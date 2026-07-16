@@ -94,6 +94,19 @@ body.english .en{display:block}
  .books,.portfolio-grid{grid-template-columns:1fr}
  .book-image img{height:360px}.library-header{align-items:flex-start;flex-direction:column}
 }
+
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.why-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow);transition:.22s;position:relative;overflow:hidden}
+.why-card:before{content:"";position:absolute;top:0;right:0;width:72px;height:5px;background:var(--gold)}
+body.english .why-card:before{right:auto;left:0}
+.why-card:hover{transform:translateY(-5px)}
+.why-icon{width:52px;height:52px;border-radius:15px;background:var(--green);color:var(--gold);display:grid;place-items:center;font-size:24px;margin-bottom:14px}
+.why-card h3{margin:0 0 7px;color:var(--green);font-size:20px}
+.why-card p{margin:0;color:var(--muted)}
+.section-lead{max-width:760px;color:var(--muted);margin:0 0 30px}
+@media(max-width:920px){.why-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.why-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -102,10 +115,10 @@ body.english .en{display:block}
 <div class="container nav-inner">
 <div class="brand">SAMY SULIMAN</div>
 <div class="links ar">
-<a href="#impact">الأثر</a><a href="#library">المكتبة التعليمية</a><a href="#portfolio">الأعمال</a><a href="#contact">التواصل</a>
+<a href="#why">لماذا سامي؟</a><a href="#impact">الأثر</a><a href="#library">المؤلفات</a><a href="#portfolio">الأعمال</a><a href="#contact">التواصل</a>
 </div>
 <div class="links en">
-<a href="#impact">Impact</a><a href="#library">Educational Library</a><a href="#portfolio">Portfolio</a><a href="#contact">Contact</a>
+<a href="#why">Why Samy?</a><a href="#impact">Impact</a><a href="#library">Publications</a><a href="#portfolio">Portfolio</a><a href="#contact">Contact</a>
 </div>
 <button class="lang" onclick="toggleLang()">AR / EN</button>
 </div>
@@ -136,6 +149,60 @@ body.english .en{display:block}
 </div>
 </header>
 
+<section class="alt" id="why">
+<div class="container">
+<h2 class="title ar">لماذا يُختار سامي سليمان؟</h2>
+<h2 class="title en">Why Choose Samy Suliman?</h2>
+<p class="section-lead ar">خبرة تعليمية ممتدة، وأثر موثق، وقدرة على الجمع بين التدريس، وتطوير المعلمين، وإنتاج المحتوى التعليمي، والعمل المؤسسي.</p>
+<p class="section-lead en">Long educational experience, documented student impact, and the ability to combine teaching, teacher development, educational publishing, and institutional contribution.</p>
+
+<div class="why-grid">
+<div class="why-card">
+<div class="why-icon">20+</div>
+<h3 class="ar">خبرة تعليمية ممتدة</h3><h3 class="en">Extensive Educational Experience</h3>
+<p class="ar">أكثر من عشرين عامًا في تدريس التربية الإسلامية والعمل داخل بيئات تعليمية متنوعة.</p>
+<p class="en">More than twenty years in Islamic Studies teaching across diverse educational environments.</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">♥</div>
+<h3 class="ar">أثر موثق في الطلاب</h3><h3 class="en">Documented Student Impact</h3>
+<p class="ar">شهادات طلابية وفيديوهات حقيقية تعكس أثرًا يتجاوز حدود الحصة الدراسية.</p>
+<p class="en">Authentic student voices and videos showing impact beyond the classroom.</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">HOD</div>
+<h3 class="ar">خبرة في رئاسة القسم</h3><h3 class="en">Department Leadership Experience</h3>
+<p class="ar">خبرة سابقة في تنسيق قسم الدراسات الإسلامية ودعم الزملاء وتحقيق الأهداف المشتركة.</p>
+<p class="en">Previous experience coordinating the Islamic Studies department and supporting colleagues.</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">✦</div>
+<h3 class="ar">تطوير المعلمين</h3><h3 class="en">Teacher Development</h3>
+<p class="ar">تقديم ورش عملية وتبادل خبرات في التخطيط، والتقويم، وإدارة الصف، وطرائق التدريس.</p>
+<p class="en">Practical workshops and knowledge sharing in planning, assessment, classroom management, and teaching methods.</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">▦</div>
+<h3 class="ar">إنتاج محتوى تعليمي</h3><h3 class="en">Educational Content Creation</h3>
+<p class="ar">مؤلفات مطبوعة وسلاسل تعليمية للأطفال والكبار ومواد تخدم المعلم والطالب.</p>
+<p class="en">Printed books, educational series for children and adults, and resources for teachers and students.</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">✓</div>
+<h3 class="ar">دعم الجودة والتحسين</h3><h3 class="en">Quality and Improvement Support</h3>
+<p class="ar">المشاركة في الجودة والاعتماد الأكاديمي والعمل بروح الفريق داخل المؤسسة التعليمية.</p>
+<p class="en">Contribution to quality, accreditation, and team-based school improvement.</p>
+</div>
+</div>
+</div>
+</section>
+
+
 <section id="impact">
 <div class="container">
 <h2 class="title ar">الأثر الذي بقي</h2>
@@ -165,8 +232,8 @@ allowfullscreen></iframe>
 <div class="container">
 <div class="library-header">
 <div>
-<h2 class="title ar">المكتبة التعليمية</h2>
-<h2 class="title en">Educational Library</h2>
+<h2 class="title ar">المشروعات التأليفية</h2>
+<h2 class="title en">Publishing Projects</h2>
 <p class="library-note ar">مشروعات تأليفية تخاطب الطفل، والقارئ البالغ، ومعلم القرآن؛ وتعرض بوضوح ما اكتمل وما يزال قيد الإعداد.</p>
 <p class="library-note en">Publishing projects for children, adult readers, and Qur’an educators, clearly distinguishing completed work from projects in development.</p>
 </div>
@@ -183,21 +250,21 @@ allowfullscreen></iframe>
 <div class="book-body"><h4>The Light of Truth — Part 1</h4>
 <p class="ar">السيرة النبوية للأطفال بأسلوب قصصي وأنشطة تعليمية مناسبة للمدارس الدولية.</p>
 <p class="en">A children’s Seerah book combining storytelling with activities for international school learners.</p>
-<span class="badge done ar">مكتمل</span><span class="badge done en">Completed</span></div>
+<span class="badge done ar">مطبوع</span><span class="badge done en">Printed</span></div>
 </article>
 <article class="book-card">
 <div class="book-image"><img src="assets/children-part-2.jpg" alt="The Light of Truth Part 2"></div>
 <div class="book-body"><h4>The Light of Truth — Part 2</h4>
 <p class="ar">استكمال رحلة السيرة النبوية للأطفال ضمن السلسلة التعليمية.</p>
 <p class="en">The next stage of the children’s educational Seerah journey.</p>
-<span class="badge progress ar">قيد الإعداد</span><span class="badge progress en">In Development</span></div>
+<span class="badge progress ar">تحت المراجعة</span><span class="badge progress en">Under Review</span></div>
 </article>
 <article class="book-card">
 <div class="book-image"><img src="assets/children-part-3.jpg" alt="The Light of Truth Part 3"></div>
 <div class="book-body"><h4>The Light of Truth — Part 3</h4>
 <p class="ar">الجزء الثالث من السلسلة الموجهة للأطفال والناشئة.</p>
 <p class="en">The third installment for children and young learners.</p>
-<span class="badge progress ar">قيد الإعداد</span><span class="badge progress en">In Development</span></div>
+<span class="badge progress ar">تحت المراجعة</span><span class="badge progress en">Under Review</span></div>
 </article>
 </div>
 </div>
@@ -205,7 +272,7 @@ allowfullscreen></iframe>
 <div class="shelf">
 <div class="shelf-title">
 <h3 class="ar">سلسلة الكبار: السيرة المحمدية</h3><h3 class="en">Adult Series: The Prophetic Biography</h3>
-<span class="ar">قيد الإعداد</span><span class="en">In Development</span>
+<span class="ar">الجزء الأول مطبوع</span><span class="en">Part 1 Printed</span>
 </div>
 <div class="books">
 <article class="book-card">
@@ -213,21 +280,21 @@ allowfullscreen></iframe>
 <div class="book-body"><h4>The Prophetic Biography — Part 1</h4>
 <p class="ar">البدايات والسنوات الأولى في صياغة موجهة للقارئ البالغ وطلاب العلم.</p>
 <p class="en">The early years, written for adult readers, educators, and students of knowledge.</p>
-<span class="badge progress ar">قيد الإعداد</span><span class="badge progress en">In Development</span></div>
+<span class="badge done ar">مطبوع</span><span class="badge done en">Printed</span></div>
 </article>
 <article class="book-card">
 <div class="book-image"><img src="assets/adult-part-2.jpg" alt="The Prophetic Biography Part 2"></div>
 <div class="book-body"><h4>The Prophetic Biography — Part 2</h4>
 <p class="ar">مرحلة الدعوة المكية ضمن مشروع السيرة الموجه للكبار.</p>
 <p class="en">The Meccan mission within the adult Seerah publishing project.</p>
-<span class="badge progress ar">قيد الإعداد</span><span class="badge progress en">In Development</span></div>
+<span class="badge progress ar">تحت المراجعة</span><span class="badge progress en">Under Review</span></div>
 </article>
 <article class="book-card">
 <div class="book-image"><img src="assets/adult-part-3.jpg" alt="The Prophetic Biography Part 3"></div>
 <div class="book-body"><h4>The Prophetic Biography — Part 3</h4>
 <p class="ar">العهد المدني واستكمال السلسلة العلمية والتربوية.</p>
 <p class="en">The Medina era, completing the educational adult series.</p>
-<span class="badge progress ar">قيد الإعداد</span><span class="badge progress en">In Development</span></div>
+<span class="badge progress ar">تحت المراجعة</span><span class="badge progress en">Under Review</span></div>
 </article>
 </div>
 </div>
@@ -235,7 +302,7 @@ allowfullscreen></iframe>
 <div class="shelf">
 <div class="shelf-title">
 <h3 class="ar">الكتاب المرجعي</h3><h3 class="en">Reference Book</h3>
-<span class="ar">كتاب كامل</span><span class="en">Complete Volume</span>
+<span class="ar">مطبوع</span><span class="en">Printed</span>
 </div>
 <div class="reference">
 <img src="assets/tajweed-book.jpg" alt="إعلام القراء بأحكام القراءة والإقراء">
@@ -246,7 +313,7 @@ allowfullscreen></iframe>
 <div class="pill-row">
 <span class="pill ar">تجويد وإقراء</span><span class="pill en">Tajweed & Recitation</span>
 <span class="pill ar">للمعلمين وطلاب القرآن</span><span class="pill en">For Teachers & Qur’an Students</span>
-<span class="badge done ar">مكتمل</span><span class="badge done en">Completed</span>
+<span class="badge done ar">مطبوع</span><span class="badge done en">Printed</span>
 </div>
 </div>
 </div>
