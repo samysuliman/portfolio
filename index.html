@@ -107,6 +107,68 @@ body.english .why-card:before{right:auto;left:0}
 @media(max-width:920px){.why-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.why-grid{grid-template-columns:1fr}}
 
+
+@media(max-width:620px){
+  .hero{padding:28px 0 42px}
+  .hero-grid{
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+  }
+  .hero-image{
+    order:-1;
+    width:100%;
+    max-width:100%;
+    height:auto;
+    border-radius:18px;
+    object-fit:contain;
+    margin:0 auto;
+  }
+  .hero-grid > div{
+    width:100%;
+    text-align:center;
+  }
+  h1{
+    font-size:42px;
+    margin:12px 0 8px;
+  }
+  .role{
+    font-size:18px;
+    line-height:1.7;
+  }
+  .tagline{
+    font-size:18px;
+    line-height:1.8;
+  }
+  .hero-copy{
+    font-size:16px;
+    line-height:2;
+  }
+  .actions{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:10px;
+    margin-top:20px;
+  }
+  .btn{
+    width:100%;
+    padding:13px 16px;
+  }
+  .kicker{
+    font-size:12px;
+  }
+  .nav-inner{
+    min-height:58px;
+  }
+  .brand{
+    font-size:15px;
+  }
+  .lang{
+    padding:6px 10px;
+    font-size:13px;
+  }
+}
+
 </style>
 </head>
 <body>
