@@ -1,269 +1,90 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="الملف المهني لسامي سليمان: قائد تربوي، معلم تربية إسلامية، مؤلف ومدرب.">
-  <meta property="og:title" content="سامي سليمان | الملف المهني">
-  <meta property="og:description" content="قائد تربوي ومعلم تربية إسلامية ومؤلف ومدرب بخبرة تتجاوز 20 عامًا.">
-  <meta property="og:image" content="assets/portrait.jpg">
-  <title>سامي سليمان | الملف المهني</title>
-  <link rel="icon" href="assets/favicon.png">
-  <style>
-    :root{
-      --green:#082c22;
-      --green2:#0d4435;
-      --gold:#d9ad55;
-      --gold2:#f2d28c;
-      --cream:#f7f2e6;
-      --white:#fff;
-      --ink:#173229;
-      --muted:#66756f;
-      --shadow:0 18px 50px rgba(8,44,34,.16);
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{margin:0;font-family:"Segoe UI",Tahoma,Arial,sans-serif;background:var(--cream);color:var(--ink);line-height:1.8}
-    a{text-decoration:none;color:inherit}
-    img{max-width:100%;display:block}
-    .container{width:min(1140px,92%);margin:auto}
-    .nav{position:sticky;top:0;z-index:20;background:rgba(8,44,34,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(217,173,85,.35)}
-    .nav-inner{height:70px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-    .brand{font-weight:800;color:var(--gold);letter-spacing:.8px;font-size:21px}
-    .navlinks{display:flex;gap:18px;color:#fff;font-size:15px}
-    .navlinks a:hover{color:var(--gold2)}
-    .hero{min-height:calc(100vh - 70px);background:
-      radial-gradient(circle at 20% 20%,rgba(217,173,85,.14),transparent 34%),
-      linear-gradient(135deg,#061e18 0%,#0b392d 100%);
-      color:#fff;display:flex;align-items:center;overflow:hidden;position:relative}
-    .hero:after{content:"";position:absolute;width:420px;height:420px;border:1px solid rgba(217,173,85,.18);border-radius:50%;left:-140px;bottom:-160px}
-    .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:center;padding:70px 0}
-    .eyebrow{display:inline-flex;border:1px solid var(--gold);border-radius:999px;padding:7px 16px;color:var(--gold2);font-size:14px}
-    h1{font-size:clamp(48px,7vw,82px);line-height:1.15;margin:18px 0 8px;color:var(--gold)}
-    .lead{font-size:clamp(20px,2.5vw,30px);margin:0 0 18px}
-    .hero-copy{font-size:18px;color:#e2ece8;max-width:680px}
-    .buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
-    .btn{padding:13px 22px;border-radius:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px;transition:.2s}
-    .btn:hover{transform:translateY(-2px)}
-    .primary{background:var(--gold);color:#082c22}
-    .secondary{border:1px solid var(--gold);color:#fff}
-    .portrait-wrap{position:relative}
-    .portrait{border-radius:32px;border:3px solid var(--gold);box-shadow:0 30px 90px rgba(0,0,0,.4)}
-    .statbar{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:-34px;position:relative;padding:0 22px}
-    .stat{background:#fff;color:var(--green);border-radius:14px;padding:14px;text-align:center;box-shadow:var(--shadow)}
-    .stat b{display:block;font-size:26px;color:#9a701f}
-    section{padding:88px 0}
-    .section-title{font-size:38px;margin:0 0 14px;color:var(--green)}
-    .section-sub{color:var(--muted);margin:0 0 36px}
-    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
-    .panel{background:#fff;border-radius:22px;padding:30px;box-shadow:var(--shadow)}
-    .goldline{height:4px;width:70px;background:var(--gold);border-radius:4px;margin:12px 0 22px}
-    .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-    .chip{background:#eef3f1;border:1px solid #dbe6e1;padding:7px 12px;border-radius:999px;font-size:14px}
-    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-    .card{background:#fff;border-radius:20px;padding:26px;box-shadow:var(--shadow);border-top:4px solid var(--gold)}
-    .icon{font-size:31px}
-    .card h3{margin:8px 0;color:var(--green)}
-    .timeline{display:grid;gap:18px}
-    .time-item{display:grid;grid-template-columns:130px 1fr;gap:18px;background:#fff;padding:24px;border-radius:18px;box-shadow:var(--shadow)}
-    .time-year{color:#a27319;font-weight:800;font-size:18px}
-    .showcase{background:var(--green);color:#fff}
-    .showcase .section-title{color:var(--gold)}
-    .media-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:start}
-    video{width:100%;border-radius:20px;border:2px solid var(--gold);background:#000;box-shadow:0 22px 50px rgba(0,0,0,.3)}
-    .quote-card{background:#fff;color:var(--green);border-radius:20px;padding:28px}
-    .quote-card blockquote{font-size:22px;margin:0 0 16px}
-    .visuals{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    .visual-card{background:#fff;border-radius:18px;overflow:hidden;box-shadow:var(--shadow)}
-    .visual-card img{aspect-ratio:1/1;object-fit:cover}
-    .visual-card .caption{padding:16px}
-    .books{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-    .book{background:#fff;padding:24px;border-radius:18px;box-shadow:var(--shadow);position:relative}
-    .book:before{content:"";position:absolute;top:0;right:0;width:7px;height:100%;background:var(--gold);border-radius:0 18px 18px 0}
-    .book h3{color:var(--green)}
-    .award-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-    .award{background:#fff;border-radius:18px;padding:22px;box-shadow:var(--shadow);display:flex;gap:16px}
-    .contact{background:linear-gradient(135deg,#061e18,#0d4435);color:#fff;text-align:center}
-    .contact .section-title{color:var(--gold)}
-    .contact-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
-    footer{background:#041711;color:#cbd8d3;padding:25px;text-align:center}
-    .lang-switch{border:1px solid var(--gold);color:var(--gold2);background:transparent;border-radius:8px;padding:6px 10px;cursor:pointer}
-    .en{display:none}
-    body.english{direction:ltr}
-    body.english .ar{display:none}
-    body.english .en{display:block}
-    body.english .time-item{grid-template-columns:130px 1fr}
-    @media(max-width:900px){
-      .navlinks{display:none}
-      .hero-grid,.about-grid,.media-grid{grid-template-columns:1fr}
-      .cards,.visuals,.books{grid-template-columns:1fr}
-      .award-grid{grid-template-columns:1fr}
-      .time-item{grid-template-columns:1fr}
-      .hero-grid{padding:45px 0 70px}
-      .portrait-wrap{order:-1}
-      .statbar{margin-top:-24px}
-    }
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="الملف المهني لسامي سليمان، معلم تربية إسلامية ورئيس قسم سابق ومدرب ومؤلف تربوي.">
+<title>سامي سليمان | الملف المهني</title>
+<style>
+:root{--g:#082c22;--g2:#0d4435;--gold:#d9ad55;--cream:#f7f2e6;--ink:#173229;--muted:#66756f;--shadow:0 12px 32px rgba(8,44,34,.12)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:"Segoe UI",Tahoma,Arial,sans-serif;background:var(--cream);color:var(--ink);line-height:1.7}
+a{text-decoration:none;color:inherit}img{max-width:100%;display:block}.container{width:min(1080px,92%);margin:auto}
+.nav{position:sticky;top:0;z-index:20;background:rgba(8,44,34,.97);border-bottom:1px solid rgba(217,173,85,.25)}
+.nav-inner{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{font-weight:800;color:var(--gold)}
+.navlinks{display:flex;gap:18px;color:#fff;font-size:14px}.lang{border:1px solid var(--gold);color:var(--gold);background:transparent;border-radius:8px;padding:6px 10px;cursor:pointer}
+.hero{background:linear-gradient(135deg,#061e18,#0b392d);color:#fff;padding:72px 0}.hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:58px;align-items:center}
+.eyebrow{display:inline-block;border:1px solid var(--gold);color:var(--gold);border-radius:999px;padding:6px 14px;font-size:13px}
+h1{font-size:clamp(46px,7vw,76px);line-height:1.1;margin:18px 0 8px;color:var(--gold)}.role{font-size:clamp(18px,2.4vw,26px);margin:0 0 16px}
+.tagline{font-size:18px;color:#dce8e3;max-width:650px}.buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.btn{padding:12px 20px;border-radius:10px;font-weight:700}
+.primary{background:var(--gold);color:var(--g)}.secondary{border:1px solid var(--gold);color:#fff}.portrait{border-radius:26px;border:3px solid var(--gold);box-shadow:0 24px 65px rgba(0,0,0,.35)}
+section{padding:68px 0}.title{font-size:34px;margin:0 0 10px;color:var(--g)}.note{color:var(--muted);margin:0 0 28px}
+.summary{background:#fff;border-radius:18px;padding:27px;box-shadow:var(--shadow);font-size:18px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:#fff;border-radius:16px;padding:22px;box-shadow:var(--shadow);border-top:4px solid var(--gold)}.card strong{display:block;color:var(--g);font-size:18px;margin-bottom:5px}.card p{margin:0;color:var(--muted)}
+.values{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.value{background:#fff;border-radius:14px;padding:20px;border:1px solid #dfe7e3}.value strong{color:var(--g)}
+.evidence{background:var(--g);color:#fff}.evidence .title{color:var(--gold)}.egrid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
+video{width:100%;border-radius:16px;border:2px solid var(--gold);background:#000}.quote{background:#fff;color:var(--g);border-radius:16px;padding:22px}.quote img{margin-top:14px;border-radius:12px}
+.resources{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.resource{background:#fff;border-radius:14px;padding:20px;text-align:center;box-shadow:var(--shadow)}.resource b{display:block;color:var(--g);margin-top:8px}
+.journey{background:#fff;border:1px dashed #b8c8c1;border-radius:16px;padding:22px;display:flex;justify-content:space-between;gap:20px}.journey span{color:#9b6f1a;font-weight:700}
+.contact{background:linear-gradient(135deg,#061e18,#0d4435);color:#fff;text-align:center}.contact .title{color:var(--gold)}footer{background:#041711;color:#cbd8d3;text-align:center;padding:22px}
+.en{display:none}body.english{direction:ltr}body.english .ar{display:none}body.english .en{display:block}
+@media(max-width:860px){.navlinks{display:none}.hero-grid,.egrid{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.values{grid-template-columns:1fr}.resources{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:540px){.grid,.resources{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-  <nav class="nav">
-    <div class="container nav-inner">
-      <div class="brand">SAMY SULIMAN</div>
-      <div class="navlinks ar">
-        <a href="#about">نبذة</a><a href="#expertise">الخبرات</a><a href="#impact">أثر تعليمي</a><a href="#works">الأعمال</a><a href="#contact">تواصل</a>
-      </div>
-      <div class="navlinks en">
-        <a href="#about">About</a><a href="#expertise">Expertise</a><a href="#impact">Student Impact</a><a href="#works">Portfolio</a><a href="#contact">Contact</a>
-      </div>
-      <button class="lang-switch" onclick="toggleLang()">AR / EN</button>
-    </div>
-  </nav>
+<nav class="nav"><div class="container nav-inner"><div class="brand">SAMY SULIMAN</div>
+<div class="navlinks ar"><a href="#profile">الملف</a><a href="#highlights">القوة</a><a href="#contribution">الإضافة</a><a href="#evidence">الشواهد</a><a href="#contact">التواصل</a></div>
+<div class="navlinks en"><a href="#profile">Profile</a><a href="#highlights">Highlights</a><a href="#contribution">Contribution</a><a href="#evidence">Evidence</a><a href="#contact">Contact</a></div>
+<button class="lang" onclick="toggleLang()">AR / EN</button></div></nav>
 
-  <header class="hero">
-    <div class="container hero-grid">
-      <div>
-        <span class="eyebrow ar">الملف المهني والتعليمي</span>
-        <span class="eyebrow en">Professional Education Portfolio</span>
-        <h1>سامي سليمان</h1>
-        <p class="lead ar">قائد تربوي | تربية إسلامية | مؤلف | مدرب</p>
-        <p class="lead en">Education Leader | Islamic Studies | Author | Trainer</p>
-        <p class="hero-copy ar">معلم تربية إسلامية وقائد تربوي بخبرة تتجاوز 20 عامًا في التعليم والإشراف الأكاديمي، أسهم في تدريب المعلمين، وتأليف المواد التعليمية، وتعليم اللغة العربية للناطقين بغيرها، مع اهتمام ببناء شخصية الطالب وتعزيز الهوية والقيم.</p>
-        <p class="hero-copy en">An Islamic Studies educator and academic leader with more than 20 years of experience in teaching, supervision, teacher development, educational content, and Arabic for non-native speakers.</p>
-        <div class="buttons">
-          <a class="btn primary ar" href="assets/samy-suliman-cv.pdf" target="_blank">تحميل السيرة الذاتية</a>
-          <a class="btn primary en" href="assets/samy-suliman-cv.pdf" target="_blank">Download CV</a>
-          <a class="btn secondary ar" href="#impact">شاهد الأثر التعليمي</a>
-          <a class="btn secondary en" href="#impact">View Student Impact</a>
-        </div>
-      </div>
-      <div class="portrait-wrap">
-        <img class="portrait" src="assets/portrait.jpg" alt="سامي سليمان">
-        <div class="statbar">
-          <div class="stat"><b>20+</b><span class="ar">سنة خبرة</span><span class="en">Years</span></div>
-          <div class="stat"><b>6+</b><span class="ar">برامج تدريبية</span><span class="en">Workshops</span></div>
-          <div class="stat"><b>3</b><span class="ar">مؤلفات</span><span class="en">Books</span></div>
-        </div>
-      </div>
-    </div>
-  </header>
+<header class="hero"><div class="container hero-grid"><div>
+<span class="eyebrow ar">الملف المهني والأعمال التعليمية</span><span class="eyebrow en">Professional Profile & Educational Portfolio</span>
+<h1><span class="ar">سامي سليمان</span><span class="en">Samy Suliman</span></h1>
+<p class="role ar">معلم تربية إسلامية | رئيس قسم سابق | مدرب معلمين | مؤلف تربوي</p>
+<p class="role en">Islamic Studies Teacher | Former Head of Department | Teacher Trainer | Educational Author</p>
+<p class="tagline ar">أؤمن بأن التعليم يبني الشخصية قبل أن ينقل المعرفة، وأن الأثر الإيجابي هو النتيجة الأهم للتجربة التعليمية.</p>
+<p class="tagline en">I believe education shapes character before it delivers knowledge, and that lasting positive impact is its most important outcome.</p>
+<div class="buttons"><a class="btn primary ar" href="assets/samy-suliman-cv.pdf" target="_blank">تحميل السيرة الذاتية</a><a class="btn primary en" href="assets/samy-suliman-cv.pdf" target="_blank">Download CV</a><a class="btn secondary ar" href="#evidence">شواهد الأثر</a><a class="btn secondary en" href="#evidence">View Evidence</a></div>
+</div><img class="portrait" src="assets/portrait.jpg" alt="Samy Suliman"></div></header>
 
-  <section id="about">
-    <div class="container">
-      <h2 class="section-title ar">نبذة مهنية</h2><h2 class="section-title en">Professional Profile</h2>
-      <div class="goldline"></div>
-      <div class="about-grid">
-        <div class="panel">
-          <p class="ar">امتدت مسيرتي بين الأزهر الشريف والمدارس الدولية في الرياض، وشملت تدريس العلوم الشرعية واللغة العربية والقرآن الكريم للمراحل المختلفة، ورئاسة قسم الدراسات الإسلامية، والمشاركة في القيادة الأكاديمية، والاختبارات والكنترول، والجودة والاعتماد، والتطوير المهني للمعلمين.</p>
-          <p class="en">My career spans Al-Azhar education and international schools in Riyadh, including Islamic Studies, Arabic and Qur'an teaching, department leadership, academic supervision, assessment, quality assurance and teacher development.</p>
-        </div>
-        <div class="panel">
-          <p class="ar">أمتلك خبرة مباشرة مع طلاب المرحلة الابتدائية في تدريس اللغة العربية والقرآن الكريم، وتحفيظ طلاب الصفوف الثاني والثالث والرابع والخامس، إلى جانب تأليف مواد في السيرة النبوية للأطفال.</p>
-          <p class="en">I have direct Junior School experience teaching Arabic and Qur'an, supporting Qur'an memorization for Grades 2–5, and authoring child-friendly Seerah materials.</p>
-          <div class="chips">
-            <span class="chip">Islamic Studies</span><span class="chip">Junior School</span><span class="chip">Teacher Training</span><span class="chip">Curriculum</span><span class="chip">Quality</span><span class="chip">Arabic L2</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<section id="profile"><div class="container"><h2 class="title ar">الملف المهني</h2><h2 class="title en">Professional Profile</h2>
+<div class="summary"><p class="ar">معلم تربية إسلامية بخبرة تتجاوز عشرين عامًا في التعليم، تشمل المدارس الدولية، ورئاسة قسم الدراسات الإسلامية، وتدريب المعلمين، وتأليف المواد التعليمية، وتعليم اللغة العربية للناطقين بغيرها. أسهم في أعمال الجودة والاعتماد الأكاديمي، ويهتم ببناء بيئة تعليمية تجمع بين جودة المحتوى، وتنمية شخصية الطالب، والعمل بروح الفريق.</p>
+<p class="en">An Islamic Studies teacher with more than twenty years of educational experience, including international schools, department leadership, teacher training, educational resource development, and Arabic instruction for non-native speakers. He has contributed to quality and accreditation initiatives and values learning environments that combine strong teaching, student character development, and teamwork.</p></div></div></section>
 
-  <section id="expertise">
-    <div class="container">
-      <h2 class="section-title ar">مجالات الخبرة</h2><h2 class="section-title en">Core Expertise</h2>
-      <p class="section-sub ar">مزيج من الخبرة الصفية والقيادة الأكاديمية والتأليف والتدريب.</p>
-      <div class="cards">
-        <div class="card"><div class="icon">🎓</div><h3 class="ar">القيادة الأكاديمية</h3><h3 class="en">Academic Leadership</h3><p class="ar">رئاسة قسم، قيادة فرق العمل، متابعة الخطط، تحليل النتائج، والخطط العلاجية.</p><p class="en">Department leadership, team development, plan monitoring, results analysis, and student support plans.</p></div>
-        <div class="card"><div class="icon">📖</div><h3 class="ar">مواد الهوية</h3><h3 class="en">National Identity</h3><p class="ar">التربية الإسلامية، القرآن، اللغة العربية، وغرس القيم والهوية.</p><p class="en">Islamic Studies, Qur’an, Arabic, and the development of values and identity.</p></div>
-        <div class="card"><div class="icon">🧑‍🏫</div><h3 class="ar">تطوير المعلمين</h3><h3 class="en">Teacher Development</h3><p class="ar">ورش في التخطيط والإدارة الصفية والتقويم واستراتيجيات التدريس.</p><p class="en">Workshops in lesson planning, classroom management, assessment, and teaching strategies.</p></div>
-        <div class="card"><div class="icon">✍️</div><h3 class="ar">التأليف التعليمي</h3><h3 class="en">Educational Authoring</h3><p class="ar">كتب ومواد في التجويد والسيرة النبوية للأطفال، ومنها مواد ثنائية اللغة.</p><p class="en">Books and learning materials in Tajweed and children’s Seerah, including bilingual resources.</p></div>
-        <div class="card"><div class="icon">🏅</div><h3 class="ar">الجودة والاعتماد</h3><h3 class="en">Quality & Accreditation</h3><p class="ar">مشاركة في الاعتماد الوزاري والدولي وأعمال Cognia وAIAA.</p><p class="en">Participation in national and international accreditation, including Cognia and AIAA.</p></div>
-        <div class="card"><div class="icon">🤝</div><h3 class="ar">التواصل والتطوير</h3><h3 class="en">Communication & Growth</h3><p class="ar">بناء العلاقات، التدريب، تطوير المبادرات، والعمل مع فرق متعددة الثقافات.</p><p class="en">Relationship building, training, initiative development, and collaboration in multicultural teams.</p></div>
-      </div>
-    </div>
-  </section>
+<section id="highlights"><div class="container"><h2 class="title ar">نقاط قوة مهنية</h2><h2 class="title en">Professional Highlights</h2><div class="grid">
+<div class="card"><strong class="ar">+20 عامًا</strong><strong class="en">20+ Years</strong><p class="ar">خبرة مستمرة في التعليم.</p><p class="en">Continuous experience in education.</p></div>
+<div class="card"><strong class="ar">مدارس دولية</strong><strong class="en">International Schools</strong><p class="ar">خبرة في بيئات متعددة الثقافات.</p><p class="en">Experience in multicultural settings.</p></div>
+<div class="card"><strong class="ar">رئيس قسم سابق</strong><strong class="en">Former Head of Department</strong><p class="ar">تنسيق العمل ودعم الفريق.</p><p class="en">Department coordination and team support.</p></div>
+<div class="card"><strong class="ar">تدريب المعلمين</strong><strong class="en">Teacher Training</strong><p class="ar">ورش عملية قابلة للتطبيق.</p><p class="en">Practical, applicable workshops.</p></div>
+<div class="card"><strong class="ar">مؤلف تربوي</strong><strong class="en">Educational Author</strong><p class="ar">كتب ومواد تعليمية.</p><p class="en">Books and learning resources.</p></div>
+<div class="card"><strong class="ar">الجودة والاعتماد</strong><strong class="en">Quality & Accreditation</strong><p class="ar">مشاركة داعمة في Cognia وAIAA.</p><p class="en">Support in Cognia and AIAA work.</p></div>
+</div></div></section>
 
-  <section>
-    <div class="container">
-      <h2 class="section-title ar">المسيرة المهنية</h2><h2 class="section-title en">Career Journey</h2>
-      <div class="timeline">
-        <div class="time-item"><div class="time-year">2015–2026</div><div><strong class="ar">مدارس التربية النموذجية الدولية – الرياض</strong><strong class="en">Al-Tarbiyah Al-Namouthajiyah International Schools</strong><br><span class="ar">معلم تربية إسلامية، رئيس قسم سابق، مدرب لمواد الهوية، ومشارك في الجودة والاعتماد.</span><span class="en">Islamic Studies Teacher, former Head of Department, National Identity trainer, and contributor to quality and accreditation.</span></div></div>
-        <div class="time-item"><div class="time-year">2006–2015</div><div><strong class="ar">الأزهر الشريف</strong><strong class="en">Al-Azhar Education</strong><br><span class="ar">تدريس اللغة العربية والقرآن والعلوم الشرعية للمراحل الابتدائية والمتوسطة والثانوية.</span><span class="en">Taught Arabic, Qur’an, and Islamic sciences across primary, middle, and secondary stages.</span></div></div>
-        <div class="time-item"><div class="time-year"><span class="ar">خبرة مستمرة</span><span class="en">Ongoing</span></div><div><strong class="ar">حلقات تحفيظ القرآن الكريم</strong><strong class="en">Qur'an Memorization Programs</strong><br><span class="ar">تحفيظ وإدارة حلقات لطلاب الصفوف الثاني والثالث والرابع والخامس الابتدائي.</span><span class="en">Led Qur’an memorization circles for students in Grades 2, 3, 4, and 5.</span></div></div>
-      </div>
-    </div>
-  </section>
+<section id="contribution"><div class="container"><h2 class="title ar">ما الذي أستطيع إضافته؟</h2><h2 class="title en">What I Can Contribute</h2><div class="values">
+<div class="value"><strong class="ar">تعليم يجمع المعرفة والقيم</strong><strong class="en">Knowledge and Values</strong><p class="ar">محتوى واضح مع الاهتمام بالشخصية والسلوك.</p><p class="en">Clear instruction with character development.</p></div>
+<div class="value"><strong class="ar">دعم نمو المعلمين</strong><strong class="en">Teacher Development</strong><p class="ar">تبادل الخبرات وتدريب عملي.</p><p class="en">Practical training and knowledge sharing.</p></div>
+<div class="value"><strong class="ar">تطوير الموارد</strong><strong class="en">Learning Resources</strong><p class="ar">مواد وأنشطة مرتبطة بالأهداف التعليمية.</p><p class="en">Resources aligned with learning goals.</p></div>
+<div class="value"><strong class="ar">التعاون المؤسسي</strong><strong class="en">Institutional Collaboration</strong><p class="ar">عمل جماعي ومشاركة في التحسين.</p><p class="en">Teamwork and improvement initiatives.</p></div>
+<div class="value"><strong class="ar">تعزيز الهوية</strong><strong class="en">Identity Education</strong><p class="ar">ربط القيم بالممارسات الصفية.</p><p class="en">Connecting values to classroom practice.</p></div>
+<div class="value"><strong class="ar">دعم الجودة</strong><strong class="en">Quality Support</strong><p class="ar">توثيق وتقويم وتحسين مستمر.</p><p class="en">Documentation, evaluation, and improvement.</p></div>
+</div></div></section>
 
-  <section class="showcase" id="impact">
-    <div class="container">
-      <h2 class="section-title ar">أثر تعليمي يبقى</h2><h2 class="section-title en">Student Impact</h2>
-      <p class="section-sub ar" style="color:#d6e3de">شهادة طالب في لقاء تلفزيوني، وتعليقات تعبّر عن الأثر الإنساني والتربوي.</p><p class="section-sub en" style="color:#d6e3de">A student’s televised testimony and messages reflecting lasting educational and personal impact.</p>
-      <div class="media-grid">
-        <video controls preload="metadata" poster="assets/portrait.jpg">
-          <source src="assets/student-tv-testimonial.mp4" type="video/mp4">
-        </video>
-        <div class="quote-card">
-          <blockquote class="ar">«من أفضل الأساتذة الذين درسوني، ترك فيَّ أثرًا جميلًا يبقى طوال العمر.»</blockquote>
-          <blockquote class="en">“One of the best teachers I had; he left a positive impact that will stay with me for life.”</blockquote>
-          <img src="assets/student-testimonials.jpg" alt="تعليقات الطلاب" style="border-radius:14px;margin-top:14px">
-        </div>
-      </div>
-    </div>
-  </section>
+<section class="evidence" id="evidence"><div class="container"><h2 class="title ar">شواهد الأثر</h2><h2 class="title en">Evidence of Impact</h2><div class="egrid">
+<video controls preload="metadata" poster="assets/portrait.jpg"><source src="assets/student-tv-testimonial.mp4" type="video/mp4"></video>
+<div class="quote"><p class="ar">شهادة طالب في لقاء تلفزيوني، وتعليقات طلابية تعكس أثرًا تربويًا يمتد إلى ما بعد الحصة الدراسية.</p><p class="en">A student’s televised testimony and comments reflecting educational impact beyond the classroom.</p><img src="assets/student-testimonials.jpg" alt="Student testimonials"></div>
+</div></div></section>
 
-  <section id="works">
-    <div class="container">
-      <h2 class="section-title ar">الأعمال والهوية المهنية</h2><h2 class="section-title en">Selected Work</h2>
-      <div class="visuals">
-        <div class="visual-card"><img src="assets/post-07.jpg" alt="منشور بناء الهوية"><div class="caption"><span class="ar">من واقع التجربة | بناء الهوية</span><span class="en">From Experience | Building Identity</span></div></div>
-        <div class="visual-card"><img src="assets/brand-card.jpg" alt="الهوية المهنية"><div class="caption"><span class="ar">هوية مهنية تجمع التعليم والقيادة والتطوير</span><span class="en">A professional identity combining education, leadership, and development</span></div></div>
-        <div class="visual-card"><img src="assets/portrait.jpg" alt="سامي سليمان"><div class="caption ar">Education Leader | Islamic Studies | Author</div></div>
-      </div>
-    </div>
-  </section>
+<section><div class="container"><h2 class="title ar">الملف والأعمال</h2><h2 class="title en">Portfolio Resources</h2><div class="resources">
+<a class="resource" href="assets/samy-suliman-cv.pdf" target="_blank">📄<b class="ar">السيرة الذاتية</b><b class="en">Resume</b></a>
+<div class="resource">📚<b class="ar">المؤلفات</b><b class="en">Publications</b></div>
+<div class="resource">🎤<b class="ar">ورش التدريب</b><b class="en">Training</b></div>
+<a class="resource" href="https://drive.google.com/drive/folders/1acujaxf8uOFEYYtCNGDWsrjCLnstMHvx" target="_blank">🏅<b class="ar">الشهادات</b><b class="en">Certificates</b></a>
+</div></div></section>
 
-  <section>
-    <div class="container">
-      <h2 class="section-title ar">المؤلفات</h2><h2 class="section-title en">Publications</h2>
-      <div class="books">
-        <div class="book"><h3>إعلام القراء بأحكام القراءة والإقراء</h3><p class="ar">كتاب مطبوع في أحكام التجويد والقراءة والإقراء.</p><p class="en">A published book on Tajweed, recitation, and Qur’an teaching principles.</p></div>
-        <div class="book"><h3>السيرة النبوية للأطفال – الجزء الأول</h3><p class="ar">مادة تعليمية ثنائية اللغة العربية والإنجليزية، تراعي خصائص الأطفال.</p><p class="en">A bilingual Arabic-English learning resource designed for children.</p></div>
-        <div class="book"><h3>حياة النبي محمد ﷺ للأطفال</h3><p class="ar">عمل تعليمي ثنائي اللغة يربط السيرة بالقيم والأنشطة.</p><p class="en">A bilingual educational work connecting Seerah with values and activities.</p></div>
-      </div>
-    </div>
-  </section>
+<section><div class="container"><div class="journey"><div><strong class="ar">ما وراء السيرة الذاتية</strong><strong class="en">Beyond the Resume</strong><p class="ar">قسم اختياري سيضاف لاحقًا لعرض المحطات التي صنعت خبرتي.</p><p class="en">An optional future section about the experiences that shaped my journey.</p></div><span class="ar">قريبًا ←</span><span class="en">Coming soon →</span></div></div></section>
 
-  <section>
-    <div class="container">
-      <h2 class="section-title ar">إنجازات مختارة</h2><h2 class="section-title en">Selected Achievements</h2>
-      <div class="award-grid">
-        <div class="award"><div class="icon">🥈</div><div><strong class="ar">المركز الثاني – جائزة الشركة الوطنية للتعليم</strong><strong class="en">Second Place – National Company for Education Award</strong><p class="ar">تقدير مهني لعام 2025.</p><p class="en">Professional recognition received in 2025.</p></div></div>
-        <div class="award"><div class="icon">🌍</div><div><strong>Cognia & AIAA</strong><p class="ar">شهادات تقدير للمساهمة في الاعتماد الأكاديمي.</p><p class="en">Certificates of appreciation for contributions to academic accreditation.</p></div></div>
-        <div class="award"><div class="icon">🎤</div><div><strong class="ar">تدريب المعلمين</strong><strong class="en">Teacher Training</strong><p class="ar">ورش في القيادة، التخطيط، التقويم، الإدارة الصفية، وأخلاقيات العمل.</p><p class="en">Workshops in leadership, planning, assessment, classroom management, and professional ethics.</p></div></div>
-        <div class="award"><div class="icon">📚</div><div><strong class="ar">مؤلفات تعليمية مطبوعة</strong><strong class="en">Published Educational Works</strong><p class="ar">في التجويد والسيرة النبوية وبناء الهوية.</p><p class="en">Works in Tajweed, Prophetic biography, and identity development.</p></div></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="contact" id="contact">
-    <div class="container">
-      <h2 class="section-title ar">للتواصل</h2><h2 class="section-title en">Contact</h2>
-      <p class="ar">أرحب بفرص التعاون في التعليم، القيادة الأكاديمية، التدريب، وتطوير المحتوى.</p><p class="en">I welcome opportunities in education, academic leadership, training, and content development.</p>
-      <div class="contact-actions">
-        <a class="btn primary" href="tel:+966559461920">📞 0559461920</a>
-        <a class="btn secondary" href="mailto:samysuliman15@gmail.com">✉️ Email</a>
-        <a class="btn secondary" href="https://drive.google.com/drive/folders/1acujaxf8uOFEYYtCNGDWsrjCLnstMHvx" target="_blank">📁 Portfolio Resources</a>
-      </div>
-    </div>
-  </section>
-
-  <footer>© 2026 Samy Suliman — Professional Portfolio</footer>
-
-  <script>
-    function toggleLang(){
-      document.body.classList.toggle('english');
-      document.documentElement.lang=document.body.classList.contains('english')?'en':'ar';
-      document.documentElement.dir=document.body.classList.contains('english')?'ltr':'rtl';
-    }
-  </script>
-</body>
-</html>
+<section class="contact" id="contact"><div class="container"><h2 class="title ar">التواصل</h2><h2 class="title en">Contact</h2><div class="buttons" style="justify-content:center">
+<a class="btn primary" href="tel:+966559461920">0559461920</a><a class="btn secondary" href="mailto:samysuliman15@gmail.com">samysuliman15@gmail.com</a>
+</div></div></section>
+<footer>© 2026 Samy Suliman — Professional Portfolio</footer>
+<script>function toggleLang(){document.body.classList.toggle('english');const e=document.body.classList.contains('english');document.documentElement.lang=e?'en':'ar';document.documentElement.dir=e?'ltr':'rtl'}</script>
+</body></html>
