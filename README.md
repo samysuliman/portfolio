@@ -1,2 +1,3 @@
-# Samy Suliman Employment-First Portfolio
-Upload all files and the assets folder to GitHub Pages.
+# Samy Suliman Impact Portfolio — YouTube Edition
+
+Lightweight version using YouTube playlist instead of local videos.
