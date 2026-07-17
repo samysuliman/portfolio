@@ -29,7 +29,7 @@ button{font:inherit}
 .lang{border:1px solid var(--gold);color:var(--gold);background:transparent;border-radius:9px;padding:7px 12px;cursor:pointer}
 .hero{background:radial-gradient(circle at 10% 15%,rgba(217,174,84,.13),transparent 33%),linear-gradient(135deg,#fffdf8,#f6f0e5);color:var(--ink);padding:64px 0 76px}
 .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:62px;align-items:center}
-.kicker{display:inline-block;border:1px solid var(--gold);color:var(--gold2);border-radius:999px;padding:6px 15px;font-size:13px}
+.kicker{display:inline-block;border:0;color:var(--gold);background:transparent;padding:0;font-size:22px;font-weight:800}
 h1{font-size:clamp(44px,5.8vw,68px);line-height:1.08;margin:18px 0 8px;color:var(--green)}
 .role{font-size:clamp(19px,2.4vw,27px);margin:0 0 13px}
 .tagline{font-size:21px;color:var(--ink);margin:0 0 10px}
@@ -39,8 +39,8 @@ h1{font-size:clamp(44px,5.8vw,68px);line-height:1.08;margin:18px 0 8px;color:var
 .btn:hover{transform:translateY(-2px)}
 .primary{background:var(--gold);color:var(--green)}
 .secondary{border:1px solid var(--green);color:var(--green);background:#fff}
-.portrait-wrap{max-width:510px;margin:auto;padding:10px;border-radius:34px;background:linear-gradient(145deg,var(--gold),#f8e8b6);box-shadow:0 26px 65px rgba(6,45,35,.20)}
-.hero-image{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center 18%;border-radius:26px;background:#eee}
+.portrait-wrap{width:min(420px,88vw);aspect-ratio:1/1;margin:auto;padding:8px;border-radius:50%;background:#fff;border:3px solid var(--gold);box-shadow:0 24px 60px rgba(6,45,35,.18);overflow:hidden}
+.hero-image{width:100%;height:100%;object-fit:cover;object-position:center 16%;border-radius:50%;background:#eee}
 section{padding:78px 0}
 .alt{background:var(--cream)}
 .title{font-size:39px;line-height:1.25;margin:0 0 8px;color:var(--green)}
@@ -137,15 +137,8 @@ body.english .why-card:before{right:auto;left:0}
     flex-direction:column;
     gap:24px;
   }
-  .hero-image{
-    order:-1;
-    width:100%;
-    max-width:100%;
-    height:auto;
-    border-radius:18px;
-    object-fit:contain;
-    margin:0 auto;
-  }
+  .portrait-wrap{order:-1;width:min(320px,82vw)}
+  .hero-image{width:100%;height:100%;border-radius:50%;object-fit:cover;margin:0 auto}
   .hero-grid > div{
     width:100%;
     text-align:center;
@@ -205,6 +198,15 @@ body.english .titem:before{right:auto;left:14px}.titem h3{margin:0 0 4px;color:v
 .pitem{display:block}.pitem small{display:block}.pitem .evidence{display:inline-block;margin-top:12px;color:#8c691f;font-weight:800;font-size:13px}
 @media(max-width:920px){.stats-grid{grid-template-columns:repeat(2,1fr)}.stat{border-bottom:1px solid var(--line)}.portfolio-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.stats{margin-top:-20px}.stats-grid,.portfolio-grid{grid-template-columns:1fr}.stat{border-inline-end:0}.timeline:before{right:18px}body.english .timeline:before{left:18px}.titem{padding-right:58px}body.english .titem{padding-left:58px}}
+
+
+.reference-visual{display:grid;grid-template-columns:1fr 120px;gap:18px;align-items:center}
+.reference-ijazah{width:110px;height:110px;object-fit:contain;background:#fff;border:1px solid var(--line);border-radius:50%;padding:8px;box-shadow:0 10px 24px rgba(6,45,35,.10)}
+.qr-footer{background:#031f18;color:#fff;padding:28px 0;text-align:center}
+.qr-footer img{width:150px;height:150px;object-fit:contain;background:#fff;padding:8px;border-radius:12px;margin:0 auto 10px}
+.qr-footer p{margin:0;color:#d7e2de}
+.career-logo{width:118px;height:90px;padding:8px}
+@media(max-width:620px){.reference-visual{grid-template-columns:1fr}.reference-ijazah{margin:auto}.kicker{font-size:18px}.career-logo{width:92px;height:76px}}
 
 </style>
 </head>
@@ -316,8 +318,8 @@ body.english .titem:before{right:auto;left:14px}.titem h3{margin:0 0 4px;color:v
 <p class="subtitle ar">خبرة تجمع بين التعليم الأزهري، والمدارس العالمية، ورئاسة القسم، وتطوير المعلمين والمحتوى.</p>
 <p class="subtitle en">A career combining Al-Azhar education, international schools, department leadership, teacher development, and educational content.</p>
 <div class="timeline">
-<div class="titem"><span class="period ar">2015 – 2026</span><span class="period en">2015 – 2026</span><div class="career-head"><img class="career-logo" src="assets/tarbiyah-logo.png" alt="شعار مدارس التربية النموذجية"><div><h3 class="ar">مدارس التربية النموذجية العالمية – الرياض</h3><h3 class="en">Tarbiyah Namouthajiyah International Schools – Riyadh</h3></div></div><p class="ar">معلم تربية إسلامية، ورئيس قسم سابق، ومشارك في تدريب المعلمين والجودة والاعتماد الأكاديمي.</p><p class="en">Islamic Studies teacher, former Head of Department, and contributor to teacher training, quality, and accreditation.</p></div>
-<div class="titem"><span class="period ar">نحو 9 أعوام</span><span class="period en">Approximately 9 Years</span><div class="career-head"><img class="career-logo" src="assets/alazhar-logo.png" alt="شعار جامعة الأزهر"><div><h3 class="ar">التعليم الأزهري – مصر</h3><h3 class="en">Al-Azhar Education – Egypt</h3></div></div><p class="ar">تدريس العلوم الشرعية والقرآن الكريم، وبناء خبرة راسخة في التعليم والتوجيه التربوي.</p><p class="en">Teaching Islamic sciences and the Qur’an, building a strong foundation in education and student guidance.</p></div>
+<div class="titem"><span class="period ar">2015 – 2026</span><span class="period en">2015 – 2026</span><div class="career-head"><img class="career-logo" src="assets/tarbiyah-international-logo.jpeg" alt="شعار مدارس التربية النموذجية العالمية"><div><h3 class="ar">مدارس التربية النموذجية العالمية – الرياض</h3><h3 class="en">Tarbiyah Namouthajiyah International Schools – Riyadh</h3></div></div><p class="ar">معلم تربية إسلامية، ورئيس قسم سابق، ومشارك في تدريب المعلمين والجودة والاعتماد الأكاديمي.</p><p class="en">Islamic Studies teacher, former Head of Department, and contributor to teacher training, quality, and accreditation.</p></div>
+<div class="titem"><span class="period ar">نحو 9 أعوام</span><span class="period en">Approximately 9 Years</span><div class="career-head"><img class="career-logo" src="assets/alazhar-institutes-logo.png" alt="شعار قطاع المعاهد الأزهرية"><div><h3 class="ar">قطاع المعاهد الأزهرية – مصر</h3><h3 class="en">Al-Azhar Institutes Sector – Egypt</h3></div></div><p class="ar">تدريس العلوم الشرعية والقرآن الكريم، وبناء خبرة راسخة في التعليم والتوجيه التربوي.</p><p class="en">Teaching Islamic sciences and the Qur’an, building a strong foundation in education and student guidance.</p></div>
 <div class="titem"><span class="period ar">خبرات موازية</span><span class="period en">Parallel Experience</span><h3 class="ar">التدريب والتأليف والمبادرات المجتمعية</h3><h3 class="en">Training, Publishing, and Community Initiatives</h3><p class="ar">تقديم ورش للمعلمين، وتأليف كتب ومواد تعليمية، والمشاركة في مبادرات تربوية ومجتمعية.</p><p class="en">Delivering teacher workshops, authoring books and educational resources, and contributing to educational and community initiatives.</p></div>
 </div></div></section>
 
@@ -364,7 +366,7 @@ allowfullscreen></iframe>
 </div>
 <div class="books">
 <article class="book-card">
-<div class="book-image"><img src="assets/children-part-1.jpg" alt="The Light of Truth Part 1"></div>
+<div class="book-image"><img src="assets/children-part-1-new.png" alt="The Light of Truth Part 1"></div>
 <div class="book-body"><h4>The Light of Truth — Part 1</h4>
 <p class="ar">السيرة النبوية للأطفال بأسلوب قصصي وأنشطة تعليمية مناسبة للمدارس الدولية.</p>
 <p class="en">A children’s Seerah book combining storytelling with activities for international school learners.</p>
@@ -423,14 +425,14 @@ allowfullscreen></iframe>
 <span class="ar">مطبوع</span><span class="en">Printed</span>
 </div>
 <div class="reference">
-<img src="assets/tajweed-book.jpg" alt="إعلام القراء بأحكام القراءة والإقراء">
+<div class="reference-visual"><img src="assets/tajweed-book.jpg" alt="إعلام القراء بأحكام القراءة والإقراء"><img class="reference-ijazah" src="assets/ijazah-logo-large.png" alt="شعار الإجازة القرآنية"></div>
 <div>
 <h3>إعلام القراء بأحكام القراءة والإقراء</h3>
 <p class="ar">كتاب كامل يجمع أحكام القراءة والإقراء في مرجع عملي، مع توجه مستقبلي لتطويره إلى مستويات تعليمية منفصلة. ويُعرض في الموقع حاليًا بوصفه كتابًا واحدًا مكتملًا.</p>
 <p class="en">A complete practical reference on Qur’anic reading and instruction. It is currently presented as one completed volume, while future educational restructuring remains a later development.</p>
 <div class="pill-row">
 <span class="pill ar">تجويد وإقراء</span><span class="pill en">Tajweed & Recitation</span>
-<span class="pill ar">للمعلمين وطلاب القرآن</span><span class="pill en">For Teachers & Qur’an Students</span>
+<span class="pill ar">للمعلمين والطلاب والمهتمين بالقرآن الكريم</span><span class="pill en">For Teachers, Students & Qur’an Learners</span>
 <span class="badge done ar">مطبوع</span><span class="badge done en">Printed</span>
 </div>
 </div>
@@ -454,7 +456,7 @@ allowfullscreen></iframe>
 <a class="pitem" href="https://drive.google.com/drive/folders/1acujaxf8uOFEYYtCNGDWsrjCLnstMHvx" target="_blank"><div class="picon">📊</div><b class="ar">الجودة والتحسين المستمر</b><b class="en">Quality & Continuous Improvement</b><small class="ar">تحليل النتائج والاستبانات وبناء خطط التحسين.</small><small class="en">Results analysis, surveys, and improvement planning.</small><span class="evidence ar">عرض الأدلة ←</span><span class="evidence en">View Evidence →</span></a>
 <a class="pitem" href="https://drive.google.com/drive/folders/1acujaxf8uOFEYYtCNGDWsrjCLnstMHvx" target="_blank"><div class="picon">💻</div><b class="ar">التعليم الرقمي والشراكة مع الأسرة</b><b class="en">Digital Learning & Family Partnership</b><small class="ar">توظيف التقنية وتعزيز التواصل مع أولياء الأمور.</small><small class="en">Using technology and strengthening parent communication.</small><span class="evidence ar">عرض الأدلة ←</span><span class="evidence en">View Evidence →</span></a>
 <a class="pitem" href="https://drive.google.com/drive/folders/1acujaxf8uOFEYYtCNGDWsrjCLnstMHvx" target="_blank"><div class="picon">🎓</div><b class="ar">التطوير المهني المستمر</b><b class="en">Continuous Professional Development</b><small class="ar">دورات وشهادات وخبرات تعلم مستمرة.</small><small class="en">Courses, certificates, and ongoing professional learning.</small><span class="evidence ar">عرض الأدلة ←</span><span class="evidence en">View Evidence →</span></a>
-<a class="pitem" href="https://drive.google.com/drive/folders/1acujaxf8uOFEYYtCNGDWsrjCLnstMHvx" target="_blank"><img class="ijazah-card-logo" src="assets/ijazah-logo.png" alt="شعار الإجازات"><b class="ar">القرآن والإقراء</b><b class="en">Qur’an & Ijazah</b><small class="ar">إجازة متصلة وخبرة في تعليم التلاوة والتجويد.</small><small class="en">Connected Ijazah and experience teaching recitation and Tajweed.</small><span class="evidence ar">عرض الأدلة ←</span><span class="evidence en">View Evidence →</span></a>
+<a class="pitem" href="https://drive.google.com/drive/folders/1acujaxf8uOFEYYtCNGDWsrjCLnstMHvx" target="_blank"><div class="picon">✦</div><b class="ar">القرآن والإقراء</b><b class="en">Qur’an & Ijazah</b><small class="ar">إجازة متصلة وخبرة في تعليم التلاوة والتجويد.</small><small class="en">Connected Ijazah and experience teaching recitation and Tajweed.</small><span class="evidence ar">عرض الأدلة ←</span><span class="evidence en">View Evidence →</span></a>
 <a class="pitem" href="#library"><div class="picon">▦</div><b class="ar">المؤلفات والمواد التعليمية</b><b class="en">Publications & Resources</b><small class="ar">كتب مطبوعة وسلاسل تربوية ومحتوى ثنائي اللغة.</small><small class="en">Printed books, educational series, and bilingual content.</small><span class="evidence ar">استعراض المؤلفات ←</span><span class="evidence en">Browse Publications →</span></a>
 <a class="pitem" href="https://drive.google.com/drive/folders/1acujaxf8uOFEYYtCNGDWsrjCLnstMHvx" target="_blank"><div class="picon">🤝</div><b class="ar">المشاركة المجتمعية</b><b class="en">Community Engagement</b><small class="ar">مبادرات تعليمية وخيرية وخدمة للمجتمع.</small><small class="en">Educational, charitable, and community service initiatives.</small><span class="evidence ar">عرض الأدلة ←</span><span class="evidence en">View Evidence →</span></a>
 <a class="pitem" href="https://drive.google.com/drive/folders/1acujaxf8uOFEYYtCNGDWsrjCLnstMHvx" target="_blank"><div class="picon">🏆</div><b class="ar">التكريمات والإنجازات</b><b class="en">Awards & Recognition</b><small class="ar">شهادات تقدير وإنجازات مهنية موثقة.</small><small class="en">Certificates of appreciation and documented achievements.</small><span class="evidence ar">عرض الأدلة ←</span><span class="evidence en">View Evidence →</span></a>
@@ -478,7 +480,7 @@ allowfullscreen></iframe>
 </div>
 </section>
 
-<footer class="footer-main"><div class="container"><div class="footer-grid"><div class="footer-copy"><strong>سامي سليمان</strong><span class="ar">معلم تربية إسلامية | مدرب معلمين | مؤلف تربوي</span><span class="en">Islamic Studies Teacher | Teacher Trainer | Educational Author</span></div><div class="footer-logos"><div class="footer-logo-box"><img src="assets/tarbiyah-logo.png" alt="شعار مدارس التربية النموذجية"></div><div class="footer-logo-box"><img src="assets/alazhar-logo.png" alt="شعار جامعة الأزهر"></div><div class="footer-logo-box ijazah"><img src="assets/ijazah-logo.png" alt="شعار الإجازات القرآنية"></div></div></div><div class="footer-bottom">© 2026 Samy Suliman — Professional Portfolio</div></div></footer>
+<footer class="qr-footer"><div class="container"><img src="assets/qr-code.png" alt="رمز الاستجابة السريعة للتواصل"><p class="ar">امسح الرمز للوصول إلى حسابي المهني</p><p class="en">Scan the code to visit my professional profile</p><div class="footer-bottom">© 2026 Samy Suliman — Professional Portfolio</div></div></footer>
 
 <script>
 function toggleLang(){
