@@ -201,17 +201,44 @@ body.english .titem:before{right:auto;left:14px}.titem h3{margin:0 0 4px;color:v
 @media(max-width:920px){.stats-grid{grid-template-columns:repeat(2,1fr)}.stat{border-bottom:1px solid var(--line)}.portfolio-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.stats{margin-top:-20px}.stats-grid,.portfolio-grid{grid-template-columns:1fr}.stat{border-inline-end:0}.timeline:before{right:18px}body.english .timeline:before{left:18px}.titem{padding-right:58px}body.english .titem{padding-left:58px}}
 
+
+.evidence-panel{margin-top:36px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:var(--shadow)}
+.evidence-panel h3{margin:0 0 6px;color:var(--green);font-size:25px}
+.evidence-panel p{margin:0 0 20px;color:var(--muted)}
+.evidence-links{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.evidence-link{display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:10px 12px;border:1px solid #d9e2de;border-radius:12px;background:#fbfdfc;color:var(--green);font-weight:800;transition:.2s}
+.evidence-link:hover{transform:translateY(-3px);border-color:var(--gold);background:#fffaf0}
+.evidence-link span{color:#9a711f}
+.contact-intro{max-width:760px;margin:0 auto 28px;color:#e7efec;font-size:18px}
+.contact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:900px;margin:0 auto}
+.contact-card{min-height:142px;border:1px solid rgba(217,174,84,.38);border-radius:18px;padding:22px 14px;background:rgba(255,255,255,.055);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:.22s}
+.contact-card:hover{transform:translateY(-5px);background:rgba(255,255,255,.1);border-color:var(--gold)}
+.contact-icon{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:var(--green)}
+.contact-icon svg{width:27px;height:27px;fill:currentColor}
+.contact-card strong{color:#fff;font-size:16px}.contact-card small{color:#c8d5d0}
+@media(max-width:920px){.evidence-links{grid-template-columns:repeat(4,1fr)}.contact-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.evidence-links{grid-template-columns:repeat(2,1fr)}.contact-grid{grid-template-columns:1fr}.contact-card{min-height:120px}}
+
+
+.availability{display:inline-block;margin:4px 0 8px;padding:8px 14px;border-radius:999px;background:#fff7df;border:1px solid #ead39a;color:#8a651b;font-weight:800;font-size:14px}
+.compact-why .why-card{text-align:center}.compact-why .why-icon{margin-inline:auto}.compact-why .why-card p{font-size:14px}
+.evidence-link{min-height:82px;display:grid!important;grid-template-columns:auto 1fr auto;align-items:center;gap:11px;text-align:start!important}.evidence-link .evidence-no{width:44px;height:44px;border-radius:12px;background:var(--green);color:var(--gold);display:grid;place-items:center;font-weight:900}.evidence-link b{font-size:13px;line-height:1.55}.evidence-link .arrow{font-size:18px;color:#9a711d}.award-docs{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:24px}.award-docs .secondary{background:#fff}
+.career-head{flex-wrap:wrap}.university-logo{width:116px}
+.testimonial-showcase{display:grid;grid-template-columns:.9fr 1.1fr;gap:26px;margin-top:34px;align-items:stretch}.testimonial-image{background:#fff;border:1px solid var(--line);border-radius:20px;padding:12px;box-shadow:var(--shadow)}.testimonial-image img{width:100%;height:100%;max-height:470px;object-fit:contain;border-radius:13px}.testimonial-quotes{display:grid;gap:18px}.testimonial-quotes article{position:relative;background:#fff;border:1px solid var(--line);border-radius:18px;padding:25px;box-shadow:var(--shadow)}.testimonial-quotes article>span{position:absolute;top:4px;left:18px;font-size:52px;color:var(--gold);line-height:1}.testimonial-quotes p{font-size:17px;color:var(--ink);margin:10px 0 14px}.testimonial-quotes b{display:block;color:var(--green)}.testimonial-quotes small{display:block;color:var(--muted)}
+.recognition-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:24px}.recognition-feature{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border-radius:22px;padding:32px;display:grid;grid-template-columns:120px 1fr;gap:25px;align-items:center;box-shadow:var(--shadow)}.award-mark{width:112px;height:112px;border-radius:50%;border:2px solid var(--gold);display:grid;place-items:center;color:var(--gold);font-size:27px;font-weight:900}.recognition-feature h3{color:var(--gold);font-size:26px;margin:0 0 9px}.recognition-feature p{margin:0 0 15px;color:#e6efec}.award-link{display:inline-block;color:var(--gold2);font-weight:900}.recognition-list{display:grid;gap:14px}.recognition-list article{display:flex;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:17px;padding:20px;box-shadow:var(--shadow)}.recognition-list article>span{width:46px;height:46px;border-radius:14px;background:var(--green);color:var(--gold);display:grid;place-items:center;font-size:22px;flex:0 0 auto}.recognition-list b,.recognition-list small{display:block}.recognition-list b{color:var(--green)}.recognition-list small{color:var(--muted)}
+@media(max-width:920px){.testimonial-showcase,.recognition-grid{grid-template-columns:1fr}.recognition-feature{grid-template-columns:auto 1fr}}
+@media(max-width:620px){.availability{font-size:12px}.evidence-links{grid-template-columns:1fr!important}.recognition-feature{grid-template-columns:1fr;text-align:center}.award-mark{margin:auto}.testimonial-image img{max-height:380px}}
 </style>
-</head>
+<link href="assets/favicon.png" rel="icon" type="image/png"/><meta content="سامي سليمان | الملف المهني" property="og:title"/><meta content="معلم تربية إسلامية، مدرب معلمين، مؤلف تربوي، ورئيس قسم سابق بخبرة تزيد على 20 عامًا." property="og:description"/><meta content="assets/portrait-only.jpg" property="og:image"/><meta content="website" property="og:type"/></head>
 <body>
 <nav class="nav">
 <div class="container nav-inner">
 <div class="brand">SAMY SULIMAN</div>
 <div class="links ar">
-<a href="#why">لماذا سامي؟</a><a href="#experience">المسيرة المهنية</a><a href="#impact">الأثر</a><a href="#library">المؤلفات</a><a href="#portfolio">الأعمال</a><a href="#contact">التواصل</a>
+<a href="#why">لماذا سامي؟</a><a href="#experience">المسيرة المهنية</a><a href="#impact">الأثر</a><a href="#library">المؤلفات</a><a href="#recognition">التكريمات</a><a href="#portfolio">الأعمال</a><a href="#contact">التواصل</a>
 </div>
 <div class="links en">
-<a href="#why">Why Samy?</a><a href="#experience">Experience</a><a href="#impact">Impact</a><a href="#library">Publications</a><a href="#portfolio">Portfolio</a><a href="#contact">Contact</a>
+<a href="#why">Why Samy?</a><a href="#experience">Experience</a><a href="#impact">Impact</a><a href="#library">Publications</a><a href="#recognition">Awards</a><a href="#portfolio">Portfolio</a><a href="#contact">Contact</a>
 </div>
 <button class="lang" onclick="toggleLang()">AR / EN</button>
 </div>
@@ -222,11 +249,11 @@ body.english .titem:before{right:auto;left:14px}.titem h3{margin:0 0 4px;color:v
 <span class="kicker ar">معلم تربية إسلامية ومؤلف تربوي</span>
 <span class="kicker en">Islamic Studies Educator &amp; Educational Author</span>
 <h1><span class="ar">سامي سليمان</span><span class="en">Samy Suliman</span></h1>
-<p class="role ar">معلم تربية إسلامية | مدرب معلمين | مؤلف تربوي</p>
-<p class="role en">Islamic Studies Teacher | Teacher Trainer | Educational Author</p>
+<p class="role ar">معلم تربية إسلامية • مؤلف تربوي • مدرب معلمين</p>
+<p class="role en">Islamic Studies Educator • Author • Teacher Trainer</p>
 <p class="tagline ar">نبني العقول... ونرعى الشخصية... ونترك أثرًا يبقى.</p>
 <p class="tagline en">Inspiring minds. Shaping character. Creating lasting impact.</p>
-<p class="hero-copy ar">خبرة تمتد لأكثر من 20 عامًا في التعليم، تشمل تدريس التربية الإسلامية، ورئاسة قسم الدراسات الإسلامية، وتدريب المعلمين، وتأليف المواد التعليمية، والمساهمة في الجودة والاعتماد الأكاديمي.</p>
+<p class="availability ar">متاح للفرص الوظيفية في المجالات التعليمية والإدارية والإشرافية.</p><p class="availability en">Open to educational, administrative, and supervisory career opportunities.</p><p class="hero-copy ar">خبرة تمتد لأكثر من 20 عامًا في التعليم، تشمل تدريس التربية الإسلامية، ورئاسة قسم الدراسات الإسلامية، وتدريب المعلمين، وتأليف المواد التعليمية، والمساهمة في الجودة والاعتماد الأكاديمي.</p>
 <p class="hero-copy en">More than 20 years of experience in Islamic Studies teaching, department leadership, teacher development, educational publishing, and quality and accreditation support.</p>
 <div class="actions">
 <a class="btn primary ar" href="https://drive.google.com/drive/folders/1acujaxf8uOFEYYtCNGDWsrjCLnstMHvx" target="_blank">معرض الأعمال</a>
@@ -253,44 +280,19 @@ body.english .titem:before{right:auto;left:14px}.titem h3{margin:0 0 4px;color:v
 <h2 class="title en">Why Choose Samy Suliman?</h2>
 <p class="section-lead ar">خبرة تعليمية ممتدة، وأثر موثق، وقدرة على الجمع بين التدريس، وتطوير المعلمين، وإنتاج المحتوى التعليمي، والعمل المؤسسي.</p>
 <p class="section-lead en">Long educational experience, documented student impact, and the ability to combine teaching, teacher development, educational publishing, and institutional contribution.</p>
-<div class="why-grid">
-<div class="why-card">
-<div class="why-icon">20+</div>
-<h3 class="ar">خبرة تعليمية ممتدة</h3><h3 class="en">Extensive Educational Experience</h3>
-<p class="ar">أكثر من عشرين عامًا في تدريس التربية الإسلامية والعمل داخل بيئات تعليمية متنوعة.</p>
-<p class="en">More than twenty years in Islamic Studies teaching across diverse educational environments.</p>
+<div class="why-grid compact-why">
+<div class="why-card"><div class="why-icon">20+</div><h3 class="ar">خبرة تعليمية</h3><h3 class="en">Educational Experience</h3><p class="ar">أكثر من 20 عامًا في التعليم والتوجيه.</p><p class="en">20+ years in education and guidance.</p></div>
+<div class="why-card"><div class="why-icon">HOD</div><h3 class="ar">رئيس قسم سابق</h3><h3 class="en">Former HOD</h3><p class="ar">قيادة الفريق ومتابعة الخطط والتطوير.</p><p class="en">Team leadership, planning, and improvement.</p></div>
+<div class="why-card"><div class="why-icon">🏆</div><h3 class="ar">فائز بجائزة تعليمية</h3><h3 class="en">Award Recognition</h3><p class="ar">المركز الثاني بجائزة الشركة الوطنية للتعليم 2025.</p><p class="en">Second place, NCLE Award 2025.</p></div>
+<div class="why-card"><div class="why-icon">✦</div><h3 class="ar">مدرب معلمين</h3><h3 class="en">Teacher Trainer</h3><p class="ar">ورش تطبيقية في التخطيط والتقويم وإدارة الصف.</p><p class="en">Practical workshops in planning and assessment.</p></div>
+<div class="why-card"><div class="why-icon">▦</div><h3 class="ar">مؤلف تربوي</h3><h3 class="en">Educational Author</h3><p class="ar">كتب مطبوعة وسلاسل تعليمية ثنائية اللغة.</p><p class="en">Printed books and bilingual learning series.</p></div>
+<div class="why-card"><div class="why-icon">✓</div><h3 class="ar">الجودة والاعتماد</h3><h3 class="en">Quality &amp; Accreditation</h3><p class="ar">مساهمة موثقة في Cognia وAIAA والتحسين المدرسي.</p><p class="en">Documented Cognia, AIAA, and school improvement support.</p></div>
 </div>
-<div class="why-card">
-<div class="why-icon">♥</div>
-<h3 class="ar">أثر موثق في الطلاب</h3><h3 class="en">Documented Student Impact</h3>
-<p class="ar">شهادات طلابية وفيديوهات حقيقية تعكس أثرًا يتجاوز حدود الحصة الدراسية.</p>
-<p class="en">Authentic student voices and videos showing impact beyond the classroom.</p>
-</div>
-<div class="why-card">
-<div class="why-icon">HOD</div>
-<h3 class="ar">خبرة في رئاسة القسم</h3><h3 class="en">Department Leadership Experience</h3>
-<p class="ar">خبرة سابقة في تنسيق قسم الدراسات الإسلامية ودعم الزملاء وتحقيق الأهداف المشتركة.</p>
-<p class="en">Previous experience coordinating the Islamic Studies department and supporting colleagues.</p>
-</div>
-<div class="why-card">
-<div class="why-icon">✦</div>
-<h3 class="ar">تطوير المعلمين</h3><h3 class="en">Teacher Development</h3>
-<p class="ar">تقديم ورش عملية وتبادل خبرات في التخطيط، والتقويم، وإدارة الصف، وطرائق التدريس.</p>
-<p class="en">Practical workshops and knowledge sharing in planning, assessment, classroom management, and teaching methods.</p>
-</div>
-<div class="why-card">
-<div class="why-icon">▦</div>
-<h3 class="ar">إنتاج محتوى تعليمي</h3><h3 class="en">Educational Content Creation</h3>
-<p class="ar">مؤلفات مطبوعة وسلاسل تعليمية للأطفال والكبار ومواد تخدم المعلم والطالب.</p>
-<p class="en">Printed books, educational series for children and adults, and resources for teachers and students.</p>
-</div>
-<div class="why-card">
-<div class="why-icon">✓</div>
-<h3 class="ar">دعم الجودة والتحسين</h3><h3 class="en">Quality and Improvement Support</h3>
-<p class="ar">المشاركة في الجودة والاعتماد الأكاديمي والعمل بروح الفريق داخل المؤسسة التعليمية.</p>
-<p class="en">Contribution to quality, accreditation, and team-based school improvement.</p>
-</div>
-</div>
+<div class="evidence-panel">
+<h3 class="ar">الأدلة المهنية الموثقة</h3><h3 class="en">Documented Professional Evidence</h3>
+<p class="ar">روابط مباشرة إلى ملفات الأدلة السبعة عشر الخاصة بالمجال الأول.</p><p class="en">Direct links to the seventeen evidence folders for the first award domain.</p>
+<div class="evidence-links"><a class="evidence-link" href="https://drive.google.com/drive/folders/1rn0_8MqkDRaXzjaW6pa3if7S_zl_Zeut" rel="noopener" target="_blank"><span class="evidence-no">1.1</span><span><b class="ar">آداب وأخلاقيات المجتمع التربوي</b><b class="en">Educational Ethics</b></span><span class="arrow">↗</span></a><a class="evidence-link" href="https://drive.google.com/drive/folders/1IF7zt3ygUF0nHx1-9eWSJBw2XQwiH1vz" rel="noopener" target="_blank"><span class="evidence-no">1.2</span><span><b class="ar">المسؤوليات الوظيفية والمهنية</b><b class="en">Professional Responsibilities</b></span><span class="arrow">↗</span></a><a class="evidence-link" href="https://drive.google.com/drive/folders/1sp1yPWeYCQEHizTvWQZbQrot4tcM1d8P" rel="noopener" target="_blank"><span class="evidence-no">1.3</span><span><b class="ar">الالتزام بساعات العمل</b><b class="en">Working Hours Commitment</b></span><span class="arrow">↗</span></a><a class="evidence-link" href="https://drive.google.com/drive/folders/1im9QU50doqRvRm0uAPvU2g4qGpnFKYuD" rel="noopener" target="_blank"><span class="evidence-no">1.4</span><span><b class="ar">المشاركة الفاعلة خارج ساعات العمل</b><b class="en">Active Participation Beyond Hours</b></span><span class="arrow">↗</span></a><a class="evidence-link" href="https://drive.google.com/drive/folders/1xzfTt8bBmf20JPeYaCytiA4mmOxGfNK0" rel="noopener" target="_blank"><span class="evidence-no">1.5</span><span><b class="ar">الزي والهندام المهني</b><b class="en">Professional Appearance</b></span><span class="arrow">↗</span></a><a class="evidence-link" href="https://drive.google.com/drive/folders/1BtM13i_BgPvf8uUFIcx1eKR1hcy9pGs0" rel="noopener" target="_blank"><span class="evidence-no">1.6</span><span><b class="ar">الالتزام بالوصف الوظيفي</b><b class="en">Role Description Compliance</b></span><span class="arrow">↗</span></a><a class="evidence-link" href="https://drive.google.com/drive/folders/1ve4nmJc1TEvXpToom8PIbGsoV1NtW8gr" rel="noopener" target="_blank"><span class="evidence-no">1.7</span><span><b class="ar">المبادرات الإبداعية والابتكارية</b><b class="en">Creative &amp; Innovative Initiatives</b></span><span class="arrow">↗</span></a><a class="evidence-link" href="https://drive.google.com/drive/folders/1osHVFexw5m6jyPDJa6O-LxKUT8bT8rar" rel="noopener" target="_blank"><span class="evidence-no">1.8</span><span><b class="ar">حل مشكلات العمل واتخاذ القرار</b><b class="en">Problem Solving &amp; Decision Making</b></span><span class="arrow">↗</span></a><a class="evidence-link" href="https://drive.google.com/drive/folders/1QbS6DJb02ct1xOvsEFfpeGw2E3wVzvx4" rel="noopener" target="_blank"><span class="evidence-no">1.9</span><span><b class="ar">دعم التغيير الإيجابي</b><b class="en">Positive Change Support</b></span><span class="arrow">↗</span></a><a class="evidence-link" href="https://drive.google.com/drive/folders/1uPoiKjeNBl6bZxDXbs7aqs-gqp_YAUAY" rel="noopener" target="_blank"><span class="evidence-no">1.10</span><span><b class="ar">نقل المعرفة للزملاء</b><b class="en">Knowledge Sharing</b></span><span class="arrow">↗</span></a><a class="evidence-link" href="https://drive.google.com/drive/folders/1DW7CWeObdh-CfnyxH8-jw7K4TYpavAkx" rel="noopener" target="_blank"><span class="evidence-no">1.11</span><span><b class="ar">تحديد الاحتياجات التدريبية</b><b class="en">Training Needs Identification</b></span><span class="arrow">↗</span></a><a class="evidence-link" href="https://drive.google.com/drive/folders/1GvDSKZEXaA2CUfopGTVnGC0nU5uBLbl9" rel="noopener" target="_blank"><span class="evidence-no">1.12</span><span><b class="ar">إدارة الوقت وكفاءة الإنجاز</b><b class="en">Time Management &amp; Efficiency</b></span><span class="arrow">↗</span></a><a class="evidence-link" href="https://drive.google.com/drive/folders/1z_lkIxokAK4kCte0mw2uhGap0VB-34vA" rel="noopener" target="_blank"><span class="evidence-no">1.13</span><span><b class="ar">تحمل المسؤولية وتقبّل التوجيهات</b><b class="en">Responsibility &amp; Feedback</b></span><span class="arrow">↗</span></a><a class="evidence-link" href="https://drive.google.com/drive/folders/1quf-GIy3z0QwdeTpoUrUqwFAKJscKdyq" rel="noopener" target="_blank"><span class="evidence-no">1.14</span><span><b class="ar">العلاقات المهنية والاحترام</b><b class="en">Professional Relationships</b></span><span class="arrow">↗</span></a><a class="evidence-link" href="https://drive.google.com/drive/folders/1RwfCRhfOZLt-DrWH8MJo8hHgcZEfxnzK" rel="noopener" target="_blank"><span class="evidence-no">1.15</span><span><b class="ar">العمل بروح الفريق والقدوة الحسنة</b><b class="en">Teamwork &amp; Positive Example</b></span><span class="arrow">↗</span></a><a class="evidence-link" href="https://drive.google.com/drive/folders/1PPqb6tuzvjJP4C2DaVkFlXgJsEe47Cb3" rel="noopener" target="_blank"><span class="evidence-no">1.16</span><span><b class="ar">الأنشطة الاجتماعية داخل المدرسة</b><b class="en">School Social Activities</b></span><span class="arrow">↗</span></a><a class="evidence-link" href="https://drive.google.com/drive/folders/1Sbnd7C_qrdaoqm5SncvDVJDLjAhinE8q" rel="noopener" target="_blank"><span class="evidence-no">1.17</span><span><b class="ar">الأنشطة اللاصفية داخل المدرسة</b><b class="en">Extracurricular Activities</b></span><span class="arrow">↗</span></a></div>
+<div class="award-docs"><a class="btn secondary ar" href="assets/ncle-award-indicators.pdf" target="_blank">بطاقة مؤشرات الجائزة</a><a class="btn secondary en" href="assets/ncle-award-indicators.pdf" target="_blank">Award Indicators</a><a class="btn secondary ar" href="assets/ncle-award-evidence.pdf" target="_blank">ملف روابط الأدلة</a><a class="btn secondary en" href="assets/ncle-award-evidence.pdf" target="_blank">Evidence Links File</a></div></div>
 </div>
 </section>
 <section id="experience">
@@ -300,7 +302,7 @@ body.english .titem:before{right:auto;left:14px}.titem h3{margin:0 0 4px;color:v
 <p class="subtitle en">A career combining Al-Azhar education, international schools, department leadership, teacher development, and educational content.</p>
 <div class="timeline">
 <div class="titem"><span class="period ar">2015 – 2026</span><span class="period en">2015 – 2026</span><div class="career-head"><img alt="شعار مدارس التربية النموذجية العالمية" class="career-logo" src="assets/tarbiyah-international-logo.jpg"/><div><h3 class="ar">مدارس التربية النموذجية العالمية – الرياض</h3><h3 class="en">Tarbiyah Namouthajiyah International Schools – Riyadh</h3></div></div><p class="ar">معلم تربية إسلامية، ورئيس قسم سابق، ومشارك في تدريب المعلمين والجودة والاعتماد الأكاديمي.</p><p class="en">Islamic Studies teacher, former Head of Department, and contributor to teacher training, quality, and accreditation.</p></div>
-<div class="titem"><span class="period ar">نحو 9 أعوام</span><span class="period en">Approximately 9 Years</span><div class="career-head"><img alt="شعار قطاع المعاهد الأزهرية" class="career-logo" src="assets/alazhar-institutes-logo.png"/><div><h3 class="ar">قطاع المعاهد الأزهرية – مصر</h3><h3 class="en">Al-Azhar Institutes Sector – Egypt</h3></div></div><p class="ar">تدريس العلوم الشرعية والقرآن الكريم، وبناء خبرة راسخة في التعليم والتوجيه التربوي.</p><p class="en">Teaching Islamic sciences and the Qur’an, building a strong foundation in education and student guidance.</p></div>
+<div class="titem"><span class="period ar">نحو 9 أعوام</span><span class="period en">Approximately 9 Years</span><div class="career-head"><img alt="شعار قطاع المعاهد الأزهرية" class="career-logo" src="assets/alazhar-institutes-logo.png"/><img alt="شعار جامعة الأزهر" class="career-logo university-logo" src="assets/alazhar-logo.png"/><div><h3 class="ar">قطاع المعاهد الأزهرية – مصر</h3><h3 class="en">Al-Azhar Institutes Sector – Egypt</h3></div></div><p class="ar">تدريس العلوم الشرعية والقرآن الكريم، وبناء خبرة راسخة في التعليم والتوجيه التربوي.</p><p class="en">Teaching Islamic sciences and the Qur’an, building a strong foundation in education and student guidance.</p></div>
 <div class="titem"><span class="period ar">خبرات موازية</span><span class="period en">Parallel Experience</span><h3 class="ar">التدريب والتأليف والمبادرات المجتمعية</h3><h3 class="en">Training, Publishing, and Community Initiatives</h3><p class="ar">تقديم ورش للمعلمين، وتأليف كتب ومواد تعليمية، والمشاركة في مبادرات تربوية ومجتمعية.</p><p class="en">Delivering teacher workshops, authoring books and educational resources, and contributing to educational and community initiatives.</p></div>
 </div></div></section>
 <section id="impact">
@@ -322,7 +324,12 @@ body.english .titem:before{right:auto;left:14px}.titem h3{margin:0 0 4px;color:v
 <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" src="https://www.youtube-nocookie.com/embed/_r4EHa5arFQ" title="Student Testimonial - Faisal"></iframe>
 </div>
 </div>
-</div>
+<div class="testimonial-showcase">
+<div class="testimonial-image"><img alt="تعليقات طلاب عن الأستاذ سامي سليمان" loading="lazy" src="assets/student-comments.jpg"/></div>
+<div class="testimonial-quotes">
+<article><span>“</span><p class="ar">الأستاذ سامي معلم متمرس ومبدع، أوصي به دون تردد.</p><p class="en">Mr. Samy is an experienced and creative teacher whom I recommend without hesitation.</p><b class="ar">فيليب أندرو رينولدز</b><b class="en">Philip Andrew Reynolds</b><small class="ar">مساعد نائب الرئيس للشؤون الأكاديمية</small><small class="en">Assistant Vice President for Academic Affairs</small></article>
+<article><span>“</span><p class="ar">يتمتع بأخلاق عالية وقدرة متميزة على التواصل والتعاون.</p><p class="en">He demonstrates high integrity and outstanding communication and collaboration skills.</p><b class="ar">هنري جيمس سميث</b><b class="en">Henry James Smith</b><small class="ar">مدير أكاديمي</small><small class="en">Academic Director</small></article>
+</div></div></div>
 </section>
 <section class="alt" id="library">
 <div class="container">
@@ -413,7 +420,16 @@ body.english .titem:before{right:auto;left:14px}.titem h3{margin:0 0 4px;color:v
 </div>
 </div>
 </section>
-<section id="portfolio">
+<section class="recognition alt" id="recognition"><div class="container">
+<h2 class="title ar">التكريمات والإنجازات</h2><h2 class="title en">Recognition &amp; Awards</h2>
+<p class="subtitle ar">محطات موثقة تعكس جودة الأداء والمساهمة في تطوير البيئة التعليمية.</p><p class="subtitle en">Documented milestones reflecting professional quality and school improvement contribution.</p>
+<div class="recognition-grid">
+<article class="recognition-feature"><div class="award-mark">2025</div><div><h3 class="ar">جائزة الشركة الوطنية للتعليم</h3><h3 class="en">National Company for Learning &amp; Education Award</h3><p class="ar">الحصول على المركز الثاني في جائزة الشركة الوطنية للتعليم، مع ملف أدلة مهني منظم يغطي 17 مؤشرًا في القيم والمسؤولية المهنية.</p><p class="en">Second-place recognition with an organized professional evidence portfolio covering 17 indicators in values and professional responsibility.</p><a class="award-link ar" href="#why">استعراض الأدلة السبعة عشر ←</a><a class="award-link en" href="#why">Explore the 17 evidence areas →</a></div></article>
+<div class="recognition-list">
+<article><span>◎</span><div><b>Cognia</b><small class="ar">شهادة تقدير للمساهمة في الاعتماد الأكاديمي — 2021</small><small class="en">Recognition for academic accreditation contribution — 2021</small></div></article>
+<article><span>◇</span><div><b>AIAA</b><small class="ar">شهادة تقدير من جمعية الاعتماد الأمريكية الدولية — 2020</small><small class="en">Recognition from the American International Accreditation Association — 2020</small></div></article>
+<article><span>✦</span><div><b class="ar">خطابات شكر وتقدير</b><b class="en">Appreciation Letters</b><small class="ar">نظير الجهود المتميزة في التطوير المهني والبرامج التعليمية.</small><small class="en">For distinguished contributions to professional development and educational programs.</small></div></article>
+</div></div></div></section><section id="portfolio">
 <div class="container">
 <h2 class="title ar">الملف المهني والأدلة</h2><h2 class="title en">Professional Portfolio &amp; Evidence</h2>
 <p class="subtitle ar">أقسام منظمة تعرض الخبرة والأثر والمبادرات والوثائق الداعمة.</p>
@@ -441,11 +457,13 @@ body.english .titem:before{right:auto;left:14px}.titem h3{margin:0 0 4px;color:v
 <section class="contact" id="contact">
 <div class="container">
 <h2 class="title ar">تواصل معي</h2><h2 class="title en">Contact</h2>
-<p class="ar">أرحب بفرص تدريس التربية الإسلامية، ورئاسة الأقسام، وتدريب المعلمين، وتطوير المحتوى التعليمي.</p>
-<p class="en">I welcome opportunities in Islamic Studies teaching, department leadership, teacher training, and educational content development.</p>
-<div class="actions">
-<a class="btn primary" href="tel:+966559461920">0559461920</a>
-<a class="btn secondary" href="mailto:samysuliman15@gmail.com">samysuliman15@gmail.com</a>
+<p class="contact-intro ar">متاح للفرص الوظيفية في المجالات التعليمية والإدارية والإشرافية.</p>
+<p class="contact-intro en">Open to educational, administrative, and supervisory career opportunities.</p>
+<div class="contact-grid">
+<a aria-label="اتصال" class="contact-card" href="tel:+966559461920"><span class="contact-icon"><svg viewbox="0 0 24 24"><path d="M6.62 10.79a15.46 15.46 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02z"></path></svg></span><strong class="ar">اتصال</strong><strong class="en">Call</strong><small>0559461920</small></a>
+<a aria-label="واتساب" class="contact-card" href="https://wa.me/966559461920" rel="noopener" target="_blank"><span class="contact-icon"><svg viewbox="0 0 24 24"><path d="M16.75 13.96c-.25-.13-1.47-.73-1.7-.81-.23-.09-.39-.13-.56.13-.16.25-.64.81-.78.98-.14.17-.29.19-.54.06-.25-.13-1.05-.39-2-1.24-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.32-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.11-.23-.17-.48-.3M12.04 2a9.84 9.84 0 0 0-8.44 14.91L2 22l5.23-1.55A9.83 9.83 0 1 0 12.04 2m0 17.86a7.97 7.97 0 0 1-4.06-1.11l-.29-.17-3.1.92.93-3.02-.19-.31A7.97 7.97 0 1 1 12.04 19.86"></path></svg></span><strong class="ar">واتساب</strong><strong class="en">WhatsApp</strong><small class="ar">مراسلة مباشرة</small><small class="en">Direct message</small></a>
+<a aria-label="لينكدإن" class="contact-card" href="https://www.linkedin.com/in/samy-suliman-3342bb212/" rel="noopener" target="_blank"><span class="contact-icon"><svg viewbox="0 0 24 24"><path d="M6.5 8.25H3.25V21H6.5V8.25M4.88 3A1.88 1.88 0 1 0 4.88 6.75 1.88 1.88 0 0 0 4.88 3M21 13.7c0-3.84-2.05-5.63-4.79-5.63-2.21 0-3.2 1.22-3.75 2.07V8.25H9.21V21h3.25v-6.31c0-1.66.32-3.27 2.38-3.27 2.03 0 2.06 1.9 2.06 3.38V21H21z"></path></svg></span><strong>LinkedIn</strong><small class="ar">الملف المهني</small><small class="en">Professional profile</small></a>
+<a aria-label="البريد الإلكتروني" class="contact-card" href="mailto:samysuliman15@gmail.com"><span class="contact-icon"><svg viewbox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2m0 4-8 5-8-5V6l8 5 8-5z"></path></svg></span><strong class="ar">البريد الإلكتروني</strong><strong class="en">Email</strong><small>samysuliman15@gmail.com</small></a>
 </div>
 </div>
 </section>
