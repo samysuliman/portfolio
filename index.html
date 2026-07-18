@@ -265,21 +265,54 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--gold2);outline-offs
 #portfolio .pitem{position:relative}
 #portfolio .pitem:after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none}
 #portfolio .pitem:hover:after{box-shadow:inset 0 0 0 2px rgba(189,134,38,.34)}
+
+/* Accessible executive navigation and mobile menu */
+.nav-profile,.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);background:#fff}
+.nav-cv{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:8px 14px;border-radius:10px;background:var(--gold);color:var(--green);font-weight:900;font-size:13px;white-space:nowrap}
+.menu-toggle{display:none;width:43px;height:40px;border:1px solid rgba(217,174,84,.65);border-radius:9px;background:transparent;padding:8px;cursor:pointer}
+.menu-toggle span{display:block;height:2px;background:var(--gold2);margin:5px 0;border-radius:5px;transition:.2s}
+.mobile-menu{display:none;background:#062d23;border-top:1px solid rgba(217,174,84,.22);box-shadow:0 16px 30px rgba(0,0,0,.18)}
+.mobile-menu.open{display:block}
+.mobile-menu-inner{width:min(1160px,92%);margin:auto;padding:12px 0 18px}
+.mobile-menu-inner a{display:block;color:#fff;padding:12px 8px;border-bottom:1px solid rgba(255,255,255,.09);font-weight:700}
+.mobile-menu-inner a:hover{color:var(--gold2);padding-inline-start:14px}
+body.menu-open{overflow:hidden}
+/* Typography/readability */
+body{font-size:17px}
+p,.subtitle,.section-lead,.hero-copy,.pitem small{line-height:1.9}
+.links{gap:15px;font-size:13px}
+@media(max-width:1050px){.links{display:none}.menu-toggle{display:block}.nav-inner{min-height:64px}.nav-profile .brand{font-size:14px}.nav-cv{font-size:12px;padding:7px 10px}}
+@media(max-width:620px){
+ .container{width:min(94%,1160px)}
+ .nav-inner{gap:8px;min-height:62px}
+ .nav-avatar{width:38px;height:38px}
+ .nav-profile .brand{display:none}
+ .nav-actions{gap:7px}
+ .nav-cv{font-size:11px;min-height:38px;padding:7px 9px}
+ .lang{padding:6px 8px;font-size:12px}
+ .menu-toggle{width:40px;height:38px}
+ body{font-size:16px}
+ .pitem small,.recognition-list small,.testimonial-quotes small,.stat span{font-size:15px}
+}
 </style>
 <link href="assets/favicon.png" rel="icon" type="image/png"/><meta content="سامي سليمان | الملف المهني" property="og:title"/><meta content="معلم تربية إسلامية، مدرب معلمين، مؤلف تربوي، ورئيس قسم سابق بخبرة تزيد على 20 عامًا." property="og:description"/><meta content="assets/portrait-only.jpg" property="og:image"/><meta content="website" property="og:type"/><meta content="سامي سليمان، معلم تربية إسلامية، مشرف تربوي، مدرب معلمين، مؤلف تربوي، تعليم القرآن، الإقراء، مدارس دولية، الرياض" name="keywords"/><meta content="Samy Suliman" name="author"/><meta content="index, follow, max-image-preview:large" name="robots"/><link href="https://samysuliman.github.io/portfolio/" rel="canonical"/><meta content="https://samysuliman.github.io/portfolio/" property="og:url"/><meta content="ar_SA" property="og:locale"/><meta content="summary_large_image" name="twitter:card"/></head>
 <body>
 <nav class="nav">
 <div class="container nav-inner">
-<div class="brand">SAMY SULIMAN</div>
-<div class="links ar">
-<a href="#why">لماذا سامي؟</a><a href="#experience">المسيرة المهنية</a><a href="#impact">الأثر</a><a href="#library">المؤلفات</a><a href="#recognition">التكريمات</a><a href="#quran">القرآن والإقراء</a><a href="#portfolio">الأعمال</a><a href="#contact">التواصل</a>
+
+
+
+
 </div>
-<div class="links en">
-<a href="#why">Why Samy?</a><a href="#experience">Experience</a><a href="#impact">Impact</a><a href="#library">Publications</a><a href="#recognition">Awards</a><a href="#quran">Qur’an</a><a href="#portfolio">Portfolio</a><a href="#contact">Contact</a>
+<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu-inner ar">
+<a href="#why">لماذا سامي؟</a><a href="#experience">المسيرة المهنية</a><a href="#impact">الأثر</a><a href="#quran">القرآن والإقراء</a><a href="#library">المؤلفات</a><a href="#recognition">التكريمات</a><a href="#portfolio">الأدلة والإنجازات</a><a href="#contact">التواصل</a>
 </div>
-<button class="lang" onclick="toggleLang()">AR / EN</button>
+<div class="mobile-menu-inner en">
+<a href="#why">Why Samy?</a><a href="#experience">Experience</a><a href="#impact">Impact</a><a href="#quran">Qur’an</a><a href="#library">Publications</a><a href="#recognition">Awards</a><a href="#portfolio">Evidence</a><a href="#contact">Contact</a>
 </div>
-</nav>
+</div></nav>
 <header class="hero">
 <div class="container hero-grid">
 <div class="hero-content">
@@ -293,8 +326,8 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--gold2);outline-offs
 <p class="availability ar">متاح للفرص الوظيفية في المجالات التعليمية والإدارية والإشرافية.</p><p class="availability en">Open to educational, administrative, and supervisory career opportunities.</p><p class="hero-copy ar">خبرة تمتد لأكثر من 20 عامًا في التعليم، تشمل تدريس التربية الإسلامية، ورئاسة قسم الدراسات الإسلامية، وتدريب المعلمين، وتأليف المواد التعليمية، والمساهمة في الجودة والاعتماد الأكاديمي.</p>
 <p class="hero-copy en">More than 20 years of experience in Islamic Studies teaching, department leadership, teacher development, educational publishing, and quality and accreditation support.</p>
 <div class="actions">
-<a class="btn primary ar" href="https://drive.google.com/drive/folders/1acujaxf8uOFEYYtCNGDWsrjCLnstMHvx" rel="noopener noreferrer" target="_blank">معرض الأعمال</a>
-<a class="btn primary en" href="https://drive.google.com/drive/folders/1acujaxf8uOFEYYtCNGDWsrjCLnstMHvx" rel="noopener noreferrer" target="_blank">Portfolio</a>
+
+
 <a class="btn secondary ar" href="assets/samy-suliman-cv.pdf" rel="noopener noreferrer" target="_blank">عرض السيرة الذاتية (PDF)</a>
 <a class="btn secondary en" href="assets/samy-suliman-cv.pdf" rel="noopener noreferrer" target="_blank">View Resume (PDF)</a>
 <a class="btn secondary ar" href="#contact">تواصل معي</a>
@@ -519,30 +552,29 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--gold2);outline-offs
 <article><span>✦</span><div><b class="ar">خطابات شكر وتقدير</b><b class="en">Appreciation Letters</b><small class="ar">نظير الجهود المتميزة في التطوير المهني والبرامج التعليمية.</small><small class="en">For distinguished contributions to professional development and educational programs.</small></div></article>
 </div></div></div></section><section id="portfolio">
 <div class="container">
-<h2 class="title ar">دليل الملف المهني</h2><h2 class="title en">Professional Portfolio Guide</h2>
-<p class="subtitle ar">مسارات واضحة تقود إلى أبرز مجالات الخبرة داخل الموقع، مع رابط مستقل للملف المهني الكامل.</p>
-<p class="subtitle en">Clear pathways to the main areas of expertise across the website, with a separate link to the complete professional portfolio.</p>
+<h2 class="title ar">الأدلة والإنجازات المهنية</h2><h2 class="title en">Professional Evidence &amp; Achievements</h2>
+<p class="subtitle ar">بوابات مختارة تربط كل مجال مهني بالدليل الأنسب من ملفات الأدلة السبعة عشر.</p>
+<p class="subtitle en">Selected pathways linking each professional area to the most relevant folder among the 17 evidence files.</p>
 <div class="portfolio-grid">
-<a class="pitem" href="#why"><div class="picon">⚙</div><b class="ar">الاحترافية المهنية</b><b class="en">Professional Excellence</b><small class="ar">الانضباط، المسؤولية، وأخلاقيات المهنة.</small><small class="en">Commitment, responsibility, and professional ethics.</small><span class="evidence ar">استعراض الاحترافية داخل الموقع ←</span><span class="evidence en">Explore Professional Excellence →</span></a>
-<a class="pitem" href="#experience"><div class="picon">♛</div><b class="ar">القيادة والعمل المؤسسي</b><b class="en">Leadership &amp; Institutional Work</b><small class="ar">رئاسة القسم، دعم الزملاء، والعمل بروح الفريق.</small><small class="en">Department leadership, colleague support, and teamwork.</small><span class="evidence ar">استعراض الخبرة القيادية ←</span><span class="evidence en">Explore Leadership Experience →</span></a>
-<a class="pitem" href="#experience"><div class="picon">👨‍🏫</div><b class="ar">تدريب المعلمين</b><b class="en">Teacher Training</b><small class="ar">ورش عملية في التخطيط والتقويم وإدارة الصف.</small><small class="en">Practical workshops in planning, assessment, and classroom management.</small><span class="evidence ar">استعراض التدريب والخبرة ←</span><span class="evidence en">Explore Training Experience →</span></a>
-<a class="pitem" href="#impact"><div class="picon">★</div><b class="ar">الأنشطة الطلابية</b><b class="en">Student Activities</b><small class="ar">تعلم ممتد خارج الفصل ومشاركة طلابية فاعلة.</small><small class="en">Learning beyond the classroom and active student participation.</small><span class="evidence ar">مشاهدة الأثر والأنشطة ←</span><span class="evidence en">View Impact &amp; Activities →</span></a>
-<a class="pitem" href="#impact"><div class="picon">💡</div><b class="ar">المبادرات والتطوير المؤسسي</b><b class="en">Initiatives &amp; Development</b><small class="ar">مقترحات عملية لتحسين الأداء والبيئة التعليمية.</small><small class="en">Practical proposals to improve performance and learning environments.</small><span class="evidence ar">استعراض المبادرات والأثر ←</span><span class="evidence en">Explore Initiatives &amp; Impact →</span></a>
-<a class="pitem" href="#why"><div class="picon">📊</div><b class="ar">الجودة والتحسين المستمر</b><b class="en">Quality &amp; Continuous Improvement</b><small class="ar">تحليل النتائج والاستبانات وبناء خطط التحسين.</small><small class="en">Results analysis, surveys, and improvement planning.</small><span class="evidence ar">استعراض الجودة والاعتماد ←</span><span class="evidence en">Explore Quality &amp; Accreditation →</span></a>
-<a class="pitem" href="#impact"><div class="picon">💻</div><b class="ar">التعليم الرقمي والشراكة مع الأسرة</b><b class="en">Digital Learning &amp; Family Partnership</b><small class="ar">توظيف التقنية وتعزيز التواصل مع أولياء الأمور.</small><small class="en">Using technology and strengthening parent communication.</small><span class="evidence ar">استعراض التعليم الرقمي ←</span><span class="evidence en">Explore Digital Learning →</span></a>
-<a class="pitem" href="#experience"><div class="picon">🎓</div><b class="ar">التطوير المهني المستمر</b><b class="en">Continuous Professional Development</b><small class="ar">دورات وشهادات وخبرات تعلم مستمرة.</small><small class="en">Courses, certificates, and ongoing professional learning.</small><span class="evidence ar">استعراض التطور المهني ←</span><span class="evidence en">Explore Professional Growth →</span></a>
-<a class="pitem" href="#quran"><img alt="شعار الإجازات" class="ijazah-card-logo" decoding="async" loading="lazy" src="assets/ijazah-logo.png"/><b class="ar">القرآن والإقراء</b><b class="en">Qur’an &amp; Ijazah</b><small class="ar">إجازة متصلة وخبرة في تعليم التلاوة والتجويد.</small><small class="en">Connected Ijazah and experience teaching recitation and Tajweed.</small><span class="evidence ar">مشاهدة الأنشطة والتلاوات ←</span><span class="evidence en">View Activities &amp; Recitations →</span></a>
-<a class="pitem" href="#library"><div class="picon">▦</div><b class="ar">المؤلفات والمواد التعليمية</b><b class="en">Publications &amp; Resources</b><small class="ar">كتب مطبوعة وسلاسل تربوية ومحتوى ثنائي اللغة.</small><small class="en">Printed books, educational series, and bilingual content.</small><span class="evidence ar">استعراض المؤلفات ←</span><span class="evidence en">Browse Publications →</span></a>
-<a class="pitem" href="#impact"><div class="picon">🤝</div><b class="ar">المشاركة المجتمعية</b><b class="en">Community Engagement</b><small class="ar">مبادرات تعليمية وخيرية وخدمة للمجتمع.</small><small class="en">Educational, charitable, and community service initiatives.</small><span class="evidence ar">استعراض المشاركة المجتمعية ←</span><span class="evidence en">Explore Community Engagement →</span></a>
-<a class="pitem" href="#recognition"><div class="picon">🏆</div><b class="ar">التكريمات والإنجازات</b><b class="en">Awards &amp; Recognition</b><small class="ar">شهادات تقدير وإنجازات مهنية موثقة.</small><small class="en">Certificates of appreciation and documented achievements.</small><span class="evidence ar">استعراض التكريمات ←</span><span class="evidence en">View Awards &amp; Recognition →</span></a>
+<a class="pitem" href="https://drive.google.com/drive/folders/1IF7zt3ygUF0nHx1-9eWSJBw2XQwiH1vz" rel="noopener noreferrer" target="_blank"><div class="picon">⚙</div><b class="ar">الاحترافية المهنية</b><b class="en">Professional Excellence</b><small class="ar">الانضباط، المسؤولية، وأخلاقيات المهنة.</small><small class="en">Commitment, responsibility, and professional ethics.</small><span class="evidence ar">فتح الدليل المباشر 1.2 ↗</span><span class="evidence en">Open direct evidence 1.2 ↗</span></a>
+<a class="pitem" href="https://drive.google.com/drive/folders/1RwfCRhfOZLt-DrWH8MJo8hHgcZEfxnzK" rel="noopener noreferrer" target="_blank"><div class="picon">♛</div><b class="ar">القيادة والعمل المؤسسي</b><b class="en">Leadership &amp; Institutional Work</b><small class="ar">رئاسة القسم، دعم الزملاء، والعمل بروح الفريق.</small><small class="en">Department leadership, colleague support, and teamwork.</small><span class="evidence ar">فتح الدليل المباشر 1.15 ↗</span><span class="evidence en">Open direct evidence 1.15 ↗</span></a>
+<a class="pitem" href="https://drive.google.com/drive/folders/1uPoiKjeNBl6bZxDXbs7aqs-gqp_YAUAY" rel="noopener noreferrer" target="_blank"><div class="picon">👨‍🏫</div><b class="ar">تدريب المعلمين</b><b class="en">Teacher Training</b><small class="ar">ورش عملية في التخطيط والتقويم وإدارة الصف.</small><small class="en">Practical workshops in planning, assessment, and classroom management.</small><span class="evidence ar">فتح الدليل المباشر 1.10 ↗</span><span class="evidence en">Open direct evidence 1.10 ↗</span></a>
+<a class="pitem" href="https://drive.google.com/drive/folders/1Sbnd7C_qrdaoqm5SncvDVJDLjAhinE8q" rel="noopener noreferrer" target="_blank"><div class="picon">★</div><b class="ar">الأنشطة الطلابية</b><b class="en">Student Activities</b><small class="ar">تعلم ممتد خارج الفصل ومشاركة طلابية فاعلة.</small><small class="en">Learning beyond the classroom and active student participation.</small><span class="evidence ar">فتح الدليل المباشر 1.17 ↗</span><span class="evidence en">Open direct evidence 1.17 ↗</span></a>
+<a class="pitem" href="https://drive.google.com/drive/folders/1ve4nmJc1TEvXpToom8PIbGsoV1NtW8gr" rel="noopener noreferrer" target="_blank"><div class="picon">💡</div><b class="ar">المبادرات والتطوير المؤسسي</b><b class="en">Initiatives &amp; Development</b><small class="ar">مقترحات عملية لتحسين الأداء والبيئة التعليمية.</small><small class="en">Practical proposals to improve performance and learning environments.</small><span class="evidence ar">فتح الدليل المباشر 1.7 ↗</span><span class="evidence en">Open direct evidence 1.7 ↗</span></a>
+<a class="pitem" href="https://drive.google.com/drive/folders/1QbS6DJb02ct1xOvsEFfpeGw2E3wVzvx4" rel="noopener noreferrer" target="_blank"><div class="picon">📊</div><b class="ar">الجودة والتحسين المستمر</b><b class="en">Quality &amp; Continuous Improvement</b><small class="ar">تحليل النتائج والاستبانات وبناء خطط التحسين.</small><small class="en">Results analysis, surveys, and improvement planning.</small><span class="evidence ar">فتح الدليل المباشر 1.9 ↗</span><span class="evidence en">Open direct evidence 1.9 ↗</span></a>
+<a class="pitem" href="https://drive.google.com/drive/folders/1im9QU50doqRvRm0uAPvU2g4qGpnFKYuD" rel="noopener noreferrer" target="_blank"><div class="picon">💻</div><b class="ar">التعليم الرقمي والشراكة مع الأسرة</b><b class="en">Digital Learning &amp; Family Partnership</b><small class="ar">توظيف التقنية وتعزيز التواصل مع أولياء الأمور.</small><small class="en">Using technology and strengthening parent communication.</small><span class="evidence ar">فتح الدليل المباشر 1.4 ↗</span><span class="evidence en">Open direct evidence 1.4 ↗</span></a>
+<a class="pitem" href="https://drive.google.com/drive/folders/1DW7CWeObdh-CfnyxH8-jw7K4TYpavAkx" rel="noopener noreferrer" target="_blank"><div class="picon">🎓</div><b class="ar">التطوير المهني المستمر</b><b class="en">Continuous Professional Development</b><small class="ar">دورات وشهادات وخبرات تعلم مستمرة.</small><small class="en">Courses, certificates, and ongoing professional learning.</small><span class="evidence ar">فتح الدليل المباشر 1.11 ↗</span><span class="evidence en">Open direct evidence 1.11 ↗</span></a>
+<a class="pitem" href="https://drive.google.com/drive/folders/1rn0_8MqkDRaXzjaW6pa3if7S_zl_Zeut" rel="noopener noreferrer" target="_blank"><img alt="شعار الإجازات" class="ijazah-card-logo" decoding="async" loading="lazy" src="assets/ijazah-logo.png"/><b class="ar">القرآن والإقراء</b><b class="en">Qur’an &amp; Ijazah</b><small class="ar">إجازة متصلة وخبرة في تعليم التلاوة والتجويد.</small><small class="en">Connected Ijazah and experience teaching recitation and Tajweed.</small><span class="evidence ar">فتح الدليل المباشر 1.1 ↗</span><span class="evidence en">Open direct evidence 1.1 ↗</span></a>
+<a class="pitem" href="https://drive.google.com/drive/folders/1uPoiKjeNBl6bZxDXbs7aqs-gqp_YAUAY" rel="noopener noreferrer" target="_blank"><div class="picon">▦</div><b class="ar">المؤلفات والمواد التعليمية</b><b class="en">Publications &amp; Resources</b><small class="ar">كتب مطبوعة وسلاسل تربوية ومحتوى ثنائي اللغة.</small><small class="en">Printed books, educational series, and bilingual content.</small><span class="evidence ar">فتح الدليل المباشر 1.10 ↗</span><span class="evidence en">Open direct evidence 1.10 ↗</span></a>
+<a class="pitem" href="https://drive.google.com/drive/folders/1PPqb6tuzvjJP4C2DaVkFlXgJsEe47Cb3" rel="noopener noreferrer" target="_blank"><div class="picon">🤝</div><b class="ar">المشاركة المجتمعية</b><b class="en">Community Engagement</b><small class="ar">مبادرات تعليمية وخيرية وخدمة للمجتمع.</small><small class="en">Educational, charitable, and community service initiatives.</small><span class="evidence ar">فتح الدليل المباشر 1.16 ↗</span><span class="evidence en">Open direct evidence 1.16 ↗</span></a>
+<a class="pitem" href="https://drive.google.com/drive/folders/1z_lkIxokAK4kCte0mw2uhGap0VB-34vA" rel="noopener noreferrer" target="_blank"><div class="picon">🏆</div><b class="ar">التكريمات والإنجازات</b><b class="en">Awards &amp; Recognition</b><small class="ar">شهادات تقدير وإنجازات مهنية موثقة.</small><small class="en">Certificates of appreciation and documented achievements.</small><span class="evidence ar">فتح الدليل المباشر 1.13 ↗</span><span class="evidence en">Open direct evidence 1.13 ↗</span></a>
 </div>
 <div class="actions" style="justify-content:center;margin-top:30px">
 <a class="btn primary ar" href="assets/samy-suliman-cv.pdf" rel="noopener noreferrer" target="_blank">عرض السيرة الذاتية (PDF)</a><a class="btn primary en" href="assets/samy-suliman-cv.pdf" rel="noopener noreferrer" target="_blank">View Resume (PDF)</a>
-<a class="btn secondary ar" href="https://drive.google.com/drive/folders/1acujaxf8uOFEYYtCNGDWsrjCLnstMHvx" rel="noopener noreferrer" style="color:var(--green)" target="_blank">فتح الملف المهني الكامل</a><a class="btn secondary en" href="https://drive.google.com/drive/folders/1acujaxf8uOFEYYtCNGDWsrjCLnstMHvx" rel="noopener noreferrer" style="color:var(--green)" target="_blank">Open Complete Portfolio</a><a class="btn secondary ar" href="https://www.youtube.com/playlist?list=PLXU5zkeQbqQg" rel="noopener noreferrer" style="color:var(--green)" target="_blank">مكتبة الفيديو</a><a class="btn secondary en" href="https://www.youtube.com/playlist?list=PLXU5zkeQbqQg" rel="noopener noreferrer" style="color:var(--green)" target="_blank">Video Library</a>
+<a class="btn secondary ar" href="https://www.youtube.com/playlist?list=PLXU5zkeQbqQg" rel="noopener noreferrer" style="color:var(--green)" target="_blank">مكتبة الفيديو</a><a class="btn secondary en" href="https://www.youtube.com/playlist?list=PLXU5zkeQbqQg" rel="noopener noreferrer" style="color:var(--green)" target="_blank">Video Library</a>
 </div>
 </div>
 </section>
-
 <section class="contact" id="contact">
 <div class="container">
 <h2 class="title ar">تواصل معي</h2><h2 class="title en">Contact</h2>
@@ -565,6 +597,23 @@ function toggleLang(){
  document.documentElement.lang=e?'en':'ar';
  document.documentElement.dir=e?'ltr':'rtl';
 }
+
+
+function toggleMenu(){
+ const menu=document.getElementById('mobileMenu');
+ const btn=document.querySelector('.menu-toggle');
+ const open=menu.classList.toggle('open');
+ btn.setAttribute('aria-expanded', String(open));
+ document.body.classList.toggle('menu-open',open);
+}
+document.querySelectorAll('.mobile-menu a').forEach(function(link){
+ link.addEventListener('click',function(){
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.body.classList.remove('menu-open');
+  const btn=document.querySelector('.menu-toggle'); if(btn) btn.setAttribute('aria-expanded','false');
+ });
+});
+window.addEventListener('resize',function(){if(window.innerWidth>1050){document.getElementById('mobileMenu').classList.remove('open');document.body.classList.remove('menu-open');}});
 </script>
 </body>
 </html>
