@@ -405,6 +405,62 @@ section{padding:88px 0}
  .book-controls button{font-size:14px;padding:8px 13px}
 }
 
+
+/* v2.3 — verified repair overrides */
+.nav{overflow:visible}
+.nav-inner{overflow:visible}
+.mobile-menu{z-index:60}
+
+/* Keep the PDF renderer independent from the Arabic page direction. */
+.book-modal,.book-modal-panel,.flipbook-stage,.page-spread{direction:ltr!important}
+.book-modal-panel h3,.book-controls,.flipbook-toolbar{direction:rtl}
+body.english .book-modal-panel h3,
+body.english .book-controls,
+body.english .flipbook-toolbar{direction:ltr}
+.page-spread canvas{direction:ltr!important;unicode-bidi:isolate;transform:none!important;filter:none!important}
+
+/* A compact one-screen contact section on desktop. */
+@media(min-width:900px){
+  .contact{padding:48px 0 42px;min-height:auto}
+  .contact .title{font-size:clamp(34px,3vw,44px);margin-bottom:4px}
+  .contact-intro{margin:0 auto 18px;font-size:16px;line-height:1.7}
+  .contact-layout{grid-template-columns:minmax(0,1.55fr) minmax(250px,.45fr);gap:18px;max-width:1120px;align-items:stretch}
+  .whatsapp-form{padding:20px 22px;border-radius:18px}
+  .whatsapp-form label{margin-bottom:10px;font-size:15px;line-height:1.45}
+  .whatsapp-form input,.whatsapp-form textarea{margin-top:4px;padding:9px 12px;line-height:1.45}
+  .whatsapp-form textarea{height:92px;min-height:92px;resize:vertical}
+  .form-grid{gap:12px}
+  .whatsapp-submit{padding:10px 14px}
+  .direct-whatsapp{margin-top:8px;font-size:13px;line-height:1.5}
+  .contact-side{gap:10px}
+  .contact-mini{min-height:0;padding:15px 14px;border-radius:14px}
+  .contact-mini strong{font-size:15px}
+  .contact-mini span{font-size:13px;line-height:1.55}
+}
+
+/* Restore the small square menu button on phones. */
+@media(max-width:620px){
+  .menu-toggle{
+    display:flex!important;
+    width:38px!important;
+    min-width:38px!important;
+    height:36px!important;
+    padding:6px!important;
+    border-radius:8px!important;
+    gap:0!important;
+  }
+  .menu-toggle b{display:none!important}
+  .menu-icon{width:20px!important}
+  .menu-icon i{height:2px!important;margin:4px 0!important}
+  .mobile-menu{position:absolute;top:100%;left:0;right:0;max-height:calc(100vh - 58px);overflow:auto}
+  .mobile-menu-inner{width:94%;padding:8px 0 13px}
+  .mobile-menu-inner a{padding:10px 8px;font-size:14px}
+  body.menu-open{overflow:hidden}
+  .contact{padding:52px 0}
+  .whatsapp-form{padding:20px 16px}
+  .whatsapp-form textarea{min-height:110px}
+}
+
 </style>
 <link href="assets/favicon.png" rel="icon" type="image/png"/><meta content="سامي سليمان | الملف المهني" property="og:title"/><meta content="معلم تربية إسلامية، مدرب معلمين، مؤلف تربوي، ورئيس قسم سابق بخبرة تزيد على 20 عامًا." property="og:description"/><meta content="assets/portrait-only.jpg" property="og:image"/><meta content="website" property="og:type"/><meta content="سامي سليمان، معلم تربية إسلامية، مشرف تربوي، مدرب معلمين، مؤلف تربوي، تعليم القرآن، الإقراء، مدارس دولية، الرياض" name="keywords"/><meta content="Samy Suliman" name="author"/><meta content="index, follow, max-image-preview:large" name="robots"/><link href="https://samysuliman.github.io/portfolio/" rel="canonical"/><meta content="https://samysuliman.github.io/portfolio/" property="og:url"/><meta content="ar_SA" property="og:locale"/><meta content="summary_large_image" name="twitter:card"/></head>
 <body>
@@ -420,7 +476,7 @@ section{padding:88px 0}
 <a class="nav-cv ar" href="assets/samy-suliman-cv-ar.pdf" rel="noopener noreferrer" target="_blank">السيرة الذاتية (PDF)</a>
 <a class="nav-cv en" href="assets/samy-suliman-cv-en.pdf" rel="noopener noreferrer" target="_blank">CV (PDF)</a>
 <button aria-label="تغيير اللغة" class="lang" onclick="toggleLang()" type="button">AR / EN</button>
-<button aria-controls="mobileMenu" aria-expanded="false" aria-label="فتح القائمة" class="menu-toggle" onclick="toggleMenu()" type="button"><span class="menu-icon"><i></i><i></i><i></i></span><b class="ar">القائمة</b><b class="en">Menu</b></button>
+<button aria-controls="mobileMenu" aria-expanded="false" aria-label="فتح القائمة" class="menu-toggle" id="menuToggle" type="button"><span class="menu-icon"><i></i><i></i><i></i></span><b class="ar">القائمة</b><b class="en">Menu</b></button>
 </div></div>
 <div class="mobile-menu" id="mobileMenu">
 <div class="mobile-menu-inner ar"><a href="#experience">المسيرة المهنية</a><a href="#why">لماذا سامي؟</a><a href="#impact">الأثر</a><a href="#quran">القرآن والإقراء</a><a href="#library">المؤلفات</a><a href="#recognition">التكريمات</a><a href="#evidence">الأدلة المهنية</a><a href="#contact">التواصل</a></div>
@@ -673,7 +729,7 @@ section{padding:88px 0}
 <label><span class="ar">البريد الإلكتروني</span><span class="en">Email</span><input autocomplete="email" id="contactEmail" required="" type="email"/></label>
 </div>
 <label><span class="ar">الموضوع</span><span class="en">Subject</span><input id="contactSubject" required="" type="text"/></label>
-<label><span class="ar">الرسالة</span><span class="en">Message</span><textarea id="contactMessage" required="" rows="6"></textarea></label>
+<label><span class="ar">الرسالة</span><span class="en">Message</span><textarea id="contactMessage" required="" rows="4"></textarea></label>
 <button class="whatsapp-submit" type="submit"><span class="ar">إرسال عبر واتساب</span><span class="en">Send via WhatsApp</span></button>
 <p class="direct-whatsapp"><span class="ar">أو تواصل مباشرة عبر واتساب:</span><span class="en">Or contact directly on WhatsApp:</span> <a href="https://wa.me/966559461920" rel="noopener noreferrer" target="_blank">+966 55 946 1920</a></p>
 </form>
@@ -702,16 +758,41 @@ function toggleLang(){
  const e=document.body.classList.contains('english');
  document.documentElement.lang=e?'en':'ar';
  document.documentElement.dir=e?'ltr':'rtl';
+ const menu=document.getElementById('mobileMenu');
+ const btn=document.getElementById('menuToggle');
+ if(menu) menu.classList.remove('open');
+ if(btn){btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label',e?'Open menu':'فتح القائمة');}
+ document.body.classList.remove('menu-open');
 }
 
 
 function toggleMenu(){
  const menu=document.getElementById('mobileMenu');
- const btn=document.querySelector('.menu-toggle');
- const open=menu.classList.toggle('open');
- btn.setAttribute('aria-expanded', String(open));
+ const btn=document.getElementById('menuToggle');
+ if(!menu || !btn) return;
+ const open=!menu.classList.contains('open');
+ menu.classList.toggle('open',open);
+ btn.setAttribute('aria-expanded',String(open));
+ btn.setAttribute('aria-label',open?'إغلاق القائمة':'فتح القائمة');
  document.body.classList.toggle('menu-open',open);
 }
+const menuToggleButton=document.getElementById('menuToggle');
+if(menuToggleButton){
+ menuToggleButton.addEventListener('click',function(event){
+  event.preventDefault();
+  event.stopPropagation();
+  toggleMenu();
+ });
+}
+document.addEventListener('click',function(event){
+ const menu=document.getElementById('mobileMenu');
+ const btn=document.getElementById('menuToggle');
+ if(menu && btn && menu.classList.contains('open') && !menu.contains(event.target) && !btn.contains(event.target)){
+  menu.classList.remove('open');
+  btn.setAttribute('aria-expanded','false');
+  document.body.classList.remove('menu-open');
+ }
+});
 document.querySelectorAll('.mobile-menu a').forEach(function(link){
  link.addEventListener('click',function(){
   document.getElementById('mobileMenu').classList.remove('open');
