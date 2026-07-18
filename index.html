@@ -339,8 +339,19 @@ p,.subtitle,.section-lead,.hero-copy,.pitem small{line-height:1.9}
 }
 .evidence-panel{scroll-margin-top:88px}
 .evidence-panel h3{font-size:32px;color:var(--green);margin-bottom:8px}
-@media(max-width:1050px){.links{display:none}.menu-toggle{display:block}}
-@media(min-width:1051px){.mobile-menu{display:none!important}.menu-toggle{display:none}.links{display:flex}}
+/* Arabic navigation uses the compact dropdown on desktop and mobile.
+   English keeps the horizontal desktop navigation. */
+body:not(.english) .links.ar{display:none!important}
+body:not(.english) .menu-toggle{display:block!important}
+@media(max-width:1050px){
+  .links{display:none!important}
+  .menu-toggle{display:block!important}
+}
+@media(min-width:1051px){
+  body.english .mobile-menu{display:none!important}
+  body.english .menu-toggle{display:none!important}
+  body.english .links.en{display:flex!important}
+}
 @media(max-width:620px){
   .hero-content .kicker{font-size:23px;color:#79500a}
   .hero-content .role{font-size:22px;line-height:1.65;color:#043d2e}
@@ -362,8 +373,8 @@ p,.subtitle,.section-lead,.hero-copy,.pitem small{line-height:1.9}
 <a href="#why">Why Samy?</a><a href="#experience">Experience</a><a href="#impact">Impact</a><a href="#quran">Qur’an</a><a href="#library">Publications</a><a href="#recognition">Awards</a><a href="#evidence">Evidence</a><a href="#contact">Contact</a>
 </div>
 <div class="nav-actions">
-<a class="nav-cv ar" href="assets/samy-suliman-cv.pdf" rel="noopener noreferrer" target="_blank">تحميل السيرة</a>
-<a class="nav-cv en" href="assets/samy-suliman-cv.pdf" rel="noopener noreferrer" target="_blank">Download CV</a>
+<a class="nav-cv ar" href="assets/samy-suliman-cv-ar.pdf" rel="noopener noreferrer" target="_blank">السيرة الذاتية (PDF)</a>
+<a class="nav-cv en" href="assets/samy-suliman-cv-en.pdf" rel="noopener noreferrer" target="_blank">CV (PDF)</a>
 <button aria-label="تغيير اللغة" class="lang" onclick="toggleLang()" type="button">AR / EN</button>
 <button aria-controls="mobileMenu" aria-expanded="false" aria-label="فتح القائمة" class="menu-toggle" onclick="toggleMenu()" type="button"><span></span><span></span><span></span></button>
 </div></div>
@@ -374,7 +385,7 @@ p,.subtitle,.section-lead,.hero-copy,.pitem small{line-height:1.9}
 <header class="hero" id="top">
 <div class="container hero-grid">
 <div class="hero-content">
-<span class="kicker ar">معلم تربية إسلامية</span>
+<span class="kicker ar">خبرة تعليمية تمتد لأكثر من 20 عامًا</span>
 <span class="kicker en">Islamic Studies Educator</span>
 <h1><span class="ar">سامي سليمان</span><span class="en">Samy Suliman</span></h1>
 <p class="role ar">معلم تربية إسلامية | مدرب تربوي | مؤلف</p>
@@ -384,8 +395,8 @@ p,.subtitle,.section-lead,.hero-copy,.pitem small{line-height:1.9}
 <p class="availability ar">متاح للتوظيف في المجالات التعليمية والإدارية والإشرافية</p><p class="availability en">Available for educational, administrative, and supervisory roles</p><p class="hero-copy ar">خبرة تمتد لأكثر من 20 عامًا في التعليم، تشمل تدريس التربية الإسلامية، ورئاسة قسم الدراسات الإسلامية، وتدريب المعلمين، وتأليف المواد التعليمية، والمساهمة في الجودة والاعتماد الأكاديمي.</p>
 <p class="hero-copy en">More than 20 years of experience in Islamic Studies teaching, department leadership, teacher development, educational publishing, and quality and accreditation support.</p>
 <div class="actions">
-<a class="btn secondary ar" href="assets/samy-suliman-cv.pdf" rel="noopener noreferrer" target="_blank">عرض السيرة الذاتية (PDF)</a>
-<a class="btn secondary en" href="assets/samy-suliman-cv.pdf" rel="noopener noreferrer" target="_blank">View Resume (PDF)</a>
+<a class="btn secondary ar" href="assets/samy-suliman-cv-ar.pdf" rel="noopener noreferrer" target="_blank">عرض السيرة الذاتية (PDF)</a>
+<a class="btn secondary en" href="assets/samy-suliman-cv-en.pdf" rel="noopener noreferrer" target="_blank">View CV (PDF)</a>
 <a class="btn secondary ar" href="#contact">تواصل معي</a>
 <a class="btn secondary en" href="#contact">Contact</a>
 </div>
@@ -601,7 +612,7 @@ p,.subtitle,.section-lead,.hero-copy,.pitem small{line-height:1.9}
 <h2 class="title ar">التكريمات والإنجازات</h2><h2 class="title en">Recognition &amp; Awards</h2>
 <p class="subtitle ar">محطات موثقة تعكس جودة الأداء والمساهمة في تطوير البيئة التعليمية.</p><p class="subtitle en">Documented milestones reflecting professional quality and school improvement contribution.</p>
 <div class="recognition-grid">
-<article class="recognition-feature"><div class="award-mark">2025</div><div><h3 class="ar">جائزة الشركة الوطنية للتعليم</h3><h3 class="en">National Company for Learning &amp; Education Award</h3><p class="ar">الحصول على المركز الثاني في جائزة الشركة الوطنية للتعليم، مع ملف أدلة مهني منظم يغطي 17 مؤشرًا في القيم والمسؤولية المهنية.</p><p class="en">Second-place recognition with an organized professional evidence portfolio covering 17 indicators in values and professional responsibility.</p><a class="award-link ar" href="#evidence">استعراض الأدلة السبعة عشر ←</a><a class="award-link en" href="#evidence">Explore the 17 evidence areas →</a></div></article>
+<article class="recognition-feature"><div class="award-mark">2025</div><div><h3 class="ar">جائزة الشركة الوطنية للتعليم</h3><h3 class="en">National Company for Learning &amp; Education Award</h3><p class="ar">الحصول على المركز الثاني في جائزة الشركة الوطنية للتعليم.</p><p class="en">Second place in the National Company for Learning &amp; Education Award.</p></div></article>
 <div class="recognition-list">
 <article><span>◎</span><div><b>Cognia</b><small class="ar">شهادة تقدير للمساهمة في الاعتماد الأكاديمي — 2021</small><small class="en">Recognition for academic accreditation contribution — 2021</small></div></article>
 <article><span>◇</span><div><b>AIAA</b><small class="ar">شهادة تقدير من جمعية الاعتماد الأمريكية الدولية — 2020</small><small class="en">Recognition from the American International Accreditation Association — 2020</small></div></article>
@@ -628,6 +639,13 @@ function toggleLang(){
  const e=document.body.classList.contains('english');
  document.documentElement.lang=e?'en':'ar';
  document.documentElement.dir=e?'ltr':'rtl';
+ if(e && window.innerWidth>1050){
+  const menu=document.getElementById('mobileMenu');
+  const btn=document.querySelector('.menu-toggle');
+  if(menu) menu.classList.remove('open');
+  if(btn) btn.setAttribute('aria-expanded','false');
+  document.body.classList.remove('menu-open');
+ }
 }
 
 
@@ -645,7 +663,13 @@ document.querySelectorAll('.mobile-menu a').forEach(function(link){
   const btn=document.querySelector('.menu-toggle'); if(btn) btn.setAttribute('aria-expanded','false');
  });
 });
-window.addEventListener('resize',function(){if(window.innerWidth>1050){document.getElementById('mobileMenu').classList.remove('open');document.body.classList.remove('menu-open');}});
+window.addEventListener('resize',function(){
+ if(window.innerWidth>1050 && document.body.classList.contains('english')){
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.body.classList.remove('menu-open');
+  const btn=document.querySelector('.menu-toggle'); if(btn) btn.setAttribute('aria-expanded','false');
+ }
+});
 </script>
 </body>
 </html>
