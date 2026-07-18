@@ -1,10 +1,13 @@
-# Samy Suliman Portfolio V4 — Mobile Fixed
+# Samy Suliman Portfolio v2.0
 
-Mobile improvements:
-- Profile image appears first on phones.
-- Full image is visible without awkward cropping.
-- Smaller headings and better spacing.
-- Buttons stack vertically and fit the screen.
-- Hero text is centered for better mobile readability.
+Updates:
+- Professional journey moved before “Why Samy?”
+- Arabic desktop navigation uses the menu button
+- WhatsApp contact form linked to +966559461920
+- Publication order preserved
+- In-site PDF flip-style previews added for completed books
+- Arabic and English CV buttons linked separately
+- Award wording simplified to second-place recognition
+- Back-to-top button and responsive refinements
 
-Upload `index.html`, `README.md`, and the full `assets` folder to the GitHub repository root.
+Upload all files and the complete `assets` folder to the GitHub repository root.

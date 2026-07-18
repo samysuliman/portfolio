@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 
 <html dir="rtl" lang="ar">
 <head>
@@ -339,24 +340,21 @@ p,.subtitle,.section-lead,.hero-copy,.pitem small{line-height:1.9}
 }
 .evidence-panel{scroll-margin-top:88px}
 .evidence-panel h3{font-size:32px;color:var(--green);margin-bottom:8px}
-/* Arabic navigation uses the compact dropdown on desktop and mobile.
-   English keeps the horizontal desktop navigation. */
-body:not(.english) .links.ar{display:none!important}
-body:not(.english) .menu-toggle{display:block!important}
-@media(max-width:1050px){
-  .links{display:none!important}
-  .menu-toggle{display:block!important}
-}
-@media(min-width:1051px){
-  body.english .mobile-menu{display:none!important}
-  body.english .menu-toggle{display:none!important}
-  body.english .links.en{display:flex!important}
-}
+@media(max-width:1050px){.links{display:none}.menu-toggle{display:block}}
+@media(min-width:1051px){.mobile-menu{display:none!important}.menu-toggle{display:none}.links{display:flex}}
 @media(max-width:620px){
   .hero-content .kicker{font-size:23px;color:#79500a}
   .hero-content .role{font-size:22px;line-height:1.65;color:#043d2e}
   .hero-content .availability{font-size:14px;padding:9px 13px;justify-content:center}
 }
+
+/* Portfolio v2 enhancements */
+.book-meta{display:flex;gap:10px;align-items:center;margin:13px 0;color:#8c691f;font-weight:800;font-size:13px}
+.book-preview-btn{width:100%;border:0;border-radius:10px;padding:11px 15px;background:var(--green);color:var(--gold);font:inherit;font-weight:900;cursor:pointer;transition:.2s}.book-preview-btn:hover{transform:translateY(-2px);background:var(--green2)}
+.contact-layout{display:grid;grid-template-columns:1.45fr .55fr;gap:24px;max-width:980px;margin:0 auto;text-align:start}.whatsapp-form{background:#fff;color:var(--ink);padding:28px;border-radius:22px;box-shadow:var(--shadow)}.whatsapp-form label{display:block;font-weight:800;margin-bottom:16px}.whatsapp-form input,.whatsapp-form textarea{width:100%;margin-top:7px;border:1px solid #d8e0dc;border-radius:11px;padding:12px 14px;font:inherit;outline:none}.whatsapp-form input:focus,.whatsapp-form textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,174,84,.18)}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.whatsapp-submit{width:100%;border:0;border-radius:11px;padding:13px;background:#25D366;color:#073b24;font:inherit;font-weight:900;cursor:pointer}.direct-whatsapp{text-align:center;margin:14px 0 0;font-size:14px}.direct-whatsapp a{color:#137f43;font-weight:900}.contact-side{display:grid;gap:14px}.contact-mini{background:rgba(255,255,255,.07);border:1px solid rgba(217,174,84,.35);border-radius:17px;padding:22px;display:flex;flex-direction:column;justify-content:center;min-height:115px;text-align:center}.contact-mini strong{color:var(--gold);font-size:17px}.contact-mini span{color:#e0ebe7;overflow-wrap:anywhere}
+.book-modal{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;place-items:center;padding:18px;z-index:100}.book-modal.open{display:grid}.book-modal-panel{position:relative;width:min(900px,96vw);height:min(90vh,900px);background:#f7f2e7;border-radius:20px;padding:22px;display:flex;flex-direction:column;box-shadow:0 30px 90px rgba(0,0,0,.45)}.book-modal-panel h3{text-align:center;color:var(--green);margin:0 38px 14px}.modal-close{position:absolute;top:10px;inset-inline-end:14px;border:0;background:transparent;color:var(--green);font-size:34px;cursor:pointer}.flipbook-stage{position:relative;flex:1;min-height:0;display:grid;place-items:center;perspective:1400px;overflow:auto;background:#ded8cc;border-radius:14px;padding:16px}.flipbook-stage canvas{max-width:100%;max-height:100%;background:#fff;box-shadow:0 15px 35px rgba(0,0,0,.25);transform-origin:center;transition:transform .28s,opacity .28s}.flipbook-stage canvas.turning{transform:rotateY(-14deg) scale(.98);opacity:.45}.page-loading{position:absolute;color:var(--muted)}.book-controls{display:flex;align-items:center;justify-content:center;gap:18px;padding-top:15px}.book-controls button{border:1px solid var(--green);background:#fff;color:var(--green);border-radius:9px;padding:8px 18px;font:inherit;font-weight:800;cursor:pointer}.book-controls button:disabled{opacity:.4;cursor:not-allowed}.back-to-top{position:fixed;bottom:22px;inset-inline-end:22px;width:46px;height:46px;border-radius:50%;border:0;background:var(--gold);color:var(--green);font-size:24px;font-weight:900;box-shadow:var(--shadow);cursor:pointer;display:none;z-index:40}.back-to-top.show{display:block}
+@media(min-width:1051px){body:not(.english) .links.ar{display:none!important}body:not(.english) .menu-toggle{display:flex!important}}
+@media(max-width:800px){.contact-layout{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.book-modal-panel{height:92vh;padding:16px}.book-controls{gap:8px}.book-controls button{padding:8px 12px}}
 </style>
 <link href="assets/favicon.png" rel="icon" type="image/png"/><meta content="سامي سليمان | الملف المهني" property="og:title"/><meta content="معلم تربية إسلامية، مدرب معلمين، مؤلف تربوي، ورئيس قسم سابق بخبرة تزيد على 20 عامًا." property="og:description"/><meta content="assets/portrait-only.jpg" property="og:image"/><meta content="website" property="og:type"/><meta content="سامي سليمان، معلم تربية إسلامية، مشرف تربوي، مدرب معلمين، مؤلف تربوي، تعليم القرآن، الإقراء، مدارس دولية، الرياض" name="keywords"/><meta content="Samy Suliman" name="author"/><meta content="index, follow, max-image-preview:large" name="robots"/><link href="https://samysuliman.github.io/portfolio/" rel="canonical"/><meta content="https://samysuliman.github.io/portfolio/" property="og:url"/><meta content="ar_SA" property="og:locale"/><meta content="summary_large_image" name="twitter:card"/></head>
 <body>
@@ -366,12 +364,8 @@ body:not(.english) .menu-toggle{display:block!important}
 <img alt="سامي سليمان" class="nav-avatar" src="assets/portrait-only.jpg"/>
 <a class="brand" href="#top"><span class="ar">سامي سليمان</span><span class="en">Samy Suliman</span></a>
 </div>
-<div class="links ar">
-<a href="#why">لماذا سامي؟</a><a href="#experience">المسيرة المهنية</a><a href="#impact">الأثر</a><a href="#quran">القرآن والإقراء</a><a href="#library">المؤلفات</a><a href="#recognition">التكريمات</a><a href="#evidence">الأدلة المهنية</a><a href="#contact">التواصل</a>
-</div>
-<div class="links en">
-<a href="#why">Why Samy?</a><a href="#experience">Experience</a><a href="#impact">Impact</a><a href="#quran">Qur’an</a><a href="#library">Publications</a><a href="#recognition">Awards</a><a href="#evidence">Evidence</a><a href="#contact">Contact</a>
-</div>
+<div class="links ar"><a href="#experience">المسيرة المهنية</a><a href="#why">لماذا سامي؟</a><a href="#impact">الأثر</a><a href="#quran">القرآن والإقراء</a><a href="#library">المؤلفات</a><a href="#recognition">التكريمات</a><a href="#evidence">الأدلة المهنية</a><a href="#contact">التواصل</a></div>
+<div class="links en"><a href="#experience">Experience</a><a href="#why">Why Samy?</a><a href="#impact">Impact</a><a href="#quran">Qur’an</a><a href="#library">Publications</a><a href="#recognition">Awards</a><a href="#evidence">Evidence</a><a href="#contact">Contact</a></div>
 <div class="nav-actions">
 <a class="nav-cv ar" href="assets/samy-suliman-cv-ar.pdf" rel="noopener noreferrer" target="_blank">السيرة الذاتية (PDF)</a>
 <a class="nav-cv en" href="assets/samy-suliman-cv-en.pdf" rel="noopener noreferrer" target="_blank">CV (PDF)</a>
@@ -379,14 +373,14 @@ body:not(.english) .menu-toggle{display:block!important}
 <button aria-controls="mobileMenu" aria-expanded="false" aria-label="فتح القائمة" class="menu-toggle" onclick="toggleMenu()" type="button"><span></span><span></span><span></span></button>
 </div></div>
 <div class="mobile-menu" id="mobileMenu">
-<div class="mobile-menu-inner ar"><a href="#why">لماذا سامي؟</a><a href="#experience">المسيرة المهنية</a><a href="#impact">الأثر</a><a href="#quran">القرآن والإقراء</a><a href="#library">المؤلفات</a><a href="#recognition">التكريمات</a><a href="#evidence">الأدلة المهنية</a><a href="#contact">التواصل</a></div>
-<div class="mobile-menu-inner en"><a href="#why">Why Samy?</a><a href="#experience">Experience</a><a href="#impact">Impact</a><a href="#quran">Qur’an</a><a href="#library">Publications</a><a href="#recognition">Awards</a><a href="#evidence">Evidence</a><a href="#contact">Contact</a></div>
+<div class="mobile-menu-inner ar"><a href="#experience">المسيرة المهنية</a><a href="#why">لماذا سامي؟</a><a href="#impact">الأثر</a><a href="#quran">القرآن والإقراء</a><a href="#library">المؤلفات</a><a href="#recognition">التكريمات</a><a href="#evidence">الأدلة المهنية</a><a href="#contact">التواصل</a></div>
+<div class="mobile-menu-inner en"><a href="#experience">Experience</a><a href="#why">Why Samy?</a><a href="#impact">Impact</a><a href="#quran">Qur’an</a><a href="#library">Publications</a><a href="#recognition">Awards</a><a href="#evidence">Evidence</a><a href="#contact">Contact</a></div>
 </div></nav>
 <header class="hero" id="top">
 <div class="container hero-grid">
 <div class="hero-content">
 <span class="kicker ar">خبرة تعليمية تمتد لأكثر من 20 عامًا</span>
-<span class="kicker en">Islamic Studies Educator</span>
+<span class="kicker en">More Than 20 Years in Education</span>
 <h1><span class="ar">سامي سليمان</span><span class="en">Samy Suliman</span></h1>
 <p class="role ar">معلم تربية إسلامية | مدرب تربوي | مؤلف</p>
 <p class="role en">Islamic Studies Educator | Teacher Trainer | Author</p>
@@ -395,8 +389,8 @@ body:not(.english) .menu-toggle{display:block!important}
 <p class="availability ar">متاح للتوظيف في المجالات التعليمية والإدارية والإشرافية</p><p class="availability en">Available for educational, administrative, and supervisory roles</p><p class="hero-copy ar">خبرة تمتد لأكثر من 20 عامًا في التعليم، تشمل تدريس التربية الإسلامية، ورئاسة قسم الدراسات الإسلامية، وتدريب المعلمين، وتأليف المواد التعليمية، والمساهمة في الجودة والاعتماد الأكاديمي.</p>
 <p class="hero-copy en">More than 20 years of experience in Islamic Studies teaching, department leadership, teacher development, educational publishing, and quality and accreditation support.</p>
 <div class="actions">
-<a class="btn secondary ar" href="assets/samy-suliman-cv-ar.pdf" rel="noopener noreferrer" target="_blank">عرض السيرة الذاتية (PDF)</a>
-<a class="btn secondary en" href="assets/samy-suliman-cv-en.pdf" rel="noopener noreferrer" target="_blank">View CV (PDF)</a>
+<a class="btn secondary ar" href="assets/samy-suliman-cv-ar.pdf" rel="noopener noreferrer" target="_blank">السيرة الذاتية (PDF)</a>
+<a class="btn secondary en" href="assets/samy-suliman-cv-en.pdf" rel="noopener noreferrer" target="_blank">CV (PDF)</a>
 <a class="btn secondary ar" href="#contact">تواصل معي</a>
 <a class="btn secondary en" href="#contact">Contact</a>
 </div>
@@ -411,7 +405,16 @@ body:not(.english) .menu-toggle{display:block!important}
 <div class="stat"><strong>6+</strong><span class="ar">ورش تدريبية للمعلمين</span><span class="en">Teacher Workshops</span></div>
 <div class="stat"><strong>3</strong><span class="ar">مجالات تأليف تربوي</span><span class="en">Publishing Fields</span></div>
 </div></div></div>
-<section class="alt" id="why">
+<section id="experience">
+<div class="container">
+<h2 class="title ar">المسيرة المهنية</h2><h2 class="title en">Professional Journey</h2>
+<p class="subtitle ar">خبرة تجمع بين التعليم الأزهري، والمدارس العالمية، ورئاسة القسم، وتطوير المعلمين والمحتوى.</p>
+<p class="subtitle en">A career combining Al-Azhar education, international schools, department leadership, teacher development, and educational content.</p>
+<div class="timeline">
+<div class="titem"><span class="period ar">2015 – 2026</span><span class="period en">2015 – 2026</span><div class="career-head"><img alt="شعار مدارس التربية النموذجية العالمية" class="career-logo" decoding="async" loading="lazy" src="assets/tarbiyah-international-logo.jpg"/><div><h3 class="ar">مدارس التربية النموذجية العالمية – الرياض</h3><h3 class="en">Tarbiyah Namouthajiyah International Schools – Riyadh</h3></div></div><p class="ar">معلم تربية إسلامية، ورئيس قسم سابق، ومشارك في تدريب المعلمين والجودة والاعتماد الأكاديمي.</p><p class="en">Islamic Studies teacher, former Head of Department, and contributor to teacher training, quality, and accreditation.</p></div>
+<div class="titem"><span class="period ar">نحو 9 أعوام</span><span class="period en">Approximately 9 Years</span><div class="career-head"><img alt="شعار قطاع المعاهد الأزهرية" class="career-logo" decoding="async" loading="lazy" src="assets/alazhar-institutes-logo.png"/><img alt="شعار جامعة الأزهر" class="career-logo university-logo" decoding="async" loading="lazy" src="assets/alazhar-logo.png"/><div><h3 class="ar">قطاع المعاهد الأزهرية – مصر</h3><h3 class="en">Al-Azhar Institutes Sector – Egypt</h3></div></div><p class="ar">تدريس العلوم الشرعية والقرآن الكريم، وبناء خبرة راسخة في التعليم والتوجيه التربوي.</p><p class="en">Teaching Islamic sciences and the Qur’an, building a strong foundation in education and student guidance.</p></div>
+<div class="titem"><span class="period ar">خبرات موازية</span><span class="period en">Parallel Experience</span><h3 class="ar">التدريب والتأليف والمبادرات المجتمعية</h3><h3 class="en">Training, Publishing, and Community Initiatives</h3><p class="ar">تقديم ورش للمعلمين، وتأليف كتب ومواد تعليمية، والمشاركة في مبادرات تربوية ومجتمعية.</p><p class="en">Delivering teacher workshops, authoring books and educational resources, and contributing to educational and community initiatives.</p></div>
+</div></div></section><section class="alt" id="why">
 <div class="container">
 <h2 class="title ar">لماذا يُختار سامي سليمان؟</h2>
 <h2 class="title en">Why Choose Samy Suliman?</h2>
@@ -432,16 +435,7 @@ body:not(.english) .menu-toggle{display:block!important}
 </div>
 </div>
 </section>
-<section id="experience">
-<div class="container">
-<h2 class="title ar">المسيرة المهنية</h2><h2 class="title en">Professional Journey</h2>
-<p class="subtitle ar">خبرة تجمع بين التعليم الأزهري، والمدارس العالمية، ورئاسة القسم، وتطوير المعلمين والمحتوى.</p>
-<p class="subtitle en">A career combining Al-Azhar education, international schools, department leadership, teacher development, and educational content.</p>
-<div class="timeline">
-<div class="titem"><span class="period ar">2015 – 2026</span><span class="period en">2015 – 2026</span><div class="career-head"><img alt="شعار مدارس التربية النموذجية العالمية" class="career-logo" decoding="async" loading="lazy" src="assets/tarbiyah-international-logo.jpg"/><div><h3 class="ar">مدارس التربية النموذجية العالمية – الرياض</h3><h3 class="en">Tarbiyah Namouthajiyah International Schools – Riyadh</h3></div></div><p class="ar">معلم تربية إسلامية، ورئيس قسم سابق، ومشارك في تدريب المعلمين والجودة والاعتماد الأكاديمي.</p><p class="en">Islamic Studies teacher, former Head of Department, and contributor to teacher training, quality, and accreditation.</p></div>
-<div class="titem"><span class="period ar">نحو 9 أعوام</span><span class="period en">Approximately 9 Years</span><div class="career-head"><img alt="شعار قطاع المعاهد الأزهرية" class="career-logo" decoding="async" loading="lazy" src="assets/alazhar-institutes-logo.png"/><img alt="شعار جامعة الأزهر" class="career-logo university-logo" decoding="async" loading="lazy" src="assets/alazhar-logo.png"/><div><h3 class="ar">قطاع المعاهد الأزهرية – مصر</h3><h3 class="en">Al-Azhar Institutes Sector – Egypt</h3></div></div><p class="ar">تدريس العلوم الشرعية والقرآن الكريم، وبناء خبرة راسخة في التعليم والتوجيه التربوي.</p><p class="en">Teaching Islamic sciences and the Qur’an, building a strong foundation in education and student guidance.</p></div>
-<div class="titem"><span class="period ar">خبرات موازية</span><span class="period en">Parallel Experience</span><h3 class="ar">التدريب والتأليف والمبادرات المجتمعية</h3><h3 class="en">Training, Publishing, and Community Initiatives</h3><p class="ar">تقديم ورش للمعلمين، وتأليف كتب ومواد تعليمية، والمشاركة في مبادرات تربوية ومجتمعية.</p><p class="en">Delivering teacher workshops, authoring books and educational resources, and contributing to educational and community initiatives.</p></div>
-</div></div></section>
+
 <section id="impact">
 <div class="container">
 <h2 class="title ar">الأثر الذي بقي</h2>
@@ -540,7 +534,7 @@ body:not(.english) .menu-toggle{display:block!important}
 <div class="book-body"><h4>The Light of Truth — Part 1</h4>
 <p class="ar">السيرة النبوية للأطفال بأسلوب قصصي وأنشطة تعليمية مناسبة للمدارس الدولية.</p>
 <p class="en">A children’s Seerah book combining storytelling with activities for international school learners.</p>
-<span class="badge done ar">مطبوع</span><span class="badge done en">Printed</span></div>
+<span class="badge done ar">مطبوع</span><span class="badge done en">Printed</span><div class="book-meta"><span class="ar">📄 44 صفحة</span><span class="en">📄 44 pages</span></div><button class="book-preview-btn" data-pdf="assets/light-of-truth-part-1.pdf" data-title-ar="نور الحق: قصة النبي محمد ﷺ — الجزء الأول" data-title-en="The Light of Truth — Part 1" type="button"><span class="ar">📖 استعراض الكتاب</span><span class="en">📖 Preview Book</span></button></div>
 </article>
 <article class="book-card">
 <div class="book-image"><img alt="The Light of Truth Part 2" decoding="async" loading="lazy" src="assets/children-part-2.jpg"/></div>
@@ -569,7 +563,7 @@ body:not(.english) .menu-toggle{display:block!important}
 <div class="book-body"><h4>The Prophetic Biography — Part 1</h4>
 <p class="ar">البدايات والسنوات الأولى في صياغة موجهة للقارئ البالغ وطلاب العلم.</p>
 <p class="en">The early years, written for adult readers, educators, and students of knowledge.</p>
-<span class="badge done ar">مطبوع</span><span class="badge done en">Printed</span></div>
+<span class="badge done ar">مطبوع</span><span class="badge done en">Printed</span><div class="book-meta"><span class="ar">📄 172 صفحة</span><span class="en">📄 172 pages</span></div><button class="book-preview-btn" data-pdf="assets/prophetic-biography.pdf" data-title-ar="السيرة النبوية" data-title-en="The Prophetic Biography" type="button"><span class="ar">📖 استعراض الكتاب</span><span class="en">📖 Preview Book</span></button></div>
 </article>
 <article class="book-card">
 <div class="book-image"><img alt="The Prophetic Biography Part 2" decoding="async" loading="lazy" src="assets/adult-part-2.jpg"/></div>
@@ -603,7 +597,7 @@ body:not(.english) .menu-toggle{display:block!important}
 <span class="pill ar">للمعلمين والطلاب والمهتمين بالقرآن الكريم</span><span class="pill en">For Teachers &amp; Qur’an Students</span>
 <span class="badge done ar">مطبوع</span><span class="badge done en">Printed</span>
 </div>
-</div>
+<div class="book-meta"><span class="ar">📄 187 صفحة</span><span class="en">📄 187 pages</span></div><button class="book-preview-btn" data-pdf="assets/tajweed-reference.pdf" data-title-ar="إعلام القراء بأحكام القراءة والإقراء" data-title-en="A Practical Reference in Qur’anic Reading and Instruction" type="button"><span class="ar">📖 استعراض الكتاب</span><span class="en">📖 Preview Book</span></button></div>
 </div>
 </div>
 </div>
@@ -612,25 +606,43 @@ body:not(.english) .menu-toggle{display:block!important}
 <h2 class="title ar">التكريمات والإنجازات</h2><h2 class="title en">Recognition &amp; Awards</h2>
 <p class="subtitle ar">محطات موثقة تعكس جودة الأداء والمساهمة في تطوير البيئة التعليمية.</p><p class="subtitle en">Documented milestones reflecting professional quality and school improvement contribution.</p>
 <div class="recognition-grid">
-<article class="recognition-feature"><div class="award-mark">2025</div><div><h3 class="ar">جائزة الشركة الوطنية للتعليم</h3><h3 class="en">National Company for Learning &amp; Education Award</h3><p class="ar">الحصول على المركز الثاني في جائزة الشركة الوطنية للتعليم.</p><p class="en">Second place in the National Company for Learning &amp; Education Award.</p></div></article>
+<article class="recognition-feature"><div class="award-mark">2025</div><div><h3 class="ar">جائزة الشركة الوطنية للتعليم</h3><h3 class="en">National Company for Learning &amp; Education Award</h3><p class="ar">الحصول على المركز الثاني في جائزة الشركة الوطنية للتعليم لعام 2025.</p><p class="en">Second place in the National Company for Learning &amp; Education Award 2025.</p></div></article>
 <div class="recognition-list">
 <article><span>◎</span><div><b>Cognia</b><small class="ar">شهادة تقدير للمساهمة في الاعتماد الأكاديمي — 2021</small><small class="en">Recognition for academic accreditation contribution — 2021</small></div></article>
 <article><span>◇</span><div><b>AIAA</b><small class="ar">شهادة تقدير من جمعية الاعتماد الأمريكية الدولية — 2020</small><small class="en">Recognition from the American International Accreditation Association — 2020</small></div></article>
 <article><span>✦</span><div><b class="ar">خطابات شكر وتقدير</b><b class="en">Appreciation Letters</b><small class="ar">نظير الجهود المتميزة في التطوير المهني والبرامج التعليمية.</small><small class="en">For distinguished contributions to professional development and educational programs.</small></div></article>
 </div></div></div></section>
-<section class="contact" id="contact">
-<div class="container">
+<section class="contact" id="contact"><div class="container">
 <h2 class="title ar">تواصل معي</h2><h2 class="title en">Contact</h2>
-<p class="contact-intro ar">متاح للفرص الوظيفية في المجالات التعليمية والإدارية والإشرافية.</p>
-<p class="contact-intro en">Open to educational, administrative, and supervisory career opportunities.</p>
-<div class="contact-grid">
-<a aria-label="اتصال" class="contact-card" href="tel:+966559461920"><span class="contact-icon"><svg viewbox="0 0 24 24"><path d="M6.62 10.79a15.46 15.46 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02z"></path></svg></span><strong class="ar">اتصال</strong><strong class="en">Call</strong><small>0559461920</small></a>
-<a aria-label="واتساب" class="contact-card" href="https://wa.me/966559461920" rel="noopener noreferrer" target="_blank"><span class="contact-icon"><svg viewbox="0 0 24 24"><path d="M16.75 13.96c-.25-.13-1.47-.73-1.7-.81-.23-.09-.39-.13-.56.13-.16.25-.64.81-.78.98-.14.17-.29.19-.54.06-.25-.13-1.05-.39-2-1.24-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.32-.23.25-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.11-.23-.17-.48-.3M12.04 2a9.84 9.84 0 0 0-8.44 14.91L2 22l5.23-1.55A9.83 9.83 0 1 0 12.04 2m0 17.86a7.97 7.97 0 0 1-4.06-1.11l-.29-.17-3.1.92.93-3.02-.19-.31A7.97 7.97 0 1 1 12.04 19.86"></path></svg></span><strong class="ar">واتساب</strong><strong class="en">WhatsApp</strong><small class="ar">مراسلة مباشرة</small><small class="en">Direct message</small></a>
-<a aria-label="لينكدإن" class="contact-card" href="https://www.linkedin.com/in/samy-suliman-3342bb212/" rel="noopener noreferrer" target="_blank"><span class="contact-icon"><svg viewbox="0 0 24 24"><path d="M6.5 8.25H3.25V21H6.5V8.25M4.88 3A1.88 1.88 0 1 0 4.88 6.75 1.88 1.88 0 0 0 4.88 3M21 13.7c0-3.84-2.05-5.63-4.79-5.63-2.21 0-3.2 1.22-3.75 2.07V8.25H9.21V21h3.25v-6.31c0-1.66.32-3.27 2.38-3.27 2.03 0 2.06 1.9 2.06 3.38V21H21z"></path></svg></span><strong>LinkedIn</strong><small class="ar">الملف المهني</small><small class="en">Professional profile</small></a>
-<a aria-label="البريد الإلكتروني" class="contact-card" href="mailto:samysuliman15@gmail.com"><span class="contact-icon"><svg viewbox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2m0 4-8 5-8-5V6l8 5 8-5z"></path></svg></span><strong class="ar">البريد الإلكتروني</strong><strong class="en">Email</strong><small>samysuliman15@gmail.com</small></a>
+<p class="contact-intro ar">أرسل رسالتك مباشرة عبر واتساب، وسأطّلع عليها في أقرب وقت.</p>
+<p class="contact-intro en">Send your message directly through WhatsApp and I will review it as soon as possible.</p>
+<div class="contact-layout">
+<form class="whatsapp-form" id="whatsappForm">
+<div class="form-grid">
+<label><span class="ar">الاسم</span><span class="en">Name</span><input autocomplete="name" id="contactName" required="" type="text"/></label>
+<label><span class="ar">البريد الإلكتروني</span><span class="en">Email</span><input autocomplete="email" id="contactEmail" required="" type="email"/></label>
+</div>
+<label><span class="ar">الموضوع</span><span class="en">Subject</span><input id="contactSubject" required="" type="text"/></label>
+<label><span class="ar">الرسالة</span><span class="en">Message</span><textarea id="contactMessage" required="" rows="6"></textarea></label>
+<button class="whatsapp-submit" type="submit"><span class="ar">إرسال عبر واتساب</span><span class="en">Send via WhatsApp</span></button>
+<p class="direct-whatsapp"><span class="ar">أو تواصل مباشرة عبر واتساب:</span><span class="en">Or contact directly on WhatsApp:</span> <a href="https://wa.me/966559461920" rel="noopener noreferrer" target="_blank">+966 55 946 1920</a></p>
+</form>
+<div class="contact-side">
+<a class="contact-mini" href="tel:+966559461920"><strong class="ar">اتصال</strong><strong class="en">Call</strong><span>+966 55 946 1920</span></a>
+<a class="contact-mini" href="mailto:samysuliman15@gmail.com"><strong class="ar">البريد الإلكتروني</strong><strong class="en">Email</strong><span>samysuliman15@gmail.com</span></a>
+<a class="contact-mini" href="https://www.linkedin.com/in/samy-suliman-3342bb212/" rel="noopener noreferrer" target="_blank"><strong>LinkedIn</strong><span class="ar">الملف المهني</span><span class="en">Professional profile</span></a>
+</div></div>
+</div></section>
+
+<div aria-hidden="true" aria-modal="true" class="book-modal" id="bookModal" role="dialog">
+<div class="book-modal-panel">
+<button aria-label="إغلاق" class="modal-close" id="closeBook" type="button">×</button>
+<h3 id="bookModalTitle"></h3>
+<div class="flipbook-stage"><canvas id="pdfCanvas"></canvas><div class="page-loading ar">جارٍ تحميل الصفحة...</div><div class="page-loading en">Loading page...</div></div>
+<div class="book-controls"><button id="prevPage" type="button"><span class="ar">السابق</span><span class="en">Previous</span></button><span id="pageIndicator">1 / 1</span><button id="nextPage" type="button"><span class="ar">التالي</span><span class="en">Next</span></button></div>
 </div>
 </div>
-</section>
+<button aria-label="العودة للأعلى" class="back-to-top" id="backToTop" type="button">↑</button>
 <footer class="footer-main"><div class="container">
 <div class="footer-bottom">© 2026 Samy Suliman — Professional Portfolio</div></div></footer>
 <script>
@@ -639,13 +651,6 @@ function toggleLang(){
  const e=document.body.classList.contains('english');
  document.documentElement.lang=e?'en':'ar';
  document.documentElement.dir=e?'ltr':'rtl';
- if(e && window.innerWidth>1050){
-  const menu=document.getElementById('mobileMenu');
-  const btn=document.querySelector('.menu-toggle');
-  if(menu) menu.classList.remove('open');
-  if(btn) btn.setAttribute('aria-expanded','false');
-  document.body.classList.remove('menu-open');
- }
 }
 
 
@@ -663,13 +668,21 @@ document.querySelectorAll('.mobile-menu a').forEach(function(link){
   const btn=document.querySelector('.menu-toggle'); if(btn) btn.setAttribute('aria-expanded','false');
  });
 });
-window.addEventListener('resize',function(){
- if(window.innerWidth>1050 && document.body.classList.contains('english')){
-  document.getElementById('mobileMenu').classList.remove('open');
-  document.body.classList.remove('menu-open');
-  const btn=document.querySelector('.menu-toggle'); if(btn) btn.setAttribute('aria-expanded','false');
- }
-});
+window.addEventListener('resize',function(){if(window.innerWidth>1050){document.getElementById('mobileMenu').classList.remove('open');document.body.classList.remove('menu-open');}});
 </script>
-</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script><script type="module">
+import * as pdfjsLib from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs';
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs';
+let pdfDoc=null,currentPage=1,rendering=false,pendingPage=null;
+const modal=document.getElementById('bookModal'), canvas=document.getElementById('pdfCanvas'), ctx=canvas.getContext('2d');
+const indicator=document.getElementById('pageIndicator'), prev=document.getElementById('prevPage'), next=document.getElementById('nextPage');
+async function renderPage(num){rendering=true; document.querySelectorAll('.page-loading').forEach(x=>x.style.display='block'); const page=await pdfDoc.getPage(num); const base=page.getViewport({scale:1}); const stage=document.querySelector('.flipbook-stage'); const scale=Math.min((stage.clientWidth-35)/base.width,(stage.clientHeight-35)/base.height,2); const viewport=page.getViewport({scale:Math.max(scale,.45)}); canvas.width=viewport.width;canvas.height=viewport.height;canvas.classList.add('turning');setTimeout(()=>canvas.classList.remove('turning'),280); await page.render({canvasContext:ctx,viewport}).promise; currentPage=num; indicator.textContent=`${num} / ${pdfDoc.numPages}`; prev.disabled=num<=1;next.disabled=num>=pdfDoc.numPages; document.querySelectorAll('.page-loading').forEach(x=>x.style.display='none');rendering=false;if(pendingPage){const p=pendingPage;pendingPage=null;renderPage(p)}}
+function queue(n){if(n<1||!pdfDoc||n>pdfDoc.numPages)return;if(rendering)pendingPage=n;else renderPage(n)}
+document.querySelectorAll('.book-preview-btn').forEach(btn=>btn.addEventListener('click',async()=>{document.getElementById('bookModalTitle').textContent=document.body.classList.contains('english')?btn.dataset.titleEn:btn.dataset.titleAr;modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';pdfDoc=await pdfjsLib.getDocument(btn.dataset.pdf).promise;currentPage=1;renderPage(1)}));
+prev.addEventListener('click',()=>queue(currentPage-1));next.addEventListener('click',()=>queue(currentPage+1));
+function closeModal(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';pdfDoc=null;ctx.clearRect(0,0,canvas.width,canvas.height)}
+document.getElementById('closeBook').addEventListener('click',closeModal);modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();if(modal.classList.contains('open')&&e.key==='ArrowLeft')queue(currentPage+1);if(modal.classList.contains('open')&&e.key==='ArrowRight')queue(currentPage-1)});
+document.getElementById('whatsappForm').addEventListener('submit',e=>{e.preventDefault();const en=document.body.classList.contains('english');const name=document.getElementById('contactName').value.trim(),email=document.getElementById('contactEmail').value.trim(),subject=document.getElementById('contactSubject').value.trim(),message=document.getElementById('contactMessage').value.trim();const text=en?`Hello Mr. Samy Suliman,\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`:`السلام عليكم أستاذ سامي سليمان،\n\nالاسم: ${name}\nالبريد الإلكتروني: ${email}\nالموضوع: ${subject}\n\nالرسالة:\n${message}`;window.open('https://wa.me/966559461920?text='+encodeURIComponent(text),'_blank','noopener')});
+const topBtn=document.getElementById('backToTop');window.addEventListener('scroll',()=>topBtn.classList.toggle('show',window.scrollY>500));topBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+</script></body>
 </html>
