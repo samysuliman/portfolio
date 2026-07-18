@@ -28,14 +28,14 @@ button{font:inherit}
 .links{display:flex;gap:22px;color:#fff;font-size:14px}
 .links a:hover{color:var(--gold2)}
 .lang{border:1px solid var(--gold);color:var(--gold);background:transparent;border-radius:9px;padding:7px 12px;cursor:pointer}
-.hero{background:radial-gradient(circle at 10% 15%,rgba(217,174,84,.13),transparent 33%),linear-gradient(135deg,#fffdf8,#f6f0e5);color:var(--ink);padding:64px 0 76px}
-.hero-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:58px;align-items:center;direction:ltr}
+.hero{background:radial-gradient(circle at 10% 15%,rgba(217,174,84,.13),transparent 33%),linear-gradient(135deg,#fffdf8,#f6f0e5);color:var(--ink);padding:38px 0 38px}
+.hero-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:32px;align-items:center;direction:ltr}
 .hero-content{direction:rtl;text-align:right}
 .kicker{display:inline-block;color:#b7831f;font-weight:800;font-size:22px;line-height:1.5;margin-bottom:2px}
 h1{font-size:clamp(42px,5.1vw,62px);line-height:1.08;margin:8px 0 8px;color:var(--green)}
 .role{font-size:clamp(19px,2.4vw,27px);margin:0 0 13px}
 .tagline{font-size:21px;color:var(--ink);margin:0 0 10px}
-.hero-copy{font-size:17px;color:#536760;max-width:720px}
+.hero-copy{font-size:17px;color:#536760;max-width:720px;margin-top:10px;margin-bottom:12px}
 .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 20px;border-radius:10px;font-weight:800;transition:.2s}
 .btn:hover{transform:translateY(-2px)}
@@ -135,7 +135,7 @@ body.english .why-card:before{right:auto;left:0}
 
 
 @media(max-width:620px){
-  .hero{padding:28px 0 42px}
+  .hero{padding:22px 0 28px}
   .hero-grid{
     display:flex;
     flex-direction:column;
@@ -376,6 +376,7 @@ section{padding:88px 0}
  body:not(.english) .links.ar{display:none!important}
  body:not(.english) .menu-toggle{display:flex!important}
  body:not(.english) .mobile-menu{position:absolute;top:100%;left:0;right:0;background:rgba(6,45,35,.99);border-top:1px solid rgba(217,174,84,.35)}
+ body:not(.english) .mobile-menu.open{display:block!important}
  body:not(.english) .mobile-menu-inner.ar{width:min(520px,92%);margin-inline-end:3%;margin-inline-start:auto;padding:10px 18px 18px;border:1px solid rgba(217,174,84,.25);border-top:0;border-radius:0 0 16px 16px;box-shadow:0 18px 40px rgba(0,0,0,.25)}
  body.english .links.en{display:flex!important}
  body.english .menu-toggle{display:none!important}
