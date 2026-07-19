@@ -23,12 +23,12 @@ img{max-width:100%;display:block}
 button{font:inherit}
 .container{width:min(1160px,92%);margin:auto}
 .nav{position:sticky;top:0;z-index:30;background:rgba(6,45,35,.97);border-bottom:1px solid rgba(217,174,84,.25)}
-.nav-inner{min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.nav-inner{min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:18px}
 .brand{font-weight:900;color:var(--gold);letter-spacing:.8px}
 .links{display:flex;gap:22px;color:#fff;font-size:14px}
 .links a:hover{color:var(--gold2)}
 .lang{border:1px solid var(--gold);color:var(--gold);background:transparent;border-radius:9px;padding:7px 12px;cursor:pointer}
-.hero{background:radial-gradient(circle at 10% 15%,rgba(217,174,84,.13),transparent 33%),linear-gradient(135deg,#fffdf8,#f6f0e5);color:var(--ink);padding:64px 0 76px}
+.hero{background:radial-gradient(circle at 10% 15%,rgba(217,174,84,.13),transparent 33%),linear-gradient(135deg,#fffdf8,#f6f0e5);color:var(--ink);padding:42px 0 48px}
 .hero-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:58px;align-items:center;direction:ltr}
 .hero-content{direction:rtl;text-align:right}
 .kicker{display:inline-block;color:#b7831f;font-weight:800;font-size:22px;line-height:1.5;margin-bottom:2px}
@@ -629,26 +629,79 @@ section{scroll-margin-top:82px}
 .tajweed-preview-wrap{display:flex;justify-content:center;margin-top:24px}
 .tajweed-preview{min-width:min(360px,100%)}
 @media(max-width:620px){.quality-section{padding-top:42px}.tajweed-preview-wrap{margin-top:18px}}
+
+
+/* v2.7 — compact, unified bilingual header */
+.nav{position:sticky;top:0;z-index:100;background:rgba(6,45,35,.985);border-bottom:1px solid rgba(217,174,84,.26);box-shadow:0 5px 18px rgba(3,22,16,.12)}
+.nav .nav-inner{min-height:54px;height:54px;display:flex!important;align-items:center;justify-content:space-between;gap:14px;overflow:visible;padding-block:4px}
+.nav-profile,.nav-actions{display:flex;align-items:center;gap:9px;min-width:0}
+.nav-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1.5px solid var(--gold);flex:0 0 auto}
+.nav .brand{font-size:15px;line-height:1.2;white-space:nowrap}
+.nav-actions{margin-inline-start:auto}
+.nav-cv{min-height:34px;padding:6px 11px;border-radius:8px;font-size:12px;line-height:1;white-space:nowrap}
+.lang{min-height:34px;padding:5px 9px;border-radius:8px;font-size:12px;line-height:1}
+.menu-toggle{display:inline-flex!important;align-items:center;justify-content:center;gap:7px;width:auto;min-width:86px;height:34px;min-height:34px;padding:5px 9px;border-radius:8px}
+.menu-toggle b{font-size:12px;line-height:1;white-space:nowrap}
+.menu-icon{width:18px;flex:0 0 18px}
+.menu-icon i{height:2px;margin:3px 0}
+.mobile-menu{display:none;position:absolute;top:100%;z-index:110;width:min(390px,calc(100vw - 32px));max-height:calc(100vh - 62px);overflow:auto;background:rgba(6,45,35,.995);border:1px solid rgba(217,174,84,.32);border-top:0;border-radius:0 0 14px 14px;box-shadow:0 18px 42px rgba(0,0,0,.25)}
+.mobile-menu.open{display:block!important}
+html[dir="rtl"] .mobile-menu{left:16px;right:auto}
+html[dir="ltr"] .mobile-menu{left:16px;right:auto}
+.mobile-menu-inner{width:100%!important;margin:0!important;padding:10px!important;grid-template-columns:1fr 1fr;gap:6px}
+.mobile-menu.open .mobile-menu-inner.ar,.mobile-menu.open .mobile-menu-inner.en{display:none!important}
+body:not(.english) .mobile-menu.open .mobile-menu-inner.ar{display:grid!important}
+body.english .mobile-menu.open .mobile-menu-inner.en{display:grid!important}
+.mobile-menu-inner a{display:flex!important;align-items:center;min-height:42px;padding:8px 10px!important;margin:0!important;border:1px solid rgba(217,174,84,.16)!important;border-radius:8px;color:#fff;font-size:13px;font-weight:700;line-height:1.35}
+.mobile-menu-inner a:hover,.mobile-menu-inner a:focus-visible{color:var(--gold2);background:rgba(255,255,255,.07);padding-inline-start:10px!important}
+body.english .nav-profile{order:0}
+body.english .nav-actions{order:1;margin-left:auto;margin-right:0}
+@media(max-width:720px){
+ .nav .nav-inner{width:94%;min-height:52px;height:52px;gap:7px;padding-block:3px}
+ .nav-avatar{width:34px;height:34px}
+ .nav .brand{font-size:13px}
+ .nav-profile,.nav-actions{gap:6px}
+ .nav-cv{min-height:32px;padding:5px 8px;font-size:10px}
+ .lang{min-height:32px;padding:4px 7px;font-size:10px}
+ .menu-toggle{min-width:34px!important;width:34px!important;height:32px!important;min-height:32px!important;padding:5px!important}
+ .menu-toggle b{display:none!important}
+ .menu-icon{width:18px!important}
+ .mobile-menu{top:100%!important;left:3%!important;right:3%!important;width:94%!important;max-height:calc(100vh - 58px)}
+ .mobile-menu-inner{grid-template-columns:1fr!important;padding:8px!important}
+ .mobile-menu-inner a{min-height:39px;font-size:13px;padding:7px 9px!important}
+}
+@media(max-width:430px){
+ .nav .brand{display:none}
+ .nav-cv{max-width:92px;overflow:hidden;text-overflow:ellipsis}
+}
 </style>
 <link href="assets/favicon.png" rel="icon" type="image/png"/><meta content="سامي سليمان | الملف المهني" property="og:title"/><meta content="معلم تربية إسلامية، مدرب معلمين، مؤلف تربوي، ورئيس قسم سابق بخبرة تزيد على 20 عامًا." property="og:description"/><meta content="assets/portrait-only.jpg" property="og:image"/><meta content="website" property="og:type"/><meta content="سامي سليمان، معلم تربية إسلامية، مشرف تربوي، مدرب معلمين، مؤلف تربوي، تعليم القرآن، الإقراء، مدارس دولية، الرياض" name="keywords"/><meta content="Samy Suliman" name="author"/><meta content="index, follow, max-image-preview:large" name="robots"/><link href="https://samysuliman.github.io/portfolio/" rel="canonical"/><meta content="https://samysuliman.github.io/portfolio/" property="og:url"/><meta content="ar_SA" property="og:locale"/><meta content="summary_large_image" name="twitter:card"/></head>
 <body>
-<nav class="nav">
-<div class="container nav-inner">
-<div class="nav-profile">
-<img alt="سامي سليمان" class="nav-avatar" src="assets/portrait-only.jpg"/>
-<a class="brand" href="#top"><span class="ar">سامي سليمان</span><span class="en">Samy Suliman</span></a>
-</div>
-</div><a href="#contact">Contact</a></div>
-<div class="nav-actions">
-<a class="nav-cv ar" href="assets/samy-suliman-cv-ar.pdf" rel="noopener noreferrer" target="_blank">السيرة الذاتية (PDF)</a>
-<a class="nav-cv en" href="assets/samy-suliman-cv-en.pdf" rel="noopener noreferrer" target="_blank">CV (PDF)</a>
-<button aria-label="تغيير اللغة" class="lang" onclick="toggleLang()" type="button">AR / EN</button>
-<button aria-controls="mobileMenu" aria-expanded="false" aria-label="فتح القائمة" class="menu-toggle" id="menuToggle" type="button"><span class="menu-icon"><i></i><i></i><i></i></span><b class="ar">القائمة</b><b class="en">Menu</b></button>
-</div></div>
-<div class="mobile-menu" id="mobileMenu">
-<div class="mobile-menu-inner ar" aria-label="القائمة العربية"><a href="#experience">المسيرة المهنية</a><a href="#why">لماذا سامي؟</a><a href="#impact">الأثر</a><a href="#quran">القرآن والإقراء</a><a href="#library">المؤلفات</a><a href="#recognition">التكريمات</a><a href="#evidence">الالتزام والتميز المهني</a><a href="#quality">الجودة والإنتاجية</a><a href="#contact">التواصل</a></div>
-<div class="mobile-menu-inner en" aria-label="English navigation menu"><a href="#experience">Experience</a><a href="#why">Why Samy?</a><a href="#impact">Impact</a><a href="#quran">Qur’an</a><a href="#library">Publications</a><a href="#recognition">Awards</a><a href="#evidence">Professional Excellence</a><a href="#quality">Quality &amp; Productivity</a><a href="#contact">Contact</a></div>
-</div></nav>
+<nav class="nav" aria-label="Primary navigation">
+  <div class="container nav-inner">
+    <div class="nav-profile">
+      <img alt="سامي سليمان" class="nav-avatar" src="assets/portrait-only.jpg"/>
+      <a class="brand" href="#top"><span class="ar">سامي سليمان</span><span class="en">Samy Suliman</span></a>
+    </div>
+    <div class="nav-actions">
+      <a class="nav-cv ar" href="assets/samy-suliman-cv-ar.pdf" rel="noopener noreferrer" target="_blank">السيرة الذاتية</a>
+      <a class="nav-cv en" href="assets/samy-suliman-cv-en.pdf" rel="noopener noreferrer" target="_blank">CV</a>
+      <button aria-label="تغيير اللغة" class="lang" onclick="toggleLang()" type="button">AR / EN</button>
+      <button aria-controls="mobileMenu" aria-expanded="false" aria-label="فتح القائمة" class="menu-toggle" id="menuToggle" type="button">
+        <span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+        <b class="ar">القائمة</b><b class="en">Menu</b>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner ar" aria-label="القائمة العربية">
+      <a href="#experience">المسيرة المهنية</a><a href="#why">لماذا سامي؟</a><a href="#impact">الأثر</a><a href="#quran">القرآن والإقراء</a><a href="#library">المؤلفات</a><a href="#recognition">التكريمات</a><a href="#evidence">الالتزام والتميز المهني</a><a href="#quality">الجودة والإنتاجية</a><a href="#contact">التواصل</a>
+    </div>
+    <div class="mobile-menu-inner en" aria-label="English navigation menu">
+      <a href="#experience">Experience</a><a href="#why">Why Samy?</a><a href="#impact">Impact</a><a href="#quran">Qur’an</a><a href="#library">Publications</a><a href="#recognition">Awards</a><a href="#evidence">Professional Excellence</a><a href="#quality">Quality &amp; Productivity</a><a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
 <header class="hero" id="top">
 <div class="container hero-grid">
 <div class="hero-content">
@@ -953,54 +1006,42 @@ section{scroll-margin-top:82px}
 <footer class="footer-main"><div class="container">
 <div class="footer-bottom">© 2026 Samy Suliman — Professional Portfolio</div></div></footer>
 <script>
-function toggleLang(){
- document.body.classList.toggle('english');
- const e=document.body.classList.contains('english');
- document.documentElement.lang=e?'en':'ar';
- document.documentElement.dir=e?'ltr':'rtl';
- const menu=document.getElementById('mobileMenu');
- const btn=document.getElementById('menuToggle');
- if(menu) menu.classList.remove('open');
- if(btn){btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label',e?'Open menu':'فتح القائمة');}
- document.body.classList.remove('menu-open');
-}
-
-
-function toggleMenu(){
+function setMenuState(open){
  const menu=document.getElementById('mobileMenu');
  const btn=document.getElementById('menuToggle');
  if(!menu || !btn) return;
- const open=!menu.classList.contains('open');
+ const english=document.body.classList.contains('english');
  menu.classList.toggle('open',open);
  btn.setAttribute('aria-expanded',String(open));
- btn.setAttribute('aria-label',open?'إغلاق القائمة':'فتح القائمة');
- document.body.classList.toggle('menu-open',open);
+ btn.setAttribute('aria-label',open?(english?'Close menu':'إغلاق القائمة'):(english?'Open menu':'فتح القائمة'));
+ document.body.classList.toggle('menu-open',open && window.innerWidth<=720);
+}
+function toggleLang(){
+ setMenuState(false);
+ document.body.classList.toggle('english');
+ const english=document.body.classList.contains('english');
+ document.documentElement.lang=english?'en':'ar';
+ document.documentElement.dir=english?'ltr':'rtl';
+ document.title=english?'Samy Suliman | Professional Portfolio':'سامي سليمان | الملف المهني والمكتبة التعليمية';
+ const btn=document.getElementById('menuToggle');
+ if(btn) btn.setAttribute('aria-label',english?'Open menu':'فتح القائمة');
 }
 const menuToggleButton=document.getElementById('menuToggle');
 if(menuToggleButton){
  menuToggleButton.addEventListener('click',function(event){
-  event.preventDefault();
-  event.stopPropagation();
-  toggleMenu();
+  event.preventDefault();event.stopPropagation();
+  const menu=document.getElementById('mobileMenu');
+  setMenuState(!menu.classList.contains('open'));
  });
 }
 document.addEventListener('click',function(event){
  const menu=document.getElementById('mobileMenu');
  const btn=document.getElementById('menuToggle');
- if(menu && btn && menu.classList.contains('open') && !menu.contains(event.target) && !btn.contains(event.target)){
-  menu.classList.remove('open');
-  btn.setAttribute('aria-expanded','false');
-  document.body.classList.remove('menu-open');
- }
+ if(menu && btn && menu.classList.contains('open') && !menu.contains(event.target) && !btn.contains(event.target)) setMenuState(false);
 });
-document.querySelectorAll('.mobile-menu a').forEach(function(link){
- link.addEventListener('click',function(){
-  document.getElementById('mobileMenu').classList.remove('open');
-  document.body.classList.remove('menu-open');
-  const btn=document.querySelector('.menu-toggle'); if(btn) btn.setAttribute('aria-expanded','false');
- });
-});
-window.addEventListener('resize',function(){if(window.innerWidth<=1050){return;} });
+document.addEventListener('keydown',function(event){if(event.key==='Escape') setMenuState(false);});
+document.querySelectorAll('.mobile-menu a').forEach(function(link){link.addEventListener('click',function(){setMenuState(false);});});
+window.addEventListener('resize',function(){if(window.innerWidth>720) document.body.classList.remove('menu-open');});
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script><script type="module">
 import * as pdfjsLib from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs';
