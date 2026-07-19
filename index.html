@@ -600,6 +600,35 @@ body:not(.english) .menu-toggle{display:flex!important}
   body.english .mobile-menu-inner.en{margin-right:auto;margin-left:3%}
 }
 
+
+/* Final bilingual navigation, spacing, contact theme, and Tajweed series */
+.links{display:none!important}
+.menu-toggle{display:inline-flex!important;align-items:center;gap:9px}
+.mobile-menu{top:100%;left:0;right:0;max-height:calc(100vh - 70px);overflow:auto}
+@media(min-width:1051px){
+ .mobile-menu{position:absolute;top:66px;right:auto;left:24px;width:min(390px,calc(100vw - 48px));border:1px solid rgba(217,174,84,.32);border-radius:0 0 16px 16px;box-shadow:0 20px 45px rgba(0,0,0,.22)}
+ body.english .mobile-menu{left:24px;right:auto}
+ .mobile-menu-inner{grid-template-columns:1fr 1fr;padding:14px}
+ .mobile-menu-inner a{border:1px solid rgba(217,174,84,.18);border-radius:9px;margin:4px;padding:10px 12px}
+}
+section{scroll-margin-top:82px}
+.quality-section{padding-top:64px;padding-bottom:72px}
+.quality-head{margin-bottom:24px}
+.quality-grid{gap:16px}
+.quality-card{min-height:220px;padding:22px}
+.whatsapp-form{background:rgba(255,255,255,.065)!important;color:#fff!important;border:1px solid rgba(217,174,84,.28);box-shadow:0 18px 45px rgba(0,0,0,.18)}
+.whatsapp-form input,.whatsapp-form textarea{background:rgba(255,255,255,.08)!important;color:#fff!important;border-color:rgba(255,255,255,.18)!important}
+.whatsapp-form input:focus,.whatsapp-form textarea:focus{background:rgba(255,255,255,.12)!important;border-color:var(--gold)!important}
+.whatsapp-form input::placeholder,.whatsapp-form textarea::placeholder{color:#c7d4cf}
+.direct-whatsapp{color:#dce8e3}.direct-whatsapp a{color:#62e591}
+.tajweed-series{align-items:stretch}
+.tajweed-volume .book-image{aspect-ratio:3/4.25;background:#062d23;overflow:hidden}
+.tajweed-volume .book-image img{width:100%;height:100%;object-fit:cover;display:block}
+.tajweed-volume .book-body{display:flex;flex-direction:column}
+.tajweed-volume .badge{align-self:flex-start;margin-top:auto}
+.tajweed-preview-wrap{display:flex;justify-content:center;margin-top:24px}
+.tajweed-preview{min-width:min(360px,100%)}
+@media(max-width:620px){.quality-section{padding-top:42px}.tajweed-preview-wrap{margin-top:18px}}
 </style>
 <link href="assets/favicon.png" rel="icon" type="image/png"/><meta content="سامي سليمان | الملف المهني" property="og:title"/><meta content="معلم تربية إسلامية، مدرب معلمين، مؤلف تربوي، ورئيس قسم سابق بخبرة تزيد على 20 عامًا." property="og:description"/><meta content="assets/portrait-only.jpg" property="og:image"/><meta content="website" property="og:type"/><meta content="سامي سليمان، معلم تربية إسلامية، مشرف تربوي، مدرب معلمين، مؤلف تربوي، تعليم القرآن، الإقراء، مدارس دولية، الرياض" name="keywords"/><meta content="Samy Suliman" name="author"/><meta content="index, follow, max-image-preview:large" name="robots"/><link href="https://samysuliman.github.io/portfolio/" rel="canonical"/><meta content="https://samysuliman.github.io/portfolio/" property="og:url"/><meta content="ar_SA" property="og:locale"/><meta content="summary_large_image" name="twitter:card"/></head>
 <body>
@@ -609,8 +638,7 @@ body:not(.english) .menu-toggle{display:flex!important}
 <img alt="سامي سليمان" class="nav-avatar" src="assets/portrait-only.jpg"/>
 <a class="brand" href="#top"><span class="ar">سامي سليمان</span><span class="en">Samy Suliman</span></a>
 </div>
-<div class="links ar"><a href="#experience">المسيرة المهنية</a><a href="#why">لماذا سامي؟</a><a href="#impact">الأثر</a><a href="#quran">القرآن والإقراء</a><a href="#library">المؤلفات</a><a href="#recognition">التكريمات</a><div class="nav-dropdown"><a href="#evidence">الأدلة المهنية</a><div class="dropdown-menu"><a href="#evidence">الالتزام والتميز المهني</a><a href="#quality">الجودة والإنتاجية</a></div></div><a href="#contact">التواصل</a></div>
-<div class="links en"><a href="#experience">Experience</a><a href="#why">Why Samy?</a><a href="#impact">Impact</a><a href="#quran">Qur’an</a><a href="#library">Publications</a><a href="#recognition">Awards</a><div class="nav-dropdown"><a href="#evidence">Evidence</a><div class="dropdown-menu"><a href="#evidence">Professional Excellence</a><a href="#quality">Quality &amp; Productivity</a></div></div><a href="#contact">Contact</a></div>
+</div><a href="#contact">Contact</a></div>
 <div class="nav-actions">
 <a class="nav-cv ar" href="assets/samy-suliman-cv-ar.pdf" rel="noopener noreferrer" target="_blank">السيرة الذاتية (PDF)</a>
 <a class="nav-cv en" href="assets/samy-suliman-cv-en.pdf" rel="noopener noreferrer" target="_blank">CV (PDF)</a>
@@ -800,7 +828,7 @@ body:not(.english) .menu-toggle{display:flex!important}
 </div>
 <div class="books">
 <article class="book-card">
-<div class="book-image"><img alt="The Light of Truth Part 1" decoding="async" loading="lazy" src="assets/children-part-1-new.png"/></div>
+<div class="book-image"><img alt="The Light of Truth Part 1" decoding="async" loading="lazy" src="assets/children-part-1-new.webp"/></div>
 <div class="book-body"><h4>The Light of Truth — Part 1</h4>
 <p class="ar">السيرة النبوية للأطفال بأسلوب قصصي وأنشطة تعليمية مناسبة للمدارس الدولية.</p>
 <p class="en">A children’s Seerah book combining storytelling with activities for international school learners.</p>
@@ -851,24 +879,32 @@ body:not(.english) .menu-toggle{display:flex!important}
 </article>
 </div>
 </div>
-<div class="shelf">
+<div class="shelf tajweed-series-shelf">
 <div class="shelf-title">
-<h3 class="ar">الكتاب المرجعي</h3><h3 class="en">Reference Book</h3>
-<span class="ar">مطبوع</span><span class="en">Printed</span>
+<h3 class="ar">سلسلة إعلام القراء</h3><h3 class="en">I‘lam Al-Qurra’ Tajweed Series</h3>
+<span class="ar">سلسلة تعليمية متدرجة</span><span class="en">A Progressive Educational Series</span>
 </div>
-<div class="reference">
-<div class="reference-visual"><img alt="إعلام القراء بأحكام القراءة والإقراء" decoding="async" loading="lazy" src="assets/tajweed-book.jpg"/><img alt="شعار الإجازة القرآنية" class="reference-ijazah" decoding="async" loading="lazy" src="assets/ijazah-logo.png"/></div>
-<div>
-<h3>إعلام القراء بأحكام القراءة والإقراء</h3>
-<p class="ar">كتاب كامل يجمع أحكام القراءة والإقراء في مرجع عملي، مع توجه مستقبلي لتطويره إلى مستويات تعليمية منفصلة. ويُعرض في الموقع حاليًا بوصفه كتابًا واحدًا مكتملًا.</p>
-<p class="en">A complete practical reference on Qur’anic reading and instruction. It is currently presented as one completed volume, while future educational restructuring remains a later development.</p>
-<div class="pill-row">
-<span class="pill ar">تجويد وإقراء</span><span class="pill en">Tajweed &amp; Recitation</span>
-<span class="pill ar">للمعلمين والطلاب والمهتمين بالقرآن الكريم</span><span class="pill en">For Teachers &amp; Qur’an Students</span>
-<span class="badge done ar">مطبوع</span><span class="badge done en">Printed</span>
+<div class="books tajweed-series">
+<article class="book-card tajweed-volume">
+<div class="book-image"><img alt="الجزء الأول: تأسيس المبتدئين في أحكام التجويد" decoding="async" loading="lazy" src="assets/tajweed-part-1.webp"/></div>
+<div class="book-body"><h4 class="ar">تأسيس المبتدئين في أحكام التجويد</h4><h4 class="en">Foundations of Tajweed for Beginners</h4>
+<p class="ar">الجزء الأول من سلسلة تعليمية متدرجة في أحكام التجويد والتلاوة.</p><p class="en">Part one of a progressive educational series in Tajweed and recitation.</p>
+<span class="badge done ar">مطبوع</span><span class="badge done en">Printed</span></div>
+</article>
+<article class="book-card tajweed-volume">
+<div class="book-image"><img alt="الجزء الثاني: تنمية المهارات التطبيقية في التجويد" decoding="async" loading="lazy" src="assets/tajweed-part-2.webp"/></div>
+<div class="book-body"><h4 class="ar">تنمية المهارات التطبيقية في التجويد</h4><h4 class="en">Developing Applied Tajweed Skills</h4>
+<p class="ar">الجزء الثاني، ويركز على تنمية التطبيق العملي لأحكام التجويد.</p><p class="en">Part two, focused on developing practical application of Tajweed rules.</p>
+<span class="badge progress ar">تحت الطبع</span><span class="badge progress en">In Print Preparation</span></div>
+</article>
+<article class="book-card tajweed-volume">
+<div class="book-image"><img alt="الجزء الثالث: الإتقان في القراءة والإقراء" decoding="async" loading="lazy" src="assets/tajweed-part-3.webp"/></div>
+<div class="book-body"><h4 class="ar">الإتقان في القراءة والإقراء</h4><h4 class="en">Mastery in Recitation and Instruction</h4>
+<p class="ar">الجزء الثالث، ويعالج مستوى الإتقان في القراءة والإقراء.</p><p class="en">Part three, addressing mastery in recitation and Qur’anic instruction.</p>
+<span class="badge progress ar">تحت الطبع</span><span class="badge progress en">In Print Preparation</span></div>
+</article>
 </div>
-<div class="book-meta"><span class="ar">📄 187 صفحة</span><span class="en">📄 187 pages</span></div><button class="book-preview-btn" data-pdf="assets/tajweed-reference.pdf" data-title-ar="إعلام القراء بأحكام القراءة والإقراء" data-title-en="A Practical Reference in Qur’anic Reading and Instruction" type="button"><span class="ar">📖 استعراض الكتاب</span><span class="en">📖 Preview Book</span></button></div>
-</div>
+<div class="tajweed-preview-wrap"><button class="book-preview-btn tajweed-preview" data-pdf="assets/tajweed-reference.pdf" data-title-ar="إعلام القراء بأحكام القراءة والإقراء" data-title-en="I‘lam Al-Qurra’ — Complete Book" type="button"><span class="ar">📖 استعراض الكتاب كاملًا</span><span class="en">📖 Preview the Complete Book</span></button></div>
 </div>
 </div>
 </section>
