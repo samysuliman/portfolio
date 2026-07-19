@@ -583,6 +583,23 @@ body.english .evidence-card:before{right:auto;left:0}
 @media(max-width:920px){.evidence-panel .evidence-links{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.evidence-panel .evidence-links{grid-template-columns:1fr}.evidence-card{min-height:auto}}
 
+/* v2.6 — guaranteed bilingual dropdown menu */
+.links.ar,.links.en{display:none!important}
+.menu-toggle{display:flex!important;align-items:center;justify-content:center;gap:8px}
+.mobile-menu-inner.ar,.mobile-menu-inner.en{display:none!important}
+body:not(.english) .mobile-menu-inner.ar{display:block!important}
+body.english .mobile-menu-inner.en{display:block!important}
+body.english .menu-toggle{display:flex!important}
+body:not(.english) .menu-toggle{display:flex!important}
+@media(min-width:1051px){
+  .links.ar,.links.en{display:none!important}
+  .menu-toggle{display:flex!important}
+  .mobile-menu{position:absolute;top:100%;left:0;right:0;z-index:80;background:rgba(6,45,35,.99);border-top:1px solid rgba(217,174,84,.35)}
+  .mobile-menu-inner{width:min(520px,92%);padding:10px 18px 18px;border:1px solid rgba(217,174,84,.25);border-top:0;border-radius:0 0 16px 16px;box-shadow:0 18px 40px rgba(0,0,0,.25)}
+  body:not(.english) .mobile-menu-inner.ar{margin-left:auto;margin-right:3%}
+  body.english .mobile-menu-inner.en{margin-right:auto;margin-left:3%}
+}
+
 </style>
 <link href="assets/favicon.png" rel="icon" type="image/png"/><meta content="سامي سليمان | الملف المهني" property="og:title"/><meta content="معلم تربية إسلامية، مدرب معلمين، مؤلف تربوي، ورئيس قسم سابق بخبرة تزيد على 20 عامًا." property="og:description"/><meta content="assets/portrait-only.jpg" property="og:image"/><meta content="website" property="og:type"/><meta content="سامي سليمان، معلم تربية إسلامية، مشرف تربوي، مدرب معلمين، مؤلف تربوي، تعليم القرآن، الإقراء، مدارس دولية، الرياض" name="keywords"/><meta content="Samy Suliman" name="author"/><meta content="index, follow, max-image-preview:large" name="robots"/><link href="https://samysuliman.github.io/portfolio/" rel="canonical"/><meta content="https://samysuliman.github.io/portfolio/" property="og:url"/><meta content="ar_SA" property="og:locale"/><meta content="summary_large_image" name="twitter:card"/></head>
 <body>
@@ -601,8 +618,8 @@ body.english .evidence-card:before{right:auto;left:0}
 <button aria-controls="mobileMenu" aria-expanded="false" aria-label="فتح القائمة" class="menu-toggle" id="menuToggle" type="button"><span class="menu-icon"><i></i><i></i><i></i></span><b class="ar">القائمة</b><b class="en">Menu</b></button>
 </div></div>
 <div class="mobile-menu" id="mobileMenu">
-<div class="mobile-menu-inner ar"><a href="#experience">المسيرة المهنية</a><a href="#why">لماذا سامي؟</a><a href="#impact">الأثر</a><a href="#quran">القرآن والإقراء</a><a href="#library">المؤلفات</a><a href="#recognition">التكريمات</a><a href="#evidence">الالتزام والتميز المهني</a><a href="#quality">الجودة والإنتاجية</a><a href="#contact">التواصل</a></div>
-<div class="mobile-menu-inner en"><a href="#experience">Experience</a><a href="#why">Why Samy?</a><a href="#impact">Impact</a><a href="#quran">Qur’an</a><a href="#library">Publications</a><a href="#recognition">Awards</a><a href="#evidence">Professional Excellence</a><a href="#quality">Quality &amp; Productivity</a><a href="#contact">Contact</a></div>
+<div class="mobile-menu-inner ar" aria-label="القائمة العربية"><a href="#experience">المسيرة المهنية</a><a href="#why">لماذا سامي؟</a><a href="#impact">الأثر</a><a href="#quran">القرآن والإقراء</a><a href="#library">المؤلفات</a><a href="#recognition">التكريمات</a><a href="#evidence">الالتزام والتميز المهني</a><a href="#quality">الجودة والإنتاجية</a><a href="#contact">التواصل</a></div>
+<div class="mobile-menu-inner en" aria-label="English navigation menu"><a href="#experience">Experience</a><a href="#why">Why Samy?</a><a href="#impact">Impact</a><a href="#quran">Qur’an</a><a href="#library">Publications</a><a href="#recognition">Awards</a><a href="#evidence">Professional Excellence</a><a href="#quality">Quality &amp; Productivity</a><a href="#contact">Contact</a></div>
 </div></nav>
 <header class="hero" id="top">
 <div class="container hero-grid">
