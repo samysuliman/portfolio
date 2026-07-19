@@ -933,5 +933,24 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();if(moda
 let resizeTimer;window.addEventListener('resize',()=>{if(!pdfDoc)return;clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>renderPage(currentPage),180)});
 document.getElementById('whatsappForm').addEventListener('submit',e=>{e.preventDefault();const en=document.body.classList.contains('english');const name=document.getElementById('contactName').value.trim(),email=document.getElementById('contactEmail').value.trim(),subject=document.getElementById('contactSubject').value.trim(),message=document.getElementById('contactMessage').value.trim();const text=en?`Hello Mr. Samy Suliman,\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`:`السلام عليكم أستاذ سامي سليمان،\n\nالاسم: ${name}\nالبريد الإلكتروني: ${email}\nالموضوع: ${subject}\n\nالرسالة:\n${message}`;window.open('https://wa.me/966559461920?text='+encodeURIComponent(text),'_blank','noopener')});
 const topBtn=document.getElementById('backToTop');window.addEventListener('scroll',()=>topBtn.classList.toggle('show',window.scrollY>500));topBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
-</script></body>
+</script>
+<section id="quality" class="section">
+<h2>الجودة والإنتاجية</h2>
+<p>نماذج من أعمالي في الجودة والتميز المؤسسي.</p>
+<div class="quality-grid">
+<div class="card"><h3>الرؤية المؤسسية</h3><p>نماذج موثقة من الأعمال.</p><a href="https://drive.google.com/drive/folders/1X9dDK3KqO1_sOSCIWSsCAcj_rYvPBZ1n" target="_blank">📂 عرض الأعمال</a></div>
+<div class="card"><h3>الرسالة والأهداف</h3><p>نماذج موثقة من الأعمال.</p><a href="https://drive.google.com/drive/folders/1Vu2QrHzZJ_5ab56-KKo1QbNQMTibtUGo" target="_blank">📂 عرض الأعمال</a></div>
+<div class="card"><h3>التخطيط التشغيلي</h3><p>نماذج موثقة من الأعمال.</p><a href="https://drive.google.com/drive/folders/1wnBVPlEqzqtXpNR0hbTZ-PhYfVIQCMPe" target="_blank">📂 عرض الأعمال</a></div>
+<div class="card"><h3>المبادرات والحلول التعليمية</h3><p>نماذج موثقة من الأعمال.</p><a href="https://drive.google.com/drive/folders/1kd7ciixdhZLXNfLBi2bCySj34FjKcREa" target="_blank">📂 عرض الأعمال</a></div>
+<div class="card"><h3>البحوث والدراسات التربوية</h3><p>نماذج موثقة من الأعمال.</p><a href="https://drive.google.com/drive/folders/1Dg_1_d8Vp4Xn6xLyGchVK0Qtl8KfuxSM" target="_blank">📂 عرض الأعمال</a></div>
+<div class="card"><h3>مجتمعات التعلم المهنية</h3><p>نماذج موثقة من الأعمال.</p><a href="https://drive.google.com/drive/folders/19a1G65Erbxeu5vJW8AzIygTbE2VBc4Ee" target="_blank">📂 عرض الأعمال</a></div>
+<div class="card"><h3>تحديد الاحتياجات التدريبية</h3><p>نماذج موثقة من الأعمال.</p><a href="https://drive.google.com/drive/folders/1hQ-PchiCCneMbjOxYnLsbjMFCiIFHw3F" target="_blank">📂 عرض الأعمال</a></div>
+<div class="card"><h3>التنمية المهنية</h3><p>نماذج موثقة من الأعمال.</p><a href="https://drive.google.com/drive/folders/15vCJATSRY3FJ0NFVadyJvzrIyPGpr58Q" target="_blank">📂 عرض الأعمال</a></div>
+<div class="card"><h3>قياس رضا المستفيدين</h3><p>نماذج موثقة من الأعمال.</p><a href="https://drive.google.com/drive/folders/1iBfN6QHt48lEErOKljBGtdUJTwyF58DB" target="_blank">📂 عرض الأعمال</a></div>
+<div class="card"><h3>تحليل الأداء</h3><p>نماذج موثقة من الأعمال.</p><a href="https://drive.google.com/drive/folders/1Dr5KLI2-FjkTz5ZzzCCX_-42QhofrQ1g" target="_blank">📂 عرض الأعمال</a></div>
+<div class="card"><h3>خطط التحسين</h3><p>نماذج موثقة من الأعمال.</p><a href="https://drive.google.com/drive/folders/1V58wk3YYqMI4nPgHkRfVrxwGawN7eOnd" target="_blank">📂 عرض الأعمال</a></div>
+<div class="card"><h3>مصادر التعلم</h3><p>نماذج موثقة من الأعمال.</p><a href="https://drive.google.com/drive/folders/1VTOkbzAFWMOEseBn7lubv0i43xh4RC2Y" target="_blank">📂 عرض الأعمال</a></div>
+<div class="card"><h3>البرامج التدريبية وورش العمل</h3><p>نماذج موثقة من الأعمال.</p><a href="https://drive.google.com/drive/folders/1dI1409yLKojV-Mqpv7tv73tOCsdblSgt" target="_blank">📂 عرض الأعمال</a></div>
+</div></section>
+</body>
 </html>
