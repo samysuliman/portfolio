@@ -1006,6 +1006,13 @@ body.english .nav-actions{order:1;margin-left:auto;margin-right:0}
 <footer class="footer-main"><div class="container">
 <div class="footer-bottom">© 2026 Samy Suliman — Professional Portfolio</div></div></footer>
 <script>
+// Always open the portfolio at the introductory hero section.
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.addEventListener('pageshow', function(){
+ if (window.location.hash) history.replaceState(null, '', window.location.pathname + window.location.search);
+ window.scrollTo(0, 0);
+ requestAnimationFrame(function(){ window.scrollTo(0, 0); });
+});
 function setMenuState(open){
  const menu=document.getElementById('mobileMenu');
  const btn=document.getElementById('menuToggle');
