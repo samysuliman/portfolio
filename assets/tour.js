@@ -24,7 +24,7 @@
 
   const publicationsArabic = `
     <div class="tour-book-showcase" aria-label="نماذج من مؤلفات سامي سليمان">
-      <img src="assets/tajweed-book.jpg" alt="إعلام القراء بأحكام القراءة والإقراء" loading="eager">
+      <img src="assets/tajweed-part-2.webp" alt="الجزء الثاني من سلسلة أحكام التجويد" loading="eager">
       <img src="assets/children-part-1-new.webp" alt="السيرة النبوية للأطفال - الجزء الأول" loading="eager">
       <img src="assets/adult-part-1.jpg" alt="حياة النبي محمد صلى الله عليه وسلم - الجزء الأول" loading="eager">
       <img src="assets/tajweed-part-1.webp" alt="مادة تعليمية في أحكام التجويد" loading="eager">
@@ -35,7 +35,7 @@
 
   const publicationsEnglish = `
     <div class="tour-book-showcase" aria-label="Selected publications by Samy Suliman">
-      <img src="assets/tajweed-book.jpg" alt="Tajweed publication" loading="eager">
+      <img src="assets/tajweed-part-2.webp" alt="Tajweed series - Part Two" loading="eager">
       <img src="assets/children-part-1-new.webp" alt="Prophetic biography for children - Part One" loading="eager">
       <img src="assets/adult-part-1.jpg" alt="Life of Prophet Muhammad - Part One" loading="eager">
       <img src="assets/tajweed-part-1.webp" alt="Educational material in Tajweed" loading="eager">
@@ -146,12 +146,12 @@
       ar: {
         k: 'شكرًا لوقتك',
         t: 'تواصل معي',
-        html: '<p class="tour-closing">يسعدني مناقشة فرص العمل والتعاون في التعليم والقيادة والتدريب وتطوير المحتوى.</p><div class="tour-contact-details"><span>الرياض، المملكة العربية السعودية</span><span dir="ltr">0559461920</span><span dir="ltr">samysuliman15@gmail.com</span></div>'
+        html: '<p class="tour-closing">يسعدني مناقشة فرص العمل والتعاون في التعليم والقيادة والتدريب وتطوير المحتوى.</p><div class="tour-contact-links" aria-label="وسائل التواصل"><a href="https://wa.me/966559461920" target="_blank" rel="noopener noreferrer"><span class="tour-contact-icon" aria-hidden="true">💬</span><span><strong>واتساب</strong><small dir="ltr">+966 55 946 1920</small></span></a><a href="tel:+966559461920"><span class="tour-contact-icon" aria-hidden="true">☎️</span><span><strong>اتصال مباشر</strong><small dir="ltr">+966 55 946 1920</small></span></a><a href="mailto:samysuliman15@gmail.com"><span class="tour-contact-icon" aria-hidden="true">✉️</span><span><strong>البريد الإلكتروني</strong><small dir="ltr">samysuliman15@gmail.com</small></span></a><a href="https://www.linkedin.com/in/samy-suliman-3342bb212/" target="_blank" rel="noopener noreferrer"><span class="tour-contact-icon" aria-hidden="true">in</span><span><strong>LinkedIn</strong><small>الملف المهني</small></span></a></div>'
       },
       en: {
         k: 'Thank you for your time',
         t: 'Contact Me',
-        html: '<p class="tour-closing">I welcome opportunities in education, leadership, training, and educational content development.</p><div class="tour-contact-details"><span>Riyadh, Saudi Arabia</span><span>0559461920</span><span>samysuliman15@gmail.com</span></div>'
+        html: '<p class="tour-closing">I welcome opportunities in education, leadership, training, and educational content development.</p><div class="tour-contact-links" aria-label="Contact options"><a href="https://wa.me/966559461920" target="_blank" rel="noopener noreferrer"><span class="tour-contact-icon" aria-hidden="true">💬</span><span><strong>WhatsApp</strong><small>+966 55 946 1920</small></span></a><a href="tel:+966559461920"><span class="tour-contact-icon" aria-hidden="true">☎️</span><span><strong>Call</strong><small>+966 55 946 1920</small></span></a><a href="mailto:samysuliman15@gmail.com"><span class="tour-contact-icon" aria-hidden="true">✉️</span><span><strong>Email</strong><small>samysuliman15@gmail.com</small></span></a><a href="https://www.linkedin.com/in/samy-suliman-3342bb212/" target="_blank" rel="noopener noreferrer"><span class="tour-contact-icon" aria-hidden="true">in</span><span><strong>LinkedIn</strong><small>Professional profile</small></span></a></div>'
       }
     }
   ];
