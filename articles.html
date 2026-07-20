@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" href="assets/favicon.png" type="image/png">
-  <link rel="stylesheet" href="assets/articles.css?v=2.0.1">
+  <link rel="stylesheet" href="assets/articles.css?v=2.0.2">
 </head>
 <body class="articles-listing-page">
   <nav class="nav">
@@ -78,7 +78,10 @@
             </div>
             <p class="ar">أكتب خلاصة الخبرة العملية في التعليم والقيادة والتطوير، بلغة واضحة وأفكار قابلة للتطبيق.</p>
             <p class="en">I share practical lessons in education, leadership, and development through clear, applicable ideas.</p>
-            <a href="index.html#contact" class="sidebar-cta"><span class="ar">تواصل معي</span><span class="en">Contact me</span></a>
+            <div class="sidebar-actions">
+              <a href="index.html#contact" class="sidebar-cta"><span class="ar">تواصل معي</span><span class="en">Contact me</span></a>
+              <a href="https://www.linkedin.com/in/samy-suliman" target="_blank" rel="noopener" class="sidebar-linkedin" aria-label="LinkedIn">in</a>
+            </div>
           </div>
 
           <div class="sidebar-qr-card">
@@ -86,6 +89,7 @@
             <img src="assets/qr-code.png" alt="رمز QR لموقع سامي سليمان">
             <strong>samysuliman.github.io/portfolio</strong>
             <small><span class="ar">امسح الرمز لزيارة الموقع وحفظه.</span><span class="en">Scan to open and save the portfolio.</span></small>
+            <button class="copy-site-link" id="copySiteLink" type="button"><span class="ar">نسخ رابط الموقع</span><span class="en">Copy website link</span></button>
           </div>
         </aside>
       </div>
@@ -94,8 +98,8 @@
 
   <footer class="footer">© 2026 Samy Suliman — Professional Portfolio</footer>
 
-  <script src="articles/articles-data.js?v=2.0.1"></script>
-  <script src="assets/articles-common.js?v=2.0.1"></script>
+  <script src="articles/articles-data.js?v=2.0.2"></script>
+  <script src="assets/articles-common.js?v=2.0.2"></script>
   <script>
     const grid = document.getElementById('articlesGrid');
     const search = document.getElementById('articleSearch');
@@ -110,8 +114,11 @@
 
     function articleNumber(article, index, total) {
       const supplied = String(article.number || '').trim();
-      if (supplied) return supplied.padStart(2, '0');
-      return String(total - index).padStart(2, '0');
+      if (supplied) {
+        const numeric = supplied.replace(/^0+/, '') || '0';
+        return numeric.padStart(2, '0').slice(-2);
+      }
+      return String(total - index).padStart(2, '0').slice(-2);
     }
 
     function render() {
@@ -162,7 +169,25 @@
       }).join('');
     }
 
-    search.addEventListener('input', render);
+
+    const copySiteLink = document.getElementById('copySiteLink');
+    copySiteLink.addEventListener('click', async () => {
+      const url = 'https://samysuliman.github.io/portfolio/';
+      try {
+        await navigator.clipboard.writeText(url);
+        const en = document.body.classList.contains('english');
+        copySiteLink.querySelector('.ar').textContent = 'تم نسخ الرابط';
+        copySiteLink.querySelector('.en').textContent = 'Link copied';
+        setTimeout(() => {
+          copySiteLink.querySelector('.ar').textContent = 'نسخ رابط الموقع';
+          copySiteLink.querySelector('.en').textContent = 'Copy website link';
+        }, 1800);
+      } catch (error) {
+        window.prompt('Copy this link:', url);
+      }
+    });
+
+        search.addEventListener('input', render);
     sort.addEventListener('change', render);
     document.getElementById('langBtn').addEventListener('click', () => {
       document.body.classList.toggle('english');
