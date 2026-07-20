@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" href="assets/favicon.png" type="image/png">
-  <link rel="stylesheet" href="assets/articles.css?v=2.1.0">
+  <link rel="stylesheet" href="assets/articles.css?v=3.0.1">
 </head>
 <body class="articles-listing-page">
   <nav class="nav">
@@ -45,161 +45,65 @@
     </div>
   </header>
 
-  <main class="articles-main">
-    <div class="container">
-      <section class="articles-toolbar" aria-label="أدوات المقالات">
-        <label class="articles-search">
-          <span aria-hidden="true">⌕</span>
-          <input id="articleSearch" type="search" placeholder="ابحث في المقالات والأبحاث" aria-label="البحث في المقالات">
-        </label>
-        <label class="articles-sort">
-          <span class="ar">الترتيب</span><span class="en">Sort</span>
-          <select id="articleSort" aria-label="ترتيب المقالات">
-            <option value="newest">الأحدث أولًا</option>
-            <option value="oldest">الأقدم أولًا</option>
-          </select>
-        </label>
-        <div class="articles-count" id="articleCount" aria-live="polite"></div>
-      </section>
-
-      <div class="articles-layout">
-        <section class="articles-results" aria-label="قائمة المقالات">
-          <div class="articles-grid" id="articlesGrid"></div>
-        </section>
-
-        <aside class="articles-sidebar">
-          <div class="sidebar-profile-card">
-            <div class="sidebar-profile-head">
-              <img src="assets/portrait-only.jpg" alt="سامي سليمان">
-              <div>
-                <strong><span class="ar">سامي سليمان</span><span class="en">Samy Suliman</span></strong>
-                <small><span class="ar">معلم ومدرب ومؤلف</span><span class="en">Educator, Trainer &amp; Author</span></small>
-              </div>
-            </div>
-            <p class="ar">أكتب خلاصة الخبرة العملية في التعليم والقيادة والتطوير، بلغة واضحة وأفكار قابلة للتطبيق.</p>
-            <p class="en">I share practical lessons in education, leadership, and development through clear, applicable ideas.</p>
-            <div class="sidebar-actions">
-              <a href="index.html#contact" class="sidebar-cta"><span class="ar">تواصل معي</span><span class="en">Contact me</span></a>
-              <a href="https://www.linkedin.com/in/samy-suliman" target="_blank" rel="noopener" class="sidebar-linkedin" aria-label="LinkedIn">in</a>
-            </div>
+  <main>
+    <section id="listingView">
+      <header class="articles-hero">
+        <div class="container articles-hero-inner">
+          <div class="articles-hero-copy">
+            <span class="articles-kicker"><span class="ar">رؤية مهنية من واقع التجربة</span><span class="en">Professional insight from experience</span></span>
+            <h1><span class="ar">مقالات وأبحاث</span><span class="en">Articles &amp; Research</span></h1>
+            <p class="ar">أفكار عملية في التعليم والقيادة والتدريب وتطوير الأعمال، تجمع بين الخبرة الميدانية والرؤية المهنية.</p>
+            <p class="en">Practical perspectives on education, leadership, training, and business development—grounded in field experience.</p>
           </div>
+          <div class="articles-hero-mark" aria-hidden="true"><span>✦</span><strong>سامي</strong><small>مقالات وأبحاث</small></div>
+        </div>
+      </header>
 
-          <div class="sidebar-qr-card">
-            <span class="sidebar-label"><span class="ar">شارك الموقع</span><span class="en">Share the portfolio</span></span>
-            <img src="assets/qr-code.png" alt="رمز QR لموقع سامي سليمان">
-            <strong>samysuliman.github.io/portfolio</strong>
-            <small><span class="ar">امسح الرمز لزيارة الموقع وحفظه.</span><span class="en">Scan to open and save the portfolio.</span></small>
-            <button class="copy-site-link" id="copySiteLink" type="button"><span class="ar">نسخ رابط الموقع</span><span class="en">Copy website link</span></button>
+      <div class="articles-main">
+        <div class="container">
+          <section class="articles-toolbar" aria-label="أدوات المقالات">
+            <label class="articles-search"><span aria-hidden="true">⌕</span><input id="articleSearch" type="search" placeholder="ابحث في المقالات والأبحاث" aria-label="البحث في المقالات"></label>
+            <label class="articles-sort"><span class="ar">الترتيب</span><span class="en">Sort</span><select id="articleSort"><option value="newest">الأحدث أولًا</option><option value="oldest">الأقدم أولًا</option></select></label>
+            <div class="articles-count" id="articleCount" aria-live="polite"></div>
+          </section>
+          <div class="articles-layout">
+            <section class="articles-results"><div class="articles-grid" id="articlesGrid"></div></section>
+            <aside class="articles-sidebar">
+              <div class="sidebar-profile-card"><div class="sidebar-profile-head"><img src="assets/portrait-only.jpg" alt="سامي سليمان"><div><strong><span class="ar">سامي سليمان</span><span class="en">Samy Suliman</span></strong><small><span class="ar">معلم ومدرب ومؤلف</span><span class="en">Educator, Trainer &amp; Author</span></small></div></div><p class="ar">أكتب خلاصة الخبرة العملية في التعليم والقيادة والتطوير، بلغة واضحة وأفكار قابلة للتطبيق.</p><p class="en">I share practical lessons in education, leadership, and development through clear, applicable ideas.</p><div class="sidebar-actions"><a href="index.html#contact" class="sidebar-cta"><span class="ar">تواصل معي</span><span class="en">Contact me</span></a><a href="https://www.linkedin.com/in/samy-suliman" target="_blank" rel="noopener" class="sidebar-linkedin">in</a></div></div>
+              <div class="sidebar-qr-card"><span class="sidebar-label"><span class="ar">شارك الموقع</span><span class="en">Share the portfolio</span></span><img src="assets/qr-code.png" alt="رمز QR لموقع سامي سليمان"><strong>samysuliman.github.io/portfolio</strong><small><span class="ar">امسح الرمز لزيارة الموقع وحفظه.</span><span class="en">Scan to open and save the portfolio.</span></small><button class="copy-site-link" id="copySiteLink" type="button"><span class="ar">نسخ رابط الموقع</span><span class="en">Copy website link</span></button></div>
+            </aside>
           </div>
-        </aside>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <section id="readerView" class="merged-reader" hidden>
+      <article class="container article" id="articleView"></article>
+    </section>
   </main>
 
   <footer class="footer">© 2026 Samy Suliman — Professional Portfolio</footer>
 
-  <script src="articles/articles-data.js?v=2.1.0"></script>
-  <script src="assets/articles-common.js?v=2.1.0"></script>
+  <script src="articles/articles-data.js?v=3.0.1"></script>
+  <script src="assets/articles-common.js?v=3.0.1"></script>
   <script>
-    const grid = document.getElementById('articlesGrid');
-    const search = document.getElementById('articleSearch');
-    const count = document.getElementById('articleCount');
-    const sort = document.getElementById('articleSort');
-
-    function readingTime(content, english) {
-      const words = String(content || '').trim().split(/\s+/).filter(Boolean).length;
-      const minutes = Math.max(1, Math.ceil(words / (english ? 210 : 180)));
-      return english ? `${minutes} min read` : `${minutes} د قراءة`;
-    }
-
-    function articleNumber(article, index, total) {
-      const supplied = String(article.number || '').trim();
-      if (supplied) {
-        const numeric = supplied.replace(/^0+/, '') || '0';
-        return numeric.padStart(2, '0').slice(-2);
-      }
-      return String(total - index).padStart(2, '0').slice(-2);
-    }
-
-    function render() {
-      const en = document.body.classList.contains('english');
-      const q = search.value.trim().toLowerCase();
-      let list = SamyArticles.published().filter(article => {
-        const localized = SamyArticles.localized(article, en);
-        const haystack = [localized.title, localized.summary, localized.content, article.series, article.keywords].join(' ').toLowerCase();
-        return haystack.includes(q);
-      });
-
-      if (sort.value === 'oldest') list = [...list].reverse();
-      count.innerHTML = `<strong>${list.length}</strong><span>${en ? (list.length === 1 ? 'article' : 'articles') : (list.length === 1 ? 'مقال منشور' : 'مقالات منشورة')}</span>`;
-
-      if (!list.length) {
-        grid.innerHTML = `<div class="articles-empty"><div>✦</div><strong>${en ? 'No matching articles' : 'لا توجد مقالات مطابقة'}</strong><p>${en ? 'Try another search phrase or return soon for new publications.' : 'جرّب عبارة بحث أخرى، أو عد قريبًا للاطلاع على جديد المقالات.'}</p></div>`;
-        return;
-      }
-
-      grid.innerHTML = list.map((article, index) => {
-        const localized = SamyArticles.localized(article, en);
-        const href = `article.html?slug=${encodeURIComponent(article.slug)}`;
-        const number = articleNumber(article, index, list.length);
-        const series = article.series || (en ? 'Professional Insight' : 'من واقع التجربة');
-        const imageAlt = en ? (article.imageAltEn || localized.title) : (article.imageAltAr || localized.title);
-        return `
-          <article class="article-list-card">
-            <a class="article-card-media" href="${href}" aria-label="${SamyArticles.escapeHtml(localized.title)}">
-              ${article.image
-                ? `<img loading="lazy" src="${SamyArticles.escapeHtml(article.image)}" alt="${SamyArticles.escapeHtml(imageAlt)}">`
-                : `<div class="article-card-placeholder"><span>✦</span><small>${en ? 'ARTICLE' : 'مقال'}</small><strong>${number}</strong></div>`}
-              <span class="article-number">${SamyArticles.escapeHtml(number)}</span>
-            </a>
-            <div class="article-card-body">
-              <div class="article-card-topline">
-                <span class="article-series-name">${SamyArticles.escapeHtml(series)}</span>
-                <span>${SamyArticles.formatDate(article.publishAt || article.createdAt, en)}</span>
-              </div>
-              <h2><a href="${href}">${SamyArticles.escapeHtml(localized.title)}</a></h2>
-              <p>${SamyArticles.escapeHtml(localized.summary || SamyArticles.excerpt(localized.content, 180))}</p>
-              ${!localized.available && en ? '<div class="translation-warning">This article is currently available in Arabic only.</div>' : ''}
-              <div class="article-card-footer">
-                <span>${readingTime(localized.content, en)}</span>
-                <a href="${href}" class="article-read-link">${en ? 'Read article' : 'اقرأ المقال'} <b aria-hidden="true">←</b></a>
-              </div>
-            </div>
-          </article>`;
-      }).join('');
-    }
-
-
-    const copySiteLink = document.getElementById('copySiteLink');
-    copySiteLink.addEventListener('click', async () => {
-      const url = 'https://samysuliman.github.io/portfolio/';
-      try {
-        await navigator.clipboard.writeText(url);
-        const en = document.body.classList.contains('english');
-        copySiteLink.querySelector('.ar').textContent = 'تم نسخ الرابط';
-        copySiteLink.querySelector('.en').textContent = 'Link copied';
-        setTimeout(() => {
-          copySiteLink.querySelector('.ar').textContent = 'نسخ رابط الموقع';
-          copySiteLink.querySelector('.en').textContent = 'Copy website link';
-        }, 1800);
-      } catch (error) {
-        window.prompt('Copy this link:', url);
-      }
-    });
-
-        search.addEventListener('input', render);
-    sort.addEventListener('change', render);
-    document.getElementById('langBtn').addEventListener('click', () => {
-      document.body.classList.toggle('english');
-      const en = document.body.classList.contains('english');
-      document.documentElement.lang = en ? 'en' : 'ar';
-      document.documentElement.dir = en ? 'ltr' : 'rtl';
-      search.placeholder = en ? 'Search articles and research' : 'ابحث في المقالات والأبحاث';
-      sort.options[0].textContent = en ? 'Newest first' : 'الأحدث أولًا';
-      sort.options[1].textContent = en ? 'Oldest first' : 'الأقدم أولًا';
-      render();
-    });
-    render();
+  const grid=document.getElementById('articlesGrid'),search=document.getElementById('articleSearch'),count=document.getElementById('articleCount'),sort=document.getElementById('articleSort');
+  const listingView=document.getElementById('listingView'),readerView=document.getElementById('readerView'),articleView=document.getElementById('articleView');
+  let savedScroll=0;
+  function en(){return document.body.classList.contains('english')}
+  function readingTime(content){const w=String(content||'').trim().split(/\s+/).filter(Boolean).length;const m=Math.max(1,Math.ceil(w/(en()?210:180)));return en()?`${m} min read`:`${m} د قراءة`}
+  function articleNumber(a,i,t){const s=String(a.number||'').trim();if(s){const n=s.replace(/^0+/,'')||'0';return n.padStart(2,'0').slice(-2)}return String(t-i).padStart(2,'0').slice(-2)}
+  function inlineFormat(text){return SamyArticles.escapeHtml(text).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>')}
+  function paragraphs(text){return String(text||'').split(/\n\s*\n/).map(block=>{const b=block.trim();if(!b)return'';if(/^##\s+/.test(b))return'<h2>'+inlineFormat(b.replace(/^##\s+/,''))+'</h2>';if(/^>\s+/.test(b))return'<blockquote>'+inlineFormat(b.replace(/^>\s+/,''))+'</blockquote>';if(/^-\s+/m.test(b)){return'<ul>'+b.split(/\n/).filter(x=>/^-\s+/.test(x)).map(x=>'<li>'+inlineFormat(x.replace(/^-\s+/,''))+'</li>').join('')+'</ul>'}return'<p>'+inlineFormat(b).replace(/\n/g,'<br>')+'</p>'}).join('')}
+  function videoBlock(url){if(!url)return'';const id=SamyArticles.youtubeId(url);return id?'<div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/'+id+'" title="Video" allowfullscreen loading="lazy"></iframe></div>':'<a class="video-link" href="'+SamyArticles.escapeHtml(url)+'" target="_blank" rel="noopener">'+(en()?'Watch video ↗':'مشاهدة الفيديو ↗')+'</a>'}
+  function renderList(){const q=search.value.trim().toLowerCase();let list=SamyArticles.published().filter(a=>{const l=SamyArticles.localized(a,en());return [l.title,l.summary,l.content,a.series,a.keywords].join(' ').toLowerCase().includes(q)});if(sort.value==='oldest')list=[...list].reverse();count.innerHTML=`<strong>${list.length}</strong><span>${en()?(list.length===1?'article':'articles'):(list.length===1?'مقال منشور':'مقالات منشورة')}</span>`;if(!list.length){grid.innerHTML=`<div class="articles-empty"><div>✦</div><strong>${en()?'No matching articles':'لا توجد مقالات مطابقة'}</strong></div>`;return}grid.innerHTML=list.map((a,i)=>{const l=SamyArticles.localized(a,en()),num=articleNumber(a,i,list.length),series=a.series||(en()?'Professional Insight':'من واقع التجربة');return `<article class="article-list-card"><button class="article-card-open article-card-media" data-slug="${SamyArticles.escapeHtml(a.slug)}">${a.image?`<img loading="lazy" src="${SamyArticles.escapeHtml(a.image)}" alt="${SamyArticles.escapeHtml(l.title)}">`:`<div class="article-card-placeholder"><span>✦</span><small>${en()?'ARTICLE':'مقال'}</small><strong>${num}</strong></div>`}<span class="article-number">${num}</span></button><div class="article-card-body"><div class="article-card-topline"><span class="article-series-name">${SamyArticles.escapeHtml(series)}</span><span>${SamyArticles.formatDate(a.publishAt||a.createdAt,en())}</span></div><h2><button class="article-title-button" data-slug="${SamyArticles.escapeHtml(a.slug)}">${SamyArticles.escapeHtml(l.title)}</button></h2><p>${SamyArticles.escapeHtml(l.summary||SamyArticles.excerpt(l.content,180))}</p><div class="article-card-footer"><span>${readingTime(l.content)}</span><button class="article-read-link" data-slug="${SamyArticles.escapeHtml(a.slug)}">${en()?'Read article':'اقرأ المقال'} <b>←</b></button></div></div></article>`}).join('');grid.querySelectorAll('[data-slug]').forEach(el=>el.addEventListener('click',()=>openArticle(el.dataset.slug,true)))}
+  function openArticle(slug,push=false){const a=SamyArticles.published().find(x=>x.slug===slug);if(!a){showList(false);return}savedScroll=window.scrollY;const l=SamyArticles.localized(a,en()),url=location.origin+location.pathname+'?slug='+encodeURIComponent(a.slug);document.title=l.title+' | Samy Suliman';articleView.innerHTML=`<button class="back-to-articles" id="backToArticles">${en()?'← Back to articles':'العودة إلى المقالات →'}</button><div class="breadcrumbs"><a href="index.html">${en()?'Portfolio':'الموقع الرئيسي'}</a> / <span>${en()?'Articles & Research':'مقالات وأبحاث'}</span></div>${a.series?`<div class="article-series">${SamyArticles.escapeHtml(a.series)}${a.number?' · '+SamyArticles.escapeHtml(a.number):''}</div>`:''}<h1>${SamyArticles.escapeHtml(l.title)}</h1><div class="article-meta">${SamyArticles.formatDate(a.publishAt||a.createdAt,en())} · ${readingTime(l.content)}</div>${!l.available&&en()?'<div class="translation-warning article-translation-warning">This article is currently available in Arabic only.</div>':''}${a.image?`<img class="article-cover" src="${SamyArticles.escapeHtml(a.image)}" alt="${SamyArticles.escapeHtml(l.title)}">`:''}${videoBlock(a.video)}<div class="article-content">${paragraphs(l.content)}</div><section class="article-share-block" aria-label="${en()?'Share content':'شارك المحتوى'}"><h2 class="article-share-title">${en()?'Share content':'شارك المحتوى'}</h2><div class="share"><button id="linkedinShare">LinkedIn</button><a class="whatsapp" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(l.title+' — '+url)}">WhatsApp</a><a class="x" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(l.title+' — '+url)}">X</a><button id="copyLink">${en()?'Copy link':'نسخ الرابط'}</button></div></section><div class="author-box"><img src="assets/portrait-only.jpg" alt="Samy Suliman"><div><h3>${en()?'Samy Suliman':'سامي سليمان'}</h3><p>${en()?'Islamic Studies educator, trainer, author, and education leader.':'معلم تربية إسلامية، ومدرب، ومؤلف، وصاحب خبرة في القيادة والتطوير التعليمي.'}</p></div></div>`;listingView.hidden=true;readerView.hidden=false;document.body.classList.add('reader-mode');if(push)history.pushState({slug:a.slug},'',`?slug=${encodeURIComponent(a.slug)}`);window.scrollTo({top:0,behavior:'smooth'});document.getElementById('backToArticles').onclick=()=>history.back();document.getElementById('linkedinShare').onclick=()=>window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(url),'_blank','noopener');document.getElementById('copyLink').onclick=async e=>{try{await navigator.clipboard.writeText(url);e.target.textContent=en()?'Copied':'تم النسخ'}catch{prompt(en()?'Copy this link':'انسخ هذا الرابط',url)}}}
+  function showList(push=false){readerView.hidden=true;listingView.hidden=false;document.body.classList.remove('reader-mode');document.title=en()?'Articles & Research | Samy Suliman':'مقالات وأبحاث | سامي سليمان';if(push)history.pushState({},'',location.pathname);requestAnimationFrame(()=>window.scrollTo(0,savedScroll||0))}
+  function route(){const slug=new URLSearchParams(location.search).get('slug');slug?openArticle(slug,false):showList(false)}
+  search.addEventListener('input',renderList);sort.addEventListener('change',renderList);window.addEventListener('popstate',route);
+  document.getElementById('copySiteLink').addEventListener('click',async()=>{const u='https://samysuliman.github.io/portfolio/';try{await navigator.clipboard.writeText(u)}catch{prompt('Copy this link:',u)}});
+  document.getElementById('langBtn').addEventListener('click',()=>{document.body.classList.toggle('english');const isEn=en();document.documentElement.lang=isEn?'en':'ar';document.documentElement.dir=isEn?'ltr':'rtl';search.placeholder=isEn?'Search articles and research':'ابحث في المقالات والأبحاث';sort.options[0].textContent=isEn?'Newest first':'الأحدث أولًا';sort.options[1].textContent=isEn?'Oldest first':'الأقدم أولًا';renderList();route()});
+  renderList();route();
   </script>
 </body>
 </html>

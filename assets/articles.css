@@ -166,3 +166,15 @@ body.english .articles-listing-page .article-number{right:auto;left:12px}
   .articles-listing-page .article-number{top:10px;right:10px;min-width:40px;height:40px;font-size:15px}
   body.english .articles-listing-page .article-number{right:auto;left:10px}
 }
+
+
+/* v3.0 unified articles and reader */
+[hidden]{display:none!important}.merged-reader{padding:44px 0 80px;background:#fff;min-height:calc(100vh - 54px)}.reader-mode{background:#fff}.reader-mode .footer{margin-top:0}.back-to-articles{display:inline-flex;align-items:center;border:1px solid #d9ae54;border-radius:999px;background:#fff;color:#7d5a13;padding:8px 15px;margin-bottom:22px;font:inherit;font-weight:800;cursor:pointer}.back-to-articles:hover{background:#fff8e9}.article-series{display:inline-flex;padding:6px 12px;border-radius:999px;background:#f8f1df;color:#8c691f;font-size:13px;font-weight:800;margin-bottom:12px}.article-title-button,.article-read-link,.article-card-open{font:inherit;color:inherit;border:0;background:none;cursor:pointer}.article-card-open{display:block;width:100%;padding:0;text-align:inherit}.article-title-button{padding:0;text-align:inherit;font-weight:inherit}.article-read-link{font-weight:900;color:#8c691f;padding:0}.merged-reader .article{max-width:850px}.merged-reader .article h1{text-align:center}.merged-reader .article-meta{text-align:center}.merged-reader .breadcrumbs{text-align:center}.merged-reader .article-series{display:flex;width:max-content;margin-inline:auto}.merged-reader .share{justify-content:center}.merged-reader .author-box{max-width:760px;margin-inline:auto}@media(max-width:620px){.merged-reader{padding-top:28px}.merged-reader .article h1{text-align:start}.merged-reader .article-meta,.merged-reader .breadcrumbs{text-align:start}.merged-reader .article-series{margin-inline:0}}
+
+/* v3.0.1 — article content sharing */
+.article-share-block{margin-top:34px;padding-top:24px;border-top:1px solid var(--line);text-align:center}
+.article-share-title{margin:0 0 14px;color:var(--green);font-size:19px;font-weight:900}
+.article-share-block .share{margin-top:0;padding-top:0;border-top:0;justify-content:center}
+.share .whatsapp{background:#168a4a}
+.share .whatsapp:hover{background:#10753e}
+@media(max-width:620px){.article-share-block{text-align:start}.article-share-block .share{justify-content:flex-start}.share button,.share a{flex:1 1 calc(50% - 10px);text-align:center}}
