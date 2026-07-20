@@ -684,7 +684,7 @@ body.english .nav-actions{order:1;margin-left:auto;margin-right:0}
 <meta name="apple-mobile-web-app-title" content="سامي سليمان">
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <link rel="stylesheet" href="assets/pwa.css">
-<link rel="stylesheet" href="assets/tour.css?v=3.3"/>
+<link rel="stylesheet" href="assets/tour.css?v=3.5"/>
 </head>
 <body>
 <nav class="nav" aria-label="Primary navigation">
@@ -1152,7 +1152,7 @@ let resizeTimer;window.addEventListener('resize',()=>{if(!pdfDoc)return;clearTim
 document.getElementById('whatsappForm').addEventListener('submit',e=>{e.preventDefault();const en=document.body.classList.contains('english');const name=document.getElementById('contactName').value.trim(),email=document.getElementById('contactEmail').value.trim(),subject=document.getElementById('contactSubject').value.trim(),message=document.getElementById('contactMessage').value.trim();const text=en?`Hello Mr. Samy Suliman,\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`:`السلام عليكم أستاذ سامي سليمان،\n\nالاسم: ${name}\nالبريد الإلكتروني: ${email}\nالموضوع: ${subject}\n\nالرسالة:\n${message}`;window.open('https://wa.me/966559461920?text='+encodeURIComponent(text),'_blank','noopener')});
 const topBtn=document.getElementById('backToTop');window.addEventListener('scroll',()=>topBtn.classList.toggle('show',window.scrollY>500));topBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 </script>
-<script src="assets/tour.js?v=3.3" defer></script>
+<script src="assets/tour.js?v=3.5" defer></script>
 <script src="assets/pwa.js" defer></script>
 </body>
 </html>
