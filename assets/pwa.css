@@ -1,0 +1,14 @@
+.pwa-install-button{
+  position:fixed;left:18px;bottom:18px;z-index:9999;
+  display:flex;align-items:center;gap:8px;
+  border:1px solid #d9ae54;border-radius:999px;
+  background:#062d23;color:#fff;padding:11px 16px;
+  font:700 14px "Cairo",Tahoma,Arial,sans-serif;
+  box-shadow:0 12px 30px rgba(6,45,35,.28);cursor:pointer
+}
+.pwa-install-button span{color:#f4d995;font-size:18px;line-height:1}
+.pwa-install-button:hover{transform:translateY(-2px)}
+@media(max-width:620px){
+  .pwa-install-button{left:12px;bottom:12px;padding:10px 14px;font-size:13px}
+}
+@media(display-mode:standalone){.pwa-install-button{display:none!important}}

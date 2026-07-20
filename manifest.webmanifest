@@ -1,0 +1,35 @@
+{
+  "name": "سامي سليمان | الملف المهني",
+  "short_name": "سامي سليمان",
+  "description": "الملف المهني والمكتبة التعليمية ومقالات سامي سليمان.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/portfolio/",
+  "scope": "/portfolio/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f7f2e7",
+  "theme_color": "#062d23",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "المقالات والأبحاث",
+      "short_name": "المقالات",
+      "url": "/portfolio/articles.html",
+      "icons": [{"src":"assets/icons/icon-192.png","sizes":"192x192","type":"image/png"}]
+    }
+  ]
+}

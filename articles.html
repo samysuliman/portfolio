@@ -16,6 +16,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" href="assets/favicon.png" type="image/png">
   <link rel="stylesheet" href="assets/articles.css?v=3.0.3">
+
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#062d23">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="سامي سليمان">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/pwa.css">
 </head>
 <body class="articles-listing-page">
   <nav class="nav">
@@ -142,5 +151,7 @@
   document.getElementById('langBtn').addEventListener('click',()=>{document.body.classList.toggle('english');const isEn=en();document.documentElement.lang=isEn?'en':'ar';document.documentElement.dir=isEn?'ltr':'rtl';search.placeholder=isEn?'Search articles and research':'ابحث في المقالات والأبحاث';sort.options[0].textContent=isEn?'Newest first':'الأحدث أولًا';sort.options[1].textContent=isEn?'Oldest first':'الأقدم أولًا';renderList();route()});
   renderList();route();
   </script>
+
+<script src="assets/pwa.js" defer></script>
 </body>
 </html>
