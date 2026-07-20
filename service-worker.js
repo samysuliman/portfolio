@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'samy-portfolio-pwa-v3.6';
+const CACHE_VERSION = 'samy-portfolio-pwa-v3.3';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 const CORE_ASSETS = [
   './',
@@ -8,8 +8,8 @@ const CORE_ASSETS = [
   './assets/articles-common.js',
   './assets/pwa.css',
   './assets/pwa.js',
-  './assets/tour.css?v=3.6',
-  './assets/tour.js?v=3.6',
+  './assets/tour.css?v=3.3',
+  './assets/tour.js?v=3.3',
   './assets/favicon.png',
   './assets/publications-collage.webp',
   './assets/icons/icon-192.png',
