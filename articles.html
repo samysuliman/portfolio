@@ -6,6 +6,11 @@
   <title>مقالات وأبحاث | سامي سليمان</title>
   <meta name="description" content="مقالات وأبحاث سامي سليمان في التعليم والقيادة والإدارة والتدريب وتطوير الأعمال.">
   <meta name="robots" content="index,follow">
+  <link id="canonicalLink" rel="canonical" href="https://samysuliman.github.io/portfolio/articles.html">
+  <meta id="ogTitle" property="og:title" content="مقالات وأبحاث | سامي سليمان">
+  <meta id="ogDescription" property="og:description" content="مقالات وأبحاث سامي سليمان في التعليم والقيادة والإدارة والتدريب وتطوير الأعمال.">
+  <meta id="ogUrl" property="og:url" content="https://samysuliman.github.io/portfolio/articles.html">
+  <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -73,17 +78,65 @@
   <script>
   const grid=document.getElementById('articlesGrid'),search=document.getElementById('articleSearch'),count=document.getElementById('articleCount'),sort=document.getElementById('articleSort');
   const listingView=document.getElementById('listingView'),readerView=document.getElementById('readerView'),articleView=document.getElementById('articleView');
+  const canonicalLink=document.getElementById('canonicalLink'),descriptionMeta=document.querySelector('meta[name="description"]'),ogTitle=document.getElementById('ogTitle'),ogDescription=document.getElementById('ogDescription'),ogUrl=document.getElementById('ogUrl');
+  const BASE_URL='https://samysuliman.github.io/portfolio/articles.html';
   let savedScroll=0;
   function en(){return document.body.classList.contains('english')}
+  function setSeo(title,description,url,type='website'){
+    document.title=title;
+    descriptionMeta.content=description;
+    canonicalLink.href=url;
+    ogTitle.content=title;
+    ogDescription.content=description;
+    ogUrl.content=url;
+    document.querySelector('meta[property="og:type"]').content=type;
+  }
+  function listingSeo(){
+    const title=en()?'Articles & Research | Samy Suliman':'مقالات وأبحاث | سامي سليمان';
+    const description=en()?'Articles and research by Samy Suliman on education, leadership, training, and business development.':'مقالات وأبحاث سامي سليمان في التعليم والقيادة والإدارة والتدريب وتطوير الأعمال.';
+    setSeo(title,description,BASE_URL);
+  }
   function readingTime(content){const w=String(content||'').trim().split(/\s+/).filter(Boolean).length;const m=Math.max(1,Math.ceil(w/(en()?210:180)));return en()?`${m} min read`:`${m} د قراءة`}
   function articleNumber(a,i,t){const s=String(a.number||'').trim();if(s){const n=s.replace(/^0+/,'')||'0';return n.padStart(2,'0').slice(-2)}return String(t-i).padStart(2,'0').slice(-2)}
   function inlineFormat(text){return SamyArticles.escapeHtml(text).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>')}
   function paragraphs(text){return String(text||'').split(/\n\s*\n/).map(block=>{const b=block.trim();if(!b)return'';if(/^##\s+/.test(b))return'<h2>'+inlineFormat(b.replace(/^##\s+/,''))+'</h2>';if(/^>\s+/.test(b))return'<blockquote>'+inlineFormat(b.replace(/^>\s+/,''))+'</blockquote>';if(/^-\s+/m.test(b)){return'<ul>'+b.split(/\n/).filter(x=>/^-\s+/.test(x)).map(x=>'<li>'+inlineFormat(x.replace(/^-\s+/,''))+'</li>').join('')+'</ul>'}return'<p>'+inlineFormat(b).replace(/\n/g,'<br>')+'</p>'}).join('')}
   function videoBlock(url){if(!url)return'';const id=SamyArticles.youtubeId(url);return id?'<div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/'+id+'" title="Video" allowfullscreen loading="lazy"></iframe></div>':'<a class="video-link" href="'+SamyArticles.escapeHtml(url)+'" target="_blank" rel="noopener">'+(en()?'Watch video ↗':'مشاهدة الفيديو ↗')+'</a>'}
   function renderList(){const q=search.value.trim().toLowerCase();let list=SamyArticles.published().filter(a=>{const l=SamyArticles.localized(a,en());return [l.title,l.summary,l.content,a.series,a.keywords].join(' ').toLowerCase().includes(q)});if(sort.value==='oldest')list=[...list].reverse();count.innerHTML=`<strong>${list.length}</strong><span>${en()?(list.length===1?'article':'articles'):(list.length===1?'مقال منشور':'مقالات منشورة')}</span>`;if(!list.length){grid.innerHTML=`<div class="articles-empty"><div>✦</div><strong>${en()?'No matching articles':'لا توجد مقالات مطابقة'}</strong></div>`;return}grid.innerHTML=list.map((a,i)=>{const l=SamyArticles.localized(a,en()),num=articleNumber(a,i,list.length),series=a.series||(en()?'Professional Insight':'من واقع التجربة');return `<article class="article-list-card"><button class="article-card-open article-card-media" data-slug="${SamyArticles.escapeHtml(a.slug)}">${a.image?`<img loading="lazy" src="${SamyArticles.escapeHtml(a.image)}" alt="${SamyArticles.escapeHtml(l.title)}">`:`<div class="article-card-placeholder"><span>✦</span><small>${en()?'ARTICLE':'مقال'}</small><strong>${num}</strong></div>`}<span class="article-number">${num}</span></button><div class="article-card-body"><div class="article-card-topline"><span class="article-series-name">${SamyArticles.escapeHtml(series)}</span><span>${SamyArticles.formatDate(a.publishAt||a.createdAt,en())}</span></div><h2><button class="article-title-button" data-slug="${SamyArticles.escapeHtml(a.slug)}">${SamyArticles.escapeHtml(l.title)}</button></h2><p>${SamyArticles.escapeHtml(l.summary||SamyArticles.excerpt(l.content,180))}</p><div class="article-card-footer"><span>${readingTime(l.content)}</span><button class="article-read-link" data-slug="${SamyArticles.escapeHtml(a.slug)}">${en()?'Read article':'اقرأ المقال'} <b>←</b></button></div></div></article>`}).join('');grid.querySelectorAll('[data-slug]').forEach(el=>el.addEventListener('click',()=>openArticle(el.dataset.slug,true)))}
-  function openArticle(slug,push=false){const a=SamyArticles.published().find(x=>x.slug===slug);if(!a){showList(false);return}savedScroll=window.scrollY;const l=SamyArticles.localized(a,en()),url=location.origin+location.pathname+'?slug='+encodeURIComponent(a.slug);document.title=l.title+' | Samy Suliman';articleView.innerHTML=`<button class="back-to-articles" id="backToArticles">${en()?'← Back to articles':'العودة إلى المقالات →'}</button><div class="breadcrumbs"><a href="index.html">${en()?'Portfolio':'الموقع الرئيسي'}</a> / <span>${en()?'Articles & Research':'مقالات وأبحاث'}</span></div>${a.series?`<div class="article-series">${SamyArticles.escapeHtml(a.series)}${a.number?' · '+SamyArticles.escapeHtml(a.number):''}</div>`:''}<h1>${SamyArticles.escapeHtml(l.title)}</h1><div class="article-meta">${SamyArticles.formatDate(a.publishAt||a.createdAt,en())} · ${readingTime(l.content)}</div>${!l.available&&en()?'<div class="translation-warning article-translation-warning">This article is currently available in Arabic only.</div>':''}${a.image?`<img class="article-cover" src="${SamyArticles.escapeHtml(a.image)}" alt="${SamyArticles.escapeHtml(l.title)}">`:''}${videoBlock(a.video)}<div class="article-content">${paragraphs(l.content)}</div><section class="article-share-block" aria-label="${en()?'Share content':'شارك المحتوى'}"><h2 class="article-share-title">${en()?'Share content':'شارك المحتوى'}</h2><div class="share"><button id="linkedinShare">LinkedIn</button><a class="whatsapp" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(l.title+' — '+url)}">WhatsApp</a><a class="x" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(l.title+' — '+url)}">X</a><button id="copyLink">${en()?'Copy link':'نسخ الرابط'}</button></div></section><div class="author-box"><img src="assets/portrait-only.jpg" alt="Samy Suliman"><div><h3>${en()?'Samy Suliman':'سامي سليمان'}</h3><p>${en()?'Islamic Studies educator, trainer, author, and education leader.':'معلم تربية إسلامية، ومدرب، ومؤلف، وصاحب خبرة في القيادة والتطوير التعليمي.'}</p></div></div>`;listingView.hidden=true;readerView.hidden=false;document.body.classList.add('reader-mode');if(push)history.pushState({slug:a.slug},'',`?slug=${encodeURIComponent(a.slug)}`);window.scrollTo({top:0,behavior:'smooth'});document.getElementById('backToArticles').onclick=()=>history.back();document.getElementById('linkedinShare').onclick=()=>window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(url),'_blank','noopener');document.getElementById('copyLink').onclick=async e=>{try{await navigator.clipboard.writeText(url);e.target.textContent=en()?'Copied':'تم النسخ'}catch{prompt(en()?'Copy this link':'انسخ هذا الرابط',url)}}}
-  function showList(push=false){readerView.hidden=true;listingView.hidden=false;document.body.classList.remove('reader-mode');document.title=en()?'Articles & Research | Samy Suliman':'مقالات وأبحاث | سامي سليمان';if(push)history.pushState({},'',location.pathname);requestAnimationFrame(()=>window.scrollTo(0,savedScroll||0))}
-  function route(){const slug=new URLSearchParams(location.search).get('slug');slug?openArticle(slug,false):showList(false)}
+  function openArticle(slug,push=false){
+    const a=SamyArticles.published().find(x=>x.slug===slug);
+    if(!a){
+      showList(false);
+      if(location.search) history.replaceState({},'',location.pathname);
+      return;
+    }
+    if(!readerView.hidden) savedScroll=0; else savedScroll=window.scrollY;
+    const l=SamyArticles.localized(a,en());
+    const relativeUrl=location.pathname+'?slug='+encodeURIComponent(a.slug);
+    const publicUrl=BASE_URL+'?slug='+encodeURIComponent(a.slug);
+    const summary=l.summary||SamyArticles.excerpt(l.content,160);
+    setSeo(l.title+' | Samy Suliman',summary,publicUrl,'article');
+    articleView.innerHTML=`<button class="back-to-articles" id="backToArticles">${en()?'← Back to articles':'العودة إلى المقالات →'}</button><div class="breadcrumbs"><a href="index.html">${en()?'Portfolio':'الموقع الرئيسي'}</a> / <span>${en()?'Articles & Research':'مقالات وأبحاث'}</span></div>${a.series?`<div class="article-series">${SamyArticles.escapeHtml(a.series)}${a.number?' · '+SamyArticles.escapeHtml(a.number):''}</div>`:''}<h1>${SamyArticles.escapeHtml(l.title)}</h1><div class="article-meta">${SamyArticles.formatDate(a.publishAt||a.createdAt,en())} · ${readingTime(l.content)}</div>${!l.available&&en()?'<div class="translation-warning article-translation-warning">This article is currently available in Arabic only.</div>':''}${a.image?`<img class="article-cover" src="${SamyArticles.escapeHtml(a.image)}" alt="${SamyArticles.escapeHtml(l.title)}">`:''}${videoBlock(a.video)}<div class="article-content">${paragraphs(l.content)}</div><section class="article-share-block" aria-label="${en()?'Share content':'شارك المحتوى'}"><h2 class="article-share-title">${en()?'Share content':'شارك المحتوى'}</h2><div class="share"><button id="linkedinShare">LinkedIn</button><a class="whatsapp" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(l.title+' — '+publicUrl)}">WhatsApp</a><a class="x" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(l.title+' — '+publicUrl)}">X</a><button id="copyLink">${en()?'Copy link':'نسخ الرابط'}</button></div></section><div class="author-box"><img src="assets/portrait-only.jpg" alt="Samy Suliman"><div><h3>${en()?'Samy Suliman':'سامي سليمان'}</h3><p>${en()?'Islamic Studies educator, trainer, author, and education leader.':'معلم تربية إسلامية، ومدرب، ومؤلف، وصاحب خبرة في القيادة والتطوير التعليمي.'}</p></div></div>`;
+    listingView.hidden=true;
+    readerView.hidden=false;
+    document.body.classList.add('reader-mode');
+    if(push) history.pushState({slug:a.slug},'',relativeUrl);
+    window.scrollTo({top:0,behavior:push?'smooth':'auto'});
+    document.getElementById('backToArticles').onclick=()=>showList(true);
+    document.getElementById('linkedinShare').onclick=()=>window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(publicUrl),'_blank','noopener');
+    document.getElementById('copyLink').onclick=async e=>{try{await navigator.clipboard.writeText(publicUrl);e.target.textContent=en()?'Copied':'تم النسخ'}catch{prompt(en()?'Copy this link':'انسخ هذا الرابط',publicUrl)}};
+  }
+  function showList(push=false){
+    readerView.hidden=true;
+    listingView.hidden=false;
+    document.body.classList.remove('reader-mode');
+    listingSeo();
+    if(push) history.pushState({},'',location.pathname);
+    requestAnimationFrame(()=>window.scrollTo(0,savedScroll||0));
+  }
+  function route(){
+    const slug=new URLSearchParams(location.search).get('slug');
+    slug?openArticle(slug,false):showList(false);
+  }
   search.addEventListener('input',renderList);sort.addEventListener('change',renderList);window.addEventListener('popstate',route);
   document.getElementById('copySiteLink').addEventListener('click',async()=>{const u='https://samysuliman.github.io/portfolio/';try{await navigator.clipboard.writeText(u)}catch{prompt('Copy this link:',u)}});
   document.getElementById('langBtn').addEventListener('click',()=>{document.body.classList.toggle('english');const isEn=en();document.documentElement.lang=isEn?'en':'ar';document.documentElement.dir=isEn?'ltr':'rtl';search.placeholder=isEn?'Search articles and research':'ابحث في المقالات والأبحاث';sort.options[0].textContent=isEn?'Newest first':'الأحدث أولًا';sort.options[1].textContent=isEn?'Oldest first':'الأقدم أولًا';renderList();route()});
