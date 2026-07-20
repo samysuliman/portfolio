@@ -1,0 +1,22 @@
+<!doctype html><html lang="ar" dir="rtl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مقالات وأبحاث | سامي سليمان</title><meta name="description" content="مقالات وأبحاث سامي سليمان في التعليم والإدارة والتدريب وتطوير الأعمال."><meta name="robots" content="index,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="icon" href="assets/favicon.png" type="image/png"><link rel="stylesheet" href="assets/articles.css">
+</head><body>
+<nav class="nav"><div class="container nav-inner"><div class="brand-wrap"><img class="avatar" src="assets/portrait-only.jpg" alt="سامي سليمان"><a class="brand" href="index.html"><span class="ar">سامي سليمان</span><span class="en">Samy Suliman</span></a></div><div class="nav-actions"><a class="nav-btn" href="index.html"><span class="ar">الموقع الرئيسي</span><span class="en">Portfolio</span></a><button class="nav-btn" id="langBtn" type="button">AR / EN</button></div></div></nav>
+<header class="hero"><div class="container"><div class="hero-icon">✍</div><h1><span class="ar">مقالات وأبحاث</span><span class="en">Articles &amp; Research</span></h1><p class="ar">خلاصة خبرات وأفكار في التعليم والإدارة والتدريب والأعمال؛ لتعكس الرؤية المهنية والخبرة العملية.</p><p class="en">Professional insights in education, leadership, training, and business, reflecting practical experience and thoughtful perspective.</p></div></header>
+<main class="main"><div class="container"><div class="toolbar"><label class="search"><span>⌕</span><input id="articleSearch" type="search" placeholder="ابحث في المقالات والأبحاث" aria-label="البحث في المقالات"></label><div class="count" id="articleCount"></div></div><div class="grid" id="articlesGrid"></div></div></main>
+<footer class="footer">© 2026 Samy Suliman — Professional Portfolio</footer>
+<script src="articles/articles-data.js"></script><script src="assets/articles-common.js"></script><script>
+const grid=document.getElementById('articlesGrid'),search=document.getElementById('articleSearch'),count=document.getElementById('articleCount');
+function render(){
+ const en=document.body.classList.contains('english'),q=search.value.trim().toLowerCase();
+ const list=SamyArticles.published().filter(a=>(a.title+' '+a.content).toLowerCase().includes(q));
+ count.textContent=en?(list.length+' article'+(list.length===1?'':'s')):(list.length+' مقال');
+ if(!list.length){grid.innerHTML='<div class="empty"><strong>'+(en?'Articles will be published soon':'سيتم نشر المقالات والأبحاث قريبًا')+'</strong><p>'+(en?'Please visit again soon.':'ستضاف هنا المقالات الجديدة تباعًا.')+'</p></div>';return}
+ grid.innerHTML=list.map(a=>'<article class="card"><a class="card-media" href="article.html?slug='+encodeURIComponent(a.slug)+'">'+(a.image?'<img src="'+SamyArticles.escapeHtml(a.image)+'" alt="">':'<div class="card-placeholder">✍</div>')+'</a><div class="card-body"><div class="meta">'+SamyArticles.formatDate(a.publishAt||a.createdAt,en)+'</div><h2><a href="article.html?slug='+encodeURIComponent(a.slug)+'">'+SamyArticles.escapeHtml(a.title)+'</a></h2><p class="excerpt">'+SamyArticles.escapeHtml(SamyArticles.excerpt(a.content))+'</p><a class="read" href="article.html?slug='+encodeURIComponent(a.slug)+'">'+(en?'Read article ←':'اقرأ المقال ←')+'</a></div></article>').join('');
+}
+search.addEventListener('input',render);
+document.getElementById('langBtn').addEventListener('click',()=>{document.body.classList.toggle('english');const en=document.body.classList.contains('english');document.documentElement.lang=en?'en':'ar';document.documentElement.dir=en?'ltr':'rtl';search.placeholder=en?'Search articles and research':'ابحث في المقالات والأبحاث';render()});
+render();
+</script></body></html>
