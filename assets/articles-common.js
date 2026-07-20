@@ -2,7 +2,7 @@
  const PUBLIC=Array.isArray(window.SAMY_ARTICLES)?window.SAMY_ARTICLES:[];
  const key='samy_articles_v1';
  function normalize(a){const titleAr=a.titleAr||a.title||'',contentAr=a.contentAr||a.content||'',summaryAr=a.summaryAr||a.summary||excerpt(contentAr,220);return {...a,titleAr,contentAr,summaryAr,title:a.title||titleAr,content:a.content||contentAr,summary:a.summary||summaryAr,titleEn:a.titleEn||'',contentEn:a.contentEn||'',summaryEn:a.summaryEn||'',hasEnglish:Boolean((a.titleEn||'').trim()&&(a.contentEn||'').trim())}}
- function local(){try{const raw=localStorage.getItem(key);return (raw===null?PUBLIC:JSON.parse(raw)).map(normalize)}catch(e){return PUBLIC.map(normalize)}}
+ function local(){try{const raw=localStorage.getItem(key);if(raw===null)return PUBLIC.map(normalize);const saved=JSON.parse(raw);if(!Array.isArray(saved))return PUBLIC.map(normalize);const merged=new Map();PUBLIC.map(normalize).forEach(a=>merged.set(a.id||a.slug,a));saved.map(normalize).forEach(a=>merged.set(a.id||a.slug,a));return Array.from(merged.values())}catch(e){return PUBLIC.map(normalize)}}
  function all(){return local()}
  function isPublished(a){const due=new Date(a.publishAt||a.createdAt||0)<=new Date();return (a.status==='published'||a.status==='scheduled')&&due}
  function published(){return all().filter(isPublished).sort((a,b)=>new Date(b.publishAt||b.createdAt)-new Date(a.publishAt||a.createdAt))}
