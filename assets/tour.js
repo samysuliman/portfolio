@@ -1,6 +1,7 @@
 (function(){
  'use strict';
  const modal=document.getElementById('introTour');
+ const explore=document.getElementById('exploreHub');
  if(!modal) return;
  const title=document.getElementById('tourTitle');
  const kicker=document.getElementById('tourKicker');
@@ -13,68 +14,45 @@
  const skip=document.getElementById('tourSkip');
  const nav=document.getElementById('tourNavGroup');
  const finalActions=document.getElementById('tourFinalActions');
- let step=0;
- let lastFocus=null;
+ const exploreBtn=document.getElementById('tourExplore');
+ const exploreClose=document.getElementById('exploreClose');
+ let step=0,lastFocus=null;
  const steps=[
-  {
-   ar:{k:'الجولة التعريفية المهنية',t:'مرحبًا، أنا سامي سليمان',p:['معلم تربية إسلامية، ومدرب تربوي، ومؤلف.','أكثر من 20 عامًا في التعليم، منها 10 أعوام في المدارس العالمية.','متاح للأدوار التعليمية والإدارية والإشرافية.']},
-   en:{k:'Professional Introduction Tour',t:'Hello, I’m Samy Suliman',p:['Islamic Studies educator, teacher trainer, and author.','20+ years in education, including 10 years in international schools.','Available for educational, administrative, and supervisory roles.']}
-  },
-  {
-   ar:{k:'الخبرات',t:'خبرة تجمع التدريس والقيادة',p:['تدريس التربية الإسلامية والقرآن الكريم في بيئات أزهرية وعالمية.','رئيس قسم سابق، مع خبرة في قيادة الفريق ومتابعة الخطط والتقييم.','مشاركة في تدريب المعلمين والجودة والاعتماد الأكاديمي.']},
-   en:{k:'Experience',t:'Teaching and Leadership Experience',p:['Teaching Islamic Studies and Qur’an in Al-Azhar and international environments.','Former Head of Department with team leadership, planning, and evaluation experience.','Contributed to teacher training, quality, and academic accreditation.']}
-  },
-  {
-   ar:{k:'الإنجازات والأثر',t:'أثر مهني موثق',p:['المركز الثاني في جائزة الشركة الوطنية للتعليم 2025.','تقديم أكثر من 6 ورش تدريبية تطبيقية للمعلمين.','شهادات وتوصيات من طلاب وقيادات أكاديمية، مع شواهد مهنية قابلة للمراجعة.']},
-   en:{k:'Achievements & Impact',t:'Documented Professional Impact',p:['Second place in the National Company for Learning and Education Award 2025.','Delivered 6+ practical teacher-development workshops.','Student testimonials, academic recommendations, and reviewable evidence of professional work.']}
-  },
-  {
-   ar:{k:'المؤلفات',t:'محتوى تعليمي أصيل',p:['سلسلة في أحكام التجويد بمستويات تعليمية متدرجة.','السيرة النبوية للأطفال بالعربية والإنجليزية، مع أنشطة وتمارين.','مقالات وأبحاث تربوية منشورة من خلال المنصة.']},
-   en:{k:'Publications',t:'Original Educational Content',p:['A progressive multi-level series on Tajweed rules.','A bilingual Prophetic biography series for children with activities and exercises.','Educational articles and research published through this platform.']}
-  },
-  {
-   ar:{k:'القيمة المضافة',t:'ماذا أستطيع أن أقدم للمؤسسة؟',p:['قيادة فريق تعليمي ومتابعة الأداء وتحويل الخطط إلى إجراءات عملية.','تطوير المعلمين والمحتوى والممارسات الصفية.','تعزيز الجودة والهوية والقيم، وبناء أثر يلمسه الطالب والمدرسة.']},
-   en:{k:'Added Value',t:'What Can I Bring to Your Institution?',p:['Lead educational teams, monitor performance, and turn plans into action.','Develop teachers, content, and classroom practice.','Strengthen quality, identity, values, and measurable student impact.']}
-  },
-  {
-   ar:{k:'الخطوة التالية',t:'شكرًا لوقتكم',p:['يمكنكم الآن تحميل السيرة الذاتية، أو تصفح المؤلفات والأعمال، أو التواصل مباشرة لمناقشة فرصة مناسبة.']},
-   en:{k:'Next Step',t:'Thank You for Your Time',p:['You may now download my CV, explore my publications and evidence, or contact me directly to discuss a suitable opportunity.']}
-  }
+  {ar:{k:'جولة تعريفية سريعة',t:'مرحبًا، أنا سامي سليمان',html:'<p>معلم تربية إسلامية، ومدرب تربوي، ومؤلف، بخبرة تمتد لأكثر من عشرين عامًا في التعليم.</p><p>أجمع بين التدريس، والقيادة التعليمية، وتطوير المعلمين والمحتوى.</p>'},en:{k:'A Quick Introduction',t:'Hello, I’m Samy Suliman',html:'<p>Islamic Studies educator, teacher trainer, and author with more than twenty years of experience in education.</p><p>I combine classroom teaching, educational leadership, teacher development, and content creation.</p>'}},
+  {ar:{k:'ماذا أقدم؟',t:'خبرة تتحول إلى قيمة عملية',html:'<p>أساعد المؤسسات التعليمية في تحسين أداء المعلمين، وتطوير الممارسات الصفية، وبناء محتوى تعليمي أصيل، وتعزيز الجودة والهوية والقيم.</p>'},en:{k:'What I Offer',t:'Experience Translated into Practical Value',html:'<p>I help educational institutions improve teacher performance, strengthen classroom practice, develop original educational content, and advance quality, identity, and values.</p>'}},
+  {ar:{k:'المؤلفات',t:'مؤلفات ومواد تعليمية من تأليفي',html:'<a class="tour-publications-visual" href="#library"><img src="assets/publications-collage.webp" alt="مجموعة من مؤلفات سامي سليمان"><span>استعرض المؤلفات</span></a>'},en:{k:'Publications',t:'Books and Educational Materials I Have Authored',html:'<a class="tour-publications-visual" href="#library"><img src="assets/publications-collage.webp" alt="A selection of books authored by Samy Suliman"><span>View publications</span></a>'}},
+  {ar:{k:'الخطوة التالية',t:'أشكرك على وقتك',html:'<p>إذا رغبت في التعرف على المزيد، يمكنك استكشاف الملف المهني كاملًا أو التواصل معي مباشرة.</p>'},en:{k:'Next Step',t:'Thank You for Your Time',html:'<p>To learn more, explore the complete professional profile or contact me directly.</p>'}}
  ];
  function english(){return document.body.classList.contains('english');}
  function render(){
-  const lang=english()?'en':'ar'; const s=steps[step][lang];
-  kicker.textContent=s.k; title.textContent=s.t;
-  body.innerHTML='<ul class="tour-points">'+s.p.map(x=>'<li>'+x+'</li>').join('')+'</ul>';
+  const lang=english()?'en':'ar',s=steps[step][lang];
+  kicker.textContent=s.k; title.textContent=s.t; body.innerHTML=s.html;
   counter.textContent=(lang==='en'?'Step ':'الخطوة ')+(step+1)+(lang==='en'?' of ':' من ')+steps.length;
   progress.style.width=((step+1)/steps.length*100)+'%';
-  prev.disabled=step===0; prev.textContent=lang==='en'?'Previous':'السابق';
+  prev.hidden=step===0; prev.textContent=lang==='en'?'Previous':'السابق';
   next.textContent=lang==='en'?'Next':'التالي';
   skip.textContent=lang==='en'?'End tour':'إنهاء الجولة';
   close.setAttribute('aria-label',lang==='en'?'Close tour':'إغلاق الجولة');
   nav.hidden=step===steps.length-1; finalActions.hidden=step!==steps.length-1;
-  document.getElementById('tourCvAr').hidden=lang==='en';
-  document.getElementById('tourCvEn').hidden=lang!=='en';
-  document.getElementById('tourWorks').textContent=lang==='en'?'View publications':'عرض المؤلفات';
   document.getElementById('tourContact').textContent=lang==='en'?'Contact me':'تواصل معي';
+  exploreBtn.textContent=lang==='en'?'Explore my professional profile':'استكشف ملفي المهني';
+  body.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',closeTour));
  }
  function openTour(){lastFocus=document.activeElement;step=0;render();modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.classList.add('tour-open');close.focus();}
- function closeTour(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.classList.remove('tour-open');if(lastFocus)lastFocus.focus();}
+ function closeTour(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');if(!explore.classList.contains('open'))document.body.classList.remove('tour-open');if(lastFocus)lastFocus.focus();}
+ function openExplore(){closeTour();explore.classList.add('open');explore.setAttribute('aria-hidden','false');document.body.classList.add('tour-open');exploreClose.focus();}
+ function closeExplore(){explore.classList.remove('open');explore.setAttribute('aria-hidden','true');document.body.classList.remove('tour-open');}
  document.querySelectorAll('[data-open-tour]').forEach(b=>b.addEventListener('click',openTour));
- close.addEventListener('click',closeTour);skip.addEventListener('click',closeTour);
+ document.querySelectorAll('[data-open-explore]').forEach(b=>b.addEventListener('click',openExplore));
+ close.addEventListener('click',closeTour); skip.addEventListener('click',closeTour);
  prev.addEventListener('click',()=>{if(step>0){step--;render();}});
  next.addEventListener('click',()=>{if(step<steps.length-1){step++;render();}});
+ exploreClose.addEventListener('click',closeExplore);
  modal.addEventListener('click',e=>{if(e.target===modal)closeTour();});
- document.getElementById('tourWorks').addEventListener('click',closeTour);
+ explore.addEventListener('click',e=>{if(e.target===explore)closeExplore();});
+ explore.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeExplore));
  document.getElementById('tourContact').addEventListener('click',closeTour);
- document.addEventListener('keydown',e=>{
-  if(!modal.classList.contains('open')) return;
-  if(e.key==='Escape') closeTour();
-  if(e.key==='ArrowLeft' && english() && step<steps.length-1){step++;render();}
-  if(e.key==='ArrowRight' && english() && step>0){step--;render();}
-  if(e.key==='ArrowLeft' && !english() && step>0){step--;render();}
-  if(e.key==='ArrowRight' && !english() && step<steps.length-1){step++;render();}
- });
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(explore.classList.contains('open'))closeExplore();else if(modal.classList.contains('open'))closeTour();}});
  const observer=new MutationObserver(()=>{if(modal.classList.contains('open'))render();});
  observer.observe(document.body,{attributes:true,attributeFilter:['class']});
 })();

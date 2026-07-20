@@ -684,7 +684,7 @@ body.english .nav-actions{order:1;margin-left:auto;margin-right:0}
 <meta name="apple-mobile-web-app-title" content="سامي سليمان">
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <link rel="stylesheet" href="assets/pwa.css">
-<link rel="stylesheet" href="assets/tour.css?v=3.2"/>
+<link rel="stylesheet" href="assets/tour.css?v=3.3"/>
 </head>
 <body>
 <nav class="nav" aria-label="Primary navigation">
@@ -724,13 +724,13 @@ body.english .nav-actions{order:1;margin-left:auto;margin-right:0}
 <p class="tagline en">Inspiring minds. Shaping character. Creating lasting impact.</p>
 <p class="availability ar">متاح للتوظيف في المجالات التعليمية والإدارية والإشرافية</p><p class="availability en">Available for educational, administrative, and supervisory roles</p><p class="hero-copy ar">خبرة تمتد لأكثر من 20 عامًا في التعليم، تشمل تدريس التربية الإسلامية، ورئاسة قسم الدراسات الإسلامية، وتدريب المعلمين، وتأليف المواد التعليمية، والمساهمة في الجودة والاعتماد الأكاديمي.</p>
 <p class="hero-copy en">More than 20 years of experience in Islamic Studies teaching, department leadership, teacher development, educational publishing, and quality and accreditation support.</p>
-<div class="actions">
-<button class="btn primary tour-start ar" data-open-tour type="button">ابدأ الجولة التعريفية — دقيقتان</button>
-<button class="btn primary tour-start en" data-open-tour type="button">Start the 2-minute tour</button>
-<a class="btn secondary ar" href="assets/samy-suliman-cv-ar.pdf" rel="noopener noreferrer" target="_blank">السيرة الذاتية (PDF)</a>
-<a class="btn secondary en" href="assets/samy-suliman-cv-en.pdf" rel="noopener noreferrer" target="_blank">CV (PDF)</a>
-<a class="btn secondary ar" href="#contact">تواصل معي</a>
-<a class="btn secondary en" href="#contact">Contact</a>
+<div class="actions professional-entry-actions">
+<a class="btn secondary ar" href="assets/samy-suliman-cv-ar.pdf" rel="noopener noreferrer" target="_blank">تحميل السيرة الذاتية</a>
+<a class="btn secondary en" href="assets/samy-suliman-cv-en.pdf" rel="noopener noreferrer" target="_blank">Download CV</a>
+<button class="btn primary tour-start ar" data-open-tour type="button">تعرّف عليّ في دقيقتين</button>
+<button class="btn primary tour-start en" data-open-tour type="button">Meet me in 2 minutes</button>
+<button class="btn secondary explore-start ar" data-open-explore type="button">استكشف ملفي المهني</button>
+<button class="btn secondary explore-start en" data-open-explore type="button">Explore my professional profile</button>
 </div>
 </div>
 <div class="portrait-wrap"><img alt="سامي سليمان" class="hero-image" decoding="async" loading="lazy" src="assets/portrait-only.jpg"/></div>
@@ -1010,15 +1010,26 @@ body.english .nav-actions{order:1;margin-left:auto;margin-right:0}
 <button class="tour-close" id="tourClose" type="button" aria-label="إغلاق الجولة">×</button>
 <div class="tour-top"><img class="tour-avatar" src="assets/portrait-only.jpg" alt="سامي سليمان"/><div><span class="tour-kicker" id="tourKicker"></span><h2 class="tour-title" id="tourTitle"></h2></div></div>
 <div class="tour-body" id="tourBody"></div>
-<div class="tour-progress-wrap"><div class="tour-progress-meta"><span id="tourCounter"></span><span>≈ 2 min</span></div><div class="tour-progress"><div class="tour-progress-bar" id="tourProgressBar"></div></div></div>
+<div class="tour-progress-wrap"><div class="tour-progress-meta"><span id="tourCounter"></span><span id="tourTime">≈ 2 min</span></div><div class="tour-progress"><div class="tour-progress-bar" id="tourProgressBar"></div></div></div>
 <div class="tour-actions">
 <button class="tour-skip" id="tourSkip" type="button">إنهاء الجولة</button>
 <div class="tour-nav-group" id="tourNavGroup"><button class="tour-btn" id="tourPrev" type="button">السابق</button><button class="tour-btn primary" id="tourNext" type="button">التالي</button></div>
 <div class="tour-final-actions" id="tourFinalActions" hidden>
-<a class="tour-btn gold" id="tourCvAr" href="assets/samy-suliman-cv-ar.pdf" target="_blank" rel="noopener noreferrer">تحميل السيرة الذاتية</a>
-<a class="tour-btn gold" id="tourCvEn" href="assets/samy-suliman-cv-en.pdf" target="_blank" rel="noopener noreferrer" hidden>Download CV</a>
-<a class="tour-btn" id="tourWorks" href="#library">عرض المؤلفات</a><a class="tour-btn primary" id="tourContact" href="#contact">تواصل معي</a>
+<a class="tour-btn primary" id="tourContact" href="#contact">تواصل معي</a>
+<button class="tour-btn gold" id="tourExplore" data-open-explore type="button">استكشف ملفي المهني</button>
 </div></div>
+</div></div>
+<div aria-hidden="true" aria-labelledby="exploreTitle" aria-modal="true" class="tour-modal explore-modal" id="exploreHub" role="dialog">
+<div class="tour-panel explore-panel">
+<button class="tour-close" id="exploreClose" type="button" aria-label="إغلاق">×</button>
+<span class="tour-kicker ar">كل أقسام الموقع في مكان واحد</span><span class="tour-kicker en">All portfolio sections in one place</span>
+<h2 class="tour-title ar" id="exploreTitle">استكشف ملفي المهني</h2><h2 class="tour-title en">Explore My Professional Profile</h2>
+<div class="explore-links ar">
+<a href="#why">نبذة عني</a><a href="#experience">الخبرات المهنية والقيادية</a><a href="#quality">الجودة والإنتاجية</a><a href="#impact">الأثر المهني</a><a href="#quran">القرآن والإقراء</a><a href="#library">المؤلفات</a><a href="articles.html">المقالات والأبحاث</a><a href="#recognition">التكريمات</a><a href="#contact">تواصل معي</a>
+</div>
+<div class="explore-links en">
+<a href="#why">About Me</a><a href="#experience">Professional &amp; Leadership Experience</a><a href="#quality">Quality &amp; Productivity</a><a href="#impact">Professional Impact</a><a href="#quran">Qur’an &amp; Ijazah</a><a href="#library">Publications</a><a href="articles.html">Articles &amp; Research</a><a href="#recognition">Recognition</a><a href="#contact">Contact Me</a>
+</div>
 </div></div>
 <div aria-hidden="true" aria-modal="true" class="book-modal" id="bookModal" role="dialog">
 <div class="book-modal-panel">
@@ -1141,7 +1152,7 @@ let resizeTimer;window.addEventListener('resize',()=>{if(!pdfDoc)return;clearTim
 document.getElementById('whatsappForm').addEventListener('submit',e=>{e.preventDefault();const en=document.body.classList.contains('english');const name=document.getElementById('contactName').value.trim(),email=document.getElementById('contactEmail').value.trim(),subject=document.getElementById('contactSubject').value.trim(),message=document.getElementById('contactMessage').value.trim();const text=en?`Hello Mr. Samy Suliman,\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`:`السلام عليكم أستاذ سامي سليمان،\n\nالاسم: ${name}\nالبريد الإلكتروني: ${email}\nالموضوع: ${subject}\n\nالرسالة:\n${message}`;window.open('https://wa.me/966559461920?text='+encodeURIComponent(text),'_blank','noopener')});
 const topBtn=document.getElementById('backToTop');window.addEventListener('scroll',()=>topBtn.classList.toggle('show',window.scrollY>500));topBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 </script>
-<script src="assets/tour.js?v=3.2" defer></script>
+<script src="assets/tour.js?v=3.3" defer></script>
 <script src="assets/pwa.js" defer></script>
 </body>
 </html>
