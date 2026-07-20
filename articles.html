@@ -11,10 +11,16 @@
 const grid=document.getElementById('articlesGrid'),search=document.getElementById('articleSearch'),count=document.getElementById('articleCount');
 function render(){
  const en=document.body.classList.contains('english'),q=search.value.trim().toLowerCase();
- const list=SamyArticles.published().filter(a=>(a.title+' '+a.content).toLowerCase().includes(q));
+ const list=SamyArticles.published().filter(a=>{
+  const text=[SamyArticles.title(a,false),SamyArticles.title(a,true),SamyArticles.summary(a,false),SamyArticles.summary(a,true),SamyArticles.content(a,false),SamyArticles.content(a,true)].join(' ').toLowerCase();
+  return text.includes(q);
+ });
  count.textContent=en?(list.length+' article'+(list.length===1?'':'s')):(list.length+' مقال');
- if(!list.length){grid.innerHTML='<div class="empty"><strong>'+(en?'Articles will be published soon':'سيتم نشر المقالات والأبحاث قريبًا')+'</strong><p>'+(en?'Please visit again soon.':'ستضاف هنا المقالات الجديدة تباعًا.')+'</p></div>';return}
- grid.innerHTML=list.map(a=>'<article class="card"><a class="card-media" href="article.html?slug='+encodeURIComponent(a.slug)+'">'+(a.image?'<img src="'+SamyArticles.escapeHtml(a.image)+'" alt="">':'<div class="card-placeholder">✍</div>')+'</a><div class="card-body"><div class="meta">'+SamyArticles.formatDate(a.publishAt||a.createdAt,en)+'</div><h2><a href="article.html?slug='+encodeURIComponent(a.slug)+'">'+SamyArticles.escapeHtml(a.title)+'</a></h2><p class="excerpt">'+SamyArticles.escapeHtml(SamyArticles.excerpt(a.content))+'</p><a class="read" href="article.html?slug='+encodeURIComponent(a.slug)+'">'+(en?'Read article ←':'اقرأ المقال ←')+'</a></div></article>').join('');
+ if(!list.length){grid.innerHTML='<div class="empty"><strong>'+(en?'No published articles yet':'لا توجد مقالات منشورة بعد')+'</strong><p>'+(en?'New articles will appear here as they are published.':'ستظهر المقالات الجديدة هنا فور نشرها.')+'</p></div>';return}
+ grid.innerHTML=list.map(a=>{
+  const title=SamyArticles.title(a,en),summary=SamyArticles.summary(a,en)||SamyArticles.excerpt(SamyArticles.content(a,en),165),fallback=en&&!SamyArticles.hasEnglish(a);
+  return '<article class="card"><a class="card-media" href="article.html?slug='+encodeURIComponent(a.slug)+'">'+(a.image?'<img src="'+SamyArticles.escapeHtml(a.image)+'" alt="'+SamyArticles.escapeHtml(title)+'" loading="lazy">':'<div class="card-placeholder">✍</div>')+'</a><div class="card-body"><div class="meta">'+SamyArticles.formatDate(a.publishAt||a.createdAt,en)+'</div><h2><a href="article.html?slug='+encodeURIComponent(a.slug)+'">'+SamyArticles.escapeHtml(title)+'</a></h2>'+(fallback?'<div class="language-note">This article is currently available in Arabic only.</div>':'')+'<p class="excerpt">'+SamyArticles.escapeHtml(summary)+'</p><a class="read" href="article.html?slug='+encodeURIComponent(a.slug)+'">'+(en?'Read article →':'اقرأ المقال ←')+'</a></div></article>';
+ }).join('');
 }
 search.addEventListener('input',render);
 document.getElementById('langBtn').addEventListener('click',()=>{document.body.classList.toggle('english');const en=document.body.classList.contains('english');document.documentElement.lang=en?'en':'ar';document.documentElement.dir=en?'ltr':'rtl';search.placeholder=en?'Search articles and research':'ابحث في المقالات والأبحاث';render()});
