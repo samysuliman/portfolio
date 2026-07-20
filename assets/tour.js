@@ -146,12 +146,12 @@
       ar: {
         k: 'شكرًا لوقتك',
         t: 'تواصل معي',
-        html: '<p class="tour-closing">يسعدني مناقشة فرص العمل والتعاون في التعليم والقيادة والتدريب وتطوير المحتوى.</p><div class="tour-contact-links" aria-label="وسائل التواصل"><a href="https://wa.me/966559461920" target="_blank" rel="noopener noreferrer"><span class="tour-contact-icon" aria-hidden="true">💬</span><span><strong>واتساب</strong><small dir="ltr">+966 55 946 1920</small></span></a><a href="tel:+966559461920"><span class="tour-contact-icon" aria-hidden="true">☎️</span><span><strong>اتصال مباشر</strong><small dir="ltr">+966 55 946 1920</small></span></a><a href="mailto:samysuliman15@gmail.com"><span class="tour-contact-icon" aria-hidden="true">✉️</span><span><strong>البريد الإلكتروني</strong><small dir="ltr">samysuliman15@gmail.com</small></span></a><a href="https://www.linkedin.com/in/samy-suliman-3342bb212/" target="_blank" rel="noopener noreferrer"><span class="tour-contact-icon" aria-hidden="true">in</span><span><strong>LinkedIn</strong><small>الملف المهني</small></span></a></div>'
+        html: '<p class="tour-closing">يسعدني مناقشة فرص العمل والتعاون في التعليم والقيادة والتدريب وتطوير المحتوى.</p>'
       },
       en: {
         k: 'Thank you for your time',
         t: 'Contact Me',
-        html: '<p class="tour-closing">I welcome opportunities in education, leadership, training, and educational content development.</p><div class="tour-contact-links" aria-label="Contact options"><a href="https://wa.me/966559461920" target="_blank" rel="noopener noreferrer"><span class="tour-contact-icon" aria-hidden="true">💬</span><span><strong>WhatsApp</strong><small>+966 55 946 1920</small></span></a><a href="tel:+966559461920"><span class="tour-contact-icon" aria-hidden="true">☎️</span><span><strong>Call</strong><small>+966 55 946 1920</small></span></a><a href="mailto:samysuliman15@gmail.com"><span class="tour-contact-icon" aria-hidden="true">✉️</span><span><strong>Email</strong><small>samysuliman15@gmail.com</small></span></a><a href="https://www.linkedin.com/in/samy-suliman-3342bb212/" target="_blank" rel="noopener noreferrer"><span class="tour-contact-icon" aria-hidden="true">in</span><span><strong>LinkedIn</strong><small>Professional profile</small></span></a></div>'
+        html: '<p class="tour-closing">I welcome opportunities in education, leadership, training, and educational content development.</p>'
       }
     }
   ];
@@ -189,8 +189,15 @@
     skip.textContent = lang === 'en' ? 'Close tour' : 'إغلاق الجولة';
     close.setAttribute('aria-label', lang === 'en' ? 'Close tour' : 'إغلاق الجولة');
 
-    nav.hidden = false;
-    if (finalActions) finalActions.hidden = true;
+    const isLastStep = step === steps.length - 1;
+    nav.hidden = isLastStep;
+    if (finalActions) {
+      finalActions.hidden = !isLastStep;
+      const contactButton = document.getElementById('tourContact');
+      if (contactButton) {
+        contactButton.textContent = lang === 'en' ? 'Go to Contact' : 'الانتقال إلى صفحة التواصل';
+      }
+    }
 
     const publicationLink = body.querySelector('.tour-publications-link');
     if (publicationLink) publicationLink.addEventListener('click', closeTour);
@@ -248,6 +255,24 @@
       closeTour();
     }
   });
+
+
+  const contactButton = document.getElementById('tourContact');
+  if (contactButton) {
+    contactButton.addEventListener('click', event => {
+      event.preventDefault();
+      closeTour();
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        requestAnimationFrame(() => {
+          contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.replaceState(null, '', '#contact');
+        });
+      } else {
+        window.location.hash = 'contact';
+      }
+    });
+  }
 
   if (exploreClose) exploreClose.addEventListener('click', closeExplore);
   modal.addEventListener('click', event => {
