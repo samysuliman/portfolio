@@ -178,3 +178,9 @@ body.english .articles-listing-page .article-number{right:auto;left:12px}
 .share .whatsapp{background:#168a4a}
 .share .whatsapp:hover{background:#10753e}
 @media(max-width:620px){.article-share-block{text-align:start}.article-share-block .share{justify-content:flex-start}.share button,.share a{flex:1 1 calc(50% - 10px);text-align:center}}
+
+/* v3.0.3 — Safe reading-page clarity only; no publishing or routing changes */
+.article-body-section{margin-top:30px;padding:28px 0 8px;border-top:1px solid var(--line)}
+.article-body-title{margin:0 0 18px;color:var(--green);font-size:22px;font-weight:900}
+.article-body-section .article-content{line-height:2}
+@media(max-width:620px){.article-body-section{margin-top:24px;padding-top:22px}.article-body-title{font-size:20px}.article-body-section .article-content{line-height:1.9}}
