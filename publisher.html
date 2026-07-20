@@ -10,7 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/favicon.png" type="image/png">
 <link rel="stylesheet" href="assets/articles.css">
-</head>
+<style>
+.latest-publication{padding:16px 20px}.latest-copy span{font-size:.72rem}.latest-copy strong{font-size:1rem}.latest-icon{width:38px;height:38px}.publisher-editor .panel-heading{align-items:flex-start}.editor-toolbar{display:flex;gap:7px;flex-wrap:wrap;padding:8px;background:#f4f7f5;border:1px solid #dce6e1;border-bottom:0;border-radius:12px 12px 0 0}.editor-toolbar button{border:1px solid #cbd9d2;background:white;border-radius:8px;padding:6px 11px;font:700 .82rem Cairo;cursor:pointer}.editor-toolbar+.article-editor{border-radius:0 0 12px 12px}.table-wrap{overflow-x:auto}.articles-table{width:100%;border-collapse:collapse;min-width:760px}.articles-table th,.articles-table td{padding:14px 12px;border-bottom:1px solid #e3ebe7;text-align:right;vertical-align:middle}.articles-table th{background:#f5f8f6;color:#31584d}.articles-table td:first-child{font-weight:800;color:#b57b00}.articles-table .owner-buttons{display:flex;gap:6px;flex-wrap:wrap}.success-modal{position:fixed;inset:0;background:rgba(0,28,21,.65);display:grid;place-items:center;z-index:1000;padding:20px}.success-modal.hidden{display:none}.success-card{position:relative;width:min(620px,100%);background:white;border-radius:24px;padding:34px;text-align:center;box-shadow:0 25px 80px rgba(0,0,0,.28)}.success-check{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:#e4f6eb;color:#18864b;font-size:2rem;font-weight:900;margin:0 auto 14px}.success-card h2{margin:0 0 8px;color:#063c30}.success-card strong{display:block;margin-bottom:22px}.modal-close{position:absolute;left:18px;top:14px;border:0;background:none;font-size:1.8rem;cursor:pointer}.success-card .actions{justify-content:center}.eyebrow{font-family:Cairo!important}@media(max-width:700px){.success-card{padding:28px 18px}.sticky-actions{overflow-x:auto;flex-wrap:nowrap}.sticky-actions .btn{white-space:nowrap}}
+</style></head>
 <body>
 <nav class="nav">
   <div class="container nav-inner">
@@ -24,12 +26,12 @@
   <section class="latest-publication" id="latestPublication" aria-live="polite">
     <div class="latest-icon">✓</div>
     <div class="latest-copy"><span>آخر عملية نشر</span><strong id="latestTitle">لا يوجد مقال منشور بعد</strong><small id="latestMeta">ابدأ بكتابة أول مقال من النموذج</small></div>
-    <a class="latest-link hidden" id="latestLink" target="_blank" rel="noopener">فتح المقال</a>
+    <a class="latest-link hidden" id="latestLink" target="_blank" rel="noopener">معاينة المقال</a>
   </section>
 
   <section class="panel publisher-editor">
     <div class="panel-heading">
-      <div><p class="eyebrow">CONTENT PUBLISHER</p><h1 id="editorTitle">مقال جديد</h1></div>
+      <div><p class="eyebrow">لوحة النشر</p><h1 id="editorTitle">إنشاء مقال جديد</h1></div>
       <span class="save-state" id="saveState" aria-live="polite">جاهز للكتابة</span>
     </div>
 
@@ -56,7 +58,7 @@
         <div class="form-grid">
           <div class="field full"><label for="titleAr">عنوان المقال بالعربية</label><input id="titleAr" required placeholder="اكتب عنوانًا واضحًا وجذابًا"></div>
           <div class="field full"><label for="summaryAr">الملخص العربي</label><textarea id="summaryAr" class="summary-field" maxlength="420" placeholder="ملخص قصير يظهر في بطاقة المقال ونتائج البحث"></textarea><small class="counter"><span id="summaryArCount">0</span>/420</small></div>
-          <div class="field full"><label for="contentAr">محتوى المقال بالعربية</label><textarea id="contentAr" class="article-editor" required placeholder="اكتب المقال هنا... استخدم سطرًا فارغًا للفصل بين الفقرات."></textarea></div>
+          <div class="field full"><label for="contentAr">محتوى المقال بالعربية</label><div class="editor-toolbar" data-target="contentAr"><button type="button" data-format="bold"><b>B</b></button><button type="button" data-format="h2">H2</button><button type="button" data-format="quote">❝</button><button type="button" data-format="list">• قائمة</button><button type="button" data-format="link">🔗</button></div><textarea id="contentAr" class="article-editor" required placeholder="اكتب المقال هنا... استخدم سطرًا فارغًا للفصل بين الفقرات."></textarea></div>
         </div>
       </div>
 
@@ -64,7 +66,7 @@
         <div class="form-grid ltr-panel">
           <div class="field full"><label for="titleEn">English title</label><input id="titleEn" dir="ltr" placeholder="Enter the English article title"></div>
           <div class="field full"><label for="summaryEn">English summary</label><textarea id="summaryEn" dir="ltr" class="summary-field" maxlength="420" placeholder="A short summary for cards and search results"></textarea><small class="counter"><span id="summaryEnCount">0</span>/420</small></div>
-          <div class="field full"><label for="contentEn">English content</label><textarea id="contentEn" dir="ltr" class="article-editor" placeholder="Write the English version here..."></textarea></div>
+          <div class="field full"><label for="contentEn">English content</label><div class="editor-toolbar" data-target="contentEn" dir="ltr"><button type="button" data-format="bold"><b>B</b></button><button type="button" data-format="h2">H2</button><button type="button" data-format="quote">❝</button><button type="button" data-format="list">• List</button><button type="button" data-format="link">🔗</button></div><textarea id="contentEn" dir="ltr" class="article-editor" placeholder="Write the English version here..."></textarea></div>
           <p class="translation-note full">عند ترك الترجمة فارغة، سيظهر للزائر: <strong>This article is currently available in Arabic only.</strong></p>
         </div>
       </div>
@@ -82,14 +84,14 @@
         <button class="btn secondary" type="button" id="previewArticle">معاينة المقال</button>
         <button class="btn primary" type="submit" id="publishButton">نشر المقال</button>
         <button class="btn ghost" type="button" id="exportDataTop">تصدير ملف الموقع</button>
-        <button class="btn ghost hidden" type="button" id="cancelEdit">إلغاء التعديل</button>
+        <button class="btn ghost" type="button" id="newArticle">مقال جديد</button><button class="btn ghost hidden" type="button" id="cancelEdit">إلغاء التعديل</button>
       </div>
     </form>
   </section>
 
   <section class="panel">
     <div class="panel-heading"><div><p class="eyebrow">ARTICLE LIBRARY</p><h2>المقالات المحفوظة</h2></div><span class="article-total" id="articleTotal">0</span></div>
-    <div id="ownerList" class="owner-list"></div>
+    <div class="table-wrap"><table class="articles-table"><thead><tr><th>رقم</th><th>العنوان</th><th>الحالة</th><th>التاريخ</th><th>الإجراءات</th></tr></thead><tbody id="ownerList"></tbody></table></div>
     <div class="actions export-actions"><button class="btn secondary" id="exportData" type="button">تصدير ملف الموقع</button><a class="btn ghost" href="articles.html" target="_blank" rel="noopener">فتح صفحة المقالات</a></div>
   </section>
 
@@ -97,6 +99,7 @@
     <h2>بطاقة المشاركة</h2>
     <div class="social-preview"><canvas id="socialCanvas" width="1200" height="1200"></canvas><div class="social-text"><div class="field"><label>نص LinkedIn</label><textarea id="linkedinText"></textarea></div><div class="field"><label>نص X</label><textarea id="xText"></textarea></div><div class="actions"><button class="btn secondary" id="downloadCard" type="button">تنزيل الصورة</button><button class="btn ghost" id="copyLinkedin" type="button">نسخ نص LinkedIn</button><button class="btn ghost" id="shareLinkedin" type="button">فتح LinkedIn</button><button class="btn ghost" id="copyX" type="button">نسخ نص X</button><button class="btn ghost" id="shareX" type="button">فتح X</button></div></div></div>
   </section>
+  <div class="success-modal hidden" id="successModal" role="dialog" aria-modal="true" aria-labelledby="successTitle"><div class="success-card"><button class="modal-close" id="closeSuccess" type="button">×</button><div class="success-check">✓</div><h2 id="successTitle">تم نشر المقال بنجاح</h2><strong id="successArticleTitle"></strong><div class="actions"><a class="btn secondary" id="successOpen" target="_blank" rel="noopener">معاينة المقال</a><button class="btn ghost" id="successCopyLink" type="button">نسخ الرابط</button><button class="btn ghost" id="successLinkedin" type="button">نسخ منشور LinkedIn</button><button class="btn ghost" id="successX" type="button">نسخ منشور X</button></div></div></div>
 </div></main>
 <footer class="footer">© 2026 Samy Suliman — Professional Portfolio</footer>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="articles/articles-data.js"></script><script src="assets/articles-common.js"></script>
@@ -158,7 +161,7 @@ function build(overrideStatus){
     hasEnglish:translated()
   };
 }
-function upsert(article,message){const items=localItems(),i=items.findIndex(a=>a.id===article.id);if(i>=0)items[i]=article;else items.push(article);persist(items);currentArticle=article;dirty=false;setSaveState(message,'success');makeSocial(article);resetForm(false)}
+function upsert(article,message){const items=localItems(),i=items.findIndex(a=>a.id===article.id);if(i>=0)items[i]=article;else items.push(article);persist(items);currentArticle=article;dirty=false;setSaveState(message,'success');makeSocial(article);if(article.status==='published'||article.status==='scheduled')showSuccess(article);resetForm(false)}
 
 fileEl.addEventListener('change',()=>handleImageFile(fileEl.files[0]));
 dropzone.addEventListener('click',e=>{if(e.target!==removeImageBtn)fileEl.click()});dropzone.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();fileEl.click()}});['dragenter','dragover'].forEach(type=>dropzone.addEventListener(type,e=>{e.preventDefault();dropzone.classList.add('is-dragging')}));['dragleave','drop'].forEach(type=>dropzone.addEventListener(type,e=>{e.preventDefault();dropzone.classList.remove('is-dragging')}));dropzone.addEventListener('drop',e=>handleImageFile(e.dataTransfer.files[0]));removeImageBtn.addEventListener('click',e=>{e.stopPropagation();fileEl.value='';setImage('')});
@@ -169,13 +172,13 @@ $('saveDraft').onclick=()=>{if(!validate('draft'))return;upsert(build('draft'),'
 $('previewArticle').onclick=()=>{if(!validate('draft'))return;const article=build(fields.status.value);const items=localItems(),i=items.findIndex(a=>a.id===article.id);if(i>=0)items[i]=article;else items.push(article);persist(items);window.open('article.html?slug='+encodeURIComponent(article.slug)+'&preview=1','_blank','noopener')};
 
 function resetForm(resetState=true){form.reset();fields.id.value='';fields.publishAt.value=localDateInput();fields.number.value=nextNumber();imageData='';preview.removeAttribute('src');preview.style.display='none';dropPrompt.classList.remove('hidden');removeImageBtn.classList.add('hidden');dropzone.classList.remove('has-image');$('cancelEdit').classList.add('hidden');$('editorTitle').textContent='مقال جديد';activateTab('arPanel');updateCounters();updateQrPreview();dirty=false;if(resetState)setSaveState('جاهز للكتابة')}
-$('cancelEdit').onclick=()=>{if(!dirty||confirm('هل تريد إلغاء التعديلات غير المحفوظة؟'))resetForm()};
+$('cancelEdit').onclick=()=>{if(!dirty||confirm('هل تريد إلغاء التعديلات غير المحفوظة؟'))resetForm()};$('newArticle').onclick=()=>{if(!dirty||confirm('هل تريد بدء مقال جديد وحذف التغييرات غير المحفوظة؟')){resetForm();scrollTo({top:0,behavior:'smooth'})}};
 
 function edit(id){const a=SamyArticles.all().find(x=>x.id===id);if(!a)return;fields.id.value=a.id;fields.series.value=a.series||'';fields.number.value=a.number||'';fields.publishAt.value=localDateInput(a.publishAt||a.createdAt);fields.status.value=a.status||'draft';fields.keywords.value=Array.isArray(a.keywords)?a.keywords.join('، '):(a.keywords||'');fields.titleAr.value=a.titleAr||a.title||'';fields.summaryAr.value=a.summaryAr||a.summary||'';fields.contentAr.value=a.contentAr||a.content||'';fields.titleEn.value=a.titleEn||'';fields.summaryEn.value=a.summaryEn||'';fields.contentEn.value=a.contentEn||'';fields.video.value=a.video||'';fields.imageAltAr.value=a.imageAltAr||'';imageData=a.image||'';if(imageData){preview.src=imageData;preview.style.display='block';dropPrompt.classList.add('hidden');removeImageBtn.classList.remove('hidden');dropzone.classList.add('has-image')}else{preview.style.display='none';dropPrompt.classList.remove('hidden');removeImageBtn.classList.add('hidden');dropzone.classList.remove('has-image')}updateQrPreview();$('cancelEdit').classList.remove('hidden');$('editorTitle').textContent='تعديل المقال';updateCounters();dirty=false;setSaveState('وضع التعديل');scrollTo({top:0,behavior:'smooth'})}
 function del(id){if(confirm('هل تريد حذف هذا المقال نهائيًا من هذا المتصفح؟')){persist(localItems().filter(a=>a.id!==id));setSaveState('تم حذف المقال','success')}}
 function duplicate(id){const source=SamyArticles.all().find(x=>x.id===id);if(!source)return;const copy={...source,id:'a'+Date.now(),slug:SamyArticles.slugify((source.titleAr||source.title)+'-نسخة-'+Date.now()),number:nextNumber(),status:'draft',titleAr:(source.titleAr||source.title)+' — نسخة',title:(source.titleAr||source.title)+' — نسخة',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};const items=localItems();items.push(copy);persist(items);edit(copy.id)}
 function statusLabel(a){if(a.status==='published')return 'منشور';if(a.status==='scheduled')return 'مجدول';return 'مسودة'}
-function renderList(){const list=SamyArticles.all().sort((a,b)=>new Date(b.updatedAt||b.createdAt)-new Date(a.updatedAt||a.createdAt)),el=$('ownerList');$('articleTotal').textContent=list.length;el.innerHTML=list.length?list.map(a=>'<article class="owner-item"><div class="owner-content"><div class="owner-status status-'+SamyArticles.escapeHtml(a.status||'draft')+'">'+statusLabel(a)+'</div><h3>'+SamyArticles.escapeHtml(a.titleAr||a.title)+'</h3><small>'+(a.series?SamyArticles.escapeHtml(a.series)+' · ':'')+'رقم '+SamyArticles.escapeHtml(a.number||'—')+' · '+SamyArticles.formatDate(a.publishAt||a.createdAt)+'</small>'+(a.titleEn?'<span class="translation-badge">EN</span>':'')+'</div><div class="owner-buttons"><button type="button" onclick="edit(\''+a.id+'\')">تعديل</button><button type="button" onclick="makeSocialById(\''+a.id+'\')">المشاركة</button><button type="button" onclick="duplicate(\''+a.id+'\')">نسخ</button><button type="button" class="danger" onclick="del(\''+a.id+'\')">حذف</button></div></article>').join(''):'<div class="empty-owner"><strong>لا توجد مقالات بعد</strong><span>ابدأ بكتابة أول مقال من النموذج أعلاه.</span></div>'}
+function renderList(){const list=SamyArticles.all().sort((a,b)=>new Date(b.updatedAt||b.createdAt)-new Date(a.updatedAt||a.createdAt)),el=$('ownerList');$('articleTotal').textContent=list.length;el.innerHTML=list.length?list.map(a=>'<tr><td>'+SamyArticles.escapeHtml(a.number||'—')+'</td><td><strong>'+SamyArticles.escapeHtml(a.titleAr||a.title)+'</strong>'+(a.titleEn?'<span class="translation-badge">EN</span>':'')+'</td><td><span class="owner-status status-'+SamyArticles.escapeHtml(a.status||'draft')+'">'+statusLabel(a)+'</span></td><td>'+SamyArticles.formatDate(a.publishAt||a.createdAt)+'</td><td><div class="owner-buttons"><button type="button" onclick="edit(\''+a.id+'\')">تعديل</button><button type="button" onclick="makeSocialById(\''+a.id+'\')">مشاركة</button><button type="button" onclick="duplicate(\''+a.id+'\')">نسخ</button><button type="button" class="danger" onclick="del(\''+a.id+'\')">حذف</button></div></td></tr>').join(''):'<tr><td colspan="5"><div class="empty-owner"><strong>لا توجد مقالات بعد</strong><span>ابدأ بكتابة أول مقال من النموذج أعلاه.</span></div></td></tr>'}
 
 function exportData(){const data=SamyArticles.all(),blob=new Blob(['// Public article data. Generated from publisher.html.\nwindow.SAMY_ARTICLES = '+JSON.stringify(data,null,2)+';\n'],{type:'application/javascript;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='articles-data.js';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);setSaveState('تم تصدير articles-data.js','success')}
 $('exportData').onclick=exportData;$('exportDataTop').onclick=exportData;
@@ -195,6 +198,13 @@ $('copyLinkedin').onclick=async()=>{try{await navigator.clipboard.writeText($('l
 $('copyX').onclick=async()=>{try{await navigator.clipboard.writeText($('xText').value);setSaveState('تم نسخ نص X','success')}catch(e){$('xText').select();document.execCommand('copy')}};
 $('shareLinkedin').onclick=async()=>{if(!currentArticle)return;try{await navigator.clipboard.writeText($('linkedinText').value)}catch(e){}window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(new URL('article.html?slug='+currentArticle.slug,location.href).href),'_blank','noopener')};
 $('shareX').onclick=()=>{if(currentArticle)window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent($('xText').value),'_blank','noopener')};
+
+function selectedTextArea(toolbar){return $(toolbar.dataset.target)}
+function wrapSelection(el,before,after=before){const start=el.selectionStart,end=el.selectionEnd,selected=el.value.slice(start,end)||'النص';el.setRangeText(before+selected+after,start,end,'end');el.focus();el.dispatchEvent(new Event('input',{bubbles:true}))}
+document.querySelectorAll('.editor-toolbar button').forEach(btn=>btn.onclick=()=>{const bar=btn.closest('.editor-toolbar'),el=selectedTextArea(bar),f=btn.dataset.format;if(f==='bold')wrapSelection(el,'**','**');if(f==='h2')wrapSelection(el,'\n## ','\n');if(f==='quote')wrapSelection(el,'\n> ','\n');if(f==='list')wrapSelection(el,'\n- ','\n');if(f==='link'){const url=prompt('أدخل الرابط:','https://');if(url)wrapSelection(el,'[',']('+url+')')}});
+function socialTexts(a){const url=articleUrl(a),title=a.titleAr||a.title,excerpt=SamyArticles.excerpt(a.summaryAr||a.contentAr||a.content,220);return {url,linkedin:'نشرت مقالًا جديدًا بعنوان:\n'+title+'\n\n'+excerpt+'\n\nلقراءة المقال كاملًا:\n'+url,x:title+'\n\n'+SamyArticles.excerpt(excerpt,135)+'\n\n'+url}}
+function showSuccess(a){const t=socialTexts(a);$('successArticleTitle').textContent=a.titleAr||a.title;$('successOpen').href=t.url;$('successModal').classList.remove('hidden');$('successCopyLink').onclick=()=>navigator.clipboard.writeText(t.url);$('successLinkedin').onclick=()=>navigator.clipboard.writeText(t.linkedin);$('successX').onclick=()=>navigator.clipboard.writeText(t.x)}
+$('closeSuccess').onclick=()=>$('successModal').classList.add('hidden');$('successModal').onclick=e=>{if(e.target===$('successModal'))$('successModal').classList.add('hidden')};
 window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
 resetForm();renderList();updateLatest();
 </script>

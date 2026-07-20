@@ -9,7 +9,8 @@
 const params=new URLSearchParams(location.search),slug=params.get('slug'),previewMode=params.get('preview')==='1';
 const source=previewMode?SamyArticles.all():SamyArticles.published();
 const article=source.find(a=>a.slug===slug),view=document.getElementById('articleView');
-function paragraphs(text){return SamyArticles.escapeHtml(text).split(/\n\s*\n/).map(p=>'<p>'+p.replace(/\n/g,'<br>')+'</p>').join('')}
+function inlineFormat(text){return SamyArticles.escapeHtml(text).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>')}
+function paragraphs(text){const blocks=String(text||'').split(/\n\s*\n/);return blocks.map(block=>{const b=block.trim();if(!b)return'';if(/^##\s+/.test(b))return'<h2>'+inlineFormat(b.replace(/^##\s+/,''))+'</h2>';if(/^>\s+/.test(b))return'<blockquote>'+inlineFormat(b.replace(/^>\s+/,''))+'</blockquote>';if(/^-\s+/m.test(b)){const items=b.split(/\n/).filter(x=>/^-\s+/.test(x)).map(x=>'<li>'+inlineFormat(x.replace(/^-\s+/,''))+'</li>').join('');return'<ul>'+items+'</ul>'}return'<p>'+inlineFormat(b).replace(/\n/g,'<br>')+'</p>'}).join('')}
 function videoBlock(url,en){if(!url)return '';const id=SamyArticles.youtubeId(url);return id?'<div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/'+id+'" title="Video" allowfullscreen loading="lazy"></iframe></div>':'<a class="video-link" href="'+SamyArticles.escapeHtml(url)+'" target="_blank" rel="noopener">'+(en?'Watch video ↗':'مشاهدة الفيديو ↗')+'</a>'}
 function render(){
  const en=document.body.classList.contains('english');
