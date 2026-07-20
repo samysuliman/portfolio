@@ -47,10 +47,17 @@
   kicker.textContent=lang==='en'?'A quick professional overview':'نبذة مهنية سريعة';
   title.textContent=lang==='en'?'Meet Me in 2 Minutes':'تعرّف عليّ في دقيقتين';
   body.innerHTML='<div class="tour-card-grid">'+cards[lang].map(c=>
-   '<a class="tour-summary-card'+(c.featured?' featured':'')+'" href="'+c.href+'">'+
-    (c.featured?'<img class="tour-card-collage" src="assets/publications-collage.webp" alt="">':'')+
-    '<span class="tour-card-icon" aria-hidden="true">'+c.icon+'</span>'+
-    '<h3>'+c.title+'</h3><p>'+c.text+'</p><span class="tour-card-more">'+(lang==='en'?'Learn more':'اعرف المزيد')+' ←</span></a>'
+   '<a class="tour-summary-card'+(c.featured?' featured':'')+'" href="'+c.href+'" data-tour-target="'+c.href+'">'+
+    '<span class="tour-card-icon" aria-hidden="true">'+c.icon+'</span>'+ 
+    '<h3>'+c.title+'</h3>'+ 
+    (c.featured?'<div class="tour-books-strip" aria-label="'+(lang==='en'?'Selected book covers':'نماذج من أغلفة المؤلفات')+'">'+
+      '<img src="assets/tajweed-book.jpg" alt="" loading="eager">'+
+      '<img src="assets/children-part-1-new.webp" alt="" loading="eager">'+
+      '<img src="assets/tajweed-part-1.webp" alt="" loading="eager">'+
+      '<img src="assets/children-part-2.jpg" alt="" loading="eager">'+
+      '<img src="assets/adult-part-1.jpg" alt="" loading="eager">'+
+     '</div>':'')+
+    '<p>'+c.text+'</p><span class="tour-card-more">'+(lang==='en'?'Learn more':'اعرف المزيد')+' ←</span></a>'
   ).join('')+'</div>';
   skip.textContent=lang==='en'?'Close':'إغلاق';
   close.setAttribute('aria-label',lang==='en'?'Close tour':'إغلاق الجولة');
@@ -59,10 +66,19 @@
   progressWrap.hidden=true;
   nav.hidden=true;
   finalActions.hidden=false;
-  body.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',closeTour));
+  body.querySelectorAll('a[data-tour-target]').forEach(a=>a.addEventListener('click',function(event){
+   event.preventDefault();
+   const selector=this.getAttribute('data-tour-target');
+   const target=document.querySelector(selector);
+   closeTour(false);
+   if(target){
+    history.replaceState(null,'',selector);
+    requestAnimationFrame(()=>target.scrollIntoView({behavior:'smooth',block:'start'}));
+   }
+  }));
  }
  function openTour(){lastFocus=document.activeElement;render();modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.classList.add('tour-open');close.focus();}
- function closeTour(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');if(!explore.classList.contains('open'))document.body.classList.remove('tour-open');if(lastFocus)lastFocus.focus();}
+ function closeTour(restoreFocus=true){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');if(!explore.classList.contains('open'))document.body.classList.remove('tour-open');if(restoreFocus&&lastFocus)lastFocus.focus();}
  function openExplore(){closeTour();explore.classList.add('open');explore.setAttribute('aria-hidden','false');document.body.classList.add('tour-open');exploreClose.focus();}
  function closeExplore(){explore.classList.remove('open');explore.setAttribute('aria-hidden','true');document.body.classList.remove('tour-open');}
  document.querySelectorAll('[data-open-tour]').forEach(b=>b.addEventListener('click',openTour));
