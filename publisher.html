@@ -1,36 +1,185 @@
-<!doctype html><html lang="ar" dir="rtl"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>مركز نشر المقالات | سامي سليمان</title><meta name="robots" content="noindex,nofollow">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="icon" href="assets/favicon.png" type="image/png"><link rel="stylesheet" href="assets/articles.css">
-</head><body>
-<nav class="nav"><div class="container nav-inner"><div class="brand-wrap"><img class="avatar" src="assets/portrait-only.jpg" alt="سامي سليمان"><a class="brand" href="index.html">سامي سليمان</a></div><div class="nav-actions"><a class="nav-btn" href="articles.html" target="_blank">معاينة المقالات</a><a class="nav-btn" href="index.html">الموقع الرئيسي</a></div></div></nav>
-<main class="publisher"><div class="container">
-<div class="notice"><strong>مركز النشر الخاص بك:</strong> الصفحة غير موجودة في قائمة الزوار. تحفظ التعديلات أولًا في هذا المتصفح. بعد النشر اضغط <strong>تصدير ملف الموقع</strong> ثم استبدل ملف <code>articles/articles-data.js</code> في GitHub ليظهر المقال لجميع الزوار.</div>
-<section class="panel"><h1>مقال جديد</h1><form id="articleForm"><input id="articleId" type="hidden"><div class="form-grid">
-<div class="field full"><label for="title">عنوان المقال</label><input id="title" required placeholder="اكتب عنوان المقال"></div>
-<div class="field"><label for="imageFile">صورة المقال (اختياري)</label><input id="imageFile" type="file" accept="image/*"><img id="imagePreview" class="preview-image" alt="معاينة الصورة"></div>
-<div class="field"><label for="video">رابط فيديو (اختياري)</label><input id="video" type="url" placeholder="YouTube أو رابط فيديو"></div>
-<div class="field full"><label for="content">محتوى المقال</label><textarea id="content" required placeholder="اكتب المقال هنا كما تكتب رسالة بريد إلكتروني..."></textarea></div>
-<div class="field"><label for="publishAt">تاريخ ووقت النشر (اختياري)</label><input id="publishAt" type="datetime-local"></div>
-</div><div class="actions"><button class="btn ghost" type="button" id="saveDraft">حفظ كمسودة</button><button class="btn primary" type="submit">نشر المقال</button><button class="btn ghost hidden" type="button" id="cancelEdit">إلغاء التعديل</button></div></form></section>
-<section class="panel"><h2>المقالات المحفوظة</h2><div id="ownerList" class="owner-list"></div><div class="actions"><button class="btn secondary" id="exportData" type="button">تصدير ملف الموقع</button><a class="btn ghost" href="articles.html" target="_blank">معاينة صفحة المقالات</a></div></section>
-<section class="panel hidden" id="socialPanel"><h2>بطاقة النشر</h2><div class="social-preview"><canvas id="socialCanvas" width="1200" height="1200"></canvas><div class="social-text"><div class="field"><label>نص LinkedIn</label><textarea id="linkedinText"></textarea></div><div class="field"><label>نص X</label><textarea id="xText"></textarea></div><div class="actions"><button class="btn secondary" id="downloadCard" type="button">تنزيل الصورة</button><button class="btn ghost" id="shareLinkedin" type="button">فتح LinkedIn</button><button class="btn ghost" id="shareX" type="button">فتح X</button></div></div></div></section>
-</div></main><footer class="footer">© 2026 Samy Suliman — Professional Portfolio</footer>
-<script src="articles/articles-data.js"></script><script src="assets/articles-common.js"></script><script>
-const form=document.getElementById('articleForm'),idEl=document.getElementById('articleId'),titleEl=document.getElementById('title'),contentEl=document.getElementById('content'),videoEl=document.getElementById('video'),dateEl=document.getElementById('publishAt'),fileEl=document.getElementById('imageFile'),preview=document.getElementById('imagePreview');let imageData='',currentArticle=null;
-function localItems(){return SamyArticles.local()}function persist(items){SamyArticles.save(items);renderList()}
-fileEl.addEventListener('change',()=>{const f=fileEl.files[0];if(!f){imageData='';preview.style.display='none';return}const r=new FileReader();r.onload=()=>{imageData=r.result;preview.src=imageData;preview.style.display='block'};r.readAsDataURL(f)});
-function build(status){const now=new Date().toISOString(),id=idEl.value||('a'+Date.now()),existing=SamyArticles.all().find(a=>a.id===id),publishAt=dateEl.value?new Date(dateEl.value).toISOString():(existing&&existing.publishAt)||now;return{id,slug:(existing&&existing.slug)||SamyArticles.slugify(titleEl.value),number:(existing&&existing.number)||String(SamyArticles.all().length+1).padStart(3,'0'),title:titleEl.value.trim(),content:contentEl.value.trim(),image:imageData||(existing&&existing.image)||'',video:videoEl.value.trim(),status,publishAt,createdAt:(existing&&existing.createdAt)||now,updatedAt:now}}
-function upsert(article){const items=localItems(),i=items.findIndex(a=>a.id===article.id);if(i>=0)items[i]=article;else items.push(article);persist(items);currentArticle=article;resetForm();makeSocial(article)}
-form.addEventListener('submit',e=>{e.preventDefault();upsert(build('published'))});document.getElementById('saveDraft').onclick=()=>{if(!titleEl.value.trim()||!contentEl.value.trim())return alert('اكتب عنوان المقال ومحتواه أولًا');upsert(build('draft'))};
-function resetForm(){form.reset();idEl.value='';imageData='';preview.style.display='none';document.getElementById('cancelEdit').classList.add('hidden')}document.getElementById('cancelEdit').onclick=resetForm;
-function edit(id){const a=SamyArticles.all().find(x=>x.id===id);if(!a)return;idEl.value=a.id;titleEl.value=a.title;contentEl.value=a.content;videoEl.value=a.video||'';dateEl.value=a.publishAt?new Date(new Date(a.publishAt).getTime()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,16):'';imageData=a.image||'';if(imageData){preview.src=imageData;preview.style.display='block'}document.getElementById('cancelEdit').classList.remove('hidden');scrollTo({top:0,behavior:'smooth'})}
-function del(id){if(confirm('هل تريد حذف هذا المقال؟'))persist(localItems().filter(a=>a.id!==id))}
-function renderList(){const list=SamyArticles.all().sort((a,b)=>new Date(b.updatedAt||b.createdAt)-new Date(a.updatedAt||a.createdAt)),el=document.getElementById('ownerList');el.innerHTML=list.length?list.map(a=>'<div class="owner-item"><div><h3>'+SamyArticles.escapeHtml(a.title)+'</h3><small>'+(a.status==='published'?'منشور':'مسودة')+' — '+SamyArticles.formatDate(a.publishAt||a.createdAt)+'</small></div><div class="owner-buttons"><button onclick="edit(\''+a.id+'\')">تعديل</button><button onclick="makeSocialById(\''+a.id+'\')">الصورة</button><button class="danger" onclick="del(\''+a.id+'\')">حذف</button></div></div>').join(''):'<p>لا توجد مقالات بعد.</p>'}
-function exportData(){const data=SamyArticles.all(),blob=new Blob(['// Public article data. Generated from publisher.html.\nwindow.SAMY_ARTICLES = '+JSON.stringify(data,null,2)+';\n'],{type:'application/javascript;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='articles-data.js';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}document.getElementById('exportData').onclick=exportData;
-function points(text){return text.split(/(?:\n+|[.!؟]+\s+)/).map(s=>s.replace(/^[-•*\d.\s]+/,'').trim()).filter(s=>s.length>12).slice(0,3).map(s=>s.length>70?s.slice(0,67)+'…':s)}
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مركز نشر المقالات | سامي سليمان</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="stylesheet" href="assets/articles.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="container nav-inner">
+    <div class="brand-wrap"><img class="avatar" src="assets/portrait-only.jpg" alt="سامي سليمان"><a class="brand" href="index.html">سامي سليمان</a></div>
+    <div class="nav-actions"><a class="nav-btn" href="articles.html" target="_blank" rel="noopener">معاينة المقالات</a><a class="nav-btn" href="index.html">الموقع الرئيسي</a></div>
+  </div>
+</nav>
+<main class="publisher"><div class="container publisher-container">
+  <div class="notice"><strong>لوحة النشر الخاصة:</strong> تحفظ المقالات في هذا المتصفح. بعد الانتهاء اضغط <strong>تصدير ملف الموقع</strong>، ثم استبدل ملف <code>articles/articles-data.js</code> في GitHub ليظهر المحتوى لجميع الزوار.</div>
+
+  <section class="panel publisher-editor">
+    <div class="panel-heading">
+      <div><p class="eyebrow">CONTENT PUBLISHER</p><h1 id="editorTitle">مقال جديد</h1></div>
+      <span class="save-state" id="saveState" aria-live="polite">جاهز للكتابة</span>
+    </div>
+
+    <form id="articleForm" novalidate>
+      <input id="articleId" type="hidden">
+
+      <div class="form-section">
+        <h2>بيانات النشر</h2>
+        <div class="form-grid compact-grid">
+          <div class="field"><label for="series">اسم السلسلة <small>(اختياري)</small></label><input id="series" placeholder="مثال: من واقع التجربة"></div>
+          <div class="field"><label for="articleNumber">رقم المقال <small>(اختياري)</small></label><input id="articleNumber" inputmode="numeric" maxlength="4" placeholder="07"></div>
+          <div class="field"><label for="publishAt">تاريخ ووقت النشر</label><input id="publishAt" type="datetime-local"></div>
+          <div class="field"><label for="status">حالة المقال</label><select id="status"><option value="draft">مسودة</option><option value="published">منشور</option><option value="scheduled">مجدول</option></select></div>
+          <div class="field full"><label for="keywords">الكلمات المفتاحية <small>(افصل بينها بفاصلة)</small></label><input id="keywords" placeholder="التعليم، القيادة، تطوير المعلمين"></div>
+        </div>
+      </div>
+
+      <div class="language-tabs" role="tablist" aria-label="لغة المقال">
+        <button class="language-tab active" id="arabicTab" type="button" role="tab" aria-selected="true" data-lang-panel="arPanel">العربية</button>
+        <button class="language-tab" id="englishTab" type="button" role="tab" aria-selected="false" data-lang-panel="enPanel">English</button>
+      </div>
+
+      <div class="language-panel active" id="arPanel" role="tabpanel" aria-labelledby="arabicTab">
+        <div class="form-grid">
+          <div class="field full"><label for="titleAr">عنوان المقال بالعربية</label><input id="titleAr" required placeholder="اكتب عنوانًا واضحًا وجذابًا"></div>
+          <div class="field full"><label for="summaryAr">الملخص العربي</label><textarea id="summaryAr" class="summary-field" maxlength="420" placeholder="ملخص قصير يظهر في بطاقة المقال ونتائج البحث"></textarea><small class="counter"><span id="summaryArCount">0</span>/420</small></div>
+          <div class="field full"><label for="contentAr">محتوى المقال بالعربية</label><textarea id="contentAr" class="article-editor" required placeholder="اكتب المقال هنا... استخدم سطرًا فارغًا للفصل بين الفقرات."></textarea></div>
+        </div>
+      </div>
+
+      <div class="language-panel" id="enPanel" role="tabpanel" aria-labelledby="englishTab" hidden>
+        <div class="form-grid ltr-panel">
+          <div class="field full"><label for="titleEn">English title</label><input id="titleEn" dir="ltr" placeholder="Enter the English article title"></div>
+          <div class="field full"><label for="summaryEn">English summary</label><textarea id="summaryEn" dir="ltr" class="summary-field" maxlength="420" placeholder="A short summary for cards and search results"></textarea><small class="counter"><span id="summaryEnCount">0</span>/420</small></div>
+          <div class="field full"><label for="contentEn">English content</label><textarea id="contentEn" dir="ltr" class="article-editor" placeholder="Write the English version here..."></textarea></div>
+          <p class="translation-note full">عند ترك الترجمة فارغة، سيظهر للزائر: <strong>This article is currently available in Arabic only.</strong></p>
+        </div>
+      </div>
+
+      <div class="form-section media-section">
+        <h2>الصورة والفيديو</h2>
+        <div class="form-grid">
+          <div class="field"><label for="imageFile">الصورة الرئيسية</label><input id="imageFile" type="file" accept="image/jpeg,image/png,image/webp"><small>يفضل WebP أو JPG بعرض 1200 بكسل وحجم أقل من 500 كيلوبايت.</small><img id="imagePreview" class="preview-image" alt="معاينة الصورة"></div>
+          <div class="field"><label for="video">رابط فيديو <small>(اختياري)</small></label><input id="video" type="url" dir="ltr" placeholder="https://youtube.com/..."><label for="imageAltAr">وصف الصورة لمحركات البحث</label><input id="imageAltAr" placeholder="وصف مختصر ودقيق للصورة"></div>
+        </div>
+      </div>
+
+      <div class="actions sticky-actions">
+        <button class="btn ghost" type="button" id="saveDraft">حفظ كمسودة</button>
+        <button class="btn secondary" type="button" id="previewArticle">معاينة المقال</button>
+        <button class="btn primary" type="submit" id="publishButton">نشر المقال</button>
+        <button class="btn ghost hidden" type="button" id="cancelEdit">إلغاء التعديل</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="panel">
+    <div class="panel-heading"><div><p class="eyebrow">ARTICLE LIBRARY</p><h2>المقالات المحفوظة</h2></div><span class="article-total" id="articleTotal">0</span></div>
+    <div id="ownerList" class="owner-list"></div>
+    <div class="actions export-actions"><button class="btn secondary" id="exportData" type="button">تصدير ملف الموقع</button><a class="btn ghost" href="articles.html" target="_blank" rel="noopener">فتح صفحة المقالات</a></div>
+  </section>
+
+  <section class="panel hidden" id="socialPanel">
+    <h2>بطاقة المشاركة</h2>
+    <div class="social-preview"><canvas id="socialCanvas" width="1200" height="1200"></canvas><div class="social-text"><div class="field"><label>نص LinkedIn</label><textarea id="linkedinText"></textarea></div><div class="field"><label>نص X</label><textarea id="xText"></textarea></div><div class="actions"><button class="btn secondary" id="downloadCard" type="button">تنزيل الصورة</button><button class="btn ghost" id="shareLinkedin" type="button">فتح LinkedIn</button><button class="btn ghost" id="shareX" type="button">فتح X</button></div></div></div>
+  </section>
+</div></main>
+<footer class="footer">© 2026 Samy Suliman — Professional Portfolio</footer>
+<script src="articles/articles-data.js"></script><script src="assets/articles-common.js"></script>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const form=$('articleForm');
+const fields={id:$('articleId'),series:$('series'),number:$('articleNumber'),publishAt:$('publishAt'),status:$('status'),keywords:$('keywords'),titleAr:$('titleAr'),summaryAr:$('summaryAr'),contentAr:$('contentAr'),titleEn:$('titleEn'),summaryEn:$('summaryEn'),contentEn:$('contentEn'),video:$('video'),imageAltAr:$('imageAltAr')};
+const fileEl=$('imageFile'),preview=$('imagePreview');
+let imageData='',currentArticle=null,dirty=false;
+
+function localItems(){return SamyArticles.local()}
+function persist(items){SamyArticles.save(items);renderList()}
+function localDateInput(value){const d=value?new Date(value):new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16)}
+function setSaveState(text,kind=''){const el=$('saveState');el.textContent=text;el.dataset.kind=kind}
+function markDirty(){dirty=true;setSaveState('تغييرات غير محفوظة','warning')}
+function keywordsArray(){return fields.keywords.value.split(/[،,]/).map(s=>s.trim()).filter(Boolean)}
+function nextNumber(){const nums=SamyArticles.all().map(a=>parseInt(a.number,10)).filter(Number.isFinite);return String((nums.length?Math.max(...nums):0)+1).padStart(2,'0')}
+function translated(){return Boolean(fields.titleEn.value.trim()&&fields.contentEn.value.trim())}
+function validate(status){
+  if(!fields.titleAr.value.trim()){activateTab('arPanel');fields.titleAr.focus();alert('اكتب عنوان المقال بالعربية أولًا.');return false}
+  if(!fields.contentAr.value.trim()){activateTab('arPanel');fields.contentAr.focus();alert('اكتب محتوى المقال بالعربية أولًا.');return false}
+  if((fields.titleEn.value.trim()&&!fields.contentEn.value.trim())||(!fields.titleEn.value.trim()&&fields.contentEn.value.trim())){activateTab('enPanel');alert('أكمل عنوان الترجمة الإنجليزية ومحتواها، أو اتركهما معًا فارغين.');return false}
+  if(status==='scheduled'&&!fields.publishAt.value){fields.publishAt.focus();alert('حدد تاريخ ووقت النشر للمقال المجدول.');return false}
+  return true;
+}
+function build(overrideStatus){
+  const now=new Date().toISOString(),id=fields.id.value||('a'+Date.now()),existing=SamyArticles.all().find(a=>a.id===id);
+  const status=overrideStatus||fields.status.value;
+  const publishAt=fields.publishAt.value?new Date(fields.publishAt.value).toISOString():(existing&&existing.publishAt)||now;
+  const titleAr=fields.titleAr.value.trim(),contentAr=fields.contentAr.value.trim();
+  return {
+    id,
+    slug:(existing&&existing.slug)||SamyArticles.slugify(titleAr),
+    number:fields.number.value.trim()||(existing&&existing.number)||nextNumber(),
+    series:fields.series.value.trim(),
+    titleAr,
+    titleEn:fields.titleEn.value.trim(),
+    summaryAr:fields.summaryAr.value.trim()||SamyArticles.excerpt(contentAr,220),
+    summaryEn:fields.summaryEn.value.trim(),
+    contentAr,
+    contentEn:fields.contentEn.value.trim(),
+    title:titleAr,
+    content:contentAr,
+    summary:fields.summaryAr.value.trim()||SamyArticles.excerpt(contentAr,220),
+    image:imageData||(existing&&existing.image)||'',
+    imageAltAr:fields.imageAltAr.value.trim(),
+    video:fields.video.value.trim(),
+    keywords:keywordsArray(),
+    status,
+    publishAt,
+    createdAt:(existing&&existing.createdAt)||now,
+    updatedAt:now,
+    hasEnglish:translated()
+  };
+}
+function upsert(article,message){const items=localItems(),i=items.findIndex(a=>a.id===article.id);if(i>=0)items[i]=article;else items.push(article);persist(items);currentArticle=article;dirty=false;setSaveState(message,'success');makeSocial(article);resetForm(false)}
+
+fileEl.addEventListener('change',()=>{const f=fileEl.files[0];if(!f){return}if(f.size>1500000&&!confirm('حجم الصورة أكبر من 1.5 ميجابايت وقد يزيد حجم ملف المقالات. هل تريد المتابعة؟')){fileEl.value='';return}const r=new FileReader();r.onload=()=>{imageData=r.result;preview.src=imageData;preview.style.display='block';markDirty()};r.readAsDataURL(f)});
+form.addEventListener('input',e=>{if(e.target.type!=='file')markDirty()});
+form.addEventListener('submit',e=>{e.preventDefault();const status=fields.status.value==='draft'?'published':fields.status.value;if(!validate(status))return;upsert(build(status),status==='scheduled'?'تمت جدولة المقال':'تم نشر المقال')});
+$('saveDraft').onclick=()=>{if(!validate('draft'))return;upsert(build('draft'),'تم حفظ المسودة')};
+$('previewArticle').onclick=()=>{if(!validate('draft'))return;const article=build(fields.status.value);const items=localItems(),i=items.findIndex(a=>a.id===article.id);if(i>=0)items[i]=article;else items.push(article);persist(items);window.open('article.html?slug='+encodeURIComponent(article.slug)+'&preview=1','_blank','noopener')};
+
+function resetForm(resetState=true){form.reset();fields.id.value='';fields.publishAt.value=localDateInput();fields.number.value=nextNumber();imageData='';preview.removeAttribute('src');preview.style.display='none';$('cancelEdit').classList.add('hidden');$('editorTitle').textContent='مقال جديد';activateTab('arPanel');updateCounters();dirty=false;if(resetState)setSaveState('جاهز للكتابة')}
+$('cancelEdit').onclick=()=>{if(!dirty||confirm('هل تريد إلغاء التعديلات غير المحفوظة؟'))resetForm()};
+
+function edit(id){const a=SamyArticles.all().find(x=>x.id===id);if(!a)return;fields.id.value=a.id;fields.series.value=a.series||'';fields.number.value=a.number||'';fields.publishAt.value=localDateInput(a.publishAt||a.createdAt);fields.status.value=a.status||'draft';fields.keywords.value=Array.isArray(a.keywords)?a.keywords.join('، '):(a.keywords||'');fields.titleAr.value=a.titleAr||a.title||'';fields.summaryAr.value=a.summaryAr||a.summary||'';fields.contentAr.value=a.contentAr||a.content||'';fields.titleEn.value=a.titleEn||'';fields.summaryEn.value=a.summaryEn||'';fields.contentEn.value=a.contentEn||'';fields.video.value=a.video||'';fields.imageAltAr.value=a.imageAltAr||'';imageData=a.image||'';if(imageData){preview.src=imageData;preview.style.display='block'}else preview.style.display='none';$('cancelEdit').classList.remove('hidden');$('editorTitle').textContent='تعديل المقال';updateCounters();dirty=false;setSaveState('وضع التعديل');scrollTo({top:0,behavior:'smooth'})}
+function del(id){if(confirm('هل تريد حذف هذا المقال نهائيًا من هذا المتصفح؟')){persist(localItems().filter(a=>a.id!==id));setSaveState('تم حذف المقال','success')}}
+function duplicate(id){const source=SamyArticles.all().find(x=>x.id===id);if(!source)return;const copy={...source,id:'a'+Date.now(),slug:SamyArticles.slugify((source.titleAr||source.title)+'-نسخة-'+Date.now()),number:nextNumber(),status:'draft',titleAr:(source.titleAr||source.title)+' — نسخة',title:(source.titleAr||source.title)+' — نسخة',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};const items=localItems();items.push(copy);persist(items);edit(copy.id)}
+function statusLabel(a){if(a.status==='published')return 'منشور';if(a.status==='scheduled')return 'مجدول';return 'مسودة'}
+function renderList(){const list=SamyArticles.all().sort((a,b)=>new Date(b.updatedAt||b.createdAt)-new Date(a.updatedAt||a.createdAt)),el=$('ownerList');$('articleTotal').textContent=list.length;el.innerHTML=list.length?list.map(a=>'<article class="owner-item"><div class="owner-content"><div class="owner-status status-'+SamyArticles.escapeHtml(a.status||'draft')+'">'+statusLabel(a)+'</div><h3>'+SamyArticles.escapeHtml(a.titleAr||a.title)+'</h3><small>'+(a.series?SamyArticles.escapeHtml(a.series)+' · ':'')+'رقم '+SamyArticles.escapeHtml(a.number||'—')+' · '+SamyArticles.formatDate(a.publishAt||a.createdAt)+'</small>'+(a.titleEn?'<span class="translation-badge">EN</span>':'')+'</div><div class="owner-buttons"><button type="button" onclick="edit(\''+a.id+'\')">تعديل</button><button type="button" onclick="makeSocialById(\''+a.id+'\')">المشاركة</button><button type="button" onclick="duplicate(\''+a.id+'\')">نسخ</button><button type="button" class="danger" onclick="del(\''+a.id+'\')">حذف</button></div></article>').join(''):'<div class="empty-owner"><strong>لا توجد مقالات بعد</strong><span>ابدأ بكتابة أول مقال من النموذج أعلاه.</span></div>'}
+
+function exportData(){const data=SamyArticles.all(),blob=new Blob(['// Public article data. Generated from publisher.html.\nwindow.SAMY_ARTICLES = '+JSON.stringify(data,null,2)+';\n'],{type:'application/javascript;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='articles-data.js';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);setSaveState('تم تصدير articles-data.js','success')}
+$('exportData').onclick=exportData;
+
+function activateTab(panelId){document.querySelectorAll('.language-tab').forEach(btn=>{const active=btn.dataset.langPanel===panelId;btn.classList.toggle('active',active);btn.setAttribute('aria-selected',active)});document.querySelectorAll('.language-panel').forEach(panel=>{const active=panel.id===panelId;panel.classList.toggle('active',active);panel.hidden=!active})}
+document.querySelectorAll('.language-tab').forEach(btn=>btn.onclick=()=>activateTab(btn.dataset.langPanel));
+function updateCounters(){$('summaryArCount').textContent=fields.summaryAr.value.length;$('summaryEnCount').textContent=fields.summaryEn.value.length}
+fields.summaryAr.addEventListener('input',updateCounters);fields.summaryEn.addEventListener('input',updateCounters);
+
+function points(text){return String(text||'').split(/(?:\n+|[.!؟]+\s+)/).map(s=>s.replace(/^[-•*\d.\s]+/,'').trim()).filter(s=>s.length>12).slice(0,3).map(s=>s.length>70?s.slice(0,67)+'…':s)}
 function iconFor(t){if(/تعليم|معلم|طالب|مدرس/.test(t))return '▣';if(/تطوير|نمو|تحسين/.test(t))return '↗';if(/قياد|إدار|فريق/.test(t))return '◆';if(/فكر|ابتكار|فكرة/.test(t))return '✦';if(/هدف|إنجاز|نجاح/.test(t))return '◎';return '✓'}
-function wrap(ctx,text,x,y,maxLines,width,lineHeight,align='right'){ctx.textAlign=align;const words=text.split(/\s+/);let line='',lines=[];for(const w of words){const test=line?line+' '+w:w;if(ctx.measureText(test).width>width&&line){lines.push(line);line=w}else line=test}if(line)lines.push(line);for(let i=0;i<Math.min(lines.length,maxLines);i++)ctx.fillText(lines[i],x,y+i*lineHeight);return Math.min(lines.length,maxLines)*lineHeight}
-async function makeSocial(a){currentArticle=a;if(document.fonts&&document.fonts.ready)await document.fonts.ready;document.getElementById('socialPanel').classList.remove('hidden');const c=document.getElementById('socialCanvas'),ctx=c.getContext('2d');ctx.fillStyle='#062d23';ctx.fillRect(0,0,1200,1200);ctx.fillStyle='#d9ae54';ctx.fillRect(0,0,1200,34);ctx.fillRect(0,1166,1200,34);ctx.fillStyle='rgba(255,255,255,.045)';ctx.beginPath();ctx.arc(1060,160,260,0,Math.PI*2);ctx.fill();ctx.fillStyle='#f4d995';ctx.font='700 31px Cairo, sans-serif';ctx.textAlign='right';ctx.fillText('مقالات وأبحاث',1080,105);ctx.fillStyle='#fff';ctx.font='800 62px Cairo, sans-serif';let used=wrap(ctx,a.title,1080,205,3,760,82),pts=points(a.content),y=260+used;ctx.font='700 34px Cairo, sans-serif';for(const p of pts){ctx.fillStyle='#d9ae54';ctx.beginPath();ctx.arc(1048,y-10,28,0,Math.PI*2);ctx.fill();ctx.fillStyle='#062d23';ctx.font='800 27px Cairo, sans-serif';ctx.textAlign='center';ctx.fillText(iconFor(p),1048,y);ctx.fillStyle='#fff';ctx.font='700 32px Cairo, sans-serif';wrap(ctx,p,992,y,2,650,46);y+=115}ctx.fillStyle='#d9ae54';ctx.font='800 27px Cairo, sans-serif';ctx.textAlign='right';ctx.fillText('المقال رقم '+a.number,1080,1010);ctx.fillStyle='#fff';ctx.font='800 34px Cairo, sans-serif';ctx.fillText('سامي سليمان',1080,1060);ctx.font='600 23px Cairo, sans-serif';ctx.fillStyle='#dce8e3';ctx.fillText('معلم ومدرب ومؤلف',1080,1100);ctx.fillStyle='#d9ae54';ctx.font='700 22px Inter, sans-serif';ctx.textAlign='left';ctx.fillText('samysuliman.github.io/portfolio',80,1110);const img=new Image();img.src='assets/portrait-only.jpg';await new Promise(res=>{img.onload=res;img.onerror=res});ctx.save();ctx.beginPath();ctx.arc(245,345,150,0,Math.PI*2);ctx.clip();ctx.drawImage(img,95,195,300,300);ctx.restore();ctx.strokeStyle='#d9ae54';ctx.lineWidth=9;ctx.beginPath();ctx.arc(245,345,155,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#d9ae54';ctx.font='700 26px Cairo, sans-serif';ctx.textAlign='center';ctx.fillText('اقرأ المقال كاملًا عبر موقعي',245,560);const url=new URL('article.html?slug='+encodeURIComponent(a.slug),location.href).href,linkedin='نشرت مقالًا جديدًا بعنوان:\n'+a.title+'\n\n'+SamyArticles.excerpt(a.content,240)+'\n\nلقراءة المقال كاملًا:\n'+url,x=a.title+'\n\n'+SamyArticles.excerpt(a.content,150)+'\n\n'+url;document.getElementById('linkedinText').value=linkedin;document.getElementById('xText').value=x;document.getElementById('socialPanel').scrollIntoView({behavior:'smooth'})}
+function wrap(ctx,text,x,y,maxLines,width,lineHeight,align='right'){ctx.textAlign=align;const words=String(text||'').split(/\s+/);let line='',lines=[];for(const w of words){const test=line?line+' '+w:w;if(ctx.measureText(test).width>width&&line){lines.push(line);line=w}else line=test}if(line)lines.push(line);for(let i=0;i<Math.min(lines.length,maxLines);i++)ctx.fillText(lines[i],x,y+i*lineHeight);return Math.min(lines.length,maxLines)*lineHeight}
+async function makeSocial(a){currentArticle=a;if(document.fonts&&document.fonts.ready)await document.fonts.ready;$('socialPanel').classList.remove('hidden');const c=$('socialCanvas'),ctx=c.getContext('2d');ctx.fillStyle='#062d23';ctx.fillRect(0,0,1200,1200);ctx.fillStyle='#d9ae54';ctx.fillRect(0,0,1200,34);ctx.fillRect(0,1166,1200,34);ctx.fillStyle='rgba(255,255,255,.045)';ctx.beginPath();ctx.arc(1060,160,260,0,Math.PI*2);ctx.fill();ctx.fillStyle='#f4d995';ctx.font='700 31px Cairo, sans-serif';ctx.textAlign='right';ctx.fillText(a.series||'مقالات وأبحاث',1080,105);ctx.fillStyle='#fff';ctx.font='800 62px Cairo, sans-serif';let used=wrap(ctx,a.titleAr||a.title,1080,205,3,760,82),pts=points(a.summaryAr||a.contentAr||a.content),y=260+used;ctx.font='700 34px Cairo, sans-serif';for(const p of pts){ctx.fillStyle='#d9ae54';ctx.beginPath();ctx.arc(1048,y-10,28,0,Math.PI*2);ctx.fill();ctx.fillStyle='#062d23';ctx.font='800 27px Cairo, sans-serif';ctx.textAlign='center';ctx.fillText(iconFor(p),1048,y);ctx.fillStyle='#fff';ctx.font='700 32px Cairo, sans-serif';wrap(ctx,p,992,y,2,650,46);y+=115}ctx.fillStyle='#d9ae54';ctx.font='800 27px Cairo, sans-serif';ctx.textAlign='right';ctx.fillText('المقال رقم '+(a.number||'—'),1080,1010);ctx.fillStyle='#fff';ctx.font='800 34px Cairo, sans-serif';ctx.fillText('سامي سليمان',1080,1060);ctx.font='600 23px Cairo, sans-serif';ctx.fillStyle='#dce8e3';ctx.fillText('معلم ومدرب ومؤلف',1080,1100);ctx.fillStyle='#d9ae54';ctx.font='700 22px Inter, sans-serif';ctx.textAlign='left';ctx.fillText('samysuliman.github.io/portfolio',80,1110);const img=new Image();img.src='assets/portrait-only.jpg';await new Promise(res=>{img.onload=res;img.onerror=res});ctx.save();ctx.beginPath();ctx.arc(245,345,150,0,Math.PI*2);ctx.clip();ctx.drawImage(img,95,195,300,300);ctx.restore();ctx.strokeStyle='#d9ae54';ctx.lineWidth=9;ctx.beginPath();ctx.arc(245,345,155,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#d9ae54';ctx.font='700 26px Cairo, sans-serif';ctx.textAlign='center';ctx.fillText('اقرأ المقال كاملًا عبر موقعي',245,560);const url=new URL('article.html?slug='+encodeURIComponent(a.slug),location.href).href,linkedin='نشرت مقالًا جديدًا بعنوان:\n'+(a.titleAr||a.title)+'\n\n'+SamyArticles.excerpt(a.summaryAr||a.contentAr||a.content,240)+'\n\nلقراءة المقال كاملًا:\n'+url,x=(a.titleAr||a.title)+'\n\n'+SamyArticles.excerpt(a.summaryAr||a.contentAr||a.content,150)+'\n\n'+url;$('linkedinText').value=linkedin;$('xText').value=x;$('socialPanel').scrollIntoView({behavior:'smooth'})}
 window.makeSocialById=id=>{const a=SamyArticles.all().find(x=>x.id===id);if(a)makeSocial(a)};
-document.getElementById('downloadCard').onclick=()=>{const a=document.createElement('a');a.download=(currentArticle&&currentArticle.slug||'article-card')+'.png';a.href=document.getElementById('socialCanvas').toDataURL('image/png');a.click()};document.getElementById('shareLinkedin').onclick=async()=>{try{await navigator.clipboard.writeText(document.getElementById('linkedinText').value)}catch(e){}window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(new URL('article.html?slug='+currentArticle.slug,location.href).href),'_blank','noopener')};document.getElementById('shareX').onclick=()=>window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(document.getElementById('xText').value),'_blank','noopener');renderList();
-</script></body></html>
+$('downloadCard').onclick=()=>{if(!currentArticle)return;const a=document.createElement('a');a.download=(currentArticle.slug||'article-card')+'.png';a.href=$('socialCanvas').toDataURL('image/png');a.click()};
+$('shareLinkedin').onclick=async()=>{if(!currentArticle)return;try{await navigator.clipboard.writeText($('linkedinText').value)}catch(e){}window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(new URL('article.html?slug='+currentArticle.slug,location.href).href),'_blank','noopener')};
+$('shareX').onclick=()=>{if(currentArticle)window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent($('xText').value),'_blank','noopener')};
+window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
+resetForm();renderList();
+</script>
+</body></html>
