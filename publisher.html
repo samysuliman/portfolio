@@ -12,7 +12,8 @@
 <link rel="stylesheet" href="assets/articles.css">
 <style>
 .latest-publication{padding:16px 20px}.latest-copy span{font-size:.72rem}.latest-copy strong{font-size:1rem}.latest-icon{width:38px;height:38px}.publisher-editor .panel-heading{align-items:flex-start}.editor-toolbar{display:flex;gap:7px;flex-wrap:wrap;padding:8px;background:#f4f7f5;border:1px solid #dce6e1;border-bottom:0;border-radius:12px 12px 0 0}.editor-toolbar button{border:1px solid #cbd9d2;background:white;border-radius:8px;padding:6px 11px;font:700 .82rem Cairo;cursor:pointer}.editor-toolbar+.article-editor{border-radius:0 0 12px 12px}.table-wrap{overflow-x:auto}.articles-table{width:100%;border-collapse:collapse;min-width:760px}.articles-table th,.articles-table td{padding:14px 12px;border-bottom:1px solid #e3ebe7;text-align:right;vertical-align:middle}.articles-table th{background:#f5f8f6;color:#31584d}.articles-table td:first-child{font-weight:800;color:#b57b00}.articles-table .owner-buttons{display:flex;gap:6px;flex-wrap:wrap}.success-modal{position:fixed;inset:0;background:rgba(0,28,21,.65);display:grid;place-items:center;z-index:1000;padding:20px}.success-modal.hidden{display:none}.success-card{position:relative;width:min(620px,100%);background:white;border-radius:24px;padding:34px;text-align:center;box-shadow:0 25px 80px rgba(0,0,0,.28)}.success-check{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:#e4f6eb;color:#18864b;font-size:2rem;font-weight:900;margin:0 auto 14px}.success-card h2{margin:0 0 8px;color:#063c30}.success-card strong{display:block;margin-bottom:22px}.modal-close{position:absolute;left:18px;top:14px;border:0;background:none;font-size:1.8rem;cursor:pointer}.success-card .actions{justify-content:center}.eyebrow{font-family:Cairo!important}@media(max-width:700px){.success-card{padding:28px 18px}.sticky-actions{overflow-x:auto;flex-wrap:nowrap}.sticky-actions .btn{white-space:nowrap}}
-.auto-visual-note{margin-top:14px}.auto-visual-note>strong{display:block;color:#063c30;margin-bottom:3px}.auto-visual-note>span{display:block;color:#60746d;font-size:.78rem;line-height:1.7;margin-bottom:9px}.auto-visual-preview{min-height:160px;border-radius:16px;padding:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;position:relative;color:#fff;background:linear-gradient(145deg,#0b4435,#062d23);border:1px solid rgba(217,174,84,.55)}.auto-visual-preview:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 20%,rgba(255,255,255,.14),transparent 35%),linear-gradient(120deg,transparent 60%,rgba(217,174,84,.12));pointer-events:none}.auto-visual-preview span,.auto-visual-preview small,.auto-visual-preview b{position:relative;z-index:1}.auto-visual-preview span{font-size:30px;color:#efc86f}.auto-visual-preview small{margin:5px 0;color:#f5ddb0;font-weight:800}.auto-visual-preview b{font-size:1.05rem;line-height:1.7;max-width:90%}.auto-visual-preview.theme-seerah{background:linear-gradient(145deg,#123f31,#061f18)}.auto-visual-preview.theme-quran{background:linear-gradient(145deg,#174b45,#082d2a)}.auto-visual-preview.theme-leadership{background:linear-gradient(145deg,#18324d,#091d31)}.auto-visual-preview.theme-education{background:linear-gradient(145deg,#176a63,#0b403c)}.auto-visual-preview.theme-business{background:linear-gradient(145deg,#57401a,#211707)}.auto-visual-preview.theme-values{background:linear-gradient(145deg,#6b4027,#2d180d)}</style>
+.auto-visual-note{margin-top:14px}.auto-visual-note>strong{display:block;color:#063c30;margin-bottom:3px}.auto-visual-note>span{display:block;color:#60746d;font-size:.78rem;line-height:1.7;margin-bottom:9px}.auto-visual-preview{min-height:160px;border-radius:16px;padding:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;position:relative;color:#fff;background:linear-gradient(145deg,#0b4435,#062d23);border:1px solid rgba(217,174,84,.55)}.auto-visual-preview:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 20%,rgba(255,255,255,.14),transparent 35%),linear-gradient(120deg,transparent 60%,rgba(217,174,84,.12));pointer-events:none}.auto-visual-preview span,.auto-visual-preview small,.auto-visual-preview b{position:relative;z-index:1}.auto-visual-preview span{font-size:30px;color:#efc86f}.auto-visual-preview small{margin:5px 0;color:#f5ddb0;font-weight:800}.auto-visual-preview b{font-size:1.05rem;line-height:1.7;max-width:90%}.auto-visual-preview.theme-seerah{background:linear-gradient(145deg,#123f31,#061f18)}.auto-visual-preview.theme-quran{background:linear-gradient(145deg,#174b45,#082d2a)}.auto-visual-preview.theme-leadership{background:linear-gradient(145deg,#18324d,#091d31)}.auto-visual-preview.theme-education{background:linear-gradient(145deg,#176a63,#0b403c)}.auto-visual-preview.theme-business{background:linear-gradient(145deg,#57401a,#211707)}.auto-visual-preview.theme-values{background:linear-gradient(145deg,#6b4027,#2d180d)}
+.publisher-pro-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;align-items:start}.quality-panel{position:sticky;top:86px;border:1px solid #dce6e1;border-radius:18px;background:#fbfdfc;padding:18px}.quality-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.quality-head h2{margin:0;font-size:1.05rem;color:#063c30}.quality-score{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#16834d var(--score,0%),#e5ece8 0);position:relative}.quality-score:after{content:"";position:absolute;inset:7px;border-radius:50%;background:#fff}.quality-score strong{position:relative;z-index:1;color:#063c30;font-size:1.05rem}.quality-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.quality-meta div{background:#f1f6f3;border-radius:10px;padding:9px;text-align:center}.quality-meta strong{display:block;color:#063c30}.quality-meta span{font-size:.72rem;color:#65766f}.quality-list{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:8px}.quality-list li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;border-radius:10px;background:#f7faf8;font-size:.82rem}.quality-list li.ok{color:#157647}.quality-list li.warn{color:#9a6500}.quality-list li.bad{color:#b33b32}.field-error{display:none;color:#b33b32;font-size:.75rem;margin-top:5px}.field.invalid input,.field.invalid textarea,.field.invalid select,.field.invalid .image-dropzone{border-color:#c7473f!important;box-shadow:0 0 0 3px rgba(199,71,63,.09)}.field.invalid .field-error{display:block}.last-save-line{display:block;margin-top:4px;font-size:.72rem;color:#697b73}.preview-modal{position:fixed;inset:0;background:rgba(0,28,21,.68);display:grid;place-items:center;z-index:1100;padding:18px}.preview-modal.hidden{display:none}.preview-card-shell{width:min(760px,100%);background:#fff;border-radius:24px;padding:24px;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.3)}.preview-article-card{overflow:hidden;border:1px solid #dde7e2;border-radius:18px;background:#fff}.preview-cover{min-height:230px;background:linear-gradient(145deg,#0b4435,#062d23);display:grid;place-items:center;padding:28px;color:white;text-align:center;background-size:cover;background-position:center;position:relative}.preview-cover:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.55),rgba(0,0,0,.08))}.preview-cover h3{position:relative;z-index:1;font-size:1.65rem;line-height:1.6;margin:0}.preview-body{padding:20px}.preview-body small{color:#a66e00;font-weight:800}.preview-body p{color:#52675f;line-height:1.9}.preview-tags{display:flex;gap:7px;flex-wrap:wrap}.preview-tags span{background:#eef5f1;color:#31584d;padding:5px 9px;border-radius:999px;font-size:.72rem}.preview-close{position:absolute;left:18px;top:12px;border:0;background:transparent;font-size:1.8rem;cursor:pointer;z-index:2}@media(max-width:980px){.publisher-pro-grid{grid-template-columns:1fr}.quality-panel{position:static;order:-1}}</style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#062d23">
 <meta name="mobile-web-app-capable" content="yes">
@@ -41,7 +42,7 @@
   <section class="panel publisher-editor">
     <div class="panel-heading">
       <div><p class="eyebrow">لوحة النشر</p><h1 id="editorTitle">إنشاء مقال جديد</h1></div>
-      <span class="save-state" id="saveState" aria-live="polite">جاهز للكتابة</span>
+      <div><span class="save-state" id="saveState" aria-live="polite">جاهز للكتابة</span><small class="last-save-line" id="lastSaveLine">لم يتم الحفظ بعد</small></div>
     </div>
 
     <form id="articleForm" novalidate>
@@ -65,9 +66,9 @@
 
       <div class="language-panel active" id="arPanel" role="tabpanel" aria-labelledby="arabicTab">
         <div class="form-grid">
-          <div class="field full"><label for="titleAr">عنوان المقال بالعربية</label><input id="titleAr" required placeholder="اكتب عنوانًا واضحًا وجذابًا"></div>
+          <div class="field full"><label for="titleAr">عنوان المقال بالعربية</label><input id="titleAr" required placeholder="اكتب عنوانًا واضحًا وجذابًا"><small class="field-error">عنوان المقال مطلوب.</small></div>
           <div class="field full"><label for="summaryAr">الملخص العربي</label><textarea id="summaryAr" class="summary-field" maxlength="420" placeholder="ملخص قصير يظهر في بطاقة المقال ونتائج البحث"></textarea><small class="counter"><span id="summaryArCount">0</span>/420</small></div>
-          <div class="field full"><label for="contentAr">محتوى المقال بالعربية</label><div class="editor-toolbar" data-target="contentAr"><button type="button" data-format="bold"><b>B</b></button><button type="button" data-format="h2">H2</button><button type="button" data-format="quote">❝</button><button type="button" data-format="list">• قائمة</button><button type="button" data-format="link">🔗</button></div><textarea id="contentAr" class="article-editor" required placeholder="اكتب المقال هنا... استخدم سطرًا فارغًا للفصل بين الفقرات."></textarea></div>
+          <div class="field full"><label for="contentAr">محتوى المقال بالعربية</label><div class="editor-toolbar" data-target="contentAr"><button type="button" data-format="bold"><b>B</b></button><button type="button" data-format="h2">H2</button><button type="button" data-format="quote">❝</button><button type="button" data-format="list">• قائمة</button><button type="button" data-format="link">🔗</button></div><textarea id="contentAr" class="article-editor" required placeholder="اكتب المقال هنا... استخدم سطرًا فارغًا للفصل بين الفقرات."></textarea><small class="field-error">محتوى المقال مطلوب.</small></div>
         </div>
       </div>
 
@@ -83,10 +84,18 @@
       <div class="form-section media-section">
         <h2>الصورة والفيديو</h2>
         <div class="form-grid">
-          <div class="field"><label for="imageFile">الصورة الرئيسية</label><div class="image-dropzone" id="imageDropzone" tabindex="0" role="button" aria-label="اسحب الصورة هنا أو اخترها من جهازك"><input id="imageFile" type="file" accept="image/jpeg,image/png,image/webp"><div class="dropzone-prompt" id="dropzonePrompt"><span class="dropzone-icon">↥</span><strong>اسحب الصورة وأفلتها هنا</strong><small>أو اضغط لاختيار ملف WebP أو JPG أو PNG</small></div><img id="imagePreview" class="preview-image" alt="معاينة الصورة"><button class="remove-image hidden" id="removeImage" type="button">إزالة الصورة</button></div><small>يفضل عرض 1200 بكسل وحجم أقل من 500 كيلوبايت.</small><div class="auto-visual-note"><strong>الهوية البصرية التلقائية</strong><span>إذا لم ترفع صورة، ينشئ الموقع خلفية مناسبة تلقائيًا من عنوان المقال وسلسلته وكلماته المفتاحية.</span><div id="autoVisualPreview" class="auto-visual-preview theme-professional"><span id="autoVisualIcon">✦</span><small id="autoVisualLabel">رؤية مهنية</small><b id="autoVisualTitle">سيظهر عنوان المقال هنا</b></div></div></div>
+          <div class="field"><label for="imageFile">الصورة الرئيسية</label><div class="image-dropzone" id="imageDropzone" tabindex="0" role="button" aria-label="اسحب الصورة هنا أو اخترها من جهازك"><input id="imageFile" type="file" accept="image/jpeg,image/png,image/webp"><div class="dropzone-prompt" id="dropzonePrompt"><span class="dropzone-icon">↥</span><strong>اسحب الصورة وأفلتها هنا</strong><small>أو اضغط لاختيار ملف WebP أو JPG أو PNG</small></div><img id="imagePreview" class="preview-image" alt="معاينة الصورة"><button class="remove-image hidden" id="removeImage" type="button">إزالة الصورة</button></div><small class="field-error">أضف صورة رئيسية قبل النشر، أو استخدم الهوية البصرية التلقائية.</small><small>يفضل عرض 1200 بكسل وحجم أقل من 500 كيلوبايت.</small><div class="auto-visual-note"><strong>الهوية البصرية التلقائية</strong><span>إذا لم ترفع صورة، ينشئ الموقع خلفية مناسبة تلقائيًا من عنوان المقال وسلسلته وكلماته المفتاحية.</span><div id="autoVisualPreview" class="auto-visual-preview theme-professional"><span id="autoVisualIcon">✦</span><small id="autoVisualLabel">رؤية مهنية</small><b id="autoVisualTitle">سيظهر عنوان المقال هنا</b></div></div></div>
           <div class="field"><label for="video">رابط فيديو <small>(اختياري)</small></label><input id="video" type="url" dir="ltr" placeholder="https://youtube.com/..."><label for="imageAltAr">وصف الصورة لمحركات البحث</label><input id="imageAltAr" placeholder="وصف مختصر ودقيق للصورة"><label class="check-option"><input id="generateQr" type="checkbox" checked> إنشاء QR خاص برابط المقال</label><div class="qr-preview-box"><div id="qrPreview"></div><span>يظهر بعد كتابة عنوان المقال</span></div></div>
         </div>
       </div>
+
+
+      <section class="quality-panel" id="qualityPanel" aria-live="polite">
+        <div class="quality-head"><div><p class="eyebrow">PUBLISHER PRO</p><h2>جودة المقال قبل النشر</h2></div><div class="quality-score" id="qualityScore" style="--score:0%"><strong id="qualityScoreText">0/100</strong></div></div>
+        <div class="quality-meta"><div><strong id="wordCount">0</strong><span>كلمة</span></div><div><strong id="charCount">0</strong><span>حرف</span></div><div><strong id="readingTime">0</strong><span>دقيقة قراءة</span></div></div>
+        <ul class="quality-list" id="qualityList"></ul>
+        <button class="btn secondary" type="button" id="previewCard" style="width:100%;margin-top:14px">معاينة بطاقة المقال</button>
+      </section>
 
       <div class="actions sticky-actions">
         <button class="btn ghost" type="button" id="saveDraft">حفظ كمسودة</button>
@@ -109,9 +118,11 @@
     <div class="social-preview"><canvas id="socialCanvas" width="1200" height="1200"></canvas><div class="social-text"><div class="field"><label>نص LinkedIn</label><textarea id="linkedinText"></textarea></div><div class="field"><label>نص X</label><textarea id="xText"></textarea></div><div class="actions"><button class="btn secondary" id="downloadCard" type="button">تنزيل الصورة</button><button class="btn ghost" id="copyLinkedin" type="button">نسخ نص LinkedIn</button><button class="btn ghost" id="shareLinkedin" type="button">فتح LinkedIn</button><button class="btn ghost" id="copyX" type="button">نسخ نص X</button><button class="btn ghost" id="shareX" type="button">فتح X</button></div></div></div>
   </section>
   <div class="success-modal hidden" id="successModal" role="dialog" aria-modal="true" aria-labelledby="successTitle"><div class="success-card"><button class="modal-close" id="closeSuccess" type="button">×</button><div class="success-check">✓</div><h2 id="successTitle">تم نشر المقال بنجاح</h2><strong id="successArticleTitle"></strong><div class="actions"><a class="btn secondary" id="successOpen" target="_blank" rel="noopener">معاينة المقال</a><button class="btn ghost" id="successCopyLink" type="button">نسخ الرابط</button><button class="btn ghost" id="successLinkedin" type="button">نسخ منشور LinkedIn</button><button class="btn ghost" id="successX" type="button">نسخ منشور X</button></div></div></div>
+
+  <div class="preview-modal hidden" id="cardPreviewModal" role="dialog" aria-modal="true" aria-labelledby="cardPreviewTitle"><div class="preview-card-shell"><button class="preview-close" id="closeCardPreview" type="button">×</button><div class="preview-article-card"><div class="preview-cover" id="previewCardCover"><h3 id="cardPreviewTitle">عنوان المقال</h3></div><div class="preview-body"><small id="previewCardSeries">مقالات وأبحاث</small><p id="previewCardSummary">ملخص المقال سيظهر هنا.</p><div class="preview-tags" id="previewCardTags"></div></div></div></div></div>
 </div></main>
 <footer class="footer">© 2026 Samy Suliman — Professional Portfolio</footer>
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="articles/articles-data.js?v=5.0"></script><script src="assets/articles-common.js?v=5.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="articles/articles-data.js?v=5.1"></script><script src="assets/articles-common.js?v=5.1"></script>
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
@@ -121,7 +132,7 @@ const fileEl=$('imageFile'),preview=$('imagePreview'),dropzone=$('imageDropzone'
 let imageData='',currentArticle=null,dirty=false,qrInstance=null;
 
 function localItems(){return SamyArticles.local()}
-function persist(items){const ok=SamyArticles.save(items);renderList();updateLatest();if(!ok)setSaveState('تعذر الحفظ المحلي في هذا المتصفح','warning');return ok}
+function persist(items){SamyArticles.save(items);renderList();updateLatest()}
 function localDateInput(value){const d=value?new Date(value):new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16)}
 function setSaveState(text,kind=''){const el=$('saveState');el.textContent=text;el.dataset.kind=kind}
 function markDirty(){dirty=true;setSaveState('تغييرات غير محفوظة','warning')}
@@ -134,10 +145,11 @@ function updateQrPreview(){const box=$('qrPreview');box.innerHTML='';const title
 function setImage(data){imageData=data||'';if(imageData){preview.src=imageData;preview.style.display='block';dropPrompt.classList.add('hidden');removeImageBtn.classList.remove('hidden');dropzone.classList.add('has-image')}else{preview.removeAttribute('src');preview.style.display='none';dropPrompt.classList.remove('hidden');removeImageBtn.classList.add('hidden');dropzone.classList.remove('has-image')}markDirty()}
 function handleImageFile(f){if(!f)return;if(!/^image\/(jpeg|png|webp)$/.test(f.type)){alert('اختر صورة بصيغة JPG أو PNG أو WebP.');return}if(f.size>1500000&&!confirm('حجم الصورة أكبر من 1.5 ميجابايت وقد يزيد حجم ملف المقالات. هل تريد المتابعة؟'))return;const r=new FileReader();r.onload=()=>setImage(r.result);r.readAsDataURL(f)}
 function validate(status){
-  if(!fields.titleAr.value.trim()){activateTab('arPanel');fields.titleAr.focus();alert('اكتب عنوان المقال بالعربية أولًا.');return false}
-  if(!fields.contentAr.value.trim()){activateTab('arPanel');fields.contentAr.focus();alert('اكتب محتوى المقال بالعربية أولًا.');return false}
-  if((fields.titleEn.value.trim()&&!fields.contentEn.value.trim())||(!fields.titleEn.value.trim()&&fields.contentEn.value.trim())){activateTab('enPanel');alert('أكمل عنوان الترجمة الإنجليزية ومحتواها، أو اتركهما معًا فارغين.');return false}
-  if(status==='scheduled'&&!fields.publishAt.value){fields.publishAt.focus();alert('حدد تاريخ ووقت النشر للمقال المجدول.');return false}
+  clearValidation();
+  if(!fields.titleAr.value.trim()){activateTab('arPanel');invalidate(fields.titleAr,'اكتب عنوان المقال بالعربية أولًا.');setSaveState('تعذر النشر: العنوان مطلوب','warning');return false}
+  if(!fields.contentAr.value.trim()){activateTab('arPanel');invalidate(fields.contentAr,'اكتب محتوى المقال بالعربية أولًا.');setSaveState('تعذر النشر: المحتوى مطلوب','warning');return false}
+  if((fields.titleEn.value.trim()&&!fields.contentEn.value.trim())||(!fields.titleEn.value.trim()&&fields.contentEn.value.trim())){activateTab('enPanel');invalidate(fields.titleEn.value.trim()?fields.contentEn:fields.titleEn,'أكمل عنوان الترجمة الإنجليزية ومحتواها، أو اتركهما معًا فارغين.');setSaveState('الترجمة الإنجليزية غير مكتملة','warning');return false}
+  if(status==='scheduled'&&!fields.publishAt.value){invalidate(fields.publishAt,'حدد تاريخ ووقت النشر للمقال المجدول.');setSaveState('حدد موعد الجدولة','warning');return false}
   return true;
 }
 function build(overrideStatus){
@@ -146,7 +158,6 @@ function build(overrideStatus){
   const publishAt=fields.publishAt.value?new Date(fields.publishAt.value).toISOString():(existing&&existing.publishAt)||now;
   const titleAr=fields.titleAr.value.trim(),contentAr=fields.contentAr.value.trim();
   return {
-    schemaVersion:SamyArticles.schemaVersion,
     id,
     slug:(existing&&existing.slug)||SamyArticles.slugify(titleAr),
     number:fields.number.value.trim()||(existing&&existing.number)||nextNumber(),
@@ -172,7 +183,7 @@ function build(overrideStatus){
     visualTheme:SamyArticles.visualTheme({series:fields.series.value,titleAr,summaryAr:fields.summaryAr.value,contentAr,keywords:keywordsArray()})
   };
 }
-function upsert(article,message){const items=localItems(),i=items.findIndex(a=>a.id===article.id);if(i>=0)items[i]=article;else items.push(article);persist(items);currentArticle=article;dirty=false;setSaveState(message,'success');makeSocial(article);if(article.status==='published'||article.status==='scheduled'){showSuccess(article);setTimeout(()=>exportData({silent:true,reason:'publish'}),250)}resetForm(false)}
+function upsert(article,message){const items=localItems(),i=items.findIndex(a=>a.id===article.id);if(i>=0)items[i]=article;else items.push(article);persist(items);currentArticle=article;dirty=false;setSaveState(message,'success');updateLastSave();makeSocial(article);if(article.status==='published'||article.status==='scheduled'){showSuccess(article);setTimeout(()=>exportData({silent:true,reason:'publish'}),250)}resetForm(false)}
 
 
 function updateAutoVisual(){
@@ -192,10 +203,10 @@ form.addEventListener('submit',e=>{e.preventDefault();const status=fields.status
 $('saveDraft').onclick=()=>{if(!validate('draft'))return;upsert(build('draft'),'تم حفظ المسودة')};
 $('previewArticle').onclick=()=>{if(!validate('draft'))return;const article=build(fields.status.value);const items=localItems(),i=items.findIndex(a=>a.id===article.id);if(i>=0)items[i]=article;else items.push(article);persist(items);window.open('articles.html?slug='+encodeURIComponent(article.slug)+'&preview=1','_blank','noopener')};
 
-function resetForm(resetState=true){form.reset();fields.id.value='';fields.publishAt.value=localDateInput();fields.number.value=nextNumber();imageData='';preview.removeAttribute('src');preview.style.display='none';dropPrompt.classList.remove('hidden');removeImageBtn.classList.add('hidden');dropzone.classList.remove('has-image');$('cancelEdit').classList.add('hidden');$('editorTitle').textContent='مقال جديد';activateTab('arPanel');updateCounters();updateQrPreview();dirty=false;if(resetState)setSaveState('جاهز للكتابة')}
+function resetForm(resetState=true){form.reset();fields.id.value='';fields.publishAt.value=localDateInput();fields.number.value=nextNumber();imageData='';preview.removeAttribute('src');preview.style.display='none';dropPrompt.classList.remove('hidden');removeImageBtn.classList.add('hidden');dropzone.classList.remove('has-image');$('cancelEdit').classList.add('hidden');$('editorTitle').textContent='مقال جديد';activateTab('arPanel');updateCounters();updateQrPreview();dirty=false;if(resetState)setSaveState('جاهز للكتابة');clearValidation();updateQuality()}
 $('cancelEdit').onclick=()=>{if(!dirty||confirm('هل تريد إلغاء التعديلات غير المحفوظة؟'))resetForm()};$('newArticle').onclick=()=>{if(!dirty||confirm('هل تريد بدء مقال جديد وحذف التغييرات غير المحفوظة؟')){resetForm();scrollTo({top:0,behavior:'smooth'})}};
 
-function edit(id){const a=SamyArticles.all().find(x=>x.id===id);if(!a)return;fields.id.value=a.id;fields.series.value=a.series||'';fields.number.value=a.number||'';fields.publishAt.value=localDateInput(a.publishAt||a.createdAt);fields.status.value=a.status||'draft';fields.keywords.value=Array.isArray(a.keywords)?a.keywords.join('، '):(a.keywords||'');fields.titleAr.value=a.titleAr||a.title||'';fields.summaryAr.value=a.summaryAr||a.summary||'';fields.contentAr.value=a.contentAr||a.content||'';fields.titleEn.value=a.titleEn||'';fields.summaryEn.value=a.summaryEn||'';fields.contentEn.value=a.contentEn||'';fields.video.value=a.video||'';fields.imageAltAr.value=a.imageAltAr||'';imageData=a.image||'';if(imageData){preview.src=imageData;preview.style.display='block';dropPrompt.classList.add('hidden');removeImageBtn.classList.remove('hidden');dropzone.classList.add('has-image')}else{preview.style.display='none';dropPrompt.classList.remove('hidden');removeImageBtn.classList.add('hidden');dropzone.classList.remove('has-image')}updateQrPreview();$('cancelEdit').classList.remove('hidden');$('editorTitle').textContent='تعديل المقال';updateCounters();dirty=false;setSaveState('وضع التعديل');scrollTo({top:0,behavior:'smooth'})}
+function edit(id){const a=SamyArticles.all().find(x=>x.id===id);if(!a)return;fields.id.value=a.id;fields.series.value=a.series||'';fields.number.value=a.number||'';fields.publishAt.value=localDateInput(a.publishAt||a.createdAt);fields.status.value=a.status||'draft';fields.keywords.value=Array.isArray(a.keywords)?a.keywords.join('، '):(a.keywords||'');fields.titleAr.value=a.titleAr||a.title||'';fields.summaryAr.value=a.summaryAr||a.summary||'';fields.contentAr.value=a.contentAr||a.content||'';fields.titleEn.value=a.titleEn||'';fields.summaryEn.value=a.summaryEn||'';fields.contentEn.value=a.contentEn||'';fields.video.value=a.video||'';fields.imageAltAr.value=a.imageAltAr||'';imageData=a.image||'';if(imageData){preview.src=imageData;preview.style.display='block';dropPrompt.classList.add('hidden');removeImageBtn.classList.remove('hidden');dropzone.classList.add('has-image')}else{preview.style.display='none';dropPrompt.classList.remove('hidden');removeImageBtn.classList.add('hidden');dropzone.classList.remove('has-image')}updateQrPreview();$('cancelEdit').classList.remove('hidden');$('editorTitle').textContent='تعديل المقال';updateCounters();updateQuality();dirty=false;setSaveState('وضع التعديل');scrollTo({top:0,behavior:'smooth'})}
 function del(id){if(confirm('هل تريد حذف هذا المقال نهائيًا من هذا المتصفح؟')){persist(localItems().filter(a=>a.id!==id));setSaveState('تم حذف المقال','success')}}
 function duplicate(id){const source=SamyArticles.all().find(x=>x.id===id);if(!source)return;const copy={...source,id:'a'+Date.now(),slug:SamyArticles.slugify((source.titleAr||source.title)+'-نسخة-'+Date.now()),number:nextNumber(),status:'draft',titleAr:(source.titleAr||source.title)+' — نسخة',title:(source.titleAr||source.title)+' — نسخة',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};const items=localItems();items.push(copy);persist(items);edit(copy.id)}
 function statusLabel(a){if(a.status==='published')return 'منشور';if(a.status==='scheduled')return 'مجدول';return 'مسودة'}
@@ -207,7 +218,39 @@ $('exportData').onclick=exportData;$('exportDataTop').onclick=exportData;
 function activateTab(panelId){document.querySelectorAll('.language-tab').forEach(btn=>{const active=btn.dataset.langPanel===panelId;btn.classList.toggle('active',active);btn.setAttribute('aria-selected',active)});document.querySelectorAll('.language-panel').forEach(panel=>{const active=panel.id===panelId;panel.classList.toggle('active',active);panel.hidden=!active})}
 document.querySelectorAll('.language-tab').forEach(btn=>btn.onclick=()=>activateTab(btn.dataset.langPanel));
 function updateCounters(){$('summaryArCount').textContent=fields.summaryAr.value.length;$('summaryEnCount').textContent=fields.summaryEn.value.length}
+
+function plainText(value){return String(value||'').replace(/[#>*_`\[\]()~-]/g,' ').replace(/\s+/g,' ').trim()}
+function qualityMetrics(){
+  const title=fields.titleAr.value.trim(),summary=fields.summaryAr.value.trim(),content=plainText(fields.contentAr.value),keywords=keywordsArray();
+  const words=content?content.split(/\s+/).filter(Boolean).length:0,chars=content.length,minutes=words?Math.max(1,Math.ceil(words/200)):0;
+  const checks=[
+    {label:'عنوان واضح بين 25 و70 حرفًا',ok:title.length>=25&&title.length<=70,partial:title.length>0},
+    {label:'ملخص مناسب بين 80 و220 حرفًا',ok:summary.length>=80&&summary.length<=220,partial:summary.length>0},
+    {label:'محتوى ثري لا يقل عن 300 كلمة',ok:words>=300,partial:words>=120},
+    {label:'كلمات مفتاحية (3 على الأقل)',ok:keywords.length>=3,partial:keywords.length>0},
+    {label:'صورة أو هوية بصرية متاحة',ok:Boolean(imageData||title),partial:Boolean(title)},
+    {label:'وصف للصورة ومحركات البحث',ok:fields.imageAltAr.value.trim().length>=20,partial:fields.imageAltAr.value.trim().length>0}
+  ];
+  const score=Math.round(checks.reduce((sum,c)=>sum+(c.ok?16.67:c.partial?8:0),0));
+  return {title,summary,content,keywords,words,chars,minutes,checks,score:Math.min(100,score)};
+}
+function updateQuality(){
+  const m=qualityMetrics();$('wordCount').textContent=m.words.toLocaleString('ar-SA');$('charCount').textContent=m.chars.toLocaleString('ar-SA');$('readingTime').textContent=m.minutes.toLocaleString('ar-SA');
+  $('qualityScore').style.setProperty('--score',m.score+'%');$('qualityScoreText').textContent=m.score+'/100';
+  $('qualityList').innerHTML=m.checks.map(c=>'<li class="'+(c.ok?'ok':c.partial?'warn':'bad')+'"><span>'+(c.ok?'✓':c.partial?'⚠':'✕')+' '+SamyArticles.escapeHtml(c.label)+'</span><strong>'+(c.ok?'مكتمل':c.partial?'يحتاج تحسين':'ناقص')+'</strong></li>').join('');
+}
+function clearValidation(){document.querySelectorAll('.field.invalid').forEach(el=>el.classList.remove('invalid'))}
+function invalidate(el,message){const field=el.closest('.field');if(field){field.classList.add('invalid');const note=field.querySelector('.field-error');if(note&&message)note.textContent=message}el.focus()}
+function updateLastSave(){const now=new Date();$('lastSaveLine').textContent='آخر حفظ: '+now.toLocaleDateString('ar-SA')+'، '+now.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'})}
+function openCardPreview(){
+  const m=qualityMetrics();$('cardPreviewTitle').textContent=m.title||'عنوان المقال';$('previewCardSeries').textContent=fields.series.value.trim()||'مقالات وأبحاث';$('previewCardSummary').textContent=m.summary||SamyArticles.excerpt(m.content,180)||'ملخص المقال سيظهر هنا.';
+  const cover=$('previewCardCover');cover.style.backgroundImage=imageData?'linear-gradient(0deg,rgba(0,0,0,.45),rgba(0,0,0,.12)),url("'+imageData.replace(/"/g,'%22')+'")':'';
+  $('previewCardTags').innerHTML=(m.keywords.length?m.keywords:['مقال']).slice(0,5).map(k=>'<span>'+SamyArticles.escapeHtml(k)+'</span>').join('');$('cardPreviewModal').classList.remove('hidden');
+}
+
 fields.summaryAr.addEventListener('input',updateCounters);fields.summaryEn.addEventListener('input',updateCounters);
+[fields.titleAr,fields.summaryAr,fields.contentAr,fields.keywords,fields.imageAltAr,fields.series].forEach(el=>{el.addEventListener('input',()=>{el.closest('.field')?.classList.remove('invalid');updateQuality()});el.addEventListener('change',updateQuality)});
+$('previewCard').onclick=openCardPreview;$('closeCardPreview').onclick=()=>$('cardPreviewModal').classList.add('hidden');$('cardPreviewModal').onclick=e=>{if(e.target===$('cardPreviewModal'))$('cardPreviewModal').classList.add('hidden')};
 
 function points(text){return String(text||'').split(/(?:\n+|[.!؟]+\s+)/).map(s=>s.replace(/^[-•*\d.\s]+/,'').trim()).filter(s=>s.length>12).slice(0,3).map(s=>s.length>70?s.slice(0,67)+'…':s)}
 function iconFor(t){if(/تعليم|معلم|طالب|مدرس/.test(t))return '▣';if(/تطوير|نمو|تحسين/.test(t))return '↗';if(/قياد|إدار|فريق/.test(t))return '◆';if(/فكر|ابتكار|فكرة/.test(t))return '✦';if(/هدف|إنجاز|نجاح/.test(t))return '◎';return '✓'}
@@ -227,7 +270,7 @@ function socialTexts(a){const url=articleUrl(a),title=a.titleAr||a.title,excerpt
 function showSuccess(a){const t=socialTexts(a);$('successArticleTitle').textContent=a.titleAr||a.title;$('successOpen').href=t.url;$('successModal').classList.remove('hidden');$('successCopyLink').onclick=()=>navigator.clipboard.writeText(t.url);$('successLinkedin').onclick=()=>navigator.clipboard.writeText(t.linkedin);$('successX').onclick=()=>navigator.clipboard.writeText(t.x)}
 $('closeSuccess').onclick=()=>$('successModal').classList.add('hidden');$('successModal').onclick=e=>{if(e.target===$('successModal'))$('successModal').classList.add('hidden')};
 window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
-resetForm();renderList();updateLatest();updateAutoVisual();
+resetForm();renderList();updateLatest();updateAutoVisual();updateQuality();
 </script>
 
 <script src="assets/pwa.js" defer></script>

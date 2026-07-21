@@ -1,11 +1,9 @@
-const CACHE_VERSION = 'samy-portfolio-v5.0-clean-start';
+const CACHE_VERSION = 'samy-portfolio-v5.1-publisher-pro';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 const CORE_ASSETS = [
   './',
   './index.html',
   './articles.html',
-  './article.html',
-  './publisher.html',
   './articles/articles-data.js',
   './assets/articles.css',
   './assets/articles-common.js',

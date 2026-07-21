@@ -1,3 +1,3 @@
 // Public article data. Generated from publisher.html.
-// Clean start: no published articles yet.
+// Clean start: publish the first article from publisher.html, then upload the exported file here.
 window.SAMY_ARTICLES = [];
