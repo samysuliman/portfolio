@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="assets/articles.css">
 <style>
 .latest-publication{padding:16px 20px}.latest-copy span{font-size:.72rem}.latest-copy strong{font-size:1rem}.latest-icon{width:38px;height:38px}.publisher-editor .panel-heading{align-items:flex-start}.editor-toolbar{display:flex;gap:7px;flex-wrap:wrap;padding:8px;background:#f4f7f5;border:1px solid #dce6e1;border-bottom:0;border-radius:12px 12px 0 0}.editor-toolbar button{border:1px solid #cbd9d2;background:white;border-radius:8px;padding:6px 11px;font:700 .82rem Cairo;cursor:pointer}.editor-toolbar+.article-editor{border-radius:0 0 12px 12px}.table-wrap{overflow-x:auto}.articles-table{width:100%;border-collapse:collapse;min-width:760px}.articles-table th,.articles-table td{padding:14px 12px;border-bottom:1px solid #e3ebe7;text-align:right;vertical-align:middle}.articles-table th{background:#f5f8f6;color:#31584d}.articles-table td:first-child{font-weight:800;color:#b57b00}.articles-table .owner-buttons{display:flex;gap:6px;flex-wrap:wrap}.success-modal{position:fixed;inset:0;background:rgba(0,28,21,.65);display:grid;place-items:center;z-index:1000;padding:20px}.success-modal.hidden{display:none}.success-card{position:relative;width:min(620px,100%);background:white;border-radius:24px;padding:34px;text-align:center;box-shadow:0 25px 80px rgba(0,0,0,.28)}.success-check{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:#e4f6eb;color:#18864b;font-size:2rem;font-weight:900;margin:0 auto 14px}.success-card h2{margin:0 0 8px;color:#063c30}.success-card strong{display:block;margin-bottom:22px}.modal-close{position:absolute;left:18px;top:14px;border:0;background:none;font-size:1.8rem;cursor:pointer}.success-card .actions{justify-content:center}.eyebrow{font-family:Cairo!important}@media(max-width:700px){.success-card{padding:28px 18px}.sticky-actions{overflow-x:auto;flex-wrap:nowrap}.sticky-actions .btn{white-space:nowrap}}
-</style>
+.auto-visual-note{margin-top:14px}.auto-visual-note>strong{display:block;color:#063c30;margin-bottom:3px}.auto-visual-note>span{display:block;color:#60746d;font-size:.78rem;line-height:1.7;margin-bottom:9px}.auto-visual-preview{min-height:160px;border-radius:16px;padding:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;position:relative;color:#fff;background:linear-gradient(145deg,#0b4435,#062d23);border:1px solid rgba(217,174,84,.55)}.auto-visual-preview:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 20%,rgba(255,255,255,.14),transparent 35%),linear-gradient(120deg,transparent 60%,rgba(217,174,84,.12));pointer-events:none}.auto-visual-preview span,.auto-visual-preview small,.auto-visual-preview b{position:relative;z-index:1}.auto-visual-preview span{font-size:30px;color:#efc86f}.auto-visual-preview small{margin:5px 0;color:#f5ddb0;font-weight:800}.auto-visual-preview b{font-size:1.05rem;line-height:1.7;max-width:90%}.auto-visual-preview.theme-seerah{background:linear-gradient(145deg,#123f31,#061f18)}.auto-visual-preview.theme-quran{background:linear-gradient(145deg,#174b45,#082d2a)}.auto-visual-preview.theme-leadership{background:linear-gradient(145deg,#18324d,#091d31)}.auto-visual-preview.theme-education{background:linear-gradient(145deg,#176a63,#0b403c)}.auto-visual-preview.theme-business{background:linear-gradient(145deg,#57401a,#211707)}.auto-visual-preview.theme-values{background:linear-gradient(145deg,#6b4027,#2d180d)}</style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#062d23">
 <meta name="mobile-web-app-capable" content="yes">
@@ -83,7 +83,7 @@
       <div class="form-section media-section">
         <h2>الصورة والفيديو</h2>
         <div class="form-grid">
-          <div class="field"><label for="imageFile">الصورة الرئيسية</label><div class="image-dropzone" id="imageDropzone" tabindex="0" role="button" aria-label="اسحب الصورة هنا أو اخترها من جهازك"><input id="imageFile" type="file" accept="image/jpeg,image/png,image/webp"><div class="dropzone-prompt" id="dropzonePrompt"><span class="dropzone-icon">↥</span><strong>اسحب الصورة وأفلتها هنا</strong><small>أو اضغط لاختيار ملف WebP أو JPG أو PNG</small></div><img id="imagePreview" class="preview-image" alt="معاينة الصورة"><button class="remove-image hidden" id="removeImage" type="button">إزالة الصورة</button></div><small>يفضل عرض 1200 بكسل وحجم أقل من 500 كيلوبايت.</small></div>
+          <div class="field"><label for="imageFile">الصورة الرئيسية</label><div class="image-dropzone" id="imageDropzone" tabindex="0" role="button" aria-label="اسحب الصورة هنا أو اخترها من جهازك"><input id="imageFile" type="file" accept="image/jpeg,image/png,image/webp"><div class="dropzone-prompt" id="dropzonePrompt"><span class="dropzone-icon">↥</span><strong>اسحب الصورة وأفلتها هنا</strong><small>أو اضغط لاختيار ملف WebP أو JPG أو PNG</small></div><img id="imagePreview" class="preview-image" alt="معاينة الصورة"><button class="remove-image hidden" id="removeImage" type="button">إزالة الصورة</button></div><small>يفضل عرض 1200 بكسل وحجم أقل من 500 كيلوبايت.</small><div class="auto-visual-note"><strong>الهوية البصرية التلقائية</strong><span>إذا لم ترفع صورة، ينشئ الموقع خلفية مناسبة تلقائيًا من عنوان المقال وسلسلته وكلماته المفتاحية.</span><div id="autoVisualPreview" class="auto-visual-preview theme-professional"><span id="autoVisualIcon">✦</span><small id="autoVisualLabel">رؤية مهنية</small><b id="autoVisualTitle">سيظهر عنوان المقال هنا</b></div></div></div>
           <div class="field"><label for="video">رابط فيديو <small>(اختياري)</small></label><input id="video" type="url" dir="ltr" placeholder="https://youtube.com/..."><label for="imageAltAr">وصف الصورة لمحركات البحث</label><input id="imageAltAr" placeholder="وصف مختصر ودقيق للصورة"><label class="check-option"><input id="generateQr" type="checkbox" checked> إنشاء QR خاص برابط المقال</label><div class="qr-preview-box"><div id="qrPreview"></div><span>يظهر بعد كتابة عنوان المقال</span></div></div>
         </div>
       </div>
@@ -111,7 +111,7 @@
   <div class="success-modal hidden" id="successModal" role="dialog" aria-modal="true" aria-labelledby="successTitle"><div class="success-card"><button class="modal-close" id="closeSuccess" type="button">×</button><div class="success-check">✓</div><h2 id="successTitle">تم نشر المقال بنجاح</h2><strong id="successArticleTitle"></strong><div class="actions"><a class="btn secondary" id="successOpen" target="_blank" rel="noopener">معاينة المقال</a><button class="btn ghost" id="successCopyLink" type="button">نسخ الرابط</button><button class="btn ghost" id="successLinkedin" type="button">نسخ منشور LinkedIn</button><button class="btn ghost" id="successX" type="button">نسخ منشور X</button></div></div></div>
 </div></main>
 <footer class="footer">© 2026 Samy Suliman — Professional Portfolio</footer>
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="articles/articles-data.js?v=3.0.2"></script><script src="assets/articles-common.js?v=3.0.2"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="articles/articles-data.js?v=4.8"></script><script src="assets/articles-common.js?v=4.8"></script>
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
@@ -167,10 +167,21 @@ function build(overrideStatus){
     publishAt,
     createdAt:(existing&&existing.createdAt)||now,
     updatedAt:now,
-    hasEnglish:translated()
+    hasEnglish:translated(),
+    visualTheme:SamyArticles.visualTheme({series:fields.series.value,titleAr,summaryAr:fields.summaryAr.value,contentAr,keywords:keywordsArray()})
   };
 }
 function upsert(article,message){const items=localItems(),i=items.findIndex(a=>a.id===article.id);if(i>=0)items[i]=article;else items.push(article);persist(items);currentArticle=article;dirty=false;setSaveState(message,'success');makeSocial(article);if(article.status==='published'||article.status==='scheduled'){showSuccess(article);setTimeout(()=>exportData({silent:true,reason:'publish'}),250)}resetForm(false)}
+
+
+function updateAutoVisual(){
+  const data={series:fields.series.value,titleAr:fields.titleAr.value,summaryAr:fields.summaryAr.value,contentAr:fields.contentAr.value,keywords:keywordsArray()};
+  const meta=SamyArticles.visualThemeMeta(data,false),box=$('autoVisualPreview');
+  box.className='auto-visual-preview theme-'+meta.theme;
+  $('autoVisualIcon').textContent=meta.icon;$('autoVisualLabel').textContent=meta.label;
+  $('autoVisualTitle').textContent=fields.titleAr.value.trim()||'سيظهر عنوان المقال هنا';
+}
+['input','change'].forEach(evt=>[fields.titleAr,fields.series,fields.keywords,fields.summaryAr,fields.contentAr].forEach(el=>el.addEventListener(evt,updateAutoVisual)));
 
 fileEl.addEventListener('change',()=>handleImageFile(fileEl.files[0]));
 dropzone.addEventListener('click',e=>{if(e.target!==removeImageBtn)fileEl.click()});dropzone.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();fileEl.click()}});['dragenter','dragover'].forEach(type=>dropzone.addEventListener(type,e=>{e.preventDefault();dropzone.classList.add('is-dragging')}));['dragleave','drop'].forEach(type=>dropzone.addEventListener(type,e=>{e.preventDefault();dropzone.classList.remove('is-dragging')}));dropzone.addEventListener('drop',e=>handleImageFile(e.dataTransfer.files[0]));removeImageBtn.addEventListener('click',e=>{e.stopPropagation();fileEl.value='';setImage('')});
@@ -215,7 +226,7 @@ function socialTexts(a){const url=articleUrl(a),title=a.titleAr||a.title,excerpt
 function showSuccess(a){const t=socialTexts(a);$('successArticleTitle').textContent=a.titleAr||a.title;$('successOpen').href=t.url;$('successModal').classList.remove('hidden');$('successCopyLink').onclick=()=>navigator.clipboard.writeText(t.url);$('successLinkedin').onclick=()=>navigator.clipboard.writeText(t.linkedin);$('successX').onclick=()=>navigator.clipboard.writeText(t.x)}
 $('closeSuccess').onclick=()=>$('successModal').classList.add('hidden');$('successModal').onclick=e=>{if(e.target===$('successModal'))$('successModal').classList.add('hidden')};
 window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue=''}});
-resetForm();renderList();updateLatest();
+resetForm();renderList();updateLatest();updateAutoVisual();
 </script>
 
 <script src="assets/pwa.js" defer></script>
