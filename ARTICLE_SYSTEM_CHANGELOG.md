@@ -45,3 +45,12 @@ This stage intentionally does not add the smart-analysis UI; that belongs to Sta
 - Saved intelligence output inside each article record as `contentIntelligence`.
 - Existing articles are analyzed automatically when opened for editing.
 
+
+## v6.4 — Final share metadata polish
+- Strengthened article-specific Open Graph metadata.
+- Added author, keywords, robots, publication and modification dates.
+- Added Twitter large-image metadata and image alt text.
+- Added Schema.org Article structured data.
+- Added branded site name metadata: `موقع سامي سليمان`.
+- Updated the service-worker cache to v6.4.
+- Preserved the clean short article URL and article-specific preview image.
