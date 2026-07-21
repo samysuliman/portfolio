@@ -1,12 +1,12 @@
-const CACHE_VERSION = 'samy-portfolio-v6.1-clean-share-links';
+const CACHE_VERSION = 'samy-portfolio-v6.2-clean-share-preview';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 const CORE_ASSETS = [
   './',
   './index.html',
   './articles.html',
-  './articles/articles-data.js',
-  './assets/articles.css',
-  './assets/articles-common.js',
+  './articles/articles-data.js?v=6.2',
+  './assets/articles.css?v=6.2',
+  './assets/articles-common.js?v=6.2',
   './assets/pwa.css',
   './assets/pwa.js',
   './assets/tour.css?v=3.3',
