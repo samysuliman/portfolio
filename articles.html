@@ -89,6 +89,9 @@
   const listingView=document.getElementById('listingView'),readerView=document.getElementById('readerView'),articleView=document.getElementById('articleView');
   const canonicalLink=document.getElementById('canonicalLink'),descriptionMeta=document.querySelector('meta[name="description"]'),ogTitle=document.getElementById('ogTitle'),ogDescription=document.getElementById('ogDescription'),ogUrl=document.getElementById('ogUrl');
   const BASE_URL='https://samysuliman.github.io/portfolio/articles.html';
+  function articleKey(a){return String(a.number||a.id||a.slug).trim()}
+  function articlePublicUrl(a){return BASE_URL+'?article='+encodeURIComponent(articleKey(a))}
+  function findArticle(source,key){return source.find(x=>x.slug===key||x.id===key||String(x.number||'')===key)}
   let savedScroll=0;
   function en(){return document.body.classList.contains('english')}
   function setSeo(title,description,url,type='website'){
@@ -116,7 +119,7 @@
     const params=new URLSearchParams(location.search);
     const previewMode=params.get('preview')==='1';
     const source=previewMode?SamyArticles.all():SamyArticles.published();
-    const a=source.find(x=>x.slug===slug);
+    const a=findArticle(source,slug);
     if(!a){
       showList(false);
       if(location.search) history.replaceState({},'',location.pathname);
@@ -124,8 +127,8 @@
     }
     if(!readerView.hidden) savedScroll=0; else savedScroll=window.scrollY;
     const l=SamyArticles.localized(a,en());
-    const relativeUrl=location.pathname+'?slug='+encodeURIComponent(a.slug)+(previewMode?'&preview=1':'');
-    const publicUrl=BASE_URL+'?slug='+encodeURIComponent(a.slug);
+    const relativeUrl=location.pathname+'?article='+encodeURIComponent(articleKey(a))+(previewMode?'&preview=1':'');
+    const publicUrl=articlePublicUrl(a);
     const summary=l.summary||SamyArticles.excerpt(l.content,160);
     setSeo(l.title+' | Samy Suliman',summary,publicUrl,'article');
     articleView.innerHTML=`<button class="back-to-articles" id="backToArticles">${en()?'← Back to articles':'العودة إلى المقالات →'}</button><div class="breadcrumbs"><a href="index.html">${en()?'Portfolio':'الموقع الرئيسي'}</a> / <span>${en()?'Articles & Research':'مقالات وأبحاث'}</span></div>${a.series?`<div class="article-series">${SamyArticles.escapeHtml(a.series)}${a.number?' · '+SamyArticles.escapeHtml(a.number):''}</div>`:''}<h1>${SamyArticles.escapeHtml(l.title)}</h1><div class="article-meta">${SamyArticles.formatDate(a.publishAt||a.createdAt,en())} · ${readingTime(l.content)}</div>${!l.available&&en()?'<div class="translation-warning article-translation-warning">This article is currently available in Arabic only.</div>':''}${a.image?`<img class="article-cover" src="${SamyArticles.escapeHtml(a.image)}" alt="${SamyArticles.escapeHtml(l.title)}">`:autoVisual(a,l,a.number||'',true)}${videoBlock(a.video)}<section class="article-body-section"><h2 class="article-body-title">${en()?'Article content':'محتوى المقال'}</h2><div class="article-content">${paragraphs(l.content)}</div></section><section class="article-share-block" aria-label="${en()?'Share content':'شارك المحتوى'}"><h2 class="article-share-title">${en()?'Share content':'شارك المحتوى'}</h2><div class="share"><button id="linkedinShare">LinkedIn</button><a class="whatsapp" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(l.title+' — '+publicUrl)}">WhatsApp</a><a class="x" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(l.title+' — '+publicUrl)}">X</a><button id="copyLink">${en()?'Copy link':'نسخ الرابط'}</button></div></section><div class="author-box"><img src="assets/portrait-only.jpg" alt="Samy Suliman"><div><h3>${en()?'Samy Suliman':'سامي سليمان'}</h3><p>${en()?'Islamic Studies educator, trainer, author, and education leader.':'معلم تربية إسلامية، ومدرب، ومؤلف، وصاحب خبرة في القيادة والتطوير التعليمي.'}</p></div></div>`;
@@ -147,8 +150,9 @@
     requestAnimationFrame(()=>window.scrollTo(0,savedScroll||0));
   }
   function route(){
-    const slug=new URLSearchParams(location.search).get('slug');
-    slug?openArticle(slug,false):showList(false);
+    const params=new URLSearchParams(location.search);
+    const key=params.get('article')||params.get('slug');
+    key?openArticle(key,false):showList(false);
   }
   search.addEventListener('input',renderList);sort.addEventListener('change',renderList);window.addEventListener('popstate',route);
   document.getElementById('copySiteLink').addEventListener('click',async()=>{const u='https://samysuliman.github.io/portfolio/';try{await navigator.clipboard.writeText(u)}catch{prompt('Copy this link:',u)}});

@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'samy-portfolio-v6.0-articles-sync';
+const CACHE_VERSION = 'samy-portfolio-v6.1-clean-share-links';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 const CORE_ASSETS = [
   './',
