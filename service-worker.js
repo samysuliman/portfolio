@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'samy-portfolio-pwa-v3.3';
+const CACHE_VERSION = 'samy-portfolio-pwa-v3.4';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 const CORE_ASSETS = [
   './',

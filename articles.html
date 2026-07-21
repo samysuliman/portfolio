@@ -112,7 +112,10 @@
   function videoBlock(url){if(!url)return'';const id=SamyArticles.youtubeId(url);return id?'<div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/'+id+'" title="Video" allowfullscreen loading="lazy"></iframe></div>':'<a class="video-link" href="'+SamyArticles.escapeHtml(url)+'" target="_blank" rel="noopener">'+(en()?'Watch video ↗':'مشاهدة الفيديو ↗')+'</a>'}
   function renderList(){const q=search.value.trim().toLowerCase();let list=SamyArticles.published().filter(a=>{const l=SamyArticles.localized(a,en());return [l.title,l.summary,l.content,a.series,a.keywords].join(' ').toLowerCase().includes(q)});if(sort.value==='oldest')list=[...list].reverse();count.innerHTML=`<strong>${list.length}</strong><span>${en()?(list.length===1?'article':'articles'):(list.length===1?'مقال منشور':'مقالات منشورة')}</span>`;if(!list.length){grid.innerHTML=`<div class="articles-empty"><div>✦</div><strong>${en()?'No matching articles':'لا توجد مقالات مطابقة'}</strong></div>`;return}grid.innerHTML=list.map((a,i)=>{const l=SamyArticles.localized(a,en()),num=articleNumber(a,i,list.length),series=a.series||(en()?'Professional Insight':'من واقع التجربة');return `<article class="article-list-card"><button class="article-card-open article-card-media" data-slug="${SamyArticles.escapeHtml(a.slug)}">${a.image?`<img loading="lazy" src="${SamyArticles.escapeHtml(a.image)}" alt="${SamyArticles.escapeHtml(l.title)}">`:`<div class="article-card-placeholder"><span>✦</span><small>${en()?'ARTICLE':'مقال'}</small><strong>${num}</strong></div>`}<span class="article-number">${num}</span></button><div class="article-card-body"><div class="article-card-topline"><span class="article-series-name">${SamyArticles.escapeHtml(series)}</span><span>${SamyArticles.formatDate(a.publishAt||a.createdAt,en())}</span></div><h2><button class="article-title-button" data-slug="${SamyArticles.escapeHtml(a.slug)}">${SamyArticles.escapeHtml(l.title)}</button></h2><p>${SamyArticles.escapeHtml(l.summary||SamyArticles.excerpt(l.content,180))}</p><div class="article-card-footer"><span>${readingTime(l.content)}</span><button class="article-read-link" data-slug="${SamyArticles.escapeHtml(a.slug)}">${en()?'Read article':'اقرأ المقال'} <b>←</b></button></div></div></article>`}).join('');grid.querySelectorAll('[data-slug]').forEach(el=>el.addEventListener('click',()=>openArticle(el.dataset.slug,true)))}
   function openArticle(slug,push=false){
-    const a=SamyArticles.published().find(x=>x.slug===slug);
+    const params=new URLSearchParams(location.search);
+    const previewMode=params.get('preview')==='1';
+    const source=previewMode?SamyArticles.all():SamyArticles.published();
+    const a=source.find(x=>x.slug===slug);
     if(!a){
       showList(false);
       if(location.search) history.replaceState({},'',location.pathname);
@@ -120,7 +123,7 @@
     }
     if(!readerView.hidden) savedScroll=0; else savedScroll=window.scrollY;
     const l=SamyArticles.localized(a,en());
-    const relativeUrl=location.pathname+'?slug='+encodeURIComponent(a.slug);
+    const relativeUrl=location.pathname+'?slug='+encodeURIComponent(a.slug)+(previewMode?'&preview=1':'');
     const publicUrl=BASE_URL+'?slug='+encodeURIComponent(a.slug);
     const summary=l.summary||SamyArticles.excerpt(l.content,160);
     setSeo(l.title+' | Samy Suliman',summary,publicUrl,'article');
