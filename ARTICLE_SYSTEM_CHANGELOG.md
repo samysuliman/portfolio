@@ -22,3 +22,11 @@ This stage intentionally does not add the smart-analysis UI; that belongs to Sta
 - Added article-card preview modal before publishing.
 - Added visible last-save date and time.
 - Updated article asset cache versions to 5.1.
+
+## 5.2 — Rule-based automatic preparation
+- Added one-click article preparation without external AI or subscriptions.
+- Detects the most suitable series from article content using local rules.
+- Generates an initial title, summary, keywords and image alt text.
+- Creates a main cover image from one fixed branded template.
+- Changes symbolic background by topic: Seerah, faith, education, leadership, business or professional experience.
+- Added a button to regenerate the symbolic background while keeping the same template.
