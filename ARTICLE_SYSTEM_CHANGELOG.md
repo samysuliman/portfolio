@@ -30,3 +30,11 @@ This stage intentionally does not add the smart-analysis UI; that belongs to Sta
 - Creates a main cover image from one fixed branded template.
 - Changes symbolic background by topic: Seerah, faith, education, leadership, business or professional experience.
 - Added a button to regenerate the symbolic background while keeping the same template.
+
+## 5.3 — Smart Publishing Studio
+- Rebuilt the publisher interface around two visible inputs: article title and article content.
+- Renamed the primary action to **✨ أنشئ المقال**.
+- Added staged creation messages while the local rule engine prepares the article.
+- Added a focused review card with generated cover, series, summary, keywords, preview, and publish actions.
+- Moved translation, SEO, scheduling, media, and quality controls into a collapsible advanced section.
+- No AI subscription or external backend is required.
