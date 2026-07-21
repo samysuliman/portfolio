@@ -17,6 +17,8 @@
 .auto-prepare-box{margin:18px 0;padding:18px;border:1px solid #d7e4dd;border-radius:18px;background:linear-gradient(135deg,#f8fbf9,#eef6f2)}.auto-prepare-box h2{margin:0 0 6px;color:#063c30;font-size:1.08rem}.auto-prepare-box p{margin:0 0 14px;color:#60746d;line-height:1.8;font-size:.84rem}.auto-prepare-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.auto-prepare-result{font-size:.8rem;font-weight:700;color:#16834d}.generated-badge{display:inline-flex;align-items:center;gap:6px;background:#e8f6ee;color:#147544;border-radius:999px;padding:5px 10px;font-size:.75rem;font-weight:800;margin-top:8px}
 
 .studio-subtitle{margin:7px 0 0;color:#65766f;line-height:1.8}.studio-writing-zone{max-width:900px;margin:0 auto;padding:10px 0 22px}.studio-step{display:flex;align-items:center;gap:12px;margin-bottom:20px}.studio-step>span{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#062d23;color:#d9ae54;font-weight:900}.studio-step strong,.studio-step small{display:block}.studio-step strong{color:#062d23;font-size:1.08rem}.studio-step small{color:#6c7e76}.studio-fields{gap:20px}.studio-fields label{font-size:1rem;font-weight:800}.studio-fields #titleAr{font-size:1.13rem;padding:16px}.studio-editor{min-height:390px!important;font-size:1.02rem!important;line-height:2!important}.studio-create-wrap{text-align:center;padding:28px 0 6px}.studio-create-button{border:0;border-radius:18px;padding:17px 42px;background:linear-gradient(135deg,#0a4938,#062d23);color:#fff;font:800 1.12rem Cairo;box-shadow:0 14px 35px rgba(6,45,35,.22);cursor:pointer;min-width:260px;transition:.2s}.studio-create-button:hover{transform:translateY(-2px)}.studio-create-button:disabled{opacity:.78;cursor:wait;transform:none}.studio-create-button span:first-child{margin-left:8px}.studio-create-wrap .auto-prepare-result{display:block;margin-top:12px}.advanced-options{margin:24px 0;border:1px solid #dce6e1;border-radius:16px;background:#fbfdfc}.advanced-options summary{cursor:pointer;padding:18px 20px;font-weight:800;color:#244d41;list-style:none}.advanced-options summary::-webkit-details-marker{display:none}.advanced-options summary:after{content:'＋';float:left}.advanced-options[open] summary:after{content:'−'}.advanced-options summary small{display:block;color:#718078;font-weight:500;margin-top:3px}.advanced-content{padding:0 20px 22px}.studio-review{max-width:900px;margin:24px auto;border:1px solid #cfe2d8;border-radius:22px;padding:22px;background:linear-gradient(135deg,#fbfdfc,#f1f7f4)}.review-grid{display:grid;grid-template-columns:280px 1fr;gap:22px;align-items:center}.review-cover{height:210px;border-radius:16px;overflow:hidden;background:#062d23;display:grid;place-items:center}.review-cover img{width:100%;height:100%;object-fit:cover;display:none}.review-cover #reviewCoverFallback{font-size:3rem;color:#d9ae54}.review-series{display:inline-block;color:#9b6b08;font-weight:800;font-size:.82rem}.review-details h2{margin:8px 0;color:#062d23;line-height:1.55}.review-details p{color:#5d7168;line-height:1.9}.review-actions{display:flex;justify-content:center;gap:10px;margin-top:20px}.studio-secondary-actions{justify-content:center;opacity:.82}.hidden{display:none!important}@media(max-width:700px){.review-grid{grid-template-columns:1fr}.review-cover{height:190px}.studio-create-button{width:100%;min-width:0}.studio-editor{min-height:320px!important}.studio-secondary-actions{overflow:auto;justify-content:flex-start}}
+
+.content-intelligence{margin-top:22px;border-top:1px solid #dce8e2;padding-top:20px}.intelligence-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.intelligence-head h3{margin:0;color:#063c30;font-size:1.04rem}.intelligence-head span{font-size:.72rem;font-weight:800;color:#8b650e;background:#fff7df;border:1px solid #ecd8a1;border-radius:999px;padding:5px 9px}.intelligence-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.intelligence-item{background:#fff;border:1px solid #dfe9e4;border-radius:13px;padding:12px 14px}.intelligence-item.full{grid-column:1/-1}.intelligence-item small{display:block;color:#788981;font-size:.72rem;margin-bottom:4px}.intelligence-item strong{display:block;color:#153f34;line-height:1.75}.intelligence-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:5px}.intelligence-list span{background:#edf5f1;color:#315d50;border-radius:999px;padding:5px 9px;font-size:.75rem}.golden-quote{border-right:4px solid #d9ae54;background:#fffaf0}.golden-quote strong{color:#674b12}.intelligence-empty{color:#73837c;font-size:.82rem}@media(max-width:700px){.intelligence-grid{grid-template-columns:1fr}.intelligence-item.full{grid-column:auto}}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#062d23">
@@ -75,6 +77,17 @@
             <div class="preview-tags" id="reviewKeywords"></div>
           </div>
         </div>
+        <section class="content-intelligence" id="contentIntelligenceCard">
+          <div class="intelligence-head"><h3>🧠 فهم المقال</h3><span>CONTENT INTELLIGENCE</span></div>
+          <div class="intelligence-grid">
+            <div class="intelligence-item full"><small>الفكرة الرئيسية</small><strong id="intelligenceMainIdea">—</strong></div>
+            <div class="intelligence-item golden-quote full"><small>الجملة الذهبية</small><strong id="intelligenceGoldenQuote">—</strong></div>
+            <div class="intelligence-item"><small>التصنيف</small><strong id="intelligenceCategory">—</strong></div>
+            <div class="intelligence-item"><small>النبرة</small><strong id="intelligenceTone">—</strong></div>
+            <div class="intelligence-item full"><small>الجمهور المستهدف</small><div class="intelligence-list" id="intelligenceAudience"></div></div>
+            <div class="intelligence-item full"><small>أهم الدروس</small><div class="intelligence-list" id="intelligenceLessons"></div></div>
+          </div>
+        </section>
         <div class="review-actions">
           <button class="btn secondary" type="button" id="previewArticle">معاينة المقال</button>
           <button class="btn primary" type="button" id="publishNow">🚀 نشر المقال</button>
@@ -130,14 +143,14 @@
   <div class="preview-modal hidden" id="cardPreviewModal" role="dialog" aria-modal="true" aria-labelledby="cardPreviewTitle"><div class="preview-card-shell"><button class="preview-close" id="closeCardPreview" type="button">×</button><div class="preview-article-card"><div class="preview-cover" id="previewCardCover"><h3 id="cardPreviewTitle">عنوان المقال</h3></div><div class="preview-body"><small id="previewCardSeries">مقالات وأبحاث</small><p id="previewCardSummary">ملخص المقال سيظهر هنا.</p><div class="preview-tags" id="previewCardTags"></div></div></div></div></div>
 </div></main>
 <footer class="footer">© 2026 Samy Suliman — Professional Portfolio</footer>
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="articles/articles-data.js?v=5.3"></script><script src="assets/articles-common.js?v=5.3"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="articles/articles-data.js?v=5.4"></script><script src="assets/articles-common.js?v=5.4"></script>
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
 const form=$('articleForm');
 const fields={id:$('articleId'),series:$('series'),number:$('articleNumber'),publishAt:$('publishAt'),status:$('status'),keywords:$('keywords'),titleAr:$('titleAr'),summaryAr:$('summaryAr'),contentAr:$('contentAr'),titleEn:$('titleEn'),summaryEn:$('summaryEn'),contentEn:$('contentEn'),video:$('video'),imageAltAr:$('imageAltAr')};
 const fileEl=$('imageFile'),preview=$('imagePreview'),dropzone=$('imageDropzone'),dropPrompt=$('dropzonePrompt'),removeImageBtn=$('removeImage');
-let imageData='',currentArticle=null,dirty=false,qrInstance=null;
+let imageData='',currentArticle=null,dirty=false,qrInstance=null,currentIntelligence=null;
 
 function localItems(){return SamyArticles.local()}
 function persist(items){SamyArticles.save(items);renderList();updateLatest()}
@@ -188,6 +201,7 @@ function build(overrideStatus){
     createdAt:(existing&&existing.createdAt)||now,
     updatedAt:now,
     hasEnglish:translated(),
+    contentIntelligence:currentIntelligence||analyzeContent(titleAr,contentAr,fields.summaryAr.value.trim()),
     visualTheme:SamyArticles.visualTheme({series:fields.series.value,titleAr,summaryAr:fields.summaryAr.value,contentAr,keywords:keywordsArray()})
   };
 }
@@ -246,14 +260,36 @@ async function generateTemplateCover(rule,title,summary){if(document.fonts&&docu
  ctx.fillStyle='#063c30';ctx.fillRect(0,825,1600,175);ctx.fillStyle='#d9ae54';ctx.font='800 40px Cairo';ctx.textAlign='right';ctx.fillText('سامي سليمان',1450,895);ctx.fillStyle='#fff';ctx.font='600 25px Cairo';ctx.fillText('معلم وخبير في التعليم والتدريب والتطوير',1450,940);ctx.fillStyle='#d9ae54';ctx.font='700 25px Cairo';ctx.textAlign='left';ctx.fillText('المقال رقم '+(fields.number.value||nextNumber()),90,910);ctx.fillText(new Date(fields.publishAt.value||Date.now()).toLocaleDateString('ar-SA'),90,950);
  return c.toDataURL('image/jpeg',.9)
 }
+
+const INTELLIGENCE_CATEGORY_RULES=[
+ {name:'السيرة النبوية',test:/النبي|الرسول|السيرة|الهجرة|قريش|صحاب|غزوة|مكة|المدينة|سراقة|كسرى/i},
+ {name:'إيماني',test:/الله|الإيمان|اليقين|التوكل|الدعاء|الابتلاء|الصبر|الرجاء|القرآن/i},
+ {name:'تربوي وتعليمي',test:/تعليم|تربية|معلم|طالب|مدرسة|منهج|فصل|تعلم/i},
+ {name:'قيادي وإداري',test:/قياد|إدار|مدير|وكيل|فريق|قرار|مؤسسة|جودة/i},
+ {name:'أعمال ومبيعات',test:/مبيعات|أعمال|عميل|تسويق|مشروع|ربح|سوق/i},
+ {name:'تجربة شخصية',test:/تجربتي|تعلمت|حدث معي|كنت|عملت|خبرتي/i}
+];
+const LESSON_BANK=[
+ ['الثقة بالله',/الثقة بالله|اليقين|التوكل|وعد الله/i],['الصبر أمام الابتلاء',/الصبر|الابتلاء|الشدة|المحنة/i],['الأمل والتفاؤل',/الأمل|التفاؤل|الرجاء|يبشر|وعد/i],['حسن التخطيط',/التخطيط|خطط|استعداد|إعداد|اختيار المكان/i],['القيادة الملهمة',/القياد|القائد|ألهم|الرؤية|الفريق/i],['التعلم من التجربة',/تعلمت|التجربة|خبرة|درس/i],['المبادرة والعمل',/مبادرة|العمل|بدأ|تحرك|سعى/i],['التربية بالقدوة',/قدوة|التربية|المعلم|السلوك/i],['الإقناع والتواصل',/الإقناع|التواصل|الحوار|الكلمة/i],['الجودة والتحسين',/الجودة|تحسين|تطوير|تقويم/i]
+];
+function detectCategory(text){return (INTELLIGENCE_CATEGORY_RULES.find(r=>r.test.test(text))||{name:'فكري عام'}).name}
+function detectTone(text){if(/هل |كيف |لماذا |نتساءل|سؤال/i.test(text))return 'تأملي وتساؤلي';if(/يجب|ينبغي|علينا|خطوات|نقاط/i.test(text))return 'توجيهي وعملي';if(/الله|اليقين|الابتلاء|الدعاء|الأمل/i.test(text))return 'إيماني ملهم';if(/كنت|تجربتي|حدث معي|رأيت/i.test(text))return 'شخصي وتجريبي';return 'معرفي هادئ'}
+function detectAudience(text,category){const a=[];if(/معلم|تعليم|تربية|مدرسة|طالب/.test(text))a.push('المعلمون والتربويون');if(/مدير|وكيل|قياد|إدار|فريق/.test(text))a.push('القيادات المدرسية');if(/النبي|السيرة|القرآن|الإيمان|الفقه/.test(text))a.push('طلاب العلم والجمهور المهتم');if(/مبيعات|أعمال|تسويق|مشروع/.test(text))a.push('المهنيون ورواد الأعمال');if(/طفل|أطفال|ناشئة|طلاب/.test(text))a.push('الأسر والناشئة');if(!a.length)a.push(category==='السيرة النبوية'?'الجمهور العام وطلاب السيرة':'الجمهور العام');return [...new Set(a)].slice(0,3)}
+function extractGoldenQuote(content,title){const raw=String(content||'');const quoted=[...raw.matchAll(/[«“\"]([^»”\"]{12,150})[»”\"]/g)].map(m=>m[1].trim());if(quoted.length)return quoted.sort((a,b)=>b.length-a.length)[0];const ss=sentenceList(raw).filter(s=>s.length>=28&&s.length<=170);const weighted=ss.map(s=>({s,w:(/لكن|إن|فإن|ليس|ربما|الأمل|اليقين|الابتلاء|القيادة|التعليم/.test(s)?3:0)+(s.includes('؟')?1:0)})).sort((a,b)=>b.w-a.w||a.s.length-b.s.length);return (weighted[0]?.s||title).slice(0,170)}
+function extractMainIdea(title,summary,content){const base=cleanArticleText(summary)||sentenceList(content)[0]||cleanArticleText(title);return base.length>150?base.slice(0,147).replace(/\s+\S*$/,'')+'…':base}
+function extractLessons(text,category){const lessons=LESSON_BANK.filter(([,re])=>re.test(text)).map(([name])=>name);const defaults={ 'السيرة النبوية':['الثقة بالله','حسن التخطيط','الأمل والتفاؤل'], 'إيماني':['الثقة بالله','الصبر أمام الابتلاء','الأمل والتفاؤل'], 'تربوي وتعليمي':['التربية بالقدوة','الجودة والتحسين','المبادرة والعمل'], 'قيادي وإداري':['القيادة الملهمة','حسن التخطيط','الجودة والتحسين'], 'أعمال ومبيعات':['المبادرة والعمل','الإقناع والتواصل','الجودة والتحسين']};return [...new Set([...lessons,...(defaults[category]||['التعلم من التجربة','المبادرة والعمل'])])].slice(0,4)}
+function analyzeContent(title,content,summary=''){const text=cleanArticleText([title,summary,content].join(' ')),category=detectCategory(text);return {version:1,mainIdea:extractMainIdea(title,summary,content),goldenQuote:extractGoldenQuote(content,title),category,tone:detectTone(text),audience:detectAudience(text,category),keyLessons:extractLessons(text,category),generatedAt:new Date().toISOString()}}
+function renderIntelligence(data){currentIntelligence=data;$('intelligenceMainIdea').textContent=data.mainIdea||'—';$('intelligenceGoldenQuote').textContent=data.goldenQuote||'—';$('intelligenceCategory').textContent=data.category||'—';$('intelligenceTone').textContent=data.tone||'—';$('intelligenceAudience').innerHTML=(data.audience||[]).map(v=>'<span>'+SamyArticles.escapeHtml(v)+'</span>').join('')||'<span class="intelligence-empty">غير محدد</span>';$('intelligenceLessons').innerHTML=(data.keyLessons||[]).map(v=>'<span>'+SamyArticles.escapeHtml(v)+'</span>').join('')||'<span class="intelligence-empty">غير محدد</span>'}
+
 const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
-function updateStudioReview(title,summary,rule,keywords){
+function updateStudioReview(title,summary,rule,keywords,intelligence){
   $('reviewTitle').textContent=title;
   $('reviewSummary').textContent=summary;
   $('reviewSeries').textContent=rule.name||'مقالات وأبحاث';
   $('reviewKeywords').innerHTML=keywords.slice(0,6).map(k=>'<span>'+SamyArticles.escapeHtml(k)+'</span>').join('');
   const reviewImg=$('reviewCoverImage'),fallback=$('reviewCoverFallback');
   if(imageData){reviewImg.src=imageData;reviewImg.style.display='block';fallback.style.display='none'}else{reviewImg.style.display='none';fallback.style.display='block'}
+  renderIntelligence(intelligence||analyzeContent(title,fields.contentAr.value,summary));
   $('studioReview').classList.remove('hidden');
   $('studioReview').scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -264,10 +300,11 @@ async function prepareArticle(){
   button.disabled=true;
   const stages=[['🧠','أقرأ المقال...'],['📚','أحدد السلسلة...'],['💡','أستخرج الفكرة الرئيسية...'],['🎨','أجهز الهوية البصرية...'],['🌍','أجهز بيانات النشر...']];
   for(const [icon,text] of stages){buttonIcon.textContent=icon;buttonText.textContent=text;$('autoPrepareResult').textContent=text;await wait(280)}
-  const title=fields.titleAr.value.trim()||autoTitle(content),all=title+' '+content,rule=detectSeries(all),summary=fields.summaryAr.value.trim()||autoSummary(content),keywords=autoKeywords(all,rule);
+  const title=fields.titleAr.value.trim()||autoTitle(content),all=title+' '+content,rule=detectSeries(all),summary=fields.summaryAr.value.trim()||autoSummary(content),keywords=autoKeywords(all,rule),intelligence=analyzeContent(title,content,summary);
+  currentIntelligence=intelligence;
   fields.titleAr.value=title;fields.summaryAr.value=summary;fields.series.value=rule.name;fields.keywords.value=keywords.join('، ');fields.imageAltAr.value=autoAlt(rule,title);if(!fields.number.value)fields.number.value=nextNumber();
   imageData=await generateTemplateCover(rule,title,summary);setImage(imageData);
-  updateCounters();updateAutoVisual();updateQuality();markDirty();updateStudioReview(title,summary,rule,keywords);
+  updateCounters();updateAutoVisual();updateQuality();markDirty();updateStudioReview(title,summary,rule,keywords,intelligence);
   buttonIcon.textContent='✅';buttonText.textContent='تم إنشاء المقال';$('autoPrepareResult').textContent='✓ تم إنجاز خطوات التجهيز تلقائيًا';setSaveState('المقال جاهز للمراجعة','success');
   await wait(900);buttonIcon.textContent='✨';buttonText.textContent='أنشئ المقال';button.disabled=false;
 }
@@ -282,10 +319,10 @@ form.addEventListener('submit',e=>{e.preventDefault();const status=fields.status
 $('saveDraft').onclick=()=>{if(!validate('draft'))return;upsert(build('draft'),'تم حفظ المسودة')};
 $('previewArticle').onclick=()=>{if(!validate('draft'))return;const article=build(fields.status.value);const items=localItems(),i=items.findIndex(a=>a.id===article.id);if(i>=0)items[i]=article;else items.push(article);persist(items);window.open('articles.html?slug='+encodeURIComponent(article.slug)+'&preview=1','_blank','noopener')};
 
-function resetForm(resetState=true){form.reset();$('studioReview').classList.add('hidden');fields.id.value='';fields.publishAt.value=localDateInput();fields.number.value=nextNumber();imageData='';preview.removeAttribute('src');preview.style.display='none';dropPrompt.classList.remove('hidden');removeImageBtn.classList.add('hidden');dropzone.classList.remove('has-image');$('cancelEdit').classList.add('hidden');$('editorTitle').textContent='✨ استوديو النشر الذكي';activateTab('arPanel');updateCounters();updateQrPreview();dirty=false;if(resetState)setSaveState('جاهز للكتابة');clearValidation();updateQuality()}
+function resetForm(resetState=true){form.reset();currentIntelligence=null;$('studioReview').classList.add('hidden');fields.id.value='';fields.publishAt.value=localDateInput();fields.number.value=nextNumber();imageData='';preview.removeAttribute('src');preview.style.display='none';dropPrompt.classList.remove('hidden');removeImageBtn.classList.add('hidden');dropzone.classList.remove('has-image');$('cancelEdit').classList.add('hidden');$('editorTitle').textContent='✨ استوديو النشر الذكي';activateTab('arPanel');updateCounters();updateQrPreview();dirty=false;if(resetState)setSaveState('جاهز للكتابة');clearValidation();updateQuality()}
 $('cancelEdit').onclick=()=>{if(!dirty||confirm('هل تريد إلغاء التعديلات غير المحفوظة؟'))resetForm()};$('newArticle').onclick=()=>{if(!dirty||confirm('هل تريد بدء مقال جديد وحذف التغييرات غير المحفوظة؟')){resetForm();scrollTo({top:0,behavior:'smooth'})}};
 
-function edit(id){const a=SamyArticles.all().find(x=>x.id===id);if(!a)return;fields.id.value=a.id;fields.series.value=a.series||'';fields.number.value=a.number||'';fields.publishAt.value=localDateInput(a.publishAt||a.createdAt);fields.status.value=a.status||'draft';fields.keywords.value=Array.isArray(a.keywords)?a.keywords.join('، '):(a.keywords||'');fields.titleAr.value=a.titleAr||a.title||'';fields.summaryAr.value=a.summaryAr||a.summary||'';fields.contentAr.value=a.contentAr||a.content||'';fields.titleEn.value=a.titleEn||'';fields.summaryEn.value=a.summaryEn||'';fields.contentEn.value=a.contentEn||'';fields.video.value=a.video||'';fields.imageAltAr.value=a.imageAltAr||'';imageData=a.image||'';if(imageData){preview.src=imageData;preview.style.display='block';dropPrompt.classList.add('hidden');removeImageBtn.classList.remove('hidden');dropzone.classList.add('has-image')}else{preview.style.display='none';dropPrompt.classList.remove('hidden');removeImageBtn.classList.add('hidden');dropzone.classList.remove('has-image')}updateQrPreview();$('cancelEdit').classList.remove('hidden');$('editorTitle').textContent='تعديل المقال';updateCounters();updateQuality();dirty=false;setSaveState('وضع التعديل');scrollTo({top:0,behavior:'smooth'})}
+function edit(id){const a=SamyArticles.all().find(x=>x.id===id);if(!a)return;fields.id.value=a.id;fields.series.value=a.series||'';fields.number.value=a.number||'';fields.publishAt.value=localDateInput(a.publishAt||a.createdAt);fields.status.value=a.status||'draft';fields.keywords.value=Array.isArray(a.keywords)?a.keywords.join('، '):(a.keywords||'');fields.titleAr.value=a.titleAr||a.title||'';fields.summaryAr.value=a.summaryAr||a.summary||'';fields.contentAr.value=a.contentAr||a.content||'';fields.titleEn.value=a.titleEn||'';fields.summaryEn.value=a.summaryEn||'';fields.contentEn.value=a.contentEn||'';fields.video.value=a.video||'';fields.imageAltAr.value=a.imageAltAr||'';currentIntelligence=a.contentIntelligence||analyzeContent(a.titleAr||a.title||'',a.contentAr||a.content||'',a.summaryAr||a.summary||'');imageData=a.image||'';if(imageData){preview.src=imageData;preview.style.display='block';dropPrompt.classList.add('hidden');removeImageBtn.classList.remove('hidden');dropzone.classList.add('has-image')}else{preview.style.display='none';dropPrompt.classList.remove('hidden');removeImageBtn.classList.add('hidden');dropzone.classList.remove('has-image')}updateQrPreview();$('cancelEdit').classList.remove('hidden');$('editorTitle').textContent='تعديل المقال';updateCounters();updateQuality();renderIntelligence(currentIntelligence);updateStudioReview(fields.titleAr.value,fields.summaryAr.value,detectSeries(fields.titleAr.value+' '+fields.contentAr.value),keywordsArray(),currentIntelligence);dirty=false;setSaveState('وضع التعديل');scrollTo({top:0,behavior:'smooth'})}
 function del(id){if(confirm('هل تريد حذف هذا المقال نهائيًا من هذا المتصفح؟')){persist(localItems().filter(a=>a.id!==id));setSaveState('تم حذف المقال','success')}}
 function duplicate(id){const source=SamyArticles.all().find(x=>x.id===id);if(!source)return;const copy={...source,id:'a'+Date.now(),slug:SamyArticles.slugify((source.titleAr||source.title)+'-نسخة-'+Date.now()),number:nextNumber(),status:'draft',titleAr:(source.titleAr||source.title)+' — نسخة',title:(source.titleAr||source.title)+' — نسخة',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()};const items=localItems();items.push(copy);persist(items);edit(copy.id)}
 function statusLabel(a){if(a.status==='published')return 'منشور';if(a.status==='scheduled')return 'مجدول';return 'مسودة'}

@@ -38,3 +38,10 @@ This stage intentionally does not add the smart-analysis UI; that belongs to Sta
 - Added a focused review card with generated cover, series, summary, keywords, preview, and publish actions.
 - Moved translation, SEO, scheduling, media, and quality controls into a collapsible advanced section.
 - No AI subscription or external backend is required.
+## Stage 5 — Content Intelligence Engine (v5.4)
+- Added a local rule-based Content Intelligence Engine with no paid AI dependency.
+- Extracts and stores: main idea, golden quote, category, tone, target audience, and key lessons.
+- Added a visible “فهم المقال” review card after article generation.
+- Saved intelligence output inside each article record as `contentIntelligence`.
+- Existing articles are analyzed automatically when opened for editing.
+
