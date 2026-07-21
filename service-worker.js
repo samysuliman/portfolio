@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'samy-portfolio-v5.1-publisher-pro';
+const CACHE_VERSION = 'samy-portfolio-v6.0-articles-sync';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 const CORE_ASSETS = [
   './',

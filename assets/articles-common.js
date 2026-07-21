@@ -66,8 +66,14 @@
    const raw=localStorage.getItem(STORAGE_KEY);
    const saved=raw===null?[]:safeParse(raw);
    const merged=new Map();
-   PUBLIC.map(normalize).forEach(a=>merged.set(a.id||a.slug,a));
-   (saved||[]).map(normalize).forEach(a=>merged.set(a.id||a.slug,a));
+   const rank=a=>a.status==='published'?3:a.status==='scheduled'?2:1;
+   const add=a=>{
+    const key=a.slug||a.id;
+    const current=merged.get(key);
+    if(!current||rank(a)>rank(current)||(rank(a)===rank(current)&&new Date(a.updatedAt||a.createdAt||0)>new Date(current.updatedAt||current.createdAt||0)))merged.set(key,a);
+   };
+   PUBLIC.map(normalize).forEach(add);
+   (saved||[]).map(normalize).forEach(add);
    return Array.from(merged.values());
   }catch(e){return PUBLIC.map(normalize)}
  }
