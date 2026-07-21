@@ -111,7 +111,7 @@
   <div class="success-modal hidden" id="successModal" role="dialog" aria-modal="true" aria-labelledby="successTitle"><div class="success-card"><button class="modal-close" id="closeSuccess" type="button">×</button><div class="success-check">✓</div><h2 id="successTitle">تم نشر المقال بنجاح</h2><strong id="successArticleTitle"></strong><div class="actions"><a class="btn secondary" id="successOpen" target="_blank" rel="noopener">معاينة المقال</a><button class="btn ghost" id="successCopyLink" type="button">نسخ الرابط</button><button class="btn ghost" id="successLinkedin" type="button">نسخ منشور LinkedIn</button><button class="btn ghost" id="successX" type="button">نسخ منشور X</button></div></div></div>
 </div></main>
 <footer class="footer">© 2026 Samy Suliman — Professional Portfolio</footer>
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="articles/articles-data.js?v=4.8"></script><script src="assets/articles-common.js?v=4.8"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script><script src="articles/articles-data.js?v=5.0"></script><script src="assets/articles-common.js?v=5.0"></script>
 <script>
 'use strict';
 const $=id=>document.getElementById(id);
@@ -121,7 +121,7 @@ const fileEl=$('imageFile'),preview=$('imagePreview'),dropzone=$('imageDropzone'
 let imageData='',currentArticle=null,dirty=false,qrInstance=null;
 
 function localItems(){return SamyArticles.local()}
-function persist(items){SamyArticles.save(items);renderList();updateLatest()}
+function persist(items){const ok=SamyArticles.save(items);renderList();updateLatest();if(!ok)setSaveState('تعذر الحفظ المحلي في هذا المتصفح','warning');return ok}
 function localDateInput(value){const d=value?new Date(value):new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16)}
 function setSaveState(text,kind=''){const el=$('saveState');el.textContent=text;el.dataset.kind=kind}
 function markDirty(){dirty=true;setSaveState('تغييرات غير محفوظة','warning')}
@@ -146,6 +146,7 @@ function build(overrideStatus){
   const publishAt=fields.publishAt.value?new Date(fields.publishAt.value).toISOString():(existing&&existing.publishAt)||now;
   const titleAr=fields.titleAr.value.trim(),contentAr=fields.contentAr.value.trim();
   return {
+    schemaVersion:SamyArticles.schemaVersion,
     id,
     slug:(existing&&existing.slug)||SamyArticles.slugify(titleAr),
     number:fields.number.value.trim()||(existing&&existing.number)||nextNumber(),
