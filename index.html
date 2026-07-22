@@ -707,6 +707,32 @@ body.english .academy-card-arrow{transform:rotate(180deg)}
   .academy-real-logo{width:58px;height:58px;flex-basis:58px}
 }
 
+
+/* v6.7 — agreed additions below the portrait only */
+.academy-card-logo{
+  width:60px;height:60px;flex:0 0 60px;object-fit:contain;
+  border-radius:12px;background:#fff;padding:4px;
+  border:1px solid rgba(217,174,84,.8);
+}
+.publications-card{
+  width:min(350px,100%);
+  display:flex;align-items:center;gap:14px;
+  padding:12px 16px;border-radius:16px;
+  background:#fff;color:var(--green);
+  border:1.5px solid var(--gold);
+  box-shadow:0 10px 24px rgba(6,45,35,.12);
+  transition:.2s ease;
+}
+.publications-card:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(6,45,35,.17)}
+.publications-card-image{
+  width:62px;height:62px;flex:0 0 62px;object-fit:cover;
+  border-radius:11px;border:1px solid #e4d3a5;background:#fff;
+}
+@media(max-width:720px){
+  .academy-card-logo{width:52px;height:52px;flex-basis:52px}
+  .publications-card-image{width:54px;height:54px;flex-basis:54px}
+}
+
 </style>
 <link href="assets/favicon.png" rel="icon" type="image/png"/><meta content="سامي سليمان | الملف المهني" property="og:title"/><meta content="معلم تربية إسلامية، مدرب معلمين، مؤلف تربوي، ورئيس قسم سابق بخبرة تزيد على 20 عامًا." property="og:description"/><meta content="assets/portrait-only.jpg" property="og:image"/><meta content="website" property="og:type"/><meta content="سامي سليمان، معلم تربية إسلامية، مشرف تربوي، مدرب معلمين، مؤلف تربوي، تعليم القرآن، الإقراء، مدارس دولية، الرياض" name="keywords"/><meta content="Samy Suliman" name="author"/><meta content="index, follow, max-image-preview:large" name="robots"/><link href="https://samysuliman.github.io/portfolio/" rel="canonical"/><meta content="https://samysuliman.github.io/portfolio/" property="og:url"/><meta content="ar_SA" property="og:locale"/><meta content="summary_large_image" name="twitter:card"/>
 <link rel="manifest" href="manifest.webmanifest">
@@ -769,13 +795,24 @@ body.english .academy-card-arrow{transform:rotate(180deg)}
 <div class="hero-portrait-column">
 <div class="portrait-wrap"><img alt="سامي سليمان" class="hero-image" decoding="async" loading="lazy" src="assets/portrait-only.jpg"/></div>
 <a class="academy-card" href="academy/" aria-label="زيارة أكاديمية رشيد">
-<span class="academy-card-mark" aria-hidden="true">ر</span>
+<img class="academy-card-logo" src="assets/rasheed-academy-logo.png" alt="شعار أكاديمية رشيد" loading="lazy" decoding="async"/>
 <span class="academy-card-copy">
 <span class="academy-card-title ar">أكاديمية رشيد</span><span class="academy-card-title en">Rasheed Academy</span>
 <span class="academy-card-subtitle ar">للقرآن الكريم والعلوم الشرعية</span><span class="academy-card-subtitle en">Qur’an and Islamic Studies</span>
 </span>
 <span class="academy-card-arrow" aria-hidden="true">‹</span>
 </a>
+
+<a class="publications-card" href="#library" aria-label="استعراض مؤلفات سامي سليمان">
+  <img class="publications-card-image" src="assets/publications-collage.webp" alt="نماذج من مؤلفات سامي سليمان" loading="lazy" decoding="async"/>
+  <span class="academy-card-copy">
+    <span class="academy-card-title ar">مؤلفاتي</span><span class="academy-card-title en">My Publications</span>
+    <span class="academy-card-subtitle ar">كتب ومقررات تعليمية في التجويد والسيرة والتربية</span>
+    <span class="academy-card-subtitle en">Books and educational resources in Tajweed, Seerah, and education</span>
+  </span>
+  <span class="academy-card-arrow" aria-hidden="true">‹</span>
+</a>
+
 </div>
 </div>
 </header>

@@ -1,12 +1,49 @@
 <!DOCTYPE html><html lang="ar" dir="rtl"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>أكاديمية رشيد | رحلتك مع القرآن</title>
-<link rel="stylesheet" href="assets/css/styles.css"></head><body>
+<link rel="stylesheet" href="assets/css/styles.css">
+<style>
+.brand-logo{
+  width:44px;height:44px;object-fit:contain;border-radius:10px;
+  background:#fff;padding:3px;border:1px solid rgba(217,174,84,.7);
+}
+.nav-actions-extra{display:flex;align-items:center;gap:10px}
+.portfolio-back{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:44px;padding:0 15px;border-radius:12px;
+  color:#0f6f5c;border:1px solid #b9d3cc;background:#fff;
+  font-weight:800;text-decoration:none;white-space:nowrap;
+}
+.portfolio-back:hover{background:#eef8f5}
+.founder-publications{padding:76px 0;background:#f7fbf9}
+.publications-grid{
+  display:grid;grid-template-columns:1.05fr .95fr;gap:42px;
+  align-items:center;
+}
+.publications-copy h2{font-size:clamp(28px,4vw,44px);margin:12px 0 16px;color:#15352e}
+.publications-copy p{font-size:18px;line-height:1.9;color:#64756f;margin-bottom:24px}
+.publications-visual{
+  display:block;background:#fff;border-radius:24px;padding:18px;
+  border:1px solid #d8e5e0;box-shadow:0 18px 40px rgba(15,111,92,.12);
+}
+.publications-visual img{display:block;width:100%;max-height:360px;object-fit:contain;border-radius:16px}
+@media(max-width:850px){
+  .nav-actions-extra{gap:6px}
+  .portfolio-back{font-size:12px;padding:0 10px}
+  .publications-grid{grid-template-columns:1fr}
+}
+@media(max-width:620px){
+  .topbar .nav{flex-wrap:wrap}
+  .nav-actions-extra{width:100%;justify-content:center}
+}
+</style>
+
+</head><body>
 
 <header class="topbar">
   <div class="container nav">
     <a class="brand" href="index.html">
-      <span class="brand-mark">ر</span>
+      <img class="brand-logo" src="../assets/rasheed-academy-logo.png" alt="شعار أكاديمية رشيد">
       <span>أكاديمية رشيد<small>للقرآن الكريم والعلوم الشرعية</small></span>
     </a>
     <nav class="nav-links">
@@ -14,7 +51,7 @@
       <a href="index.html#journey">رحلة القرآن</a>
       <a href="index.html#how">كيف تبدأ؟</a>
     </nav>
-    <a class="btn btn-primary" href="login.html">تسجيل الدخول</a>
+    <div class="nav-actions-extra"><a class="portfolio-back" href="../index.html">العودة للموقع الشخصي</a><a class="btn btn-primary" href="login.html">تسجيل الدخول</a></div>
   </div>
 </header>
 
@@ -50,6 +87,21 @@
 <section id="how"><div class="container"><div class="section-head"><span class="eyebrow">كيف تبدأ؟</span><h2>من أول زيارة إلى أول حصة</h2></div>
 <div class="steps"><div class="step"><b>1</b>التسجيل</div><div class="step"><b>2</b>تقييم المستوى</div><div class="step"><b>3</b>التقرير</div><div class="step"><b>4</b>اختيار الخطة</div><div class="step"><b>5</b>بدء الدراسة</div><div class="step"><b>6</b>المتابعة</div></div>
 </div></section>
+
+<section id="founder-publications" class="founder-publications">
+  <div class="container publications-grid">
+    <div class="publications-copy">
+      <span class="eyebrow">من مؤلفات مؤسس الأكاديمية</span>
+      <h2>محتوى تعليمي يجمع بين الأصالة وسهولة التعلّم</h2>
+      <p>كتب ومقررات تعليمية في أحكام التجويد والسيرة النبوية والتربية، صُممت لتناسب مراحل عمرية ومستويات تعليمية مختلفة.</p>
+      <a class="btn btn-secondary" href="../index.html#library">استعرض جميع المؤلفات</a>
+    </div>
+    <a class="publications-visual" href="../index.html#library" aria-label="استعراض المؤلفات">
+      <img src="../assets/publications-collage.webp" alt="نماذج من مؤلفات سامي سليمان" loading="lazy">
+    </a>
+  </div>
+</section>
+
 </main>
 <footer class="footer"><div class="container footer-row"><span>© 2026 أكاديمية رشيد</span><span>مجموعة رشيد — Rasheed Education Group</span></div></footer>
 <script src="assets/js/app.js"></script></body></html>
