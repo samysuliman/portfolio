@@ -118,6 +118,153 @@ body:not(.english) .block[data-ar]{display:block}
  .footer-inner{flex-direction:column;text-align:center}
 }
 </style>
+
+<style id="v71-layout-fix">
+/* v7.1 — viewport, hero, direction, and contact corrections */
+html,body{overflow-x:hidden}
+.page-shell{
+  direction:ltr;
+  grid-template-columns:minmax(0,1fr) 292px!important;
+  gap:16px!important;
+  align-items:start;
+  padding-top:16px!important;
+}
+.main-column,.founder-sidebar{direction:rtl}
+body.english .main-column,body.english .founder-sidebar{direction:ltr}
+
+/* Keep the founder card on the right in Arabic and English */
+.main-column{grid-column:1}
+.founder-sidebar{
+  grid-column:2;
+  top:98px!important;
+  padding:18px 16px!important;
+  border-radius:20px!important;
+}
+.founder-photo{
+  width:164px!important;
+  height:164px!important;
+  margin-bottom:12px!important;
+}
+.founder-sidebar h2{font-size:29px!important;margin:4px 0!important}
+.founder-role{font-size:13px;line-height:1.65!important;margin-bottom:12px!important}
+.sidebar-academy{padding:12px!important;margin:12px 0!important}
+.sidebar-academy img{width:145px!important}
+.sidebar-academy p{font-size:12.5px!important;line-height:1.65!important;margin:8px 0 12px}
+.founder-sidebar h3{margin:14px 0 8px}
+
+/* One connected hero panel sized for the first viewport */
+.hero{
+  display:grid!important;
+  grid-template-columns:39% 61%!important;
+  min-height:300px!important;
+  height:300px!important;
+  overflow:hidden;
+  background:#fffaf0!important;
+}
+.hero-image{
+  min-height:300px!important;
+  height:300px!important;
+  background-position:center 58%!important;
+  border-radius:0!important;
+}
+.hero-center{
+  min-width:0;
+  padding:15px 22px!important;
+  background:
+    radial-gradient(circle at 50% 40%,rgba(212,163,61,.10),transparent 42%),
+    linear-gradient(145deg,#fffdf8,#fff)!important;
+}
+.hero-logo{
+  width:min(430px,82%)!important;
+  max-height:175px;
+  object-fit:contain;
+}
+.hero-center p{
+  font-size:18px!important;
+  line-height:1.55!important;
+  margin:7px auto!important;
+}
+.motto{font-size:15px!important;gap:10px!important;margin-top:5px}
+.hero-actions{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+.hero-actions .btn{min-height:40px;padding:0 18px}
+.hero-outline{border-color:var(--green)!important;color:var(--green)!important;background:#fff}
+.hero-outline:hover{background:var(--green);color:#fff!important}
+
+/* Compact sections so the design opens as a composed page, not oversized panels */
+.content-section{padding:17px 20px 21px!important}
+.section-title{font-size:24px!important;margin-bottom:14px!important}
+.quran-grid{gap:10px!important}
+.quran-card{padding:11px!important;grid-template-columns:62px 1fr!important;gap:9px!important}
+.quran-card .icon{width:58px!important;height:58px!important;font-size:26px!important}
+.quran-card h3{font-size:16px!important}
+.quran-card p{font-size:12px!important}
+.quran-card a{padding:7px!important}
+.books-grid{gap:10px!important}
+.book-card{padding:10px!important}
+.book-cover{height:178px!important}
+.book-card h3{font-size:16px!important}
+.book-card p{font-size:12px!important;min-height:55px!important}
+.features{margin-top:12px!important}
+
+/* Professional SVG contact icons */
+.socials{display:flex!important;justify-content:center!important;gap:11px!important;margin-top:10px!important}
+.social{
+  width:42px!important;height:42px!important;
+  border-radius:50%;display:grid!important;place-items:center;
+  border:1px solid rgba(212,163,61,.55);
+  box-shadow:0 7px 16px rgba(7,61,50,.10);
+  transition:transform .2s,box-shadow .2s,background .2s;
+}
+.social svg{width:21px;height:21px;fill:currentColor}
+.social:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 11px 22px rgba(7,61,50,.18)}
+.whatsapp{background:#25a55f!important;color:#fff!important}
+.email{background:#c79635!important;color:#fff!important}
+.linkedin{background:#1676a8!important;color:#fff!important}
+.x-social{background:#111!important;color:#fff!important}
+
+/* Laptop sizes similar to the user's screenshot */
+@media (max-width:1360px){
+  .container{width:min(1320px,calc(100% - 20px))!important}
+  .page-shell{grid-template-columns:minmax(0,1fr) 280px!important}
+  .nav{gap:14px!important}
+  .navlinks{gap:16px!important}
+}
+@media (max-width:1180px){
+  .page-shell{grid-template-columns:1fr!important}
+  .main-column{grid-column:1}
+  .founder-sidebar{
+    grid-column:1;
+    position:static!important;
+    display:grid!important;
+    grid-template-columns:150px 1fr 220px!important;
+    text-align:start!important;
+  }
+  .socials{justify-content:flex-start!important}
+}
+@media (max-width:850px){
+  .hero{height:auto!important;grid-template-columns:1fr!important}
+  .hero-image{height:230px!important;min-height:230px!important}
+  .hero-center{padding:22px 14px!important}
+  .hero-logo{max-height:150px}
+  .founder-sidebar{display:block!important;text-align:center!important}
+  .socials{justify-content:center!important}
+}
+@media (max-width:650px){
+  .page-shell{padding-top:8px!important}
+  .hero-image{height:205px!important;min-height:205px!important}
+  .hero-center p{font-size:15px!important}
+  .hero-logo{width:min(360px,92%)!important}
+  .content-section{padding:16px 11px!important}
+  .book-cover{height:225px!important}
+}
+</style>
+
 </head>
 <body>
 <header class="topbar">
@@ -150,6 +297,10 @@ body:not(.english) .block[data-ar]{display:block}
      <p class="block" data-ar>رحلة متكاملة في تعليم القرآن الكريم والعلوم الشرعية</p>
      <p class="block" data-en>A complete journey in Qur'an and Islamic sciences education</p>
      <div class="motto"><span data-ar>تعلّم ميسّر • علم راسخ • أثر دائم</span><span data-en>Accessible Learning • Sound Knowledge • Lasting Impact</span></div>
+     <div class="hero-actions">
+      <a class="btn btn-gold" href="register.html"><span data-ar>ابدأ الآن</span><span data-en>Start Now</span></a>
+      <a class="btn hero-outline" href="#quran"><span data-ar>استكشف المسارات</span><span data-en>Explore Paths</span></a>
+     </div>
     </div>
    </div>
   </section>
@@ -207,11 +358,20 @@ body:not(.english) .block[data-ar]{display:block}
    <a class="btn sidebar-button" href="register.html"><span data-ar>زيارة الأكاديمية</span><span data-en>Join the Academy</span></a>
   </div>
   <h3><span data-ar>تواصل معي</span><span data-en>Contact Me</span></h3>
-  <div class="socials">
-   <a href="https://wa.me/" aria-label="WhatsApp">W</a>
-   <a href="mailto:" aria-label="Email">✉</a>
-   <a href="https://www.linkedin.com/" aria-label="LinkedIn">in</a>
-   <a href="https://x.com/" aria-label="X">X</a>
+  
+  <div class="socials" aria-label="وسائل التواصل">
+   <a class="social whatsapp" href="https://wa.me/966559461920" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a9.7 9.7 0 0 0-8.34 14.65L2.3 21.7l5.18-1.35A9.7 9.7 0 1 0 12 2Zm0 17.64a7.9 7.9 0 0 1-4.03-1.1l-.29-.17-3.07.8.82-2.99-.19-.3A7.9 7.9 0 1 1 12 19.64Zm4.33-5.91c-.24-.12-1.4-.69-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.18-.7-.62-1.18-1.4-1.32-1.63-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.69 2.58 4.1 3.62.57.25 1.02.4 1.37.51.58.18 1.1.16 1.51.1.46-.07 1.4-.57 1.6-1.13.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z"/></svg>
+   </a>
+   <a class="social email" href="mailto:samysuliman15@gmail.com" aria-label="Email">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm0 2 9 6 9-6H3Zm18 10V9.4l-8.45 5.63a1 1 0 0 1-1.1 0L3 9.4V17h18Z"/></svg>
+   </a>
+   <a class="social linkedin" href="https://www.linkedin.com/in/samy-suliman-3342bb212/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 3.5A2.2 2.2 0 1 1 .8 3.5a2.2 2.2 0 0 1 4.4 0ZM1.2 8h3.9v12.5H1.2V8Zm6.3 0h3.7v1.7h.05c.52-.98 1.78-2.02 3.67-2.02 3.93 0 4.66 2.59 4.66 5.96v6.86h-3.88v-6.08c0-1.45-.03-3.32-2.02-3.32-2.02 0-2.33 1.58-2.33 3.21v6.19H7.5V8Z"/></svg>
+   </a>
+   <a class="social x-social" href="https://x.com/SamySuliman" target="_blank" rel="noopener noreferrer" aria-label="X">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.24l-4.89-6.4L6.47 22H3.35l7.25-8.29L2.95 2h6.4l4.42 5.84L18.9 2Zm-1.1 17.85h1.72L8.41 4.04H6.56L17.8 19.85Z"/></svg>
+   </a>
   </div>
  </aside>
 </div>
