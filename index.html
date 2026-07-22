@@ -103,6 +103,8 @@ footer{background:#031610;color:#cbd7d3;text-align:center;padding:22px}
 .footer-bottom{border-top:1px solid rgba(255,255,255,.14);margin-top:18px;padding-top:12px;text-align:center;color:#aebdb7;font-size:13px}
 
 .en{display:none}
+body:not(.english) .en{display:none!important}
+body.english .ar{display:none!important}
 body.english{direction:ltr;font-family:"Inter","Cairo",Arial,sans-serif}
 body.english .ar{display:none}
 body.english .en{display:block}
@@ -675,22 +677,31 @@ body.english .nav-actions{order:1;margin-left:auto;margin-right:0}
  .nav-cv{max-width:92px;overflow:hidden;text-overflow:ellipsis}
 }
 
-.academy-project-card{
-  border:2px solid var(--gold);
-  background:linear-gradient(145deg,#fffdf7,#f7f0df);
-}
-.academy-project-card .picon{
-  font-family:"Cairo",Tahoma,Arial,sans-serif;
-  font-weight:900;
-  font-size:30px;
-}
-.academy-nav-link{
-  color:var(--gold2)!important;
-  font-weight:800;
-}
+/* v6.5 — Rasheed Academy integration */
+.hero-portrait-column{display:flex;flex-direction:column;align-items:center;gap:18px;min-width:0}
+.academy-card{width:min(390px,100%);display:flex;align-items:center;gap:14px;padding:15px 17px;border-radius:17px;border:1.5px solid var(--gold);background:linear-gradient(135deg,var(--green),#0b4b3b);color:#fff;box-shadow:0 14px 34px rgba(6,45,35,.18);transition:transform .2s ease,box-shadow .2s ease;text-decoration:none}
+.academy-card:hover{transform:translateY(-3px);box-shadow:0 19px 42px rgba(6,45,35,.24)}
+.academy-card-mark{width:54px;height:54px;flex:0 0 54px;border-radius:14px;display:grid;place-items:center;border:1px solid rgba(217,174,84,.8);background:rgba(255,255,255,.06);color:var(--gold);font-size:27px;font-weight:900}
+.academy-card-copy{flex:1;min-width:0;text-align:right}
+body.english .academy-card-copy{text-align:left}
+.academy-card-title{display:block;font-size:21px;font-weight:900;line-height:1.35}
+.academy-card-subtitle{display:block;margin-top:2px;color:#d9e8e2;font-size:12px;line-height:1.55}
+.academy-card-arrow{flex:0 0 auto;color:var(--gold);font-size:26px;font-weight:900}
+body.english .academy-card-arrow{transform:rotate(180deg)}
+@media(max-width:900px){.hero-portrait-column{order:-1}.academy-card{width:min(390px,92vw)}}
 
 </style>
-<link href="assets/favicon.png" rel="icon" type="image/png"/><meta content="سامي سليمان | الملف المهني" property="og:title"/><meta content="معلم تربية إسلامية، مدرب معلمين، مؤلف تربوي، ورئيس قسم سابق بخبرة تزيد على 20 عامًا." property="og:description"/><meta content="assets/portrait-only.jpg" property="og:image"/><meta content="website" property="og:type"/><meta content="سامي سليمان، معلم تربية إسلامية، مشرف تربوي، مدرب معلمين، مؤلف تربوي، تعليم القرآن، الإقراء، مدارس دولية، الرياض" name="keywords"/><meta content="Samy Suliman" name="author"/><meta content="index, follow, max-image-preview:large" name="robots"/><link href="https://samysuliman.github.io/portfolio/" rel="canonical"/><meta content="https://samysuliman.github.io/portfolio/" property="og:url"/><meta content="ar_SA" property="og:locale"/><meta content="summary_large_image" name="twitter:card"/></head>
+<link href="assets/favicon.png" rel="icon" type="image/png"/><meta content="سامي سليمان | الملف المهني" property="og:title"/><meta content="معلم تربية إسلامية، مدرب معلمين، مؤلف تربوي، ورئيس قسم سابق بخبرة تزيد على 20 عامًا." property="og:description"/><meta content="assets/portrait-only.jpg" property="og:image"/><meta content="website" property="og:type"/><meta content="سامي سليمان، معلم تربية إسلامية، مشرف تربوي، مدرب معلمين، مؤلف تربوي، تعليم القرآن، الإقراء، مدارس دولية، الرياض" name="keywords"/><meta content="Samy Suliman" name="author"/><meta content="index, follow, max-image-preview:large" name="robots"/><link href="https://samysuliman.github.io/portfolio/" rel="canonical"/><meta content="https://samysuliman.github.io/portfolio/" property="og:url"/><meta content="ar_SA" property="og:locale"/><meta content="summary_large_image" name="twitter:card"/>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#062d23">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="سامي سليمان">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/pwa.css">
+<link rel="stylesheet" href="assets/tour.css?v=4.5"/>
+</head>
 <body>
 <nav class="nav" aria-label="Primary navigation">
   <div class="container nav-inner">
@@ -710,10 +721,10 @@ body.english .nav-actions{order:1;margin-left:auto;margin-right:0}
   </div>
   <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-inner ar" aria-label="القائمة العربية">
-      <a href="#experience">المسيرة المهنية</a><a href="#why">لماذا سامي؟</a><a href="#impact">الأثر</a><a href="#quran">القرآن والإقراء</a><a href="#library">المؤلفات</a><a href="articles.html">مقالات وأبحاث</a><a href="#recognition">التكريمات</a><a href="#evidence">الالتزام والتميز المهني</a><a href="#quality">الجودة والإنتاجية</a><a href="#contact">التواصل</a>
+      <a href="academy/">أكاديمية رشيد</a><a href="#experience">المسيرة المهنية</a><a href="#why">لماذا سامي؟</a><a href="#impact">الأثر</a><a href="#quran">القرآن والإقراء</a><a href="#library">المؤلفات</a><a href="articles.html">مقالات وأبحاث</a><a href="#recognition">التكريمات</a><a href="#evidence">الالتزام والتميز المهني</a><a href="#quality">الجودة والإنتاجية</a><a href="#contact">التواصل</a>
     </div>
     <div class="mobile-menu-inner en" aria-label="English navigation menu">
-      <a href="#experience">Experience</a><a href="#why">Why Samy?</a><a href="#impact">Impact</a><a href="#quran">Qur’an</a><a href="#library">Publications</a><a href="articles.html">Articles &amp; Research</a><a href="#recognition">Awards</a><a href="#evidence">Professional Excellence</a><a href="#quality">Quality &amp; Productivity</a><a href="#contact">Contact</a>
+      <a href="academy/">Rasheed Academy</a><a href="#experience">Experience</a><a href="#why">Why Samy?</a><a href="#impact">Impact</a><a href="#quran">Qur’an</a><a href="#library">Publications</a><a href="articles.html">Articles &amp; Research</a><a href="#recognition">Awards</a><a href="#evidence">Professional Excellence</a><a href="#quality">Quality &amp; Productivity</a><a href="#contact">Contact</a>
     </div>
   </div>
 </nav>
@@ -729,14 +740,26 @@ body.english .nav-actions{order:1;margin-left:auto;margin-right:0}
 <p class="tagline en">Inspiring minds. Shaping character. Creating lasting impact.</p>
 <p class="availability ar">متاح للتوظيف في المجالات التعليمية والإدارية والإشرافية</p><p class="availability en">Available for educational, administrative, and supervisory roles</p><p class="hero-copy ar">خبرة تمتد لأكثر من 20 عامًا في التعليم، تشمل تدريس التربية الإسلامية، ورئاسة قسم الدراسات الإسلامية، وتدريب المعلمين، وتأليف المواد التعليمية، والمساهمة في الجودة والاعتماد الأكاديمي.</p>
 <p class="hero-copy en">More than 20 years of experience in Islamic Studies teaching, department leadership, teacher development, educational publishing, and quality and accreditation support.</p>
-<div class="actions">
-<a class="btn secondary ar" href="assets/samy-suliman-cv-ar.pdf" rel="noopener noreferrer" target="_blank">السيرة الذاتية (PDF)</a>
-<a class="btn secondary en" href="assets/samy-suliman-cv-en.pdf" rel="noopener noreferrer" target="_blank">CV (PDF)</a>
-<a class="btn secondary ar" href="#contact">تواصل معي</a>
-<a class="btn secondary en" href="#contact">Contact</a>
+<div class="actions professional-entry-actions">
+<a class="btn secondary ar" href="assets/samy-suliman-cv-ar.pdf" rel="noopener noreferrer" target="_blank">تحميل السيرة الذاتية</a>
+<a class="btn secondary en" href="assets/samy-suliman-cv-en.pdf" rel="noopener noreferrer" target="_blank">Download CV</a>
+<button class="btn primary tour-start ar" data-open-tour type="button">تعرّف عليّ في دقيقتين</button>
+<button class="btn primary tour-start en" data-open-tour type="button">Meet me in 2 minutes</button>
+<button class="btn secondary explore-start ar" data-open-explore type="button">شاهد ملفي المهني</button>
+<button class="btn secondary explore-start en" data-open-explore type="button">View my professional profile</button>
 </div>
 </div>
+<div class="hero-portrait-column">
 <div class="portrait-wrap"><img alt="سامي سليمان" class="hero-image" decoding="async" loading="lazy" src="assets/portrait-only.jpg"/></div>
+<a class="academy-card" href="academy/" aria-label="زيارة أكاديمية رشيد">
+<span class="academy-card-mark" aria-hidden="true">ر</span>
+<span class="academy-card-copy">
+<span class="academy-card-title ar">أكاديمية رشيد</span><span class="academy-card-title en">Rasheed Academy</span>
+<span class="academy-card-subtitle ar">للقرآن الكريم والعلوم الشرعية</span><span class="academy-card-subtitle en">Qur’an and Islamic Studies</span>
+</span>
+<span class="academy-card-arrow" aria-hidden="true">‹</span>
+</a>
+</div>
 </div>
 </header>
 <div class="stats"><div class="container"><div class="stats-grid">
@@ -1003,11 +1026,37 @@ body.english .nav-actions{order:1;margin-left:auto;margin-right:0}
 </form>
 <div class="contact-side">
 <a class="contact-mini" href="tel:+966559461920"><strong class="ar">اتصال</strong><strong class="en">Call</strong><span>+966 55 946 1920</span></a>
-<a class="contact-mini" href="mailto:samysuliman15@gmail.com"><strong class="ar">البريد الإلكتروني</strong><strong class="en">Email</strong><span>samysuliman15@gmail.com</span></a>
+<a class="contact-mini" href="https://mail.google.com/mail/?view=cm&fs=1&to=samysuliman15%40gmail.com" target="_blank" rel="noopener noreferrer"><strong class="ar">البريد الإلكتروني</strong><strong class="en">Email</strong><span>samysuliman15@gmail.com</span></a>
 <a class="contact-mini" href="https://www.linkedin.com/in/samy-suliman-3342bb212/" rel="noopener noreferrer" target="_blank"><strong>LinkedIn</strong><span class="ar">الملف المهني</span><span class="en">Professional profile</span></a>
 </div></div>
 </div></section>
 
+<div aria-hidden="true" aria-labelledby="tourTitle" aria-modal="true" class="tour-modal" id="introTour" role="dialog">
+<div class="tour-panel">
+<button class="tour-close" id="tourClose" type="button" aria-label="إغلاق الجولة">×</button>
+<div class="tour-top"><img class="tour-avatar" src="assets/portrait-only.jpg" alt="سامي سليمان"/><div><span class="tour-kicker" id="tourKicker"></span><h2 class="tour-title" id="tourTitle"></h2></div></div>
+<div class="tour-body" id="tourBody"></div>
+<div class="tour-progress-wrap"><div class="tour-progress-meta"><span id="tourCounter"></span><span id="tourTime">نحو دقيقتين</span></div><div class="tour-progress"><div class="tour-progress-bar" id="tourProgressBar"></div></div></div>
+<div class="tour-actions">
+<button class="tour-skip" id="tourSkip" type="button">إنهاء الجولة</button>
+<div class="tour-nav-group" id="tourNavGroup"><button class="tour-btn" id="tourPrev" type="button">السابق</button><button class="tour-btn primary" id="tourNext" type="button">التالي</button></div>
+<div class="tour-final-actions" id="tourFinalActions" hidden>
+<a class="tour-btn primary" id="tourContact" href="#contact">تواصل معي</a>
+<button class="tour-btn gold" id="tourExplore" data-open-explore type="button">شاهد ملفي المهني</button>
+</div></div>
+</div></div>
+<div aria-hidden="true" aria-labelledby="exploreTitle" aria-modal="true" class="tour-modal explore-modal" id="exploreHub" role="dialog">
+<div class="tour-panel explore-panel">
+<button class="tour-close" id="exploreClose" type="button" aria-label="إغلاق">×</button>
+<span class="tour-kicker ar">كل أقسام الموقع في مكان واحد</span><span class="tour-kicker en">All portfolio sections in one place</span>
+<h2 class="tour-title ar" id="exploreTitle">شاهد ملفي المهني</h2><h2 class="tour-title en">View My Professional Profile</h2>
+<div class="explore-links ar">
+<a href="#why">نبذة عني</a><a href="#experience">الخبرات المهنية والقيادية</a><a href="#quality">الجودة والإنتاجية</a><a href="#impact">الأثر المهني</a><a href="#quran">القرآن والإقراء</a><a href="#library">المؤلفات</a><a href="articles.html">المقالات والأبحاث</a><a href="#recognition">التكريمات</a><a href="#contact">تواصل معي</a>
+</div>
+<div class="explore-links en">
+<a href="#why">About Me</a><a href="#experience">Professional &amp; Leadership Experience</a><a href="#quality">Quality &amp; Productivity</a><a href="#impact">Professional Impact</a><a href="#quran">Qur’an &amp; Ijazah</a><a href="#library">Publications</a><a href="articles.html">Articles &amp; Research</a><a href="#recognition">Recognition</a><a href="#contact">Contact Me</a>
+</div>
+</div></div>
 <div aria-hidden="true" aria-modal="true" class="book-modal" id="bookModal" role="dialog">
 <div class="book-modal-panel">
 <button aria-label="إغلاق" class="modal-close" id="closeBook" type="button">×</button>
@@ -1128,5 +1177,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();if(moda
 let resizeTimer;window.addEventListener('resize',()=>{if(!pdfDoc)return;clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>renderPage(currentPage),180)});
 document.getElementById('whatsappForm').addEventListener('submit',e=>{e.preventDefault();const en=document.body.classList.contains('english');const name=document.getElementById('contactName').value.trim(),email=document.getElementById('contactEmail').value.trim(),subject=document.getElementById('contactSubject').value.trim(),message=document.getElementById('contactMessage').value.trim();const text=en?`Hello Mr. Samy Suliman,\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`:`السلام عليكم أستاذ سامي سليمان،\n\nالاسم: ${name}\nالبريد الإلكتروني: ${email}\nالموضوع: ${subject}\n\nالرسالة:\n${message}`;window.open('https://wa.me/966559461920?text='+encodeURIComponent(text),'_blank','noopener')});
 const topBtn=document.getElementById('backToTop');window.addEventListener('scroll',()=>topBtn.classList.toggle('show',window.scrollY>500));topBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
-</script></body>
+</script>
+<script src="assets/tour.js?v=4.5" defer></script>
+<script src="assets/pwa.js" defer></script>
+</body>
 </html>
