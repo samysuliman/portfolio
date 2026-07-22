@@ -1,20 +1,21 @@
-# Samy Suliman Portfolio v2.0
+# أكاديمية رشيد — النموذج التجريبي الأول
 
-Updates:
-- Professional journey moved before “Why Samy?”
-- Arabic desktop navigation uses the menu button
-- WhatsApp contact form linked to +966559461920
-- Publication order preserved
-- In-site PDF flip-style previews added for completed books
-- Arabic and English CV buttons linked separately
-- Award wording simplified to second-place recognition
-- Back-to-top button and responsive refinements
+هذا مشروع واجهات ثابتة للتجربة والمراجعة، وليس نظامًا إنتاجيًا نهائيًا.
 
-Upload all files and the complete `assets` folder to the GitHub repository root.
+## التشغيل
+1. فك ضغط الملف.
+2. افتح `index.html` في متصفح Chrome أو Edge.
+3. اضغط "تسجيل الدخول" لتجربة لوحات الطالب والمعلم والمدير.
 
-## Articles & Research (MVP)
-- Public page: `articles.html`
-- Article page: `article.html?slug=...`
-- Owner publishing page (not linked publicly): `publisher.html`
-- Write and preview articles in the browser, then use **Export Site File** and replace `articles/articles-data.js` in GitHub to publish to all visitors.
-- LinkedIn opens its share composer and copies the prepared post text; X opens a prefilled post. Fully unattended posting will require future OAuth/API integration.
+## الصفحات
+- الصفحة الرئيسية
+- التسجيل وتقييم المستوى
+- تسجيل الدخول
+- لوحة الطالب
+- لوحة المعلم
+- لوحة المدير
+
+## ملاحظات
+- الأزرار والبيانات تجريبية.
+- لا توجد قاعدة بيانات أو تسجيل دخول حقيقي في هذه النسخة.
+- التصميم متجاوب مع الجوال والكمبيوتر.
