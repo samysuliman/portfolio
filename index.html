@@ -1,593 +1,1227 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+
+<html dir="rtl" lang="ar">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="أكاديمية رشيد لتعليم القرآن الكريم والعلوم الشرعية والعربية لغير الناطقين بها.">
-<title>أكاديمية رشيد | Rasheed Academy</title>
-<link rel="icon" href="../assets/rasheed-academy-logo.png">
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="الملف المهني لسامي سليمان: معلم تربية إسلامية، مدرب معلمين، ومؤلف تربوي." name="description"/>
+<title>سامي سليمان | الملف المهني والمكتبة التعليمية</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700;800&amp;family=Noto+Kufi+Arabic:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
 <style>
 :root{
- --green:#073d32;--green2:#0a5747;--gold:#d4a33d;--cream:#fbf7ee;
- --paper:#fff;--ink:#18342d;--muted:#66766f;--line:#e8e2d7;
- --shadow:0 16px 40px rgba(7,61,50,.12)
+  --green:#062d23;--green2:#0b4435;--gold:#d9ae54;--gold2:#f4d995;
+  --cream:#f7f2e7;--white:#fff;--ink:#17362c;--muted:#6d7c76;
+  --line:#e4e9e6;--shadow:0 18px 50px rgba(6,45,35,.13)
 }
-*{box-sizing:border-box} html{scroll-behavior:smooth}
-body{margin:0;font-family:"Segoe UI",Tahoma,Arial,sans-serif;background:#f8f7f3;color:var(--ink)}
-a{text-decoration:none;color:inherit} img{max-width:100%;display:block}
-.container{width:min(1460px,calc(100% - 28px));margin:auto}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Cairo",Tahoma,Arial,sans-serif;background:#fff;color:var(--ink);line-height:1.75}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+button{font:inherit}
+.container{width:min(1160px,92%);margin:auto}
+.nav{position:sticky;top:0;z-index:30;background:rgba(6,45,35,.97);border-bottom:1px solid rgba(217,174,84,.25)}
+.nav-inner{min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{font-weight:900;color:var(--gold);letter-spacing:.8px}
+.links{display:flex;gap:22px;color:#fff;font-size:14px}
+.links a:hover{color:var(--gold2)}
+.lang{border:1px solid var(--gold);color:var(--gold);background:transparent;border-radius:9px;padding:7px 12px;cursor:pointer}
+.hero{background:radial-gradient(circle at 10% 15%,rgba(217,174,84,.13),transparent 33%),linear-gradient(135deg,#fffdf8,#f6f0e5);color:var(--ink);padding:64px 0 76px}
+.hero-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:58px;align-items:center;direction:ltr}
+.hero-content{direction:rtl;text-align:right}
+.kicker{display:inline-block;color:#b7831f;font-weight:800;font-size:22px;line-height:1.5;margin-bottom:2px}
+h1{font-size:clamp(42px,5.1vw,62px);line-height:1.08;margin:8px 0 8px;color:var(--green)}
+.role{font-size:clamp(19px,2.4vw,27px);margin:0 0 13px}
+.tagline{font-size:21px;color:var(--ink);margin:0 0 10px}
+.hero-copy{font-size:17px;color:#536760;max-width:720px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 20px;border-radius:10px;font-weight:800;transition:.2s}
+.btn:hover{transform:translateY(-2px)}
+.primary{background:var(--gold);color:var(--green)}
+.secondary{border:1px solid var(--green);color:var(--green);background:#fff}
+.portrait-wrap{width:min(390px,100%);aspect-ratio:1;margin:auto;padding:7px;border-radius:50%;background:linear-gradient(145deg,var(--gold),#f8e8b6);box-shadow:0 22px 55px rgba(6,45,35,.18)}
+.hero-image{width:100%;height:100%;object-fit:cover;object-position:center;border-radius:50%;background:#eee}
+section{padding:78px 0}
+.alt{background:var(--cream)}
+.title{font-size:39px;line-height:1.25;margin:0 0 8px;color:var(--green)}
+.subtitle{color:var(--muted);margin:0 0 34px}
+.featured-impact{display:grid;grid-template-columns:.9fr 1.1fr;gap:30px;align-items:center}
+.impact-copy{background:var(--green);color:#fff;padding:32px;border-radius:22px;box-shadow:var(--shadow)}
+.impact-copy h3{color:var(--gold);font-size:28px;margin:0 0 10px}
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:20px;box-shadow:var(--shadow);background:#000}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.library-header{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:28px}
+.library-note{max-width:650px;color:var(--muted)}
+.shelf{margin-top:45px}
+.shelf-title{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--gold)}
+.shelf-title h3{margin:0;color:var(--green);font-size:28px}
+.shelf-title span{color:#8c691f;font-weight:800}
+.books{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.book-card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);transition:.25s}
+.book-card:hover{transform:translateY(-7px)}
+.book-image{background:linear-gradient(145deg,#e9e3d8,#fff);padding:18px}
+.book-image img{width:100%;height:410px;object-fit:contain;filter:drop-shadow(0 14px 18px rgba(0,0,0,.18))}
+.book-body{padding:20px}
+.book-body h4{margin:0 0 7px;color:var(--green);font-size:20px}
+.book-body p{margin:0 0 13px;color:var(--muted)}
+.badge{display:inline-block;padding:5px 11px;border-radius:999px;font-size:12px;font-weight:900}
+.done{background:#e5f3eb;color:#17613d}
+.progress{background:#fff1d5;color:#8c6418}
+.reference{display:grid;grid-template-columns:.72fr 1.28fr;gap:34px;align-items:center;background:#fff;border-radius:22px;padding:30px;box-shadow:var(--shadow)}
+.reference img{max-height:500px;margin:auto;object-fit:contain}
+.reference-visual{display:grid;grid-template-columns:1fr 120px;gap:18px;align-items:center}
+.reference-visual .reference-ijazah{width:110px;height:110px;object-fit:contain;background:#fff;border:1px solid var(--line);border-radius:20px;padding:8px;box-shadow:0 10px 24px rgba(6,45,35,.10)}
+.reference h3{font-size:31px;color:var(--green);margin:0 0 10px}
+.reference p{color:var(--muted)}
+.pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.pill{border:1px solid #d8dfdb;border-radius:999px;padding:7px 12px;color:var(--green);font-size:13px}
+.portfolio-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:17px}
+.pitem{background:#fff;border:1px solid var(--line);border-radius:16px;padding:25px;text-align:center;box-shadow:var(--shadow);transition:.2s}
+.pitem:hover{transform:translateY(-4px);border-color:var(--gold)}
+.picon{width:58px;height:58px;margin:0 auto 13px;border-radius:15px;background:var(--green);color:var(--gold);display:grid;place-items:center;font-size:27px}
+.pitem b{display:block;color:var(--green);margin-bottom:4px}
+.pitem small{color:var(--muted)}
+.contact{background:linear-gradient(135deg,#041d17,#0b4435);color:#fff;text-align:center}
+.contact .title{color:var(--gold)}
+.contact .actions{justify-content:center}
+footer{background:#031610;color:#cbd7d3;text-align:center;padding:22px}
 
-/* Header: preserved as requested, with clearer hierarchy */
-.topbar{position:sticky;top:0;z-index:100;background:var(--green);color:#fff;border-bottom:1px solid rgba(212,163,61,.45)}
-.nav{min-height:82px;display:flex;align-items:center;gap:22px}
-.brand{display:flex;align-items:center;gap:10px;min-width:max-content}
-.brand img{width:60px;height:60px;object-fit:contain;background:#fff;border-radius:14px;padding:4px;border:1px solid var(--gold)}
-.brand strong{display:block;font-size:20px}.brand small{display:block;color:#dcebe6;font-size:12px}
-.navlinks{display:flex;justify-content:center;gap:22px;flex:1}
-.navlinks a{font-weight:800;font-size:14px;color:#f2f8f5}.navlinks a:hover{color:#f3cf79}
-.actions{display:flex;align-items:center;gap:9px}
-.lang{display:flex;direction:ltr;border:1px solid rgba(255,255,255,.35);border-radius:999px;overflow:hidden}
-.lang button{border:0;background:transparent;color:#fff;padding:9px 13px;font-weight:900;cursor:pointer}
-.lang button.active{background:var(--gold);color:var(--green)}
-.btn{min-height:44px;padding:0 16px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;font-weight:900;border:1px solid transparent;transition:.2s}
-.btn-gold{background:var(--gold);color:var(--green)}
-.btn-light{border-color:rgba(255,255,255,.45);color:#fff}.btn-light:hover{background:#fff;color:var(--green)}
+.career-head{display:flex;align-items:center;gap:18px;margin-bottom:8px}
+.career-logo{width:92px;height:72px;object-fit:contain;background:#fff;border:1px solid var(--line);border-radius:14px;padding:7px;box-shadow:0 8px 20px rgba(6,45,35,.10);flex:0 0 auto}
+.career-head h3{margin:0!important}
+.ijazah-card-logo{width:52px;height:52px;object-fit:contain;margin:0 auto 10px;border-radius:12px;background:#fff;padding:3px}
+.footer-main{background:#031f18;color:#fff;padding:26px 0 14px}
+.footer-contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;align-items:stretch;border:1px solid rgba(217,174,84,.25);border-radius:18px;overflow:hidden}
+.footer-contact-item{min-height:118px;display:flex;align-items:center;justify-content:center;gap:15px;padding:18px 22px;text-align:center;border-inline-end:1px solid rgba(255,255,255,.16)}
+.footer-contact-item:last-child{border-inline-end:0}
+.footer-contact-item .ficon{width:48px;height:48px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-size:22px;flex:0 0 auto}
+.footer-contact-item strong{display:block;color:#fff;font-size:16px;line-height:1.5}
+.footer-contact-item span{display:block;color:#b8c8c2;font-size:12px}
+.footer-qr img{width:82px;height:82px;object-fit:cover;background:#fff;padding:5px;border-radius:8px}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.14);margin-top:18px;padding-top:12px;text-align:center;color:#aebdb7;font-size:13px}
 
-/* Main academy shell */
-.page-shell{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:22px;align-items:start;padding:22px 0 0}
-.main-column{min-width:0;background:#fff;border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
-.founder-sidebar{position:sticky;top:104px;background:#fff;border-radius:22px;padding:22px 18px;box-shadow:var(--shadow);text-align:center}
-.founder-photo{width:190px;height:190px;border-radius:50%;object-fit:cover;margin:0 auto 18px;border:5px solid #fff;outline:3px solid var(--gold)}
-.founder-sidebar h2{font-size:34px;margin:5px 0;color:var(--green)}
-.founder-role{line-height:1.8;font-weight:700;color:#445b54;margin:0 0 18px}
-.sidebar-academy{border:1px solid var(--gold);border-radius:18px;padding:17px;margin:18px 0;background:linear-gradient(145deg,#fffdf7,#fff)}
-.sidebar-academy img{width:190px;margin:auto}
-.sidebar-academy p{line-height:1.8;color:#4e625c;font-size:14px}
-.sidebar-button{width:100%;background:var(--green);color:#fff}
-.socials{display:flex;justify-content:center;gap:13px;margin-top:22px}
-.socials a{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:18px}
-.socials a:nth-child(1){background:#25a55f}.socials a:nth-child(2){background:#c79635}.socials a:nth-child(3){background:#1676a8}.socials a:nth-child(4){background:#111}
-
-/* Hero matching approved concept */
-.hero{display:grid;grid-template-columns:38% 62%;min-height:285px;background:linear-gradient(90deg,#f7efe1,#fff)}
-.hero-image{background:url("assets/images/v7/quran-hero.webp") center/cover no-repeat;min-height:285px}
-.hero-center{display:flex;align-items:center;justify-content:center;text-align:center;padding:22px 30px}
-.hero-logo{width:min(580px,90%);margin:auto}
-.hero-center p{font-size:20px;line-height:1.9;margin:10px auto;color:#244940}
-.motto{display:flex;justify-content:center;align-items:center;gap:14px;font-size:18px;font-weight:900;color:var(--green)}
-.motto:before,.motto:after{content:"";width:38px;height:1px;background:var(--gold)}
-
-/* Sections */
-.content-section{padding:20px 28px 24px}
-.section-title{text-align:center;font-size:27px;color:var(--green);margin:0 0 18px;display:flex;align-items:center;justify-content:center;gap:12px}
-.section-title:before,.section-title:after{content:"◇";color:var(--gold);font-size:18px}
-.quran-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.quran-card{border:1px solid var(--line);border-radius:15px;padding:14px;background:#fff;box-shadow:0 7px 18px rgba(7,61,50,.07);display:grid;grid-template-columns:74px 1fr;gap:12px;align-items:center}
-.quran-card .icon{width:70px;height:70px;border-radius:14px;display:grid;place-items:center;background:#f4ead3;font-size:31px;color:var(--green)}
-.quran-card h3{margin:0 0 5px;font-size:18px;color:var(--green)}
-.quran-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.65}
-.quran-card a{grid-column:1/-1;background:var(--green);color:#fff;text-align:center;padding:8px;border-radius:999px;font-weight:800;font-size:13px}
-
-/* Real book cards from the approved design */
-.books-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
-.book-card{border:1px solid var(--line);border-radius:16px;background:#fff;padding:12px;box-shadow:0 8px 20px rgba(7,61,50,.07);text-align:center;transition:.22s}
-.book-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
-.book-cover{height:198px;object-fit:contain;margin:auto}
-.book-card h3{font-size:18px;margin:7px 0;color:var(--green)}
-.book-card p{font-size:13px;line-height:1.65;color:var(--muted);min-height:62px;margin:0}
-.book-card a{margin-top:10px;width:100%;background:var(--green);color:#fff;border-radius:999px;padding:8px;display:block;font-weight:800;font-size:13px}
-
-/* Improvements requested */
-.features{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:15px;background:#fff}
-.feature{padding:15px 10px;text-align:center;border-inline-start:1px solid var(--line)}
-.feature:first-child{border-inline-start:0}.feature b{display:block;color:var(--green);margin-bottom:5px}.feature span{font-size:12px;color:var(--muted)}
-.publications{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:center;background:var(--cream);padding:26px;border-radius:20px;margin-top:24px}
-.publications img{max-height:270px;object-fit:contain;margin:auto}
-.publications h2{font-size:32px;color:var(--green);margin:8px 0}.publications p{line-height:1.9;color:var(--muted)}
-.cta{margin:24px 28px 30px;background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border-radius:22px;padding:34px;text-align:center}
-.cta h2{font-size:32px;margin:0 0 10px}.cta p{color:#dcece6}.cta .btn{background:var(--gold);color:var(--green)}
-
-footer{margin-top:28px;background:#052d25;color:#dcebe5;padding:28px}
-.footer-inner{display:flex;justify-content:space-between;gap:20px;align-items:center}
-.footer-links{display:flex;gap:18px;flex-wrap:wrap}
-
-/* Bilingual behavior */
-[data-en]{display:none}body.english{direction:ltr}
-body.english [data-ar]{display:none!important}
-body.english [data-en]{display:inline}
-body.english .block[data-en]{display:block}
-body:not(.english) .block[data-ar]{display:block}
-
-/* Responsive */
-@media(max-width:1180px){
- .page-shell{grid-template-columns:1fr}.founder-sidebar{position:static;display:grid;grid-template-columns:180px 1fr 1fr;gap:18px;align-items:center;text-align:start}
- .founder-photo{width:150px;height:150px;margin:auto}.socials{justify-content:flex-start}.books-grid{grid-template-columns:repeat(3,1fr)}
+.en{display:none}
+body:not(.english) .en{display:none!important}
+body.english .ar{display:none!important}
+body.english{direction:ltr;font-family:"Inter","Cairo",Arial,sans-serif}
+body.english .ar{display:none}
+body.english .en{display:block}
+@media(max-width:920px){
+ .links{display:none}.hero-grid,.featured-impact,.reference{grid-template-columns:1fr}
+ .books{grid-template-columns:repeat(2,1fr)}.portfolio-grid{grid-template-columns:repeat(2,1fr)}
+ .hero-image{max-width:560px;margin:auto}
 }
-@media(max-width:930px){
- .navlinks{display:none}.hero{grid-template-columns:1fr}.hero-image{min-height:250px}.quran-grid{grid-template-columns:repeat(2,1fr)}
- .features{grid-template-columns:repeat(2,1fr)}.publications{grid-template-columns:1fr}
+@media(max-width:620px){
+ .books,.portfolio-grid{grid-template-columns:1fr}
+ .career-head{align-items:flex-start}
+ .career-logo{width:76px;height:64px}
+ .footer-contact-grid{grid-template-columns:1fr}
+ .footer-contact-item{border-inline-end:0;border-bottom:1px solid rgba(255,255,255,.16)}
+ .footer-contact-item:last-child{border-bottom:0}
+ .book-image img{height:360px}.library-header{align-items:flex-start;flex-direction:column}
 }
-@media(max-width:650px){
- .container{width:min(100% - 14px,1460px)}.nav{flex-wrap:wrap;padding:8px 0}.brand-copy{display:none}.actions{width:100%;justify-content:center;flex-wrap:wrap}
- .page-shell{padding-top:10px}.main-column,.founder-sidebar{border-radius:15px}
- .founder-sidebar{display:block;text-align:center}.socials{justify-content:center}
- .hero-center{padding:18px 12px}.hero-center p{font-size:16px}.motto{font-size:14px}
- .content-section{padding:18px 12px}.quran-grid,.books-grid{grid-template-columns:1fr}
- .quran-card{grid-template-columns:65px 1fr}.book-cover{height:235px}
- .features{grid-template-columns:1fr}.publications{padding:18px}.cta{margin:18px 12px 24px;padding:28px 16px}
- .footer-inner{flex-direction:column;text-align:center}
-}
-</style>
 
-<style id="v71-layout-fix">
-/* v7.1 — viewport, hero, direction, and contact corrections */
-html,body{overflow-x:hidden}
-.page-shell{
-  direction:ltr;
-  grid-template-columns:minmax(0,1fr) 292px!important;
-  gap:16px!important;
-  align-items:start;
-  padding-top:16px!important;
-}
-.main-column,.founder-sidebar{direction:rtl}
-body.english .main-column,body.english .founder-sidebar{direction:ltr}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.why-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow);transition:.22s;position:relative;overflow:hidden}
+.why-card:before{content:"";position:absolute;top:0;right:0;width:72px;height:5px;background:var(--gold)}
+body.english .why-card:before{right:auto;left:0}
+.why-card:hover{transform:translateY(-5px)}
+.why-icon{width:52px;height:52px;border-radius:15px;background:var(--green);color:var(--gold);display:grid;place-items:center;font-size:24px;margin-bottom:14px}
+.why-card h3{margin:0 0 7px;color:var(--green);font-size:20px}
+.why-card p{margin:0;color:var(--muted)}
+.section-lead{max-width:760px;color:var(--muted);margin:0 0 30px}
+@media(max-width:920px){.why-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.why-grid{grid-template-columns:1fr}}
 
-/* Keep the founder card on the right in Arabic and English */
-.main-column{grid-column:1}
-.founder-sidebar{
-  grid-column:2;
-  top:98px!important;
-  padding:18px 16px!important;
-  border-radius:20px!important;
-}
-.founder-photo{
-  width:164px!important;
-  height:164px!important;
-  margin-bottom:12px!important;
-}
-.founder-sidebar h2{font-size:29px!important;margin:4px 0!important}
-.founder-role{font-size:13px;line-height:1.65!important;margin-bottom:12px!important}
-.sidebar-academy{padding:12px!important;margin:12px 0!important}
-.sidebar-academy img{width:145px!important}
-.sidebar-academy p{font-size:12.5px!important;line-height:1.65!important;margin:8px 0 12px}
-.founder-sidebar h3{margin:14px 0 8px}
 
-/* One connected hero panel sized for the first viewport */
-.hero{
-  display:grid!important;
-  grid-template-columns:39% 61%!important;
-  min-height:300px!important;
-  height:300px!important;
-  overflow:hidden;
-  background:#fffaf0!important;
-}
-.hero-image{
-  min-height:300px!important;
-  height:300px!important;
-  background-position:center 58%!important;
-  border-radius:0!important;
-}
-.hero-center{
-  min-width:0;
-  padding:15px 22px!important;
-  background:
-    radial-gradient(circle at 50% 40%,rgba(212,163,61,.10),transparent 42%),
-    linear-gradient(145deg,#fffdf8,#fff)!important;
-}
-.hero-logo{
-  width:min(430px,82%)!important;
-  max-height:175px;
-  object-fit:contain;
-}
-.hero-center p{
-  font-size:18px!important;
-  line-height:1.55!important;
-  margin:7px auto!important;
-}
-.motto{font-size:15px!important;gap:10px!important;margin-top:5px}
-.hero-actions{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:14px;
-}
-.hero-actions .btn{min-height:40px;padding:0 18px}
-.hero-outline{border-color:var(--green)!important;color:var(--green)!important;background:#fff}
-.hero-outline:hover{background:var(--green);color:#fff!important}
-
-/* Compact sections so the design opens as a composed page, not oversized panels */
-.content-section{padding:17px 20px 21px!important}
-.section-title{font-size:24px!important;margin-bottom:14px!important}
-.quran-grid{gap:10px!important}
-.quran-card{padding:11px!important;grid-template-columns:62px 1fr!important;gap:9px!important}
-.quran-card .icon{width:58px!important;height:58px!important;font-size:26px!important}
-.quran-card h3{font-size:16px!important}
-.quran-card p{font-size:12px!important}
-.quran-card a{padding:7px!important}
-.books-grid{gap:10px!important}
-.book-card{padding:10px!important}
-.book-cover{height:178px!important}
-.book-card h3{font-size:16px!important}
-.book-card p{font-size:12px!important;min-height:55px!important}
-.features{margin-top:12px!important}
-
-/* Professional SVG contact icons */
-.socials{display:flex!important;justify-content:center!important;gap:11px!important;margin-top:10px!important}
-.social{
-  width:42px!important;height:42px!important;
-  border-radius:50%;display:grid!important;place-items:center;
-  border:1px solid rgba(212,163,61,.55);
-  box-shadow:0 7px 16px rgba(7,61,50,.10);
-  transition:transform .2s,box-shadow .2s,background .2s;
-}
-.social svg{width:21px;height:21px;fill:currentColor}
-.social:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 11px 22px rgba(7,61,50,.18)}
-.whatsapp{background:#25a55f!important;color:#fff!important}
-.email{background:#c79635!important;color:#fff!important}
-.linkedin{background:#1676a8!important;color:#fff!important}
-.x-social{background:#111!important;color:#fff!important}
-
-/* Laptop sizes similar to the user's screenshot */
-@media (max-width:1360px){
-  .container{width:min(1320px,calc(100% - 20px))!important}
-  .page-shell{grid-template-columns:minmax(0,1fr) 280px!important}
-  .nav{gap:14px!important}
-  .navlinks{gap:16px!important}
-}
-@media (max-width:1180px){
-  .page-shell{grid-template-columns:1fr!important}
-  .main-column{grid-column:1}
-  .founder-sidebar{
-    grid-column:1;
-    position:static!important;
-    display:grid!important;
-    grid-template-columns:150px 1fr 220px!important;
-    text-align:start!important;
+@media(max-width:620px){
+  .hero{padding:28px 0 42px}
+  .hero-grid{
+    display:flex;
+    flex-direction:column;
+    gap:24px;
   }
-  .socials{justify-content:flex-start!important}
+  .portrait-wrap{order:-1;width:min(300px,88vw);height:auto;aspect-ratio:1}
+  .hero-image{width:100%;height:100%;border-radius:50%;object-fit:cover;margin:0 auto}
+  .hero-grid > div{width:100%;text-align:center}
+  .hero-content{direction:rtl;text-align:center}
+  h1{
+    font-size:42px;
+    margin:12px 0 8px;
+  }
+  .role{
+    font-size:18px;
+    line-height:1.7;
+  }
+  .tagline{
+    font-size:18px;
+    line-height:1.8;
+  }
+  .hero-copy{
+    font-size:16px;
+    line-height:2;
+  }
+  .actions{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:10px;
+    margin-top:20px;
+  }
+  .btn{
+    width:100%;
+    padding:13px 16px;
+  }
+  .kicker{
+    font-size:12px;
+  }
+  .nav-inner{
+    min-height:58px;
+  }
+  .brand{
+    font-size:15px;
+  }
+  .lang{
+    padding:6px 10px;
+    font-size:13px;
+  }
 }
-@media (max-width:850px){
-  .hero{height:auto!important;grid-template-columns:1fr!important}
-  .hero-image{height:230px!important;min-height:230px!important}
-  .hero-center{padding:22px 14px!important}
-  .hero-logo{max-height:150px}
-  .founder-sidebar{display:block!important;text-align:center!important}
-  .socials{justify-content:center!important}
-}
-@media (max-width:650px){
-  .page-shell{padding-top:8px!important}
-  .hero-image{height:205px!important;min-height:205px!important}
-  .hero-center p{font-size:15px!important}
-  .hero-logo{width:min(360px,92%)!important}
-  .content-section{padding:16px 11px!important}
-  .book-cover{height:225px!important}
-}
-</style>
+
+.stats{margin-top:-34px;position:relative;z-index:5}
+.stats-grid{display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.stat{padding:20px 14px;text-align:center;border-inline-end:1px solid var(--line)}
+.stat:last-child{border-inline-end:0}.stat strong{display:block;color:var(--green);font-size:25px;line-height:1.2}.stat span{color:var(--muted);font-size:13px}
+.timeline{position:relative;display:grid;gap:20px;max-width:900px;margin:auto}
+.timeline:before{content:"";position:absolute;top:8px;bottom:8px;right:22px;width:2px;background:var(--gold)}
+body.english .timeline:before{right:auto;left:22px}
+.titem{position:relative;background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 68px 22px 22px;box-shadow:var(--shadow)}
+body.english .titem{padding:22px 22px 22px 68px}.titem:before{content:"";position:absolute;right:14px;top:28px;width:18px;height:18px;border-radius:50%;background:var(--gold);border:4px solid var(--green)}
+body.english .titem:before{right:auto;left:14px}.titem h3{margin:0 0 4px;color:var(--green)}.titem .period{color:#8c691f;font-weight:800;font-size:14px}.titem p{margin:8px 0 0;color:var(--muted)}
+.portfolio-grid{grid-template-columns:repeat(3,1fr)}
+.pitem{display:block}.pitem small{display:block}.pitem .evidence{display:inline-block;margin-top:12px;color:#8c691f;font-weight:800;font-size:13px}
+@media(max-width:920px){.stats-grid{grid-template-columns:repeat(2,1fr)}.stat{border-bottom:1px solid var(--line)}.portfolio-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.stats{margin-top:-20px}.stats-grid,.portfolio-grid{grid-template-columns:1fr}.stat{border-inline-end:0}.timeline:before{right:18px}body.english .timeline:before{left:18px}.titem{padding-right:58px}body.english .titem{padding-left:58px}}
 
 
-<style id="v72-interface">
-/* v7.2 — approved academy interface */
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.evidence-panel{margin-top:36px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:var(--shadow)}
+.evidence-panel h3{margin:0 0 6px;color:var(--green);font-size:25px}
+.evidence-panel p{margin:0 0 20px;color:var(--muted)}
+.evidence-links{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.evidence-link{display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:10px 12px;border:1px solid #d9e2de;border-radius:12px;background:#fbfdfc;color:var(--green);font-weight:800;transition:.2s}
+.evidence-link:hover{transform:translateY(-3px);border-color:var(--gold);background:#fffaf0}
+.evidence-link span{color:#9a711f}
+.contact-intro{max-width:760px;margin:0 auto 28px;color:#e7efec;font-size:18px}
+.contact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:900px;margin:0 auto}
+.contact-card{min-height:142px;border:1px solid rgba(217,174,84,.38);border-radius:18px;padding:22px 14px;background:rgba(255,255,255,.055);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:.22s}
+.contact-card:hover{transform:translateY(-5px);background:rgba(255,255,255,.1);border-color:var(--gold)}
+.contact-icon{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:var(--green)}
+.contact-icon svg{width:27px;height:27px;fill:currentColor}
+.contact-card strong{color:#fff;font-size:16px}.contact-card small{color:#c8d5d0}
+@media(max-width:920px){.evidence-links{grid-template-columns:repeat(4,1fr)}.contact-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.evidence-links{grid-template-columns:repeat(2,1fr)}.contact-grid{grid-template-columns:1fr}.contact-card{min-height:120px}}
 
-/* Smart sticky header */
-.topbar{transition:min-height .25s,box-shadow .25s,background .25s}
-.topbar.is-compact{box-shadow:0 10px 28px rgba(0,0,0,.22);background:rgba(7,61,50,.97);backdrop-filter:blur(10px)}
-.topbar.is-compact .nav{min-height:62px}
-.topbar.is-compact .brand img{width:46px;height:46px}
-.topbar.is-compact .brand strong{font-size:17px}
-.nav,.brand img,.brand strong{transition:.25s}
 
-/* Single merged hero asset */
-.hero-v72{display:block!important;height:auto!important;min-height:0!important;background:none!important}
-.hero-merged{
-  position:relative;
-  min-height:330px;
-  background:url("assets/images/v7/rasheed-merged-hero.webp") center/cover no-repeat;
-  overflow:hidden;
+.availability{display:inline-block;margin:4px 0 8px;padding:8px 14px;border-radius:999px;background:#fff7df;border:1px solid #ead39a;color:#8a651b;font-weight:800;font-size:14px}
+.compact-why .why-card{text-align:center}.compact-why .why-icon{margin-inline:auto}.compact-why .why-card p{font-size:14px}
+.evidence-link{min-height:82px;display:grid!important;grid-template-columns:auto 1fr auto;align-items:center;gap:11px;text-align:start!important}.evidence-link .evidence-no{width:44px;height:44px;border-radius:12px;background:var(--green);color:var(--gold);display:grid;place-items:center;font-weight:900}.evidence-link b{font-size:13px;line-height:1.55}.evidence-link .arrow{font-size:18px;color:#9a711d}.award-docs{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:24px}.award-docs .secondary{background:#fff}
+.career-head{flex-wrap:wrap}.university-logo{width:116px}
+.testimonial-showcase{display:grid;grid-template-columns:.9fr 1.1fr;gap:26px;margin-top:34px;align-items:stretch}.testimonial-image{background:#fff;border:1px solid var(--line);border-radius:20px;padding:12px;box-shadow:var(--shadow)}.testimonial-image img{width:100%;height:100%;max-height:470px;object-fit:contain;border-radius:13px}.testimonial-quotes{display:grid;gap:18px}.testimonial-quotes article{position:relative;background:#fff;border:1px solid var(--line);border-radius:18px;padding:25px;box-shadow:var(--shadow)}.testimonial-quotes article>span{position:absolute;top:4px;left:18px;font-size:52px;color:var(--gold);line-height:1}.testimonial-quotes p{font-size:17px;color:var(--ink);margin:10px 0 14px}.testimonial-quotes b{display:block;color:var(--green)}.testimonial-quotes small{display:block;color:var(--muted)}
+.recognition-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:24px}.recognition-feature{background:linear-gradient(135deg,var(--green),var(--green2));color:#fff;border-radius:22px;padding:32px;display:grid;grid-template-columns:120px 1fr;gap:25px;align-items:center;box-shadow:var(--shadow)}.award-mark{width:112px;height:112px;border-radius:50%;border:2px solid var(--gold);display:grid;place-items:center;color:var(--gold);font-size:27px;font-weight:900}.recognition-feature h3{color:var(--gold);font-size:26px;margin:0 0 9px}.recognition-feature p{margin:0 0 15px;color:#e6efec}.award-link{display:inline-block;color:var(--gold2);font-weight:900}.recognition-list{display:grid;gap:14px}.recognition-list article{display:flex;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:17px;padding:20px;box-shadow:var(--shadow)}.recognition-list article>span{width:46px;height:46px;border-radius:14px;background:var(--green);color:var(--gold);display:grid;place-items:center;font-size:22px;flex:0 0 auto}.recognition-list b,.recognition-list small{display:block}.recognition-list b{color:var(--green)}.recognition-list small{color:var(--muted)}
+@media(max-width:920px){.testimonial-showcase,.recognition-grid{grid-template-columns:1fr}.recognition-feature{grid-template-columns:auto 1fr}}
+@media(max-width:620px){.availability{font-size:12px}.evidence-links{grid-template-columns:1fr!important}.recognition-feature{grid-template-columns:1fr;text-align:center}.award-mark{margin:auto}.testimonial-image img{max-height:380px}}
+
+/* Final refinement: stronger readability without changing the established layout */
+:root{--green:#043d2e;--green2:#07513d;--gold:#bd8626;--gold2:#e2b95f;--ink:#152d35;--muted:#4f625f;--cream:#f7f3ea}
+body{font-size:16px;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+.subtitle,.section-lead,.library-note,.book-body p,.reference p,.titem p,.why-card p,.pitem small{color:var(--muted)}
+.pitem small,.recognition-list small,.testimonial-quotes small,.stat span{font-size:14px;line-height:1.75}
+a:focus-visible,button:focus-visible{outline:3px solid var(--gold2);outline-offset:3px}
+.quran-section{padding:82px 0;background:radial-gradient(circle at 85% 15%,rgba(226,185,95,.16),transparent 28%),linear-gradient(145deg,#03271e,#07513d);color:#fff;overflow:hidden}
+.quran-section .title{color:var(--gold2)}
+.quran-section .section-lead{color:#d6e3df;margin-bottom:0}
+.quran-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;margin-bottom:32px}
+.quran-eyebrow{display:block;color:var(--gold2);font-weight:800;font-size:14px;letter-spacing:.3px;margin-bottom:6px}
+.quran-all{background:transparent;border:1px solid rgba(226,185,95,.72);color:var(--gold2);white-space:nowrap}
+.quran-all:hover{background:rgba(255,255,255,.08)}
+.quran-feature{display:grid;grid-template-columns:1.3fr .7fr;gap:26px;align-items:stretch;margin-bottom:28px}
+.quran-feature-video{min-height:100%;border:1px solid rgba(255,255,255,.12)}
+.quran-info-card{background:#fff;color:var(--ink);border-radius:20px;padding:30px;box-shadow:0 22px 55px rgba(0,0,0,.22);border-top:5px solid var(--gold)}
+.feature-label,.mini-label{display:inline-block;background:#f8ecd0;color:#76500f;border-radius:999px;padding:5px 11px;font-size:12px;font-weight:900}
+.quran-info-card h3{font-size:27px;color:var(--green);margin:12px 0 8px}.quran-info-card p{color:var(--muted);margin:0 0 17px}
+.quran-credentials{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:19px}.quran-credentials span{border:1px solid #d9e3df;border-radius:999px;padding:5px 9px;color:var(--green);font-size:12px;font-weight:700}
+.quran-watch{display:inline-block;color:#8a6018;font-weight:900}
+.quran-video-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px}
+.quran-video-card{background:#fff;color:var(--ink);border-radius:19px;overflow:hidden;box-shadow:0 18px 42px rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.15)}
+.quran-video-card.recitation-highlight{box-shadow:0 0 0 2px var(--gold),0 18px 42px rgba(0,0,0,.22)}
+.quran-card-body{padding:20px}.quran-card-body h3{color:var(--green);font-size:21px;margin:9px 0 5px}.quran-card-body p{color:var(--muted);margin:0}
+.students-recitation{margin-top:34px;padding-top:27px;border-top:1px solid rgba(255,255,255,.18)}
+.students-title h3{font-size:25px;color:var(--gold2);margin:0 0 3px}.students-title p{color:#d3dfdb;margin:0 0 20px}
+.student-video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.student-video{position:relative;background:#fff;border-radius:16px;overflow:hidden;color:var(--green);box-shadow:0 14px 34px rgba(0,0,0,.18);transition:.22s}.student-video:hover{transform:translateY(-5px)}
+.student-video img{width:100%;aspect-ratio:16/9;object-fit:cover}.student-video b{display:block;padding:13px 15px;font-size:15px}.play-mark{position:absolute;inset-inline-start:50%;top:40%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:rgba(3,39,30,.9);color:var(--gold2);display:grid;place-items:center;padding-inline-start:3px}
+@media(max-width:920px){.quran-heading{align-items:flex-start;flex-direction:column}.quran-feature{grid-template-columns:1fr}.quran-video-grid{grid-template-columns:1fr}.student-video-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){section{padding:58px 0}.title{font-size:32px}.quran-section{padding:60px 0}.quran-info-card{padding:22px}.student-video-grid{grid-template-columns:1fr}.quran-all{width:100%}.quran-info-card h3{font-size:23px}}
+
+/* Portfolio guide: cards now lead to distinct, relevant sections */
+#portfolio .pitem{position:relative}
+#portfolio .pitem:after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none}
+#portfolio .pitem:hover:after{box-shadow:inset 0 0 0 2px rgba(189,134,38,.34)}
+
+/* Accessible executive navigation and mobile menu */
+.nav-profile,.nav-actions{display:flex;align-items:center;gap:10px}
+.nav-avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);background:#fff}
+.nav-cv{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:8px 14px;border-radius:10px;background:var(--gold);color:var(--green);font-weight:900;font-size:13px;white-space:nowrap}
+.menu-toggle{display:none;width:43px;height:40px;border:1px solid rgba(217,174,84,.65);border-radius:9px;background:transparent;padding:8px;cursor:pointer}
+.menu-toggle span{display:block;height:2px;background:var(--gold2);margin:5px 0;border-radius:5px;transition:.2s}
+.mobile-menu{display:none;background:#062d23;border-top:1px solid rgba(217,174,84,.22);box-shadow:0 16px 30px rgba(0,0,0,.18)}
+.mobile-menu.open{display:block}
+.mobile-menu-inner{width:min(1160px,92%);margin:auto;padding:12px 0 18px}
+.mobile-menu-inner a{display:block;color:#fff;padding:12px 8px;border-bottom:1px solid rgba(255,255,255,.09);font-weight:700}
+.mobile-menu-inner a:hover{color:var(--gold2);padding-inline-start:14px}
+body.menu-open{overflow:hidden}
+/* Typography/readability */
+body{font-size:17px}
+p,.subtitle,.section-lead,.hero-copy,.pitem small{line-height:1.9}
+.links{gap:15px;font-size:13px}
+@media(max-width:1050px){.links{display:none}.menu-toggle{display:block}.nav-inner{min-height:64px}.nav-profile .brand{font-size:14px}.nav-cv{font-size:12px;padding:7px 10px}}
+@media(max-width:620px){
+ .container{width:min(94%,1160px)}
+ .nav-inner{gap:8px;min-height:62px}
+ .nav-avatar{width:38px;height:38px}
+ .nav-profile .brand{display:none}
+ .nav-actions{gap:7px}
+ .nav-cv{font-size:11px;min-height:38px;padding:7px 9px}
+ .lang{padding:6px 8px;font-size:12px}
+ .menu-toggle{width:40px;height:38px}
+ body{font-size:16px}
+ .pitem small,.recognition-list small,.testimonial-quotes small,.stat span{font-size:15px}
 }
-.hero-copy{
-  position:absolute;
-  inset-inline-end:8%;
-  bottom:25px;
-  width:min(560px,52%);
-  text-align:center;
-  padding:0 10px;
-}
-.hero-copy p{font-size:20px!important;line-height:1.55!important;margin:0 0 6px!important;color:#244940!important;font-weight:700}
-.hero-copy .motto{font-size:15px!important}
-.hero-actions{margin-top:13px!important}
-.hero-outline{background:rgba(255,255,255,.88)!important}
 
-/* You ask section */
-.ask-rasheed{
-  margin:18px 20px 5px;
-  padding:21px 22px;
-  border-radius:19px;
+
+/* Final hero contrast and navigation repair */
+.nav-inner{display:flex!important}
+.links{display:flex}
+.hero-content .kicker{
+  color:#8a5a08;
+  font-size:clamp(22px,2.2vw,29px);
+  font-weight:900;
+  letter-spacing:0;
+  margin-bottom:4px;
+  text-shadow:none;
+}
+.hero-content .role{
+  color:#083c2f;
+  font-size:clamp(22px,2.5vw,31px);
+  font-weight:800;
+  line-height:1.6;
+  margin:2px 0 12px;
+}
+.hero-content .availability{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  width:auto;
+  max-width:100%;
+  background:#07513d;
   color:#fff;
-  background:
-    radial-gradient(circle at 10% 10%,rgba(212,163,61,.20),transparent 25%),
-    linear-gradient(135deg,#073d32,#0a5747);
-  box-shadow:0 15px 34px rgba(7,61,50,.18);
+  border:2px solid #d8ae52;
+  border-radius:999px;
+  padding:9px 16px;
+  margin:4px 0 15px;
+  font-size:15px;
+  font-weight:900;
+  box-shadow:0 8px 22px rgba(4,61,46,.16);
 }
-.ask-head{display:flex;align-items:center;gap:14px}
-.ask-mark{width:54px;height:54px;display:grid;place-items:center;border-radius:16px;background:var(--gold);color:var(--green);font-size:33px;font-weight:900;flex:0 0 auto}
-.ask-head h2{font-size:26px;margin:0 0 5px}.ask-head p{margin:0;color:#dcece6}
-.ask-form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;margin-top:17px}
-.ask-form input{min-width:0;height:49px;border-radius:13px;border:1px solid rgba(255,255,255,.45);padding:0 16px;font:inherit;outline:none}
-.ask-form input:focus{box-shadow:0 0 0 3px rgba(212,163,61,.25);border-color:var(--gold)}
-.ask-samples{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.ask-samples button{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.09);color:#fff;border-radius:999px;padding:8px 12px;cursor:pointer;font:inherit;font-size:12px}
-.ask-samples button:hover{background:rgba(255,255,255,.18)}
-.ask-notice{display:none;margin:13px 0 0;color:#f8dfa7;font-weight:700}.ask-notice.show{display:block}
-
-/* Founder card tailored to the academy */
-.founder-tour-button{border:0;cursor:pointer;font:inherit;margin-top:2px}
-.founder-site-link{display:inline-flex;margin-top:10px;color:var(--green);font-weight:900;text-decoration:underline;text-underline-offset:4px}
-.sidebar-academy img{display:none!important}
-.sidebar-academy{position:relative;padding-top:15px!important}
-.sidebar-academy:before{content:"❝";display:block;color:var(--gold);font-size:32px;line-height:1;margin-bottom:3px}
-
-/* Founder 9-card academy tour */
-.academy-tour-modal{position:fixed;inset:0;z-index:300;display:none;place-items:center;padding:16px;background:rgba(2,24,18,.86);backdrop-filter:blur(8px)}
-.academy-tour-modal.open{display:grid}
-.academy-tour-panel{position:relative;width:min(820px,96vw);max-height:92vh;overflow:auto;background:#fffdf8;border:1px solid rgba(212,163,61,.55);border-radius:26px;padding:28px 32px;box-shadow:0 30px 100px rgba(0,0,0,.42)}
-.academy-tour-close{position:absolute;top:13px;inset-inline-end:14px;width:42px;height:42px;border:0;border-radius:50%;background:#edf3f0;color:var(--green);font-size:27px;cursor:pointer}
-.academy-tour-top{display:flex;gap:17px;align-items:center;padding-inline-end:48px;padding-bottom:17px;border-bottom:1px solid rgba(7,61,50,.12)}
-.academy-tour-top img{width:78px;height:78px;border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 0 0 3px var(--gold)}
-.academy-tour-kicker{color:#94650e;font-weight:900;font-size:13px}
-.academy-tour-top h2{margin:5px 0 0;color:var(--green);font-size:32px}
-.academy-tour-body{min-height:300px;margin:20px 0 17px;padding:25px 27px;border:1px solid rgba(7,61,50,.14);border-radius:19px;background:linear-gradient(145deg,#fff,#fbfcfa);font-size:18px;line-height:1.85}
-.academy-tour-body ul{display:grid;gap:9px;margin:0;padding-inline-start:23px}.academy-tour-body li::marker{color:var(--gold)}
-.academy-tour-progress{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;color:#66766f;font-size:13px;font-weight:900}
-.academy-tour-progress>div{height:8px;border-radius:999px;background:#e4ece8;overflow:hidden}.academy-tour-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#a97819,var(--gold));transition:.25s}
-.academy-tour-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:20px}
-.academy-tour-actions>div{display:flex;gap:9px}
-.academy-tour-actions button{min-width:108px;border:1px solid var(--green);border-radius:11px;padding:10px 16px;background:#fff;color:var(--green);font:inherit;font-weight:900;cursor:pointer}
-.academy-tour-next{background:var(--green)!important;color:#fff!important}.academy-tour-exit{border:0!important;text-decoration:underline;background:transparent!important;min-width:auto!important;color:#66766f!important}
-body.tour-open{overflow:hidden}
-
-/* keep page composition tight */
-.content-section{scroll-margin-top:76px}
-@media(max-width:900px){
- .hero-merged{min-height:420px;background-position:31% center}
- .hero-copy{width:64%;inset-inline-end:2%;bottom:19px}
- .hero-copy p{font-size:17px!important}
+.hero-content .availability:before{
+  content:"";
+  width:10px;height:10px;border-radius:50%;background:#7cf2a5;
+  box-shadow:0 0 0 4px rgba(124,242,165,.16);
+  flex:0 0 auto;
 }
-@media(max-width:650px){
- .hero-merged{min-height:470px;background-position:24% center}
- .hero-copy{width:100%;inset-inline:0;bottom:14px;padding:14px;background:linear-gradient(0deg,rgba(255,252,246,.96),rgba(255,252,246,.78),transparent)}
- .hero-copy p{font-size:15px!important}
- .ask-rasheed{margin:12px 10px 2px;padding:17px 14px}
- .ask-head h2{font-size:20px}.ask-mark{width:45px;height:45px}
- .ask-form{grid-template-columns:1fr}.ask-form .btn{width:100%}
- .academy-tour-panel{padding:22px 15px}.academy-tour-top h2{font-size:24px}.academy-tour-body{min-height:0;font-size:16px;padding:19px 16px}
- .academy-tour-actions{align-items:stretch;flex-direction:column}.academy-tour-actions>div{width:100%}.academy-tour-actions button{flex:1}
+.evidence-panel{scroll-margin-top:88px}
+.evidence-panel h3{font-size:32px;color:var(--green);margin-bottom:8px}
+@media(max-width:1050px){.links{display:none}.menu-toggle{display:block}}
+@media(min-width:1051px){.mobile-menu{display:none!important}.menu-toggle{display:none}.links{display:flex}}
+@media(max-width:620px){
+  .hero-content .kicker{font-size:23px;color:#79500a}
+  .hero-content .role{font-size:22px;line-height:1.65;color:#043d2e}
+  .hero-content .availability{font-size:14px;padding:9px 13px;justify-content:center}
 }
+
+/* Portfolio v2 enhancements */
+.book-meta{display:flex;gap:10px;align-items:center;margin:13px 0;color:#8c691f;font-weight:800;font-size:13px}
+.book-preview-btn{width:100%;border:0;border-radius:10px;padding:11px 15px;background:var(--green);color:var(--gold);font:inherit;font-weight:900;cursor:pointer;transition:.2s}.book-preview-btn:hover{transform:translateY(-2px);background:var(--green2)}
+.contact-layout{display:grid;grid-template-columns:1.45fr .55fr;gap:24px;max-width:980px;margin:0 auto;text-align:start}.whatsapp-form{background:#fff;color:var(--ink);padding:28px;border-radius:22px;box-shadow:var(--shadow)}.whatsapp-form label{display:block;font-weight:800;margin-bottom:16px}.whatsapp-form input,.whatsapp-form textarea{width:100%;margin-top:7px;border:1px solid #d8e0dc;border-radius:11px;padding:12px 14px;font:inherit;outline:none}.whatsapp-form input:focus,.whatsapp-form textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,174,84,.18)}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.whatsapp-submit{width:100%;border:0;border-radius:11px;padding:13px;background:#25D366;color:#073b24;font:inherit;font-weight:900;cursor:pointer}.direct-whatsapp{text-align:center;margin:14px 0 0;font-size:14px}.direct-whatsapp a{color:#137f43;font-weight:900}.contact-side{display:grid;gap:14px}.contact-mini{background:rgba(255,255,255,.07);border:1px solid rgba(217,174,84,.35);border-radius:17px;padding:22px;display:flex;flex-direction:column;justify-content:center;min-height:115px;text-align:center}.contact-mini strong{color:var(--gold);font-size:17px}.contact-mini span{color:#e0ebe7;overflow-wrap:anywhere}
+.book-modal{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;place-items:center;padding:18px;z-index:100}.book-modal.open{display:grid}.book-modal-panel{position:relative;width:min(900px,96vw);height:min(90vh,900px);background:#f7f2e7;border-radius:20px;padding:22px;display:flex;flex-direction:column;box-shadow:0 30px 90px rgba(0,0,0,.45)}.book-modal-panel h3{text-align:center;color:var(--green);margin:0 38px 14px}.modal-close{position:absolute;top:10px;inset-inline-end:14px;border:0;background:transparent;color:var(--green);font-size:34px;cursor:pointer}.flipbook-stage{position:relative;flex:1;min-height:0;display:grid;place-items:center;perspective:1400px;overflow:auto;background:#ded8cc;border-radius:14px;padding:16px}.flipbook-stage canvas{max-width:100%;max-height:100%;background:#fff;box-shadow:0 15px 35px rgba(0,0,0,.25);transform-origin:center;transition:transform .28s,opacity .28s}.flipbook-stage canvas.turning{transform:rotateY(-14deg) scale(.98);opacity:.45}.page-loading{position:absolute;color:var(--muted)}.book-controls{display:flex;align-items:center;justify-content:center;gap:18px;padding-top:15px}.book-controls button{border:1px solid var(--green);background:#fff;color:var(--green);border-radius:9px;padding:8px 18px;font:inherit;font-weight:800;cursor:pointer}.book-controls button:disabled{opacity:.4;cursor:not-allowed}.back-to-top{position:fixed;bottom:22px;inset-inline-end:22px;width:46px;height:46px;border-radius:50%;border:0;background:var(--gold);color:var(--green);font-size:24px;font-weight:900;box-shadow:var(--shadow);cursor:pointer;display:none;z-index:40}.back-to-top.show{display:block}
+@media(min-width:1051px){body:not(.english) .links.ar{display:none!important}body:not(.english) .menu-toggle{display:flex!important}}
+@media(max-width:800px){.contact-layout{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.book-modal-panel{height:92vh;padding:16px}.book-controls{gap:8px}.book-controls button{padding:8px 12px}}
+
+/* Readability and desktop Arabic navigation refinement */
+.container{width:min(1420px,94%)}
+body{font-size:18px;line-height:1.9}
+.subtitle,.section-lead,.hero-copy,.book-body p,.reference p,.titem p,.why-card p{font-size:18px;line-height:2}
+.title{font-size:clamp(38px,3.4vw,52px)}
+section{padding:88px 0}
+.career-logo{width:132px;height:96px;padding:8px;border-radius:16px}
+.university-logo{width:145px}
+.career-head{gap:22px}
+.career-head h3{font-size:25px}
+.nav{position:sticky}
+.nav-inner{position:relative}
+.menu-toggle{align-items:center;justify-content:center;gap:8px;width:auto;min-width:105px;height:43px;padding:7px 12px;color:var(--gold2)}
+.menu-toggle b{font-size:13px}
+.menu-icon{width:23px;display:block}
+.menu-icon i{display:block;height:2px;background:var(--gold2);margin:4px 0;border-radius:5px}
+.menu-toggle>span:not(.menu-icon){display:none}
+@media(min-width:1051px){
+ body:not(.english) .links.ar{display:none!important}
+ body:not(.english) .menu-toggle{display:flex!important}
+ body:not(.english) .mobile-menu{position:absolute;top:100%;left:0;right:0;background:rgba(6,45,35,.99);border-top:1px solid rgba(217,174,84,.35)}
+ body:not(.english) .mobile-menu-inner.ar{width:min(520px,92%);margin-inline-end:3%;margin-inline-start:auto;padding:10px 18px 18px;border:1px solid rgba(217,174,84,.25);border-top:0;border-radius:0 0 16px 16px;box-shadow:0 18px 40px rgba(0,0,0,.25)}
+ body.english .links.en{display:flex!important}
+ body.english .menu-toggle{display:none!important}
+}
+.book-modal{padding:10px}
+.book-modal-panel{width:min(1500px,98vw);height:96vh;padding:18px 20px 14px}
+.book-modal-panel h3{font-size:clamp(20px,2vw,30px);margin-bottom:6px}
+.flipbook-toolbar{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px}
+.flipbook-toolbar button{width:40px;height:34px;border:1px solid var(--green);background:#fff;color:var(--green);border-radius:8px;font-weight:900;cursor:pointer}
+.flipbook-toolbar span{min-width:58px;text-align:center;font-weight:800;color:var(--green)}
+.flipbook-stage{padding:18px;overflow:auto;background:#cfc8ba}
+.page-spread{display:flex;align-items:center;justify-content:center;gap:14px;min-width:min-content;min-height:min-content;transition:transform .22s,opacity .22s}
+.page-spread.turning{transform:scale(.985);opacity:.65}
+.page-spread canvas{max-width:none;max-height:none;background:#fff;box-shadow:0 12px 30px rgba(0,0,0,.28);image-rendering:auto}
+.book-controls{padding-top:10px}
+.book-controls button{font-size:17px;padding:9px 24px}
+#pageIndicator{font-size:17px;font-weight:900;min-width:120px;text-align:center}
+@media(max-width:899px){
+ .container{width:94%}
+ body{font-size:16px}
+ .subtitle,.section-lead,.hero-copy,.book-body p,.reference p,.titem p,.why-card p{font-size:16px}
+ section{padding:62px 0}
+ .career-logo{width:98px;height:78px}.university-logo{width:112px}
+ .book-modal-panel{width:98vw;height:94vh;padding:14px 10px 10px}
+ .flipbook-stage{padding:10px}
+ .page-spread{gap:0}
+ .book-controls button{font-size:14px;padding:8px 13px}
+}
+
+
+/* v2.3 — verified repair overrides */
+.nav{overflow:visible}
+.nav-inner{overflow:visible}
+.mobile-menu{z-index:60}
+
+/* Keep the PDF renderer independent from the Arabic page direction. */
+.book-modal,.book-modal-panel,.flipbook-stage,.page-spread{direction:ltr!important}
+.book-modal-panel h3,.book-controls,.flipbook-toolbar{direction:rtl}
+body.english .book-modal-panel h3,
+body.english .book-controls,
+body.english .flipbook-toolbar{direction:ltr}
+.page-spread canvas{direction:ltr!important;unicode-bidi:isolate;transform:none!important;filter:none!important}
+
+/* A compact one-screen contact section on desktop. */
+@media(min-width:900px){
+  .contact{padding:48px 0 42px;min-height:auto}
+  .contact .title{font-size:clamp(34px,3vw,44px);margin-bottom:4px}
+  .contact-intro{margin:0 auto 18px;font-size:16px;line-height:1.7}
+  .contact-layout{grid-template-columns:minmax(0,1.55fr) minmax(250px,.45fr);gap:18px;max-width:1120px;align-items:stretch}
+  .whatsapp-form{padding:20px 22px;border-radius:18px}
+  .whatsapp-form label{margin-bottom:10px;font-size:15px;line-height:1.45}
+  .whatsapp-form input,.whatsapp-form textarea{margin-top:4px;padding:9px 12px;line-height:1.45}
+  .whatsapp-form textarea{height:92px;min-height:92px;resize:vertical}
+  .form-grid{gap:12px}
+  .whatsapp-submit{padding:10px 14px}
+  .direct-whatsapp{margin-top:8px;font-size:13px;line-height:1.5}
+  .contact-side{gap:10px}
+  .contact-mini{min-height:0;padding:15px 14px;border-radius:14px}
+  .contact-mini strong{font-size:15px}
+  .contact-mini span{font-size:13px;line-height:1.55}
+}
+
+/* Restore the small square menu button on phones. */
+@media(max-width:620px){
+  .menu-toggle{
+    display:flex!important;
+    width:38px!important;
+    min-width:38px!important;
+    height:36px!important;
+    padding:6px!important;
+    border-radius:8px!important;
+    gap:0!important;
+  }
+  .menu-toggle b{display:none!important}
+  .menu-icon{width:20px!important}
+  .menu-icon i{height:2px!important;margin:4px 0!important}
+  .mobile-menu{position:absolute;top:100%;left:0;right:0;max-height:calc(100vh - 58px);overflow:auto}
+  .mobile-menu-inner{width:94%;padding:8px 0 13px}
+  .mobile-menu-inner a{padding:10px 8px;font-size:14px}
+  body.menu-open{overflow:hidden}
+  .contact{padding:52px 0}
+  .whatsapp-form{padding:20px 16px}
+  .whatsapp-form textarea{min-height:110px}
+}
+
+
+/* v2.5 Stable — final homepage, menu, statistics, and contact refinements */
+#contact{scroll-margin-top:96px}
+
+@media(min-width:900px){
+  .hero{padding:30px 0 58px}
+  .hero-grid{grid-template-columns:.80fr 1.20fr;gap:42px;align-items:center}
+  .portrait-wrap{width:min(350px,100%);transform:translateY(-8px)}
+  .hero-content .kicker{margin-bottom:0;font-size:clamp(20px,2vw,27px)}
+  .hero-content h1{
+    font-family:"Noto Kufi Arabic","Cairo",Tahoma,Arial,sans-serif;
+    font-size:clamp(40px,4.5vw,56px);
+    line-height:1.28;
+    margin:2px 0 2px;
+    white-space:nowrap;
+  }
+  body.english .hero-content h1{font-family:"Inter","Cairo",Arial,sans-serif;line-height:1.08}
+  .hero-content .role{margin:0 0 6px;font-size:clamp(20px,2.2vw,28px);line-height:1.45}
+  .tagline{margin:0 0 5px;font-size:19px}
+  .hero-content .availability{margin:2px 0 8px;padding:7px 14px;font-size:14px}
+  .hero-copy{margin:3px 0 0;font-size:16px!important;line-height:1.75!important}
+  .actions{margin-top:15px}
+  .btn{padding:10px 18px}
+
+  .stats{margin-top:-46px}
+  .stats-grid{border-color:#d8dfdb;box-shadow:0 16px 42px rgba(6,45,35,.16)}
+  .stat{padding:16px 10px;background:#fff}
+  .stat strong{font-size:29px;line-height:1.15;color:#07513d}
+  .stat span{font-size:15px;line-height:1.55;color:#445f55;font-weight:800}
+}
+
+@media(min-width:1051px){
+  body:not(.english) .mobile-menu.open{
+    display:block!important;
+  }
+  body:not(.english) .mobile-menu{
+    position:absolute!important;
+    top:calc(100% + 8px)!important;
+    left:18px!important;
+    right:auto!important;
+    width:min(430px,calc(100vw - 36px))!important;
+    max-height:calc(100vh - 95px);
+    overflow:auto;
+    border:1px solid rgba(217,174,84,.35)!important;
+    border-radius:14px!important;
+    background:rgba(6,45,35,.99)!important;
+    box-shadow:0 18px 44px rgba(0,0,0,.28)!important;
+  }
+  body:not(.english) .mobile-menu-inner.ar{
+    width:100%!important;
+    margin:0!important;
+    padding:8px 16px 14px!important;
+    border:0!important;
+    border-radius:14px!important;
+    box-shadow:none!important;
+  }
+  body:not(.english).menu-open{overflow:auto!important}
+}
+
+@media(max-width:899px){
+  #contact{scroll-margin-top:82px}
+  .hero-content h1{
+    font-family:"Noto Kufi Arabic","Cairo",Tahoma,Arial,sans-serif;
+    line-height:1.35;
+  }
+  body.english .hero-content h1{font-family:"Inter","Cairo",Arial,sans-serif;line-height:1.12}
+}
+
+
+/* Quality & Productivity section and navigation dropdown */
+.nav-dropdown{position:relative;display:flex;align-items:center}
+.nav-dropdown>a{display:flex;align-items:center;gap:5px;cursor:pointer}
+.nav-dropdown>a::after{content:"⌄";font-size:11px;color:var(--gold2)}
+.dropdown-menu{position:absolute;top:calc(100% + 16px);right:0;min-width:230px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;box-shadow:var(--shadow);opacity:0;visibility:hidden;transform:translateY(-8px);transition:.2s;z-index:50}
+body.english .dropdown-menu{left:auto;right:0}
+.nav-dropdown:hover .dropdown-menu,.nav-dropdown:focus-within .dropdown-menu{opacity:1;visibility:visible;transform:translateY(0)}
+.dropdown-menu a{display:block!important;color:var(--green)!important;padding:10px 12px;border-radius:9px;white-space:nowrap}
+.dropdown-menu a:hover{background:var(--cream);color:#8c691f!important}
+.quality-section{background:#fff}
+.quality-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:30px}
+.quality-intro{max-width:790px}
+.quality-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.quality-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:var(--shadow);position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:235px;transition:.22s}
+.quality-card:before{content:"";position:absolute;top:0;right:0;width:82px;height:5px;background:var(--gold)}
+body.english .quality-card:before{right:auto;left:0}
+.quality-card:hover{transform:translateY(-5px);border-color:var(--gold)}
+.quality-icon{width:54px;height:54px;border-radius:15px;background:var(--green);color:var(--gold);display:grid;place-items:center;font-size:24px;margin-bottom:15px}
+.quality-card h3{margin:0 0 8px;color:var(--green);font-size:20px;line-height:1.5}
+.quality-card p{margin:0 0 18px;color:var(--muted);font-size:14px;flex:1}
+.quality-link{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 15px;border-radius:10px;background:var(--green);color:#fff;font-weight:800;align-self:flex-start}
+.quality-link:hover{background:var(--green2);color:var(--gold2)}
+#quality{scroll-margin-top:86px}
+@media(max-width:920px){.quality-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.quality-grid{grid-template-columns:1fr}.quality-head{align-items:flex-start;flex-direction:column}.quality-card{min-height:auto}}
+
+
+/* Unified bilingual dropdown navigation and 17 professional evidence cards */
+@media(min-width:1051px){
+  .links.ar,.links.en{display:none!important}
+  .menu-toggle{display:flex!important}
+  .mobile-menu{position:absolute;top:100%;left:0;right:0;background:rgba(6,45,35,.99);border-top:1px solid rgba(217,174,84,.35)}
+  .mobile-menu-inner{width:min(520px,92%);padding:10px 18px 18px;border:1px solid rgba(217,174,84,.25);border-top:0;border-radius:0 0 16px 16px;box-shadow:0 18px 40px rgba(0,0,0,.25)}
+  body:not(.english) .mobile-menu-inner.ar{margin-inline-start:auto;margin-inline-end:3%}
+  body.english .mobile-menu-inner.en{margin-inline-start:3%;margin-inline-end:auto}
+}
+.quality-link.en,.evidence-action.en{display:none!important}
+body.english .quality-link.ar,body.english .evidence-action.ar{display:none!important}
+body.english .quality-link.en,body.english .evidence-action.en{display:inline-flex!important}
+.evidence-panel{scroll-margin-top:86px}
+.evidence-panel .evidence-links{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px}
+.evidence-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow);position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:250px;transition:.22s}
+.evidence-card:before{content:"";position:absolute;top:0;right:0;width:82px;height:5px;background:var(--gold)}
+body.english .evidence-card:before{right:auto;left:0}
+.evidence-card:hover{transform:translateY(-5px);border-color:var(--gold)}
+.evidence-icon{width:52px;height:52px;border-radius:15px;background:var(--green);color:var(--gold);display:grid;place-items:center;font-size:23px;margin-bottom:14px}
+.evidence-card h4{margin:0 0 8px;color:var(--green);font-size:18px;line-height:1.5}
+.evidence-card p{margin:0 0 18px;color:var(--muted);font-size:14px;line-height:1.8;flex:1}
+.evidence-action{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 15px;border-radius:10px;background:var(--green);color:#fff;font-weight:800;align-self:flex-start}
+.evidence-action:hover{background:var(--green2);color:var(--gold2)}
+@media(max-width:920px){.evidence-panel .evidence-links{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.evidence-panel .evidence-links{grid-template-columns:1fr}.evidence-card{min-height:auto}}
+
+/* v2.6 — guaranteed bilingual dropdown menu */
+.links.ar,.links.en{display:none!important}
+.menu-toggle{display:flex!important;align-items:center;justify-content:center;gap:8px}
+.mobile-menu-inner.ar,.mobile-menu-inner.en{display:none!important}
+body:not(.english) .mobile-menu-inner.ar{display:block!important}
+body.english .mobile-menu-inner.en{display:block!important}
+body.english .menu-toggle{display:flex!important}
+body:not(.english) .menu-toggle{display:flex!important}
+@media(min-width:1051px){
+  .links.ar,.links.en{display:none!important}
+  .menu-toggle{display:flex!important}
+  .mobile-menu{position:absolute;top:100%;left:0;right:0;z-index:80;background:rgba(6,45,35,.99);border-top:1px solid rgba(217,174,84,.35)}
+  .mobile-menu-inner{width:min(520px,92%);padding:10px 18px 18px;border:1px solid rgba(217,174,84,.25);border-top:0;border-radius:0 0 16px 16px;box-shadow:0 18px 40px rgba(0,0,0,.25)}
+  body:not(.english) .mobile-menu-inner.ar{margin-left:auto;margin-right:3%}
+  body.english .mobile-menu-inner.en{margin-right:auto;margin-left:3%}
+}
+
+
+/* Final bilingual navigation, spacing, contact theme, and Tajweed series */
+.links{display:none!important}
+.menu-toggle{display:inline-flex!important;align-items:center;gap:9px}
+.mobile-menu{top:100%;left:0;right:0;max-height:calc(100vh - 70px);overflow:auto}
+@media(min-width:1051px){
+ .mobile-menu{position:absolute;top:66px;right:auto;left:24px;width:min(390px,calc(100vw - 48px));border:1px solid rgba(217,174,84,.32);border-radius:0 0 16px 16px;box-shadow:0 20px 45px rgba(0,0,0,.22)}
+ body.english .mobile-menu{left:24px;right:auto}
+ .mobile-menu-inner{grid-template-columns:1fr 1fr;padding:14px}
+ .mobile-menu-inner a{border:1px solid rgba(217,174,84,.18);border-radius:9px;margin:4px;padding:10px 12px}
+}
+section{scroll-margin-top:82px}
+.quality-section{padding-top:64px;padding-bottom:72px}
+.quality-head{margin-bottom:24px}
+.quality-grid{gap:16px}
+.quality-card{min-height:220px;padding:22px}
+.whatsapp-form{background:rgba(255,255,255,.065)!important;color:#fff!important;border:1px solid rgba(217,174,84,.28);box-shadow:0 18px 45px rgba(0,0,0,.18)}
+.whatsapp-form input,.whatsapp-form textarea{background:rgba(255,255,255,.08)!important;color:#fff!important;border-color:rgba(255,255,255,.18)!important}
+.whatsapp-form input:focus,.whatsapp-form textarea:focus{background:rgba(255,255,255,.12)!important;border-color:var(--gold)!important}
+.whatsapp-form input::placeholder,.whatsapp-form textarea::placeholder{color:#c7d4cf}
+.direct-whatsapp{color:#dce8e3}.direct-whatsapp a{color:#62e591}
+.tajweed-series{align-items:stretch}
+.tajweed-volume .book-image{aspect-ratio:3/4.25;background:#062d23;overflow:hidden}
+.tajweed-volume .book-image img{width:100%;height:100%;object-fit:cover;display:block}
+.tajweed-volume .book-body{display:flex;flex-direction:column}
+.tajweed-volume .badge{align-self:flex-start;margin-top:auto}
+.tajweed-preview-wrap{display:flex;justify-content:center;margin-top:24px}
+.tajweed-preview{min-width:min(360px,100%)}
+@media(max-width:620px){.quality-section{padding-top:42px}.tajweed-preview-wrap{margin-top:18px}}
+
+
+/* v2.7 — compact, unified bilingual header */
+.nav{position:sticky;top:0;z-index:100;background:rgba(6,45,35,.985);border-bottom:1px solid rgba(217,174,84,.26);box-shadow:0 5px 18px rgba(3,22,16,.12)}
+.nav .nav-inner{min-height:54px;height:54px;display:flex!important;align-items:center;justify-content:space-between;gap:14px;overflow:visible;padding-block:4px}
+.nav-profile,.nav-actions{display:flex;align-items:center;gap:9px;min-width:0}
+.nav-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1.5px solid var(--gold);flex:0 0 auto}
+.nav .brand{font-size:15px;line-height:1.2;white-space:nowrap}
+.nav-actions{margin-inline-start:auto}
+.nav-cv{min-height:34px;padding:6px 11px;border-radius:8px;font-size:12px;line-height:1;white-space:nowrap}
+.lang{min-height:34px;padding:5px 9px;border-radius:8px;font-size:12px;line-height:1}
+.menu-toggle{display:inline-flex!important;align-items:center;justify-content:center;gap:7px;width:auto;min-width:86px;height:34px;min-height:34px;padding:5px 9px;border-radius:8px}
+.menu-toggle b{font-size:12px;line-height:1;white-space:nowrap}
+.menu-icon{width:18px;flex:0 0 18px}
+.menu-icon i{height:2px;margin:3px 0}
+.mobile-menu{display:none;position:absolute;top:100%;z-index:110;width:min(390px,calc(100vw - 32px));max-height:calc(100vh - 62px);overflow:auto;background:rgba(6,45,35,.995);border:1px solid rgba(217,174,84,.32);border-top:0;border-radius:0 0 14px 14px;box-shadow:0 18px 42px rgba(0,0,0,.25)}
+.mobile-menu.open{display:block!important}
+html[dir="rtl"] .mobile-menu{left:16px;right:auto}
+html[dir="ltr"] .mobile-menu{left:16px;right:auto}
+.mobile-menu-inner{width:100%!important;margin:0!important;padding:10px!important;grid-template-columns:1fr 1fr;gap:6px}
+.mobile-menu.open .mobile-menu-inner.ar,.mobile-menu.open .mobile-menu-inner.en{display:none!important}
+body:not(.english) .mobile-menu.open .mobile-menu-inner.ar{display:grid!important}
+body.english .mobile-menu.open .mobile-menu-inner.en{display:grid!important}
+.mobile-menu-inner a{display:flex!important;align-items:center;min-height:42px;padding:8px 10px!important;margin:0!important;border:1px solid rgba(217,174,84,.16)!important;border-radius:8px;color:#fff;font-size:13px;font-weight:700;line-height:1.35}
+.mobile-menu-inner a:hover,.mobile-menu-inner a:focus-visible{color:var(--gold2);background:rgba(255,255,255,.07);padding-inline-start:10px!important}
+body.english .nav-profile{order:0}
+body.english .nav-actions{order:1;margin-left:auto;margin-right:0}
+@media(max-width:720px){
+ .nav .nav-inner{width:94%;min-height:52px;height:52px;gap:7px;padding-block:3px}
+ .nav-avatar{width:34px;height:34px}
+ .nav .brand{font-size:13px}
+ .nav-profile,.nav-actions{gap:6px}
+ .nav-cv{min-height:32px;padding:5px 8px;font-size:10px}
+ .lang{min-height:32px;padding:4px 7px;font-size:10px}
+ .menu-toggle{min-width:34px!important;width:34px!important;height:32px!important;min-height:32px!important;padding:5px!important}
+ .menu-toggle b{display:none!important}
+ .menu-icon{width:18px!important}
+ .mobile-menu{top:100%!important;left:3%!important;right:3%!important;width:94%!important;max-height:calc(100vh - 58px)}
+ .mobile-menu-inner{grid-template-columns:1fr!important;padding:8px!important}
+ .mobile-menu-inner a{min-height:39px;font-size:13px;padding:7px 9px!important}
+}
+@media(max-width:430px){
+ .nav .brand{display:none}
+ .nav-cv{max-width:92px;overflow:hidden;text-overflow:ellipsis}
+}
+
+/* v6.5 — Rasheed Academy integration */
+.hero-portrait-column{display:flex;flex-direction:column;align-items:center;gap:18px;min-width:0}
+.academy-card{width:min(390px,100%);display:flex;align-items:center;gap:14px;padding:15px 17px;border-radius:17px;border:1.5px solid var(--gold);background:linear-gradient(135deg,var(--green),#0b4b3b);color:#fff;box-shadow:0 14px 34px rgba(6,45,35,.18);transition:transform .2s ease,box-shadow .2s ease;text-decoration:none}
+.academy-card:hover{transform:translateY(-3px);box-shadow:0 19px 42px rgba(6,45,35,.24)}
+.academy-card-mark{width:54px;height:54px;flex:0 0 54px;border-radius:14px;display:grid;place-items:center;border:1px solid rgba(217,174,84,.8);background:rgba(255,255,255,.06);color:var(--gold);font-size:27px;font-weight:900}
+.academy-card-copy{flex:1;min-width:0;text-align:right}
+body.english .academy-card-copy{text-align:left}
+.academy-card-title{display:block;font-size:21px;font-weight:900;line-height:1.35}
+.academy-card-subtitle{display:block;margin-top:2px;color:#d9e8e2;font-size:12px;line-height:1.55}
+.academy-card-arrow{flex:0 0 auto;color:var(--gold);font-size:26px;font-weight:900}
+body.english .academy-card-arrow{transform:rotate(180deg)}
+@media(max-width:900px){.hero-portrait-column{order:-1}.academy-card{width:min(390px,92vw)}}
+
+
+/* v6.6 — real Rasheed Academy logo inside the existing academy card */
+.academy-real-logo{
+  width:68px;
+  height:68px;
+  flex:0 0 68px;
+  object-fit:contain;
+  border-radius:14px;
+  background:#fff;
+  padding:5px;
+  border:1px solid rgba(217,174,84,.75);
+  box-shadow:0 6px 16px rgba(0,0,0,.12);
+}
+@media(max-width:720px){
+  .academy-real-logo{width:58px;height:58px;flex-basis:58px}
+}
+
+
+/* v6.7 — agreed additions below the portrait only */
+.academy-card-logo{
+  width:60px;height:60px;flex:0 0 60px;object-fit:contain;
+  border-radius:12px;background:#fff;padding:4px;
+  border:1px solid rgba(217,174,84,.8);
+}
+.publications-card{
+  width:min(350px,100%);
+  display:flex;align-items:center;gap:14px;
+  padding:12px 16px;border-radius:16px;
+  background:#fff;color:var(--green);
+  border:1.5px solid var(--gold);
+  box-shadow:0 10px 24px rgba(6,45,35,.12);
+  transition:.2s ease;
+}
+.publications-card:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(6,45,35,.17)}
+.publications-card-image{
+  width:62px;height:62px;flex:0 0 62px;object-fit:cover;
+  border-radius:11px;border:1px solid #e4d3a5;background:#fff;
+}
+@media(max-width:720px){
+  .academy-card-logo{width:52px;height:52px;flex-basis:52px}
+  .publications-card-image{width:54px;height:54px;flex-basis:54px}
+}
+
 </style>
-
+<link href="assets/favicon.png" rel="icon" type="image/png"/><meta content="سامي سليمان | الملف المهني" property="og:title"/><meta content="معلم تربية إسلامية، مدرب معلمين، مؤلف تربوي، ورئيس قسم سابق بخبرة تزيد على 20 عامًا." property="og:description"/><meta content="assets/portrait-only.jpg" property="og:image"/><meta content="website" property="og:type"/><meta content="سامي سليمان، معلم تربية إسلامية، مشرف تربوي، مدرب معلمين، مؤلف تربوي، تعليم القرآن، الإقراء، مدارس دولية، الرياض" name="keywords"/><meta content="Samy Suliman" name="author"/><meta content="index, follow, max-image-preview:large" name="robots"/><link href="https://samysuliman.github.io/portfolio/" rel="canonical"/><meta content="https://samysuliman.github.io/portfolio/" property="og:url"/><meta content="ar_SA" property="og:locale"/><meta content="summary_large_image" name="twitter:card"/>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#062d23">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="سامي سليمان">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/pwa.css">
+<link rel="stylesheet" href="assets/tour.css?v=4.5"/>
 </head>
 <body>
-<header class="topbar">
- <div class="container nav">
-  <a class="brand" href="index.html">
-   <img src="../assets/rasheed-academy-logo.png" alt="Rasheed Academy">
-   <span class="brand-copy"><strong data-ar>أكاديمية رشيد</strong><strong data-en>Rasheed Academy</strong><small data-ar>للقرآن الكريم والعلوم الشرعية</small><small data-en>Qur'an & Islamic Sciences</small></span>
-  </a>
-  <nav class="navlinks">
-   <a href="#quran"><span data-ar>مسارات القرآن</span><span data-en>Qur'an Paths</span></a>
-   <a href="#sciences"><span data-ar>العلوم الشرعية</span><span data-en>Islamic Sciences</span></a>
-   <a href="#publications"><span data-ar>المؤلفات</span><span data-en>Publications</span></a>
-   <a href="#founder"><span data-ar>المؤسس</span><span data-en>Founder</span></a>
-  </nav>
-  <div class="actions">
-   <div class="lang"><button id="enBtn">EN</button><button id="arBtn" class="active">AR</button></div>
-   <a class="btn btn-light" href="../index.html"><span data-ar>موقعي الشخصي</span><span data-en>My Portfolio</span></a>
-   <a class="btn btn-gold" href="login.html"><span data-ar>تسجيل الدخول</span><span data-en>Sign In</span></a>
-  </div>
- </div>
-</header>
-
-<div class="container page-shell">
- <main class="main-column">
-  
-  <section class="hero hero-v72" aria-label="أكاديمية رشيد">
-   <div class="hero-merged">
-    <div class="hero-copy">
-     <p><span data-ar>رحلة متكاملة في تعليم القرآن الكريم والعلوم الشرعية</span><span data-en>A complete journey in Qur’an and Islamic studies education</span></p>
-     <div class="motto"><span data-ar>تعلّم ميسّر • علم راسخ • أثر دائم</span><span data-en>Accessible Learning • Sound Knowledge • Lasting Impact</span></div>
-     <div class="hero-actions">
-      <a class="btn btn-gold" href="register.html"><span data-ar>ابدأ الآن</span><span data-en>Start Now</span></a>
-      <a class="btn hero-outline" href="#quran"><span data-ar>استكشف المسارات</span><span data-en>Explore Paths</span></a>
-     </div>
+<nav class="nav" aria-label="Primary navigation">
+  <div class="container nav-inner">
+    <div class="nav-profile">
+      <img alt="سامي سليمان" class="nav-avatar" src="assets/portrait-only.jpg"/>
+      <a class="brand" href="#top"><span class="ar">سامي سليمان</span><span class="en">Samy Suliman</span></a>
     </div>
-   </div>
-  </section>
-
-  <section id="quran" class="content-section">
-   <h2 class="section-title"><span data-ar>مسارات القرآن الكريم</span><span data-en>Qur'an Learning Paths</span></h2>
-   <div class="quran-grid">
-    <article class="quran-card"><div class="icon">أ</div><div><h3><span data-ar>التأسيس</span><span data-en>Foundations</span></h3><p class="block" data-ar>الحروف والمخارج والقاعدة العربية.</p><p class="block" data-en>Letters, articulation and Arabic reading foundations.</p></div><a href="register.html"><span data-ar>ابدأ الآن</span><span data-en>Start Now</span></a></article>
-    <article class="quran-card"><div class="icon">◫</div><div><h3><span data-ar>التلاوة والتجويد</span><span data-en>Recitation & Tajweed</span></h3><p class="block" data-ar>تلاوة القرآن وفهم معانيه وتطبيق أحكام التجويد.</p><p class="block" data-en>Recitation, understanding and practical Tajweed.</p></div><a href="register.html"><span data-ar>ابدأ الآن</span><span data-en>Start Now</span></a></article>
-    <article class="quran-card"><div class="icon">✦</div><div><h3><span data-ar>الحفظ والإتقان</span><span data-en>Memorization & Mastery</span></h3><p class="block" data-ar>حفظ متدرج ومراجعة مستمرة وإتقان.</p><p class="block" data-en>Progressive memorization, revision and mastery.</p></div><a href="register.html"><span data-ar>ابدأ الآن</span><span data-en>Start Now</span></a></article>
-    <article class="quran-card"><div class="icon">◇</div><div><h3><span data-ar>الإجازة والسند</span><span data-en>Ijazah & Sanad</span></h3><p class="block" data-ar>تأهيل للقراءة المضبوطة والاستعداد للإجازة.</p><p class="block" data-en>Preparation for accurate recitation and Ijazah.</p></div><a href="register.html"><span data-ar>ابدأ الآن</span><span data-en>Start Now</span></a></article>
-   </div>
-  </section>
-
-  <section id="sciences" class="content-section">
-   <h2 class="section-title"><span data-ar>العلوم الشرعية</span><span data-en>Islamic Sciences</span></h2>
-   <div class="books-grid">
-    <article class="book-card"><img class="book-cover" src="assets/images/v7/aqeedah-book.webp" alt="كتاب العقيدة"><h3><span data-ar>العقيدة</span><span data-en>Aqeedah</span></h3><p class="block" data-ar>تعلم أصول الإيمان وأركان العقيدة الإسلامية.</p><p class="block" data-en>Foundations of faith and Islamic creed.</p><a href="register.html"><span data-ar>استكشف</span><span data-en>Explore</span></a></article>
-    <article class="book-card"><img class="book-cover" src="assets/images/v7/fiqh-book.webp" alt="كتاب الفقه"><h3><span data-ar>الفقه</span><span data-en>Fiqh</span></h3><p class="block" data-ar>أحكام العبادات والمعاملات بلغة عملية.</p><p class="block" data-en>Practical rulings for worship and daily life.</p><a href="register.html"><span data-ar>استكشف</span><span data-en>Explore</span></a></article>
-    <article class="book-card"><img class="book-cover" src="assets/images/v7/hadith-book.webp" alt="كتاب الحديث"><h3><span data-ar>الحديث</span><span data-en>Hadith</span></h3><p class="block" data-ar>دراسة الأحاديث النبوية وفهم معانيها.</p><p class="block" data-en>Study Prophetic traditions and meanings.</p><a href="register.html"><span data-ar>استكشف</span><span data-en>Explore</span></a></article>
-    <article class="book-card"><img class="book-cover" src="assets/images/v7/tafsir-book.webp" alt="كتاب التفسير"><h3><span data-ar>التفسير</span><span data-en>Tafsir</span></h3><p class="block" data-ar>فهم معاني القرآن وتدبر آياته.</p><p class="block" data-en>Understand and reflect on Qur'anic meanings.</p><a href="register.html"><span data-ar>استكشف</span><span data-en>Explore</span></a></article>
-    <article class="book-card"><img class="book-cover" src="assets/images/v7/seerah-book.webp" alt="كتاب السيرة"><h3><span data-ar>السيرة النبوية</span><span data-en>Seerah</span></h3><p class="block" data-ar>دروس وعبر من حياة النبي ﷺ.</p><p class="block" data-en>Lessons from the life of the Prophet ﷺ.</p><a href="register.html"><span data-ar>استكشف</span><span data-en>Explore</span></a></article>
-    <article class="book-card"><img class="book-cover" src="assets/images/v7/arabic-book.webp" alt="كتاب العربية"><h3><span data-ar>العربية لغير الناطقين بها</span><span data-en>Arabic for Non-Native Speakers</span></h3><p class="block" data-ar>تعلم العربية لفهم القرآن والتواصل.</p><p class="block" data-en>Arabic for Qur'anic understanding and communication.</p><a href="register.html"><span data-ar>استكشف</span><span data-en>Explore</span></a></article>
-   </div>
-
-   <div class="features">
-    <div class="feature"><b data-ar>مناهج موثوقة</b><b data-en>Trusted Curriculum</b><span data-ar>مستندة إلى كتب العلماء</span><span data-en>Based on reliable scholarship</span></div>
-    <div class="feature"><b data-ar>مرونة في التعلم</b><b data-en>Flexible Learning</b><span data-ar>في أي وقت ومن أي مكان</span><span data-en>Anytime and anywhere</span></div>
-    <div class="feature"><b data-ar>معلمون متخصصون</b><b data-en>Qualified Teachers</b><span data-ar>خبرة علمية وتربوية</span><span data-en>Academic and educational expertise</span></div>
-    <div class="feature"><b data-ar>تعليم تفاعلي</b><b data-en>Interactive Learning</b><span data-ar>دروس مباشرة وتغذية راجعة</span><span data-en>Live lessons and feedback</span></div>
-    <div class="feature"><b data-ar>شهادات إتمام</b><b data-en>Completion Certificates</b><span data-ar>بعد اجتياز المسار</span><span data-en>After completing the program</span></div>
-   </div>
-  </section>
-
-  <section id="publications" class="publications">
-   <img src="../assets/publications-collage.webp" alt="مؤلفات سامي سليمان">
-   <div><span style="color:#b68118;font-weight:900"><span data-ar>من مؤلفات المؤسس</span><span data-en>Founder's Publications</span></span><h2><span data-ar>محتوى علمي وتربوي أصيل</span><span data-en>Authentic Educational Content</span></h2><p class="block" data-ar>كتب في التجويد والسيرة ومواد تعليمية للأطفال والكبار، تجمع بين صحة المحتوى وسهولة العرض.</p><p class="block" data-en>Books in Tajweed, Seerah and educational resources for children and adults.</p><a class="btn btn-gold" href="../index.html#library"><span data-ar>مشاهدة المؤلفات</span><span data-en>View Publications</span></a></div>
-  </section>
-
-  <section class="cta">
-   <h2><span data-ar>ابدأ رحلتك مع القرآن والعلم الشرعي</span><span data-en>Begin Your Qur'an and Islamic Learning Journey</span></h2>
-   <p class="block" data-ar>اختر المسار المناسب لك أو لأبنائك، وسجّل اهتمامك الآن.</p><p class="block" data-en>Choose the right learning path for you or your children.</p>
-   <a class="btn" href="register.html"><span data-ar>التسجيل في الأكاديمية</span><span data-en>Register at the Academy</span></a>
-  </section>
- </main>
-
- <aside id="founder" class="founder-sidebar">
-  <img class="founder-photo" src="../assets/portrait-only.jpg" alt="سامي سليمان">
-  <h2><span data-ar>سامي سليمان</span><span data-en>Samy Suliman</span></h2>
-  <p class="founder-role"><span data-ar>معلم تربية إسلامية | مدرب تربوي | مؤلف</span><span data-en>Islamic Studies Educator | Trainer | Author</span></p>
-  <div class="sidebar-academy">
-   <img src="../assets/rasheed-academy-logo.png" alt="أكاديمية رشيد">
-   <p class="block" data-ar>منصة متكاملة لتعليم القرآن الكريم والعلوم الشرعية من التأسيس حتى الإجازة.</p>
-   <p class="block" data-en>A complete platform for Qur'an and Islamic sciences education from foundations to Ijazah.</p>
-   <a class="btn sidebar-button" href="register.html"><span data-ar>زيارة الأكاديمية</span><span data-en>Join the Academy</span></a>
+    <div class="nav-actions">
+      <a class="nav-cv ar" href="assets/samy-suliman-cv-ar.pdf" rel="noopener noreferrer" target="_blank">السيرة الذاتية</a>
+      <a class="nav-cv en" href="assets/samy-suliman-cv-en.pdf" rel="noopener noreferrer" target="_blank">CV</a>
+      <button aria-label="تغيير اللغة" class="lang" onclick="toggleLang()" type="button">AR / EN</button>
+      <button aria-controls="mobileMenu" aria-expanded="false" aria-label="فتح القائمة" class="menu-toggle" id="menuToggle" type="button">
+        <span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+        <b class="ar">القائمة</b><b class="en">Menu</b>
+      </button>
+    </div>
   </div>
-  <h3><span data-ar>تواصل معي</span><span data-en>Contact Me</span></h3>
-  
-  <div class="socials" aria-label="وسائل التواصل">
-   <a class="social whatsapp" href="https://wa.me/966559461920" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a9.7 9.7 0 0 0-8.34 14.65L2.3 21.7l5.18-1.35A9.7 9.7 0 1 0 12 2Zm0 17.64a7.9 7.9 0 0 1-4.03-1.1l-.29-.17-3.07.8.82-2.99-.19-.3A7.9 7.9 0 1 1 12 19.64Zm4.33-5.91c-.24-.12-1.4-.69-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.62.77-.76.93-.14.16-.28.18-.52.06-.24-.12-1-.37-1.9-1.18-.7-.62-1.18-1.4-1.32-1.63-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.69 2.58 4.1 3.62.57.25 1.02.4 1.37.51.58.18 1.1.16 1.51.1.46-.07 1.4-.57 1.6-1.13.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z"/></svg>
-   </a>
-   <a class="social email" href="mailto:samysuliman15@gmail.com" aria-label="Email">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm0 2 9 6 9-6H3Zm18 10V9.4l-8.45 5.63a1 1 0 0 1-1.1 0L3 9.4V17h18Z"/></svg>
-   </a>
-   <a class="social linkedin" href="https://www.linkedin.com/in/samy-suliman-3342bb212/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 3.5A2.2 2.2 0 1 1 .8 3.5a2.2 2.2 0 0 1 4.4 0ZM1.2 8h3.9v12.5H1.2V8Zm6.3 0h3.7v1.7h.05c.52-.98 1.78-2.02 3.67-2.02 3.93 0 4.66 2.59 4.66 5.96v6.86h-3.88v-6.08c0-1.45-.03-3.32-2.02-3.32-2.02 0-2.33 1.58-2.33 3.21v6.19H7.5V8Z"/></svg>
-   </a>
-   <a class="social x-social" href="https://x.com/SamySuliman" target="_blank" rel="noopener noreferrer" aria-label="X">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.24l-4.89-6.4L6.47 22H3.35l7.25-8.29L2.95 2h6.4l4.42 5.84L18.9 2Zm-1.1 17.85h1.72L8.41 4.04H6.56L17.8 19.85Z"/></svg>
-   </a>
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner ar" aria-label="القائمة العربية">
+      <a href="academy/">أكاديمية رشيد</a><a href="#experience">المسيرة المهنية</a><a href="#why">لماذا سامي؟</a><a href="#impact">الأثر</a><a href="#quran">القرآن والإقراء</a><a href="#library">المؤلفات</a><a href="articles.html">مقالات وأبحاث</a><a href="#recognition">التكريمات</a><a href="#evidence">الالتزام والتميز المهني</a><a href="#quality">الجودة والإنتاجية</a><a href="#contact">التواصل</a>
+    </div>
+    <div class="mobile-menu-inner en" aria-label="English navigation menu">
+      <a href="academy/">Rasheed Academy</a><a href="#experience">Experience</a><a href="#why">Why Samy?</a><a href="#impact">Impact</a><a href="#quran">Qur’an</a><a href="#library">Publications</a><a href="articles.html">Articles &amp; Research</a><a href="#recognition">Awards</a><a href="#evidence">Professional Excellence</a><a href="#quality">Quality &amp; Productivity</a><a href="#contact">Contact</a>
+    </div>
   </div>
- </aside>
+</nav>
+<header class="hero" id="top">
+<div class="container hero-grid">
+<div class="hero-content">
+<span class="kicker ar">خبرة تعليمية تمتد لأكثر من 20 عامًا</span>
+<span class="kicker en">More Than 20 Years in Education</span>
+<h1><span class="ar">سامي سليمان</span><span class="en">Samy Suliman</span></h1>
+<p class="role ar">معلم تربية إسلامية | مدرب تربوي | مؤلف</p>
+<p class="role en">Islamic Studies Educator | Teacher Trainer | Author</p>
+<p class="tagline ar">نبني العقول... ونرعى الشخصية... ونترك أثرًا يبقى.</p>
+<p class="tagline en">Inspiring minds. Shaping character. Creating lasting impact.</p>
+<p class="availability ar">متاح للتوظيف في المجالات التعليمية والإدارية والإشرافية</p><p class="availability en">Available for educational, administrative, and supervisory roles</p><p class="hero-copy ar">خبرة تمتد لأكثر من 20 عامًا في التعليم، تشمل تدريس التربية الإسلامية، ورئاسة قسم الدراسات الإسلامية، وتدريب المعلمين، وتأليف المواد التعليمية، والمساهمة في الجودة والاعتماد الأكاديمي.</p>
+<p class="hero-copy en">More than 20 years of experience in Islamic Studies teaching, department leadership, teacher development, educational publishing, and quality and accreditation support.</p>
+<div class="actions professional-entry-actions">
+<a class="btn secondary ar" href="assets/samy-suliman-cv-ar.pdf" rel="noopener noreferrer" target="_blank">تحميل السيرة الذاتية</a>
+<a class="btn secondary en" href="assets/samy-suliman-cv-en.pdf" rel="noopener noreferrer" target="_blank">Download CV</a>
+<button class="btn primary tour-start ar" data-open-tour type="button">تعرّف عليّ في دقيقتين</button>
+<button class="btn primary tour-start en" data-open-tour type="button">Meet me in 2 minutes</button>
+<button class="btn secondary explore-start ar" data-open-explore type="button">شاهد ملفي المهني</button>
+<button class="btn secondary explore-start en" data-open-explore type="button">View my professional profile</button>
 </div>
-
-<footer>
- <div class="container footer-inner">
-  <div><strong><span data-ar>أكاديمية رشيد</span><span data-en>Rasheed Academy</span></strong><br><small><span data-ar>مجموعة رشيد التعليمية</span><span data-en>Rasheed Education Group</span></small></div>
-  <div class="footer-links"><a href="../index.html"><span data-ar>الموقع الشخصي</span><span data-en>Personal Portfolio</span></a><a href="login.html"><span data-ar>تسجيل الدخول</span><span data-en>Sign In</span></a><a href="register.html"><span data-ar>التسجيل</span><span data-en>Register</span></a></div>
- </div>
-</footer>
-
-<div class="academy-tour-modal" id="academyFounderTour" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="academyTourTitle">
- <div class="academy-tour-panel">
-  <button class="academy-tour-close" type="button" aria-label="إغلاق">×</button>
-  <div class="academy-tour-top">
-   <img src="../assets/portrait-only.jpg" alt="سامي سليمان">
-   <div>
-    <span class="academy-tour-kicker" id="academyTourKicker"></span>
-    <h2 id="academyTourTitle"></h2>
-   </div>
-  </div>
-  <div class="academy-tour-body" id="academyTourBody"></div>
-  <div class="academy-tour-progress"><span id="academyTourCounter"></span><div><i id="academyTourBar"></i></div><span id="academyTourTime"></span></div>
-  <div class="academy-tour-actions">
-   <button class="academy-tour-exit" type="button"><span data-ar>إغلاق الجولة</span><span data-en>Close Tour</span></button>
-   <div>
-    <button class="academy-tour-prev" type="button"><span data-ar>السابق</span><span data-en>Previous</span></button>
-    <button class="academy-tour-next" type="button"><span data-ar>التالي</span><span data-en>Next</span></button>
-   </div>
-  </div>
- </div>
 </div>
+<div class="hero-portrait-column">
+<div class="portrait-wrap"><img alt="سامي سليمان" class="hero-image" decoding="async" loading="lazy" src="assets/portrait-only.jpg"/></div>
+<a class="academy-card" href="academy/" aria-label="زيارة أكاديمية رشيد">
+<img class="academy-card-logo" src="assets/rasheed-academy-logo.png" alt="شعار أكاديمية رشيد" loading="lazy" decoding="async"/>
+<span class="academy-card-copy">
+<span class="academy-card-title ar">أكاديمية رشيد</span><span class="academy-card-title en">Rasheed Academy</span>
+<span class="academy-card-subtitle ar">للقرآن الكريم والعلوم الشرعية</span><span class="academy-card-subtitle en">Qur’an and Islamic Studies</span>
+</span>
+<span class="academy-card-arrow" aria-hidden="true">‹</span>
+</a>
+</div>
+</div>
+</header>
+<div class="stats"><div class="container"><div class="stats-grid">
+<div class="stat"><strong>20+</strong><span class="ar">عامًا في التعليم</span><span class="en">Years in Education</span></div>
+<div class="stat"><strong>10</strong><span class="ar">أعوام في المدارس العالمية</span><span class="en">Years in International Schools</span></div>
+<div class="stat"><strong>HOD</strong><span class="ar">رئيس قسم سابق</span><span class="en">Former Head of Department</span></div>
+<div class="stat"><strong>6+</strong><span class="ar">ورش تدريبية للمعلمين</span><span class="en">Teacher Workshops</span></div>
+<div class="stat"><strong>3</strong><span class="ar">مجالات تأليف تربوي</span><span class="en">Publishing Fields</span></div>
+</div></div></div>
+<section id="experience">
+<div class="container">
+<h2 class="title ar">المسيرة المهنية</h2><h2 class="title en">Professional Journey</h2>
+<p class="subtitle ar">خبرة تجمع بين التعليم الأزهري، والمدارس العالمية، ورئاسة القسم، وتطوير المعلمين والمحتوى.</p>
+<p class="subtitle en">A career combining Al-Azhar education, international schools, department leadership, teacher development, and educational content.</p>
+<div class="timeline">
+<div class="titem"><span class="period ar">2015 – 2026</span><span class="period en">2015 – 2026</span><div class="career-head"><img alt="شعار مدارس التربية النموذجية العالمية" class="career-logo" decoding="async" loading="lazy" src="assets/tarbiyah-international-logo.jpg"/><div><h3 class="ar">مدارس التربية النموذجية العالمية – الرياض</h3><h3 class="en">Tarbiyah Namouthajiyah International Schools – Riyadh</h3></div></div><p class="ar">معلم تربية إسلامية، ورئيس قسم سابق، ومشارك في تدريب المعلمين والجودة والاعتماد الأكاديمي.</p><p class="en">Islamic Studies teacher, former Head of Department, and contributor to teacher training, quality, and accreditation.</p></div>
+<div class="titem"><span class="period ar">نحو 9 أعوام</span><span class="period en">Approximately 9 Years</span><div class="career-head"><img alt="شعار قطاع المعاهد الأزهرية" class="career-logo" decoding="async" loading="lazy" src="assets/alazhar-institutes-logo.png"/><img alt="شعار جامعة الأزهر" class="career-logo university-logo" decoding="async" loading="lazy" src="assets/alazhar-logo.png"/><div><h3 class="ar">قطاع المعاهد الأزهرية – مصر</h3><h3 class="en">Al-Azhar Institutes Sector – Egypt</h3></div></div><p class="ar">تدريس العلوم الشرعية والقرآن الكريم، وبناء خبرة راسخة في التعليم والتوجيه التربوي.</p><p class="en">Teaching Islamic sciences and the Qur’an, building a strong foundation in education and student guidance.</p></div>
+<div class="titem"><span class="period ar">خبرات موازية</span><span class="period en">Parallel Experience</span><h3 class="ar">التدريب والتأليف والمبادرات المجتمعية</h3><h3 class="en">Training, Publishing, and Community Initiatives</h3><p class="ar">تقديم ورش للمعلمين، وتأليف كتب ومواد تعليمية، والمشاركة في مبادرات تربوية ومجتمعية.</p><p class="en">Delivering teacher workshops, authoring books and educational resources, and contributing to educational and community initiatives.</p></div>
+</div></div></section><section class="alt" id="why">
+<div class="container">
+<h2 class="title ar">لماذا يُختار سامي سليمان؟</h2>
+<h2 class="title en">Why Choose Samy Suliman?</h2>
+<p class="section-lead ar">خبرة تعليمية ممتدة، وأثر موثق، وقدرة على الجمع بين التدريس، وتطوير المعلمين، وإنتاج المحتوى التعليمي، والعمل المؤسسي.</p>
+<p class="section-lead en">Long educational experience, documented student impact, and the ability to combine teaching, teacher development, educational publishing, and institutional contribution.</p>
+<div class="why-grid compact-why">
+<div class="why-card"><div class="why-icon">20+</div><h3 class="ar">خبرة تعليمية</h3><h3 class="en">Educational Experience</h3><p class="ar">أكثر من 20 عامًا في التعليم والتوجيه.</p><p class="en">20+ years in education and guidance.</p></div>
+<div class="why-card"><div class="why-icon">HOD</div><h3 class="ar">رئيس قسم سابق</h3><h3 class="en">Former HOD</h3><p class="ar">قيادة الفريق ومتابعة الخطط والتطوير.</p><p class="en">Team leadership, planning, and improvement.</p></div>
+<div class="why-card"><div class="why-icon">🏆</div><h3 class="ar">فائز بجائزة تعليمية</h3><h3 class="en">Award Recognition</h3><p class="ar">المركز الثاني بجائزة الشركة الوطنية للتعليم 2025.</p><p class="en">Second place, NCLE Award 2025.</p></div>
+<div class="why-card"><div class="why-icon">✦</div><h3 class="ar">مدرب معلمين</h3><h3 class="en">Teacher Trainer</h3><p class="ar">ورش تطبيقية في التخطيط والتقويم وإدارة الصف.</p><p class="en">Practical workshops in planning and assessment.</p></div>
+<div class="why-card"><div class="why-icon">▦</div><h3 class="ar">مؤلف تربوي</h3><h3 class="en">Educational Author</h3><p class="ar">كتب مطبوعة وسلاسل تعليمية ثنائية اللغة.</p><p class="en">Printed books and bilingual learning series.</p></div>
+<div class="why-card"><div class="why-icon">✓</div><h3 class="ar">الجودة والاعتماد</h3><h3 class="en">Quality &amp; Accreditation</h3><p class="ar">مساهمة موثقة في Cognia وAIAA والتحسين المدرسي.</p><p class="en">Documented Cognia, AIAA, and school improvement support.</p></div>
+</div>
+<div class="evidence-panel" id="evidence">
+<h3 class="ar">الالتزام والتميز المهني</h3><h3 class="en">Professional Commitment &amp; Excellence</h3>
+<p class="ar">سبعة عشر مجالًا موثقًا تعكس الالتزام المهني، والمبادرة، والتطوير، والمشاركة الفاعلة داخل البيئة التعليمية.</p><p class="en">Seventeen documented areas reflecting professional commitment, initiative, development, and active contribution within the educational environment.</p>
+<div class="evidence-links"><article class="evidence-card"><div class="evidence-icon">◆</div><h4 class="ar">آداب وأخلاقيات المجتمع التربوي</h4><h4 class="en">Educational Ethics</h4><p class="ar">نماذج توثق الالتزام بالقيم المهنية والسلوك التربوي المسؤول داخل البيئة التعليمية.</p><p class="en">Evidence of professional values and responsible conduct within the educational community.</p><a class="evidence-action ar" href="https://drive.google.com/drive/folders/1rn0_8MqkDRaXzjaW6pa3if7S_zl_Zeut" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="evidence-action en" href="https://drive.google.com/drive/folders/1rn0_8MqkDRaXzjaW6pa3if7S_zl_Zeut" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article><article class="evidence-card"><div class="evidence-icon">✓</div><h4 class="ar">المسؤوليات الوظيفية والمهنية</h4><h4 class="en">Professional Responsibilities</h4><p class="ar">شواهد على أداء المسؤوليات الوظيفية والمهنية بكفاءة وموثوقية.</p><p class="en">Evidence of fulfilling professional duties with efficiency and reliability.</p><a class="evidence-action ar" href="https://drive.google.com/drive/folders/1IF7zt3ygUF0nHx1-9eWSJBw2XQwiH1vz" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="evidence-action en" href="https://drive.google.com/drive/folders/1IF7zt3ygUF0nHx1-9eWSJBw2XQwiH1vz" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article><article class="evidence-card"><div class="evidence-icon">◷</div><h4 class="ar">الالتزام بساعات العمل</h4><h4 class="en">Working Hours Commitment</h4><p class="ar">توثيق الانضباط والالتزام بالحضور وساعات العمل الرسمية.</p><p class="en">Documentation of punctuality, attendance, and commitment to official working hours.</p><a class="evidence-action ar" href="https://drive.google.com/drive/folders/1sp1yPWeYCQEHizTvWQZbQrot4tcM1d8P" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="evidence-action en" href="https://drive.google.com/drive/folders/1sp1yPWeYCQEHizTvWQZbQrot4tcM1d8P" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article><article class="evidence-card"><div class="evidence-icon">✦</div><h4 class="ar">المشاركة الفاعلة خارج ساعات العمل</h4><h4 class="en">Active Participation Beyond Hours</h4><p class="ar">مشاركات تطوعية ومهنية داعمة للعمل المدرسي خارج أوقات الدوام.</p><p class="en">Voluntary and professional contributions supporting school work beyond official hours.</p><a class="evidence-action ar" href="https://drive.google.com/drive/folders/1im9QU50doqRvRm0uAPvU2g4qGpnFKYuD" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="evidence-action en" href="https://drive.google.com/drive/folders/1im9QU50doqRvRm0uAPvU2g4qGpnFKYuD" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article><article class="evidence-card"><div class="evidence-icon">◇</div><h4 class="ar">الزي والهندام المهني</h4><h4 class="en">Professional Appearance</h4><p class="ar">شواهد تعكس الالتزام بالمظهر المهني اللائق والقدوة الحسنة.</p><p class="en">Evidence of appropriate professional appearance and positive role modelling.</p><a class="evidence-action ar" href="https://drive.google.com/drive/folders/1xzfTt8bBmf20JPeYaCytiA4mmOxGfNK0" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="evidence-action en" href="https://drive.google.com/drive/folders/1xzfTt8bBmf20JPeYaCytiA4mmOxGfNK0" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article><article class="evidence-card"><div class="evidence-icon">▤</div><h4 class="ar">الالتزام بالوصف الوظيفي</h4><h4 class="en">Role Description Compliance</h4><p class="ar">نماذج توضح الالتزام بمتطلبات الوصف الوظيفي والمهام المسندة.</p><p class="en">Examples demonstrating compliance with assigned duties and role requirements.</p><a class="evidence-action ar" href="https://drive.google.com/drive/folders/1BtM13i_BgPvf8uUFIcx1eKR1hcy9pGs0" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="evidence-action en" href="https://drive.google.com/drive/folders/1BtM13i_BgPvf8uUFIcx1eKR1hcy9pGs0" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article><article class="evidence-card"><div class="evidence-icon">✧</div><h4 class="ar">المبادرات الإبداعية والابتكارية</h4><h4 class="en">Creative & Innovative Initiatives</h4><p class="ar">مبادرات وأفكار تطويرية أسهمت في تحسين العمل والممارسات التعليمية.</p><p class="en">Creative initiatives that contributed to improving educational practice and school work.</p><a class="evidence-action ar" href="https://drive.google.com/drive/folders/1ve4nmJc1TEvXpToom8PIbGsoV1NtW8gr" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="evidence-action en" href="https://drive.google.com/drive/folders/1ve4nmJc1TEvXpToom8PIbGsoV1NtW8gr" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article><article class="evidence-card"><div class="evidence-icon">⌘</div><h4 class="ar">حل مشكلات العمل واتخاذ القرار</h4><h4 class="en">Problem Solving & Decision Making</h4><p class="ar">نماذج عملية لتحليل المشكلات واتخاذ قرارات مناسبة في المواقف المهنية.</p><p class="en">Practical examples of analysing problems and making sound professional decisions.</p><a class="evidence-action ar" href="https://drive.google.com/drive/folders/1osHVFexw5m6jyPDJa6O-LxKUT8bT8rar" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="evidence-action en" href="https://drive.google.com/drive/folders/1osHVFexw5m6jyPDJa6O-LxKUT8bT8rar" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article><article class="evidence-card"><div class="evidence-icon">↗</div><h4 class="ar">دعم التغيير الإيجابي</h4><h4 class="en">Positive Change Support</h4><p class="ar">شواهد على المساهمة في التغيير الإيجابي وتطوير بيئة العمل.</p><p class="en">Evidence of supporting positive change and improving the work environment.</p><a class="evidence-action ar" href="https://drive.google.com/drive/folders/1QbS6DJb02ct1xOvsEFfpeGw2E3wVzvx4" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="evidence-action en" href="https://drive.google.com/drive/folders/1QbS6DJb02ct1xOvsEFfpeGw2E3wVzvx4" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article><article class="evidence-card"><div class="evidence-icon">⇄</div><h4 class="ar">نقل المعرفة للزملاء</h4><h4 class="en">Knowledge Sharing</h4><p class="ar">مشاركات في نقل الخبرات والمعارف المهنية ودعم تعلم الزملاء.</p><p class="en">Contributions to sharing expertise and supporting colleagues’ professional learning.</p><a class="evidence-action ar" href="https://drive.google.com/drive/folders/1uPoiKjeNBl6bZxDXbs7aqs-gqp_YAUAY" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="evidence-action en" href="https://drive.google.com/drive/folders/1uPoiKjeNBl6bZxDXbs7aqs-gqp_YAUAY" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article><article class="evidence-card"><div class="evidence-icon">◎</div><h4 class="ar">تحديد الاحتياجات التدريبية</h4><h4 class="en">Training Needs Identification</h4><p class="ar">تحليل الاحتياجات المهنية وتحديد الأولويات التدريبية اللازمة للتطوير.</p><p class="en">Analysis of professional needs and identification of development priorities.</p><a class="evidence-action ar" href="https://drive.google.com/drive/folders/1DW7CWeObdh-CfnyxH8-jw7K4TYpavAkx" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="evidence-action en" href="https://drive.google.com/drive/folders/1DW7CWeObdh-CfnyxH8-jw7K4TYpavAkx" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article><article class="evidence-card"><div class="evidence-icon">⏱</div><h4 class="ar">إدارة الوقت وكفاءة الإنجاز</h4><h4 class="en">Time Management & Efficiency</h4><p class="ar">شواهد توضح تنظيم الوقت، وترتيب الأولويات، وإنجاز المهام بكفاءة.</p><p class="en">Evidence of effective time management, prioritisation, and efficient task completion.</p><a class="evidence-action ar" href="https://drive.google.com/drive/folders/1GvDSKZEXaA2CUfopGTVnGC0nU5uBLbl9" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="evidence-action en" href="https://drive.google.com/drive/folders/1GvDSKZEXaA2CUfopGTVnGC0nU5uBLbl9" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article><article class="evidence-card"><div class="evidence-icon">▲</div><h4 class="ar">تحمل المسؤولية وتقبّل التوجيهات</h4><h4 class="en">Responsibility & Feedback</h4><p class="ar">نماذج تعكس تحمل المسؤولية والاستجابة الإيجابية للتوجيه والتغذية الراجعة.</p><p class="en">Examples reflecting accountability and positive response to guidance and feedback.</p><a class="evidence-action ar" href="https://drive.google.com/drive/folders/1z_lkIxokAK4kCte0mw2uhGap0VB-34vA" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="evidence-action en" href="https://drive.google.com/drive/folders/1z_lkIxokAK4kCte0mw2uhGap0VB-34vA" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article><article class="evidence-card"><div class="evidence-icon">♡</div><h4 class="ar">العلاقات المهنية والاحترام</h4><h4 class="en">Professional Relationships</h4><p class="ar">شواهد على بناء علاقات مهنية قائمة على الاحترام والتعاون والثقة.</p><p class="en">Evidence of professional relationships built on respect, cooperation, and trust.</p><a class="evidence-action ar" href="https://drive.google.com/drive/folders/1quf-GIy3z0QwdeTpoUrUqwFAKJscKdyq" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="evidence-action en" href="https://drive.google.com/drive/folders/1quf-GIy3z0QwdeTpoUrUqwFAKJscKdyq" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article><article class="evidence-card"><div class="evidence-icon">◉</div><h4 class="ar">العمل بروح الفريق والقدوة الحسنة</h4><h4 class="en">Teamwork & Positive Example</h4><p class="ar">مواقف وممارسات توثق العمل الجماعي والقدوة المهنية الإيجابية.</p><p class="en">Practices demonstrating teamwork and positive professional role modelling.</p><a class="evidence-action ar" href="https://drive.google.com/drive/folders/1RwfCRhfOZLt-DrWH8MJo8hHgcZEfxnzK" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="evidence-action en" href="https://drive.google.com/drive/folders/1RwfCRhfOZLt-DrWH8MJo8hHgcZEfxnzK" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article><article class="evidence-card"><div class="evidence-icon">♟</div><h4 class="ar">الأنشطة الاجتماعية داخل المدرسة</h4><h4 class="en">School Social Activities</h4><p class="ar">مشاركات اجتماعية أسهمت في تعزيز الانتماء والتواصل داخل المجتمع المدرسي.</p><p class="en">Social activities that strengthened belonging and communication within the school community.</p><a class="evidence-action ar" href="https://drive.google.com/drive/folders/1PPqb6tuzvjJP4C2DaVkFlXgJsEe47Cb3" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="evidence-action en" href="https://drive.google.com/drive/folders/1PPqb6tuzvjJP4C2DaVkFlXgJsEe47Cb3" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article><article class="evidence-card"><div class="evidence-icon">★</div><h4 class="ar">الأنشطة اللاصفية داخل المدرسة</h4><h4 class="en">Extracurricular Activities</h4><p class="ar">نماذج من الأنشطة اللاصفية التي دعمت شخصية الطالب ومهاراته وقيمه.</p><p class="en">Examples of extracurricular activities supporting students’ character, skills, and values.</p><a class="evidence-action ar" href="https://drive.google.com/drive/folders/1Sbnd7C_qrdaoqm5SncvDVJDLjAhinE8q" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="evidence-action en" href="https://drive.google.com/drive/folders/1Sbnd7C_qrdaoqm5SncvDVJDLjAhinE8q" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article></div>
+</div>
+</div>
+</section>
 
+<section class="quality-section" id="quality">
+<div class="container">
+<div class="quality-head"><div class="quality-intro">
+<span class="quran-eyebrow ar" style="color:#8c691f">نماذج موثقة من العمل المؤسسي والتطوير المستمر</span>
+<span class="quran-eyebrow en" style="color:#8c691f">Documented institutional work and continuous improvement</span>
+<h2 class="title ar">الجودة والإنتاجية</h2><h2 class="title en">Quality &amp; Productivity</h2>
+<p class="section-lead ar">نماذج من أعمالي في التخطيط والتطوير وقياس الأداء والتنمية المهنية والتحسين المستمر، مرتبة في ثلاثة عشر محورًا مهنيًا.</p>
+<p class="section-lead en">Selected work in planning, development, performance measurement, professional learning, and continuous improvement across thirteen professional areas.</p>
+</div></div>
+<div class="quality-grid"><article class="quality-card"><div class="quality-icon">◈</div><h3 class="ar">الرؤية المؤسسية</h3><h3 class="en">Institutional Vision</h3><p class="ar">صياغة رؤية مهنية متوافقة مع رؤية المدرسة وموجهة نحو تحقيق أهدافها الاستراتيجية.</p><p class="en">A professional vision aligned with the school vision and strategic direction.</p><a class="quality-link ar" href="https://drive.google.com/drive/folders/1X9dDK3KqO1_sOSCIWSsCAcj_rYvPBZ1n" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="quality-link en" href="https://drive.google.com/drive/folders/1X9dDK3KqO1_sOSCIWSsCAcj_rYvPBZ1n" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article>
+<article class="quality-card"><div class="quality-icon">◎</div><h3 class="ar">الرسالة والأهداف</h3><h3 class="en">Mission & Objectives</h3><p class="ar">رسالة وأهداف مهنية متسقة مع رسالة المدرسة وأهدافها ومعتمدة ضمن سياق العمل المؤسسي.</p><p class="en">A professional mission and objectives aligned with the school’s direction.</p><a class="quality-link ar" href="https://drive.google.com/drive/folders/1Vu2QrHzZJ_5ab56-KKo1QbNQMTibtUGo" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="quality-link en" href="https://drive.google.com/drive/folders/1Vu2QrHzZJ_5ab56-KKo1QbNQMTibtUGo" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article>
+<article class="quality-card"><div class="quality-icon">▤</div><h3 class="ar">التخطيط التشغيلي</h3><h3 class="en">Operational Planning</h3><p class="ar">إعداد خطة عمل تشغيلية مرتبطة بالخطة الاستراتيجية ومتابعة تنفيذها وفق المستهدفات.</p><p class="en">Developing an operational plan aligned with the school strategy.</p><a class="quality-link ar" href="https://drive.google.com/drive/folders/1wnBVPlEqzqtXpNR0hbTZ-PhYfVIQCMPe" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="quality-link en" href="https://drive.google.com/drive/folders/1wnBVPlEqzqtXpNR0hbTZ-PhYfVIQCMPe" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article>
+<article class="quality-card"><div class="quality-icon">✦</div><h3 class="ar">المبادرات والحلول التعليمية</h3><h3 class="en">Educational Initiatives & Solutions</h3><p class="ar">مبادرات وأعمال عملية لمعالجة تحديات العمل التربوي وتحقيق نتائج إيجابية قابلة للقياس.</p><p class="en">Practical initiatives addressing educational challenges and producing positive results.</p><a class="quality-link ar" href="https://drive.google.com/drive/folders/1kd7ciixdhZLXNfLBi2bCySj34FjKcREa" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="quality-link en" href="https://drive.google.com/drive/folders/1kd7ciixdhZLXNfLBi2bCySj34FjKcREa" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article>
+<article class="quality-card"><div class="quality-icon">⌕</div><h3 class="ar">البحوث والدراسات التربوية</h3><h3 class="en">Educational Research</h3><p class="ar">توظيف التجارب المستفادة من البحوث والدراسات في تطوير وتحسين الممارسات التعليمية.</p><p class="en">Applying research-based practices to improve teaching and learning.</p><a class="quality-link ar" href="https://drive.google.com/drive/folders/1Dg_1_d8Vp4Xn6xLyGchVK0Qtl8KfuxSM" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="quality-link en" href="https://drive.google.com/drive/folders/1Dg_1_d8Vp4Xn6xLyGchVK0Qtl8KfuxSM" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article>
+<article class="quality-card"><div class="quality-icon">◉</div><h3 class="ar">مجتمعات التعلم المهنية</h3><h3 class="en">Professional Learning Communities</h3><p class="ar">مناقشة القضايا التربوية وتبادل الخبرات مع الزملاء داخل مجتمعات التعلم المهنية وخارجها.</p><p class="en">Discussing educational issues and sharing expertise with colleagues.</p><a class="quality-link ar" href="https://drive.google.com/drive/folders/19a1G65Erbxeu5vJW8AzIygTbE2VBc4Ee" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="quality-link en" href="https://drive.google.com/drive/folders/19a1G65Erbxeu5vJW8AzIygTbE2VBc4Ee" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article>
+<article class="quality-card"><div class="quality-icon">✓</div><h3 class="ar">تحديد الاحتياجات التدريبية</h3><h3 class="en">Training Needs Identification</h3><p class="ar">تحليل الاحتياجات المهنية وبناء مسار تدريبي مستند إلى الأولويات وفرص التطوير.</p><p class="en">Identifying professional needs and building a targeted development pathway.</p><a class="quality-link ar" href="https://drive.google.com/drive/folders/1hQ-PchiCCneMbjOxYnLsbjMFCiIFHw3F" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="quality-link en" href="https://drive.google.com/drive/folders/1hQ-PchiCCneMbjOxYnLsbjMFCiIFHw3F" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article>
+<article class="quality-card"><div class="quality-icon">▲</div><h3 class="ar">التنمية المهنية</h3><h3 class="en">Professional Development</h3><p class="ar">شهادات وبرامج ودورات تدريبية تدعم النمو المهني وتطوير الكفايات التعليمية والقيادية.</p><p class="en">Courses and programs supporting professional and leadership growth.</p><a class="quality-link ar" href="https://drive.google.com/drive/folders/15vCJATSRY3FJ0NFVadyJvzrIyPGpr58Q" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="quality-link en" href="https://drive.google.com/drive/folders/15vCJATSRY3FJ0NFVadyJvzrIyPGpr58Q" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article>
+<article class="quality-card"><div class="quality-icon">♡</div><h3 class="ar">قياس رضا المستفيدين</h3><h3 class="en">Beneficiary Satisfaction</h3><p class="ar">قياس رضا المتعلمين وأسرهم وتوظيف آرائهم ومقترحاتهم في تحسين الأداء والخدمة التعليمية.</p><p class="en">Measuring learner and family satisfaction and using feedback for improvement.</p><a class="quality-link ar" href="https://drive.google.com/drive/folders/1iBfN6QHt48lEErOKljBGtdUJTwyF58DB" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="quality-link en" href="https://drive.google.com/drive/folders/1iBfN6QHt48lEErOKljBGtdUJTwyF58DB" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article>
+<article class="quality-card"><div class="quality-icon">▥</div><h3 class="ar">تحليل الأداء</h3><h3 class="en">Performance Analysis</h3><p class="ar">دراسة تحليلية للأداء الوظيفي تحدد نقاط القوة وفرص التحسين وتدعم القرار التطويري.</p><p class="en">Analyzing performance to identify strengths and improvement opportunities.</p><a class="quality-link ar" href="https://drive.google.com/drive/folders/1Dr5KLI2-FjkTz5ZzzCCX_-42QhofrQ1g" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="quality-link en" href="https://drive.google.com/drive/folders/1Dr5KLI2-FjkTz5ZzzCCX_-42QhofrQ1g" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article>
+<article class="quality-card"><div class="quality-icon">↗</div><h3 class="ar">خطط التحسين</h3><h3 class="en">Improvement Plans</h3><p class="ar">خطط إجرائية لتعزيز نقاط القوة ومعالجة فرص التحسين وتحويل نتائج التحليل إلى خطوات عملية.</p><p class="en">Action plans that strengthen performance and address improvement priorities.</p><a class="quality-link ar" href="https://drive.google.com/drive/folders/1V58wk3YYqMI4nPgHkRfVrxwGawN7eOnd" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="quality-link en" href="https://drive.google.com/drive/folders/1V58wk3YYqMI4nPgHkRfVrxwGawN7eOnd" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article>
+<article class="quality-card"><div class="quality-icon">▦</div><h3 class="ar">مصادر التعلم</h3><h3 class="en">Learning Resources</h3><p class="ar">تحفيز الطلاب على استخدام المكتبات الإلكترونية ومصادر التعلم الحديثة وإنتاج نماذج تطبيقية.</p><p class="en">Encouraging students to use digital libraries and modern learning resources.</p><a class="quality-link ar" href="https://drive.google.com/drive/folders/1VTOkbzAFWMOEseBn7lubv0i43xh4RC2Y" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="quality-link en" href="https://drive.google.com/drive/folders/1VTOkbzAFWMOEseBn7lubv0i43xh4RC2Y" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article>
+<article class="quality-card"><div class="quality-icon">✎</div><h3 class="ar">البرامج التدريبية وورش العمل</h3><h3 class="en">Training Programs & Workshops</h3><p class="ar">تقديم ورش عمل ودروس تطبيقية وبرامج توعوية للطلاب والزملاء ونقل الخبرات المهنية.</p><p class="en">Delivering workshops, practical lessons, and awareness programs.</p><a class="quality-link ar" href="https://drive.google.com/drive/folders/1dI1409yLKojV-Mqpv7tv73tOCsdblSgt" rel="noopener noreferrer" target="_blank">📂 عرض الأعمال ↗</a><a class="quality-link en" href="https://drive.google.com/drive/folders/1dI1409yLKojV-Mqpv7tv73tOCsdblSgt" rel="noopener noreferrer" target="_blank">📂 View Evidence ↗</a></article></div>
+</div>
+</section>
 
+<section id="impact">
+<div class="container">
+<h2 class="title ar">الأثر الذي بقي</h2>
+<h2 class="title en">The Impact That Remains</h2>
+<div class="featured-impact">
+<div class="impact-copy">
+<h3 class="ar">فيصل يتحدث أولًا</h3>
+<h3 class="en">Faisal Speaks First</h3>
+<p class="ar">قد تتحدث الشهادات عن الخبرة، لكن كلمات الطلاب تكشف الأثر. لذلك جعلنا شهادة فيصل أول فيديو في الموقع.</p>
+<p class="en">Certificates describe experience, but students reveal impact. That is why Faisal’s testimony is the first featured video.</p>
+<div class="actions">
+<a class="btn primary ar" href="https://www.youtube.com/playlist?list=PLXU5zkeQbqQg" rel="noopener noreferrer" target="_blank">مشاهدة بقية الفيديوهات</a>
+<a class="btn primary en" href="https://www.youtube.com/playlist?list=PLXU5zkeQbqQg" rel="noopener noreferrer" target="_blank">View Full Video Library</a>
+</div>
+</div>
+<div class="video-wrap">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/_r4EHa5arFQ" title="Student Testimonial - Faisal"></iframe>
+</div>
+</div>
+<div class="testimonial-showcase">
+<div class="testimonial-image"><img alt="تعليقات طلاب عن الأستاذ سامي سليمان" decoding="async" loading="lazy" src="assets/student-comments.jpg"/></div>
+<div class="testimonial-quotes">
+<article><span>“</span><p class="ar">الأستاذ سامي معلم متمرس ومبدع، أوصي به دون تردد.</p><p class="en">Mr. Samy is an experienced and creative teacher whom I recommend without hesitation.</p><b class="ar">فيليب أندرو رينولدز</b><b class="en">Philip Andrew Reynolds</b><small class="ar">مساعد نائب الرئيس للشؤون الأكاديمية</small><small class="en">Assistant Vice President for Academic Affairs</small></article>
+<article><span>“</span><p class="ar">يتمتع بأخلاق عالية وقدرة متميزة على التواصل والتعاون.</p><p class="en">He demonstrates high integrity and outstanding communication and collaboration skills.</p><b class="ar">هنري جيمس سميث</b><b class="en">Henry James Smith</b><small class="ar">مدير أكاديمي</small><small class="en">Academic Director</small></article>
+</div></div></div>
+</section><section class="quran-section" id="quran">
+<div class="container">
+<div class="quran-heading">
+<div>
+<span class="quran-eyebrow ar">تعليمٌ بالتلاوة والقدوة والممارسة</span>
+<span class="quran-eyebrow en">Teaching through recitation, example, and practice</span>
+<h2 class="title ar">القرآن الكريم والإقراء</h2>
+<h2 class="title en">Qur’an Recitation &amp; Instruction</h2>
+<p class="section-lead ar">نماذج موثقة من الحلقات القرآنية والأنشطة المدرسية والتلاوات، تعكس خبرة عملية في تعليم القرآن الكريم وتنمية أداء الطلاب.</p>
+<p class="section-lead en">Documented examples of Qur’an circles, school activities, and recitations reflecting practical experience in Qur’an instruction and student development.</p>
+</div>
+<a class="btn quran-all ar" href="https://www.youtube.com/playlist?list=PLXU5zkeQbqQg" rel="noopener noreferrer" target="_blank">مشاهدة جميع الأنشطة ↗</a>
+<a class="btn quran-all en" href="https://www.youtube.com/playlist?list=PLXU5zkeQbqQg" rel="noopener noreferrer" target="_blank">View All Activities ↗</a>
+</div>
+<div class="quran-feature">
+<div class="quran-feature-video video-wrap">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/Fat6Pzksryo" title="حلقة قرآنية مع الطلاب"></iframe>
+</div>
+<article class="quran-info-card">
+<span class="feature-label ar">نشاط رئيسي</span><span class="feature-label en">Featured Activity</span>
+<h3 class="ar">حلقة قرآنية مع الطلاب</h3><h3 class="en">Qur’an Circle with Students</h3>
+<p class="ar">مشهد تطبيقي يبرز أسلوب التعليم المباشر، وتصحيح التلاوة، وبناء الصلة بالقرآن داخل البيئة المدرسية.</p>
+<p class="en">A practical example of direct instruction, recitation correction, and nurturing students’ connection with the Qur’an in school.</p>
+<div class="quran-credentials">
+<span class="ar">إجازة متصلة</span><span class="en">Connected Ijazah</span>
+<span class="ar">تعليم التلاوة والتجويد</span><span class="en">Recitation &amp; Tajweed</span>
+<span class="ar">تنمية أداء الطلاب</span><span class="en">Student Development</span>
+</div>
+<a class="quran-watch ar" href="https://www.youtube.com/watch?v=Fat6Pzksryo" rel="noopener noreferrer" target="_blank">مشاهدة على يوتيوب ↗</a>
+<a class="quran-watch en" href="https://www.youtube.com/watch?v=Fat6Pzksryo" rel="noopener noreferrer" target="_blank">Watch on YouTube ↗</a>
+</article>
+</div>
+<div class="quran-video-grid">
+<article class="quran-video-card featured-secondary">
+<div class="video-wrap"><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/kBOKYogu-jA" title="الأنشطة القرآنية المدرسية"></iframe></div>
+<div class="quran-card-body"><span class="mini-label ar">نشاط مميز</span><span class="mini-label en">Featured</span><h3 class="ar">الأنشطة القرآنية المدرسية</h3><h3 class="en">School Qur’anic Activities</h3><p class="ar">توظيف الأنشطة في تعزيز الحفظ والتلاوة والمشاركة الطلابية.</p><p class="en">Using school activities to strengthen memorization, recitation, and participation.</p></div>
+</article>
+<article class="quran-video-card recitation-highlight">
+<div class="video-wrap"><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/w1ydQcWKvYU" title="تلاوتي من سورة مريم"></iframe></div>
+<div class="quran-card-body"><span class="mini-label ar">تلاوة شخصية</span><span class="mini-label en">Personal Recitation</span><h3 class="ar">تلاوتي – سورة مريم</h3><h3 class="en">My Recitation — Surah Maryam</h3><p class="ar">نموذج من الأداء القرآني الذي يجمع بين سلامة التلاوة وحسن الأداء.</p><p class="en">A personal recitation demonstrating accuracy, tajweed, and expressive delivery.</p></div>
+</article>
+</div>
+<div class="students-recitation">
+<div class="students-title"><div><h3 class="ar">نماذج من تلاوات الطلاب</h3><h3 class="en">Selected Student Recitations</h3><p class="ar">شواهد على أثر التعليم والمتابعة والتدريب المستمر.</p><p class="en">Examples reflecting the impact of instruction, follow-up, and consistent practice.</p></div></div>
+<div class="student-video-grid">
+<a class="student-video" href="https://www.youtube.com/watch?v=-eUzXoHMUmI" rel="noopener noreferrer" target="_blank"><img alt="نموذج من تلاوة أحد الطلاب" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/-eUzXoHMUmI/hqdefault.jpg"/><span class="play-mark">▶</span><b class="ar">تلاوة طالب 1</b><b class="en">Student Recitation 1</b></a>
+<a class="student-video" href="https://www.youtube.com/watch?v=HgYOYD4z9b4" rel="noopener noreferrer" target="_blank"><img alt="نموذج من تلاوة أحد الطلاب" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/HgYOYD4z9b4/hqdefault.jpg"/><span class="play-mark">▶</span><b class="ar">تلاوة طالب 2</b><b class="en">Student Recitation 2</b></a>
+<a class="student-video" href="https://www.youtube.com/watch?v=azSqqE4xN3A" rel="noopener noreferrer" target="_blank"><img alt="نموذج من تلاوة أحد الطلاب" decoding="async" loading="lazy" src="https://i.ytimg.com/vi/azSqqE4xN3A/hqdefault.jpg"/><span class="play-mark">▶</span><b class="ar">تلاوة طالب 3</b><b class="en">Student Recitation 3</b></a>
+</div>
+</div>
+</div>
+</section>
+<section class="alt" id="library">
+<div class="container">
+<div class="library-header">
+<div>
+<h2 class="title ar">المشروعات التأليفية</h2>
+<h2 class="title en">Publishing Projects</h2>
+<p class="library-note ar">مشروعات تأليفية تخاطب الطفل، والقارئ البالغ، ومعلم القرآن؛ وتعرض بوضوح ما اكتمل وما يزال قيد الإعداد.</p>
+<p class="library-note en">Publishing projects for children, adult readers, and Qur’an educators, clearly distinguishing completed work from projects in development.</p>
+</div>
+</div>
+<div class="shelf">
+<div class="shelf-title">
+<h3 class="ar">سلسلة الأطفال: نور الحق</h3><h3 class="en">Children’s Series: The Light of Truth</h3>
+<span class="ar">ثنائية اللغة</span><span class="en">Bilingual Series</span>
+</div>
+<div class="books">
+<article class="book-card">
+<div class="book-image"><img alt="The Light of Truth Part 1" decoding="async" loading="lazy" src="assets/children-part-1-new.webp"/></div>
+<div class="book-body"><h4>The Light of Truth — Part 1</h4>
+<p class="ar">السيرة النبوية للأطفال بأسلوب قصصي وأنشطة تعليمية مناسبة للمدارس الدولية.</p>
+<p class="en">A children’s Seerah book combining storytelling with activities for international school learners.</p>
+<span class="badge done ar">مطبوع</span><span class="badge done en">Printed</span><div class="book-meta"><span class="ar">📄 44 صفحة</span><span class="en">📄 44 pages</span></div><button class="book-preview-btn" data-pdf="assets/light-of-truth-part-1.pdf" data-title-ar="نور الحق: قصة النبي محمد ﷺ — الجزء الأول" data-title-en="The Light of Truth — Part 1" type="button"><span class="ar">📖 استعراض الكتاب</span><span class="en">📖 Preview Book</span></button></div>
+</article>
+<article class="book-card">
+<div class="book-image"><img alt="The Light of Truth Part 2" decoding="async" loading="lazy" src="assets/children-part-2.jpg"/></div>
+<div class="book-body"><h4>The Light of Truth — Part 2</h4>
+<p class="ar">استكمال رحلة السيرة النبوية للأطفال ضمن السلسلة التعليمية.</p>
+<p class="en">The next stage of the children’s educational Seerah journey.</p>
+<span class="badge progress ar">تحت المراجعة</span><span class="badge progress en">Under Review</span></div>
+</article>
+<article class="book-card">
+<div class="book-image"><img alt="The Light of Truth Part 3" decoding="async" loading="lazy" src="assets/children-part-3.jpg"/></div>
+<div class="book-body"><h4>The Light of Truth — Part 3</h4>
+<p class="ar">الجزء الثالث من السلسلة الموجهة للأطفال والناشئة.</p>
+<p class="en">The third installment for children and young learners.</p>
+<span class="badge progress ar">تحت المراجعة</span><span class="badge progress en">Under Review</span></div>
+</article>
+</div>
+</div>
+<div class="shelf">
+<div class="shelf-title">
+<h3 class="ar">سلسلة الكبار: السيرة المحمدية</h3><h3 class="en">Adult Series: The Prophetic Biography</h3>
+<span class="ar">الجزء الأول مطبوع</span><span class="en">Part 1 Printed</span>
+</div>
+<div class="books">
+<article class="book-card">
+<div class="book-image"><img alt="The Prophetic Biography Part 1" decoding="async" loading="lazy" src="assets/adult-part-1.jpg"/></div>
+<div class="book-body"><h4>The Prophetic Biography — Part 1</h4>
+<p class="ar">البدايات والسنوات الأولى في صياغة موجهة للقارئ البالغ وطلاب العلم.</p>
+<p class="en">The early years, written for adult readers, educators, and students of knowledge.</p>
+<span class="badge done ar">مطبوع</span><span class="badge done en">Printed</span><div class="book-meta"><span class="ar">📄 172 صفحة</span><span class="en">📄 172 pages</span></div><button class="book-preview-btn" data-pdf="assets/prophetic-biography.pdf" data-title-ar="السيرة النبوية" data-title-en="The Prophetic Biography" type="button"><span class="ar">📖 استعراض الكتاب</span><span class="en">📖 Preview Book</span></button></div>
+</article>
+<article class="book-card">
+<div class="book-image"><img alt="The Prophetic Biography Part 2" decoding="async" loading="lazy" src="assets/adult-part-2.jpg"/></div>
+<div class="book-body"><h4>The Prophetic Biography — Part 2</h4>
+<p class="ar">مرحلة الدعوة المكية ضمن مشروع السيرة الموجه للكبار.</p>
+<p class="en">The Meccan mission within the adult Seerah publishing project.</p>
+<span class="badge progress ar">تحت المراجعة</span><span class="badge progress en">Under Review</span></div>
+</article>
+<article class="book-card">
+<div class="book-image"><img alt="The Prophetic Biography Part 3" decoding="async" loading="lazy" src="assets/adult-part-3.jpg"/></div>
+<div class="book-body"><h4>The Prophetic Biography — Part 3</h4>
+<p class="ar">العهد المدني واستكمال السلسلة العلمية والتربوية.</p>
+<p class="en">The Medina era, completing the educational adult series.</p>
+<span class="badge progress ar">تحت المراجعة</span><span class="badge progress en">Under Review</span></div>
+</article>
+</div>
+</div>
+<div class="shelf tajweed-series-shelf">
+<div class="shelf-title">
+<h3 class="ar">سلسلة إعلام القراء</h3><h3 class="en">I‘lam Al-Qurra’ Tajweed Series</h3>
+<span class="ar">سلسلة تعليمية متدرجة</span><span class="en">A Progressive Educational Series</span>
+</div>
+<div class="books tajweed-series">
+<article class="book-card tajweed-volume">
+<div class="book-image"><img alt="الجزء الأول: تأسيس المبتدئين في أحكام التجويد" decoding="async" loading="lazy" src="assets/tajweed-part-1.webp"/></div>
+<div class="book-body"><h4 class="ar">تأسيس المبتدئين في أحكام التجويد</h4><h4 class="en">Foundations of Tajweed for Beginners</h4>
+<p class="ar">الجزء الأول من سلسلة تعليمية متدرجة في أحكام التجويد والتلاوة.</p><p class="en">Part one of a progressive educational series in Tajweed and recitation.</p>
+<span class="badge done ar">مطبوع</span><span class="badge done en">Printed</span></div>
+</article>
+<article class="book-card tajweed-volume">
+<div class="book-image"><img alt="الجزء الثاني: تنمية المهارات التطبيقية في التجويد" decoding="async" loading="lazy" src="assets/tajweed-part-2.webp"/></div>
+<div class="book-body"><h4 class="ar">تنمية المهارات التطبيقية في التجويد</h4><h4 class="en">Developing Applied Tajweed Skills</h4>
+<p class="ar">الجزء الثاني، ويركز على تنمية التطبيق العملي لأحكام التجويد.</p><p class="en">Part two, focused on developing practical application of Tajweed rules.</p>
+<span class="badge progress ar">تحت الطبع</span><span class="badge progress en">In Print Preparation</span></div>
+</article>
+<article class="book-card tajweed-volume">
+<div class="book-image"><img alt="الجزء الثالث: الإتقان في القراءة والإقراء" decoding="async" loading="lazy" src="assets/tajweed-part-3.webp"/></div>
+<div class="book-body"><h4 class="ar">الإتقان في القراءة والإقراء</h4><h4 class="en">Mastery in Recitation and Instruction</h4>
+<p class="ar">الجزء الثالث، ويعالج مستوى الإتقان في القراءة والإقراء.</p><p class="en">Part three, addressing mastery in recitation and Qur’anic instruction.</p>
+<span class="badge progress ar">تحت الطبع</span><span class="badge progress en">In Print Preparation</span></div>
+</article>
+</div>
+<div class="tajweed-preview-wrap"><button class="book-preview-btn tajweed-preview" data-pdf="assets/tajweed-reference.pdf" data-title-ar="إعلام القراء بأحكام القراءة والإقراء" data-title-en="I‘lam Al-Qurra’ — Complete Book" type="button"><span class="ar">📖 استعراض الكتاب كاملًا</span><span class="en">📖 Preview the Complete Book</span></button></div>
+</div>
+</div>
+</section>
+<section class="recognition alt" id="recognition"><div class="container">
+<h2 class="title ar">التكريمات والإنجازات</h2><h2 class="title en">Recognition &amp; Awards</h2>
+<p class="subtitle ar">محطات موثقة تعكس جودة الأداء والمساهمة في تطوير البيئة التعليمية.</p><p class="subtitle en">Documented milestones reflecting professional quality and school improvement contribution.</p>
+<div class="recognition-grid">
+<article class="recognition-feature"><div class="award-mark">2025</div><div><h3 class="ar">جائزة الشركة الوطنية للتعليم</h3><h3 class="en">National Company for Learning &amp; Education Award</h3><p class="ar">الحصول على المركز الثاني في جائزة الشركة الوطنية للتعليم لعام 2025.</p><p class="en">Second place in the National Company for Learning &amp; Education Award 2025.</p></div></article>
+<div class="recognition-list">
+<article><span>◎</span><div><b>Cognia</b><small class="ar">شهادة تقدير للمساهمة في الاعتماد الأكاديمي — 2021</small><small class="en">Recognition for academic accreditation contribution — 2021</small></div></article>
+<article><span>◇</span><div><b>AIAA</b><small class="ar">شهادة تقدير من جمعية الاعتماد الأمريكية الدولية — 2020</small><small class="en">Recognition from the American International Accreditation Association — 2020</small></div></article>
+<article><span>✦</span><div><b class="ar">خطابات شكر وتقدير</b><b class="en">Appreciation Letters</b><small class="ar">نظير الجهود المتميزة في التطوير المهني والبرامج التعليمية.</small><small class="en">For distinguished contributions to professional development and educational programs.</small></div></article>
+</div></div></div></section>
+<section class="contact" id="contact"><div class="container">
+<h2 class="title ar">تواصل معي</h2><h2 class="title en">Contact</h2>
+<p class="contact-intro ar">أرسل رسالتك مباشرة عبر واتساب، وسأطّلع عليها في أقرب وقت.</p>
+<p class="contact-intro en">Send your message directly through WhatsApp and I will review it as soon as possible.</p>
+<div class="contact-layout">
+<form class="whatsapp-form" id="whatsappForm">
+<div class="form-grid">
+<label><span class="ar">الاسم</span><span class="en">Name</span><input autocomplete="name" id="contactName" required="" type="text"/></label>
+<label><span class="ar">البريد الإلكتروني</span><span class="en">Email</span><input autocomplete="email" id="contactEmail" required="" type="email"/></label>
+</div>
+<label><span class="ar">الموضوع</span><span class="en">Subject</span><input id="contactSubject" required="" type="text"/></label>
+<label><span class="ar">الرسالة</span><span class="en">Message</span><textarea id="contactMessage" required="" rows="4"></textarea></label>
+<button class="whatsapp-submit" type="submit"><span class="ar">إرسال عبر واتساب</span><span class="en">Send via WhatsApp</span></button>
+<p class="direct-whatsapp"><span class="ar">أو تواصل مباشرة عبر واتساب:</span><span class="en">Or contact directly on WhatsApp:</span> <a href="https://wa.me/966559461920" rel="noopener noreferrer" target="_blank">+966 55 946 1920</a></p>
+</form>
+<div class="contact-side">
+<a class="contact-mini" href="tel:+966559461920"><strong class="ar">اتصال</strong><strong class="en">Call</strong><span>+966 55 946 1920</span></a>
+<a class="contact-mini" href="https://mail.google.com/mail/?view=cm&fs=1&to=samysuliman15%40gmail.com" target="_blank" rel="noopener noreferrer"><strong class="ar">البريد الإلكتروني</strong><strong class="en">Email</strong><span>samysuliman15@gmail.com</span></a>
+<a class="contact-mini" href="https://www.linkedin.com/in/samy-suliman-3342bb212/" rel="noopener noreferrer" target="_blank"><strong>LinkedIn</strong><span class="ar">الملف المهني</span><span class="en">Professional profile</span></a>
+</div></div>
+</div></section>
+
+<div aria-hidden="true" aria-labelledby="tourTitle" aria-modal="true" class="tour-modal" id="introTour" role="dialog">
+<div class="tour-panel">
+<button class="tour-close" id="tourClose" type="button" aria-label="إغلاق الجولة">×</button>
+<div class="tour-top"><img class="tour-avatar" src="assets/portrait-only.jpg" alt="سامي سليمان"/><div><span class="tour-kicker" id="tourKicker"></span><h2 class="tour-title" id="tourTitle"></h2></div></div>
+<div class="tour-body" id="tourBody"></div>
+<div class="tour-progress-wrap"><div class="tour-progress-meta"><span id="tourCounter"></span><span id="tourTime">نحو دقيقتين</span></div><div class="tour-progress"><div class="tour-progress-bar" id="tourProgressBar"></div></div></div>
+<div class="tour-actions">
+<button class="tour-skip" id="tourSkip" type="button">إنهاء الجولة</button>
+<div class="tour-nav-group" id="tourNavGroup"><button class="tour-btn" id="tourPrev" type="button">السابق</button><button class="tour-btn primary" id="tourNext" type="button">التالي</button></div>
+<div class="tour-final-actions" id="tourFinalActions" hidden>
+<a class="tour-btn primary" id="tourContact" href="#contact">تواصل معي</a>
+<button class="tour-btn gold" id="tourExplore" data-open-explore type="button">شاهد ملفي المهني</button>
+</div></div>
+</div></div>
+<div aria-hidden="true" aria-labelledby="exploreTitle" aria-modal="true" class="tour-modal explore-modal" id="exploreHub" role="dialog">
+<div class="tour-panel explore-panel">
+<button class="tour-close" id="exploreClose" type="button" aria-label="إغلاق">×</button>
+<span class="tour-kicker ar">كل أقسام الموقع في مكان واحد</span><span class="tour-kicker en">All portfolio sections in one place</span>
+<h2 class="tour-title ar" id="exploreTitle">شاهد ملفي المهني</h2><h2 class="tour-title en">View My Professional Profile</h2>
+<div class="explore-links ar">
+<a href="#why">نبذة عني</a><a href="#experience">الخبرات المهنية والقيادية</a><a href="#quality">الجودة والإنتاجية</a><a href="#impact">الأثر المهني</a><a href="#quran">القرآن والإقراء</a><a href="#library">المؤلفات</a><a href="articles.html">المقالات والأبحاث</a><a href="#recognition">التكريمات</a><a href="#contact">تواصل معي</a>
+</div>
+<div class="explore-links en">
+<a href="#why">About Me</a><a href="#experience">Professional &amp; Leadership Experience</a><a href="#quality">Quality &amp; Productivity</a><a href="#impact">Professional Impact</a><a href="#quran">Qur’an &amp; Ijazah</a><a href="#library">Publications</a><a href="articles.html">Articles &amp; Research</a><a href="#recognition">Recognition</a><a href="#contact">Contact Me</a>
+</div>
+</div></div>
+<div aria-hidden="true" aria-modal="true" class="book-modal" id="bookModal" role="dialog">
+<div class="book-modal-panel">
+<button aria-label="إغلاق" class="modal-close" id="closeBook" type="button">×</button>
+<h3 id="bookModalTitle"></h3>
+<div class="flipbook-toolbar"><button id="zoomOut" type="button" aria-label="تصغير">−</button><span id="zoomIndicator">100%</span><button id="zoomIn" type="button" aria-label="تكبير">+</button></div>
+<div class="flipbook-stage"><div class="page-spread"><canvas id="pdfCanvas"></canvas><canvas id="pdfCanvas2"></canvas></div><div class="page-loading ar">جارٍ تحميل الصفحات...</div><div class="page-loading en">Loading pages...</div></div>
+<div class="book-controls"><button id="prevPage" type="button"><span class="ar">السابق</span><span class="en">Previous</span></button><span id="pageIndicator">1 / 1</span><button id="nextPage" type="button"><span class="ar">التالي</span><span class="en">Next</span></button></div>
+</div>
+</div>
+<button aria-label="العودة للأعلى" class="back-to-top" id="backToTop" type="button">↑</button>
+<footer class="footer-main"><div class="container">
+<div class="footer-bottom">© 2026 Samy Suliman — Professional Portfolio</div></div></footer>
 <script>
-(function(){
- const body=document.body, ar=document.getElementById('arBtn'), en=document.getElementById('enBtn');
- function setLang(lang){
-  const isEn=lang==='en';body.classList.toggle('english',isEn);
-  document.documentElement.lang=lang;document.documentElement.dir=isEn?'ltr':'rtl';
-  ar.classList.toggle('active',!isEn);en.classList.toggle('active',isEn);
-  localStorage.setItem('rasheedLanguage',lang);
- }
- ar.onclick=()=>setLang('ar'); en.onclick=()=>setLang('en');
- setLang(localStorage.getItem('rasheedLanguage')||'ar');
-})();
-</script>
-
-<script id="v72-interface-js">
-(function(){
- const topbar=document.querySelector('.topbar');
- const question=document.getElementById('academyQuestion');
- function applyCompact(){ if(topbar) topbar.classList.toggle('is-compact',window.scrollY>45); }
- window.addEventListener('scroll',applyCompact,{passive:true}); applyCompact();
-
- document.querySelectorAll('[data-question-ar]').forEach(btn=>{
-   btn.addEventListener('click',()=>{
-     const en=document.body.classList.contains('english');
-     if(question){ question.value=en?btn.dataset.questionEn:btn.dataset.questionAr; question.focus(); }
-   });
+// Always open the portfolio at the introductory hero section.
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.addEventListener('pageshow', function(){
+ if (window.location.hash) history.replaceState(null, '', window.location.pathname + window.location.search);
+ window.scrollTo(0, 0);
+ requestAnimationFrame(function(){ window.scrollTo(0, 0); });
+});
+function setMenuState(open){
+ const menu=document.getElementById('mobileMenu');
+ const btn=document.getElementById('menuToggle');
+ if(!menu || !btn) return;
+ const english=document.body.classList.contains('english');
+ menu.classList.toggle('open',open);
+ btn.setAttribute('aria-expanded',String(open));
+ btn.setAttribute('aria-label',open?(english?'Close menu':'إغلاق القائمة'):(english?'Open menu':'فتح القائمة'));
+ document.body.classList.toggle('menu-open',open && window.innerWidth<=720);
+}
+function toggleLang(){
+ setMenuState(false);
+ document.body.classList.toggle('english');
+ const english=document.body.classList.contains('english');
+ document.documentElement.lang=english?'en':'ar';
+ document.documentElement.dir=english?'ltr':'rtl';
+ document.title=english?'Samy Suliman | Professional Portfolio':'سامي سليمان | الملف المهني والمكتبة التعليمية';
+ const btn=document.getElementById('menuToggle');
+ if(btn) btn.setAttribute('aria-label',english?'Open menu':'فتح القائمة');
+}
+const menuToggleButton=document.getElementById('menuToggle');
+if(menuToggleButton){
+ menuToggleButton.addEventListener('click',function(event){
+  event.preventDefault();event.stopPropagation();
+  const menu=document.getElementById('mobileMenu');
+  setMenuState(!menu.classList.contains('open'));
  });
-
- function syncQuestionPlaceholder(){
-   if(!question) return;
-   question.placeholder=document.body.classList.contains('english')
-      ? question.dataset.enPlaceholder : question.dataset.arPlaceholder;
- }
- syncQuestionPlaceholder();
- const observer=new MutationObserver(syncQuestionPlaceholder);
- observer.observe(document.body,{attributes:true,attributeFilter:['class']});
-
- const modal=document.getElementById('academyFounderTour');
- if(!modal) return;
- const kicker=document.getElementById('academyTourKicker');
- const title=document.getElementById('academyTourTitle');
- const body=document.getElementById('academyTourBody');
- const counter=document.getElementById('academyTourCounter');
- const bar=document.getElementById('academyTourBar');
- const time=document.getElementById('academyTourTime');
- const prev=modal.querySelector('.academy-tour-prev');
- const next=modal.querySelector('.academy-tour-next');
- const close=modal.querySelector('.academy-tour-close');
- const exit=modal.querySelector('.academy-tour-exit');
- let step=0;
-
- const cards=[
-  {ar:['رؤية تربوية','المؤسس ورؤية أكاديمية رشيد','<p>مربٍ قبل أن يكون معلمًا، يؤمن بأن تعليم القرآن والعلوم الشرعية لا يكتمل بالمعلومة وحدها، بل ببناء الشخصية والقيم والقدرة على تطبيق العلم.</p>'],en:['Educational Vision','The Founder and Rasheed Academy Vision','<p>An educator before being a teacher, believing that Qur’an and Islamic studies education must build knowledge, character, values, and practice together.</p>']},
-  {ar:['خبرة تعليمية راسخة','أكثر من عشرين عامًا في التعليم','<ul><li>تدريس القرآن الكريم والتجويد والفقه والحديث والتفسير والعقيدة.</li><li>خبرة في المراحل المتوسطة والثانوية والبيئات الدولية.</li><li>تعليم العربية للناطقين بغيرها.</li></ul>'],en:['Extensive Teaching Experience','More Than 20 Years in Education','<ul><li>Teaching Qur’an, Tajweed, Fiqh, Hadith, Tafsir, and Aqeedah.</li><li>Experience across middle, secondary, and international education.</li><li>Arabic teaching for non-native speakers.</li></ul>']},
-  {ar:['قيادة أكاديمية','الإشراف وتطوير المعلمين','<ul><li>رئاسة قسم الدراسات الإسلامية والإشراف على فريق من المعلمين.</li><li>الزيارات الصفية والتقويم وتطوير الخطط التعليمية.</li><li>تقديم برامج تدريبية وورش مهنية للمعلمين.</li></ul>'],en:['Academic Leadership','Supervision and Teacher Development','<ul><li>Led an Islamic Studies department and supervised teachers.</li><li>Classroom observation, evaluation, and instructional planning.</li><li>Delivered professional development workshops.</li></ul>']},
-  {ar:['أساس علمي موثوق','المؤهلات العلمية','<ul><li>ليسانس أصول الدين والدعوة – جامعة الأزهر – بتقدير ممتاز.</li><li>دبلومة عامة في التربية.</li><li>التخصص: التفسير وعلوم القرآن.</li><li>إجازة في القرآن الكريم بسند متصل.</li></ul>'],en:['Trusted Academic Foundation','Qualifications','<ul><li>B.A. in Fundamentals of Religion and Da‘wah – Al-Azhar University, Excellent.</li><li>General Diploma in Education.</li><li>Specialization in Tafsir and Qur’anic Sciences.</li><li>Qur’an ijazah with connected chain.</li></ul>']},
-  {ar:['منهج متدرج','لماذا أُسست أكاديمية رشيد؟','<p>لتقديم تعليم واضح ومتدرج وموثوق، يبدأ من التأسيس، ثم التلاوة والحفظ والإتقان، ويمتد إلى العلوم الشرعية واللغة العربية، مع مراعاة الفروق الفردية بين المتعلمين.</p>'],en:['Structured Learning','Why Rasheed Academy Was Founded','<p>To provide clear, structured, and trusted learning—from foundations to recitation, memorization, mastery, Islamic studies, and Arabic—while respecting learner differences.</p>']},
-  {ar:['محتوى أصيل','المؤلفات والمواد التعليمية','<p>ألّف المؤسس مواد وكتبًا تعليمية في أحكام التجويد والسيرة النبوية، منها إصدارات ثنائية اللغة، لتقريب العلم وتيسيره للطلاب والمعلمين.</p>'],en:['Original Content','Books and Educational Materials','<p>The founder has authored learning resources in Tajweed and the Prophetic biography, including bilingual editions designed for students and teachers.</p>']},
-  {ar:['جودة ومتابعة','كيف تتعلم في الأكاديمية؟','<ul><li>مسارات واضحة ومخرجات تعلم محددة.</li><li>متابعة فردية وتغذية راجعة مستمرة.</li><li>تقويم مرحلي واختبارات وشهادات.</li><li>ربط المعرفة بالممارسة والسلوك.</li></ul>'],en:['Quality and Follow-up','How Learning Works','<ul><li>Clear paths and defined learning outcomes.</li><li>Individual follow-up and continuous feedback.</li><li>Progress checks, assessments, and certificates.</li><li>Connecting knowledge with practice and conduct.</li></ul>']},
-  {ar:['أثر يمتد','رؤية الأكاديمية للمستقبل','<p>أن تصبح أكاديمية رشيد منصة تعليمية موثوقة تجمع التعليم المباشر، والمحتوى الرقمي، والاختبارات، والشهادات، وخدمة الإجازة والسند في بيئة واحدة.</p>'],en:['Lasting Impact','The Academy’s Future Vision','<p>To become a trusted learning platform combining live teaching, digital content, assessments, certificates, and ijazah pathways in one environment.</p>']},
-  {ar:['ابدأ من هنا','رسالة المؤسس إليك','<p>مهما كان مستواك الآن، يمكنك أن تبدأ خطوة صحيحة ومتدرجة. اختر المسار المناسب، وابدأ رحلتك مع القرآن الكريم والعلم النافع في أكاديمية رشيد.</p>'],en:['Start Here','A Message from the Founder','<p>Whatever your current level, you can begin with a clear and structured step. Choose your path and start your journey with the Qur’an and beneficial knowledge.</p>']}
- ];
-
- function isEn(){return document.body.classList.contains('english')}
- function render(){
-   const lang=isEn()?'en':'ar', c=cards[step][lang];
-   kicker.textContent=c[0]; title.textContent=c[1]; body.innerHTML=c[2];
-   counter.textContent=(step+1)+' / '+cards.length;
-   bar.style.width=((step+1)/cards.length*100)+'%';
-   time.textContent=isEn()?'About 2 minutes':'نحو دقيقتين';
-   prev.disabled=step===0;
-   next.querySelector(isEn()?'[data-en]':'[data-ar]').textContent=step===cards.length-1?(isEn()?'Finish':'إنهاء'):(isEn()?'Next':'التالي');
- }
- function openTour(){step=0;render();modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.classList.add('tour-open')}
- function closeTour(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.classList.remove('tour-open')}
- document.querySelectorAll('[data-open-founder-tour]').forEach(b=>b.addEventListener('click',openTour));
- close.addEventListener('click',closeTour);exit.addEventListener('click',closeTour);
- modal.addEventListener('click',e=>{if(e.target===modal)closeTour()});
- prev.addEventListener('click',()=>{if(step>0){step--;render()}});
- next.addEventListener('click',()=>{if(step<cards.length-1){step++;render()}else closeTour()});
- document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeTour()});
-})();
+}
+document.addEventListener('click',function(event){
+ const menu=document.getElementById('mobileMenu');
+ const btn=document.getElementById('menuToggle');
+ if(menu && btn && menu.classList.contains('open') && !menu.contains(event.target) && !btn.contains(event.target)) setMenuState(false);
+});
+document.addEventListener('keydown',function(event){if(event.key==='Escape') setMenuState(false);});
+document.querySelectorAll('.mobile-menu a').forEach(function(link){link.addEventListener('click',function(){setMenuState(false);});});
+window.addEventListener('resize',function(){if(window.innerWidth>720) document.body.classList.remove('menu-open');});
 </script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script><script type="module">
+import * as pdfjsLib from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs';
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs';
+let pdfDoc=null,currentPage=1,rendering=false,pendingPage=null,zoom=1;
+const modal=document.getElementById('bookModal');
+const canvas=document.getElementById('pdfCanvas'), canvas2=document.getElementById('pdfCanvas2');
+const indicator=document.getElementById('pageIndicator'), prev=document.getElementById('prevPage'), next=document.getElementById('nextPage');
+const zoomIndicator=document.getElementById('zoomIndicator');
+function isTwoPage(){return window.innerWidth>=900;}
+async function drawPdfPage(pageNum,targetCanvas,cssScale){
+ if(pageNum>pdfDoc.numPages){targetCanvas.hidden=true;return;}
+ targetCanvas.hidden=false;
+ const page=await pdfDoc.getPage(pageNum);
+ const base=page.getViewport({scale:1});
+ const dpr=Math.min(window.devicePixelRatio||1,2.5);
+ const viewport=page.getViewport({scale:cssScale*dpr});
+ targetCanvas.width=Math.floor(viewport.width);
+ targetCanvas.height=Math.floor(viewport.height);
+ targetCanvas.style.width=Math.floor(base.width*cssScale)+'px';
+ targetCanvas.style.height=Math.floor(base.height*cssScale)+'px';
+ await page.render({canvasContext:targetCanvas.getContext('2d',{alpha:false}),viewport}).promise;
+}
+async function renderPage(num){
+ if(!pdfDoc)return;
+ rendering=true;
+ document.querySelectorAll('.page-loading').forEach(x=>x.style.display='block');
+ const stage=document.querySelector('.flipbook-stage');
+ const page=await pdfDoc.getPage(num);
+ const base=page.getViewport({scale:1});
+ const two=isTwoPage();
+ const usableW=Math.max(stage.clientWidth-(two?70:36),320);
+ const usableH=Math.max(stage.clientHeight-36,320);
+ const perPageW=two?usableW/2:usableW;
+ const fit=Math.min(perPageW/base.width,usableH/base.height);
+ const cssScale=Math.max(.55,fit*zoom);
+ document.querySelector('.page-spread').classList.add('turning');
+ await Promise.all([drawPdfPage(num,canvas,cssScale), two?drawPdfPage(num+1,canvas2,cssScale):Promise.resolve(canvas2.hidden=true)]);
+ setTimeout(()=>document.querySelector('.page-spread').classList.remove('turning'),220);
+ currentPage=num;
+ const shownEnd=two?Math.min(num+1,pdfDoc.numPages):num;
+ indicator.textContent=shownEnd===num?`${num} / ${pdfDoc.numPages}`:`${num}–${shownEnd} / ${pdfDoc.numPages}`;
+ prev.disabled=num<=1; next.disabled=shownEnd>=pdfDoc.numPages;
+ zoomIndicator.textContent=Math.round(zoom*100)+'%';
+ document.querySelectorAll('.page-loading').forEach(x=>x.style.display='none');
+ rendering=false;
+ if(pendingPage){const p=pendingPage;pendingPage=null;renderPage(p)}
+}
+function step(){return isTwoPage()?2:1}
+function queue(n){if(!pdfDoc)return;n=Math.max(1,Math.min(n,pdfDoc.numPages));if(rendering)pendingPage=n;else renderPage(n)}
+document.querySelectorAll('.book-preview-btn').forEach(btn=>btn.addEventListener('click',async()=>{
+ document.getElementById('bookModalTitle').textContent=document.body.classList.contains('english')?btn.dataset.titleEn:btn.dataset.titleAr;
+ modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+ zoom=1;pdfDoc=await pdfjsLib.getDocument(btn.dataset.pdf).promise;currentPage=1;renderPage(1)
+}));
+prev.addEventListener('click',()=>queue(currentPage-step()));next.addEventListener('click',()=>queue(currentPage+step()));
+document.getElementById('zoomIn').addEventListener('click',()=>{zoom=Math.min(zoom+.15,2);renderPage(currentPage)});
+document.getElementById('zoomOut').addEventListener('click',()=>{zoom=Math.max(zoom-.15,.7);renderPage(currentPage)});
+function closeModal(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';pdfDoc=null;[canvas,canvas2].forEach(c=>{c.getContext('2d').clearRect(0,0,c.width,c.height)})}
+document.getElementById('closeBook').addEventListener('click',closeModal);modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();if(modal.classList.contains('open')&&e.key==='ArrowLeft')queue(currentPage+step());if(modal.classList.contains('open')&&e.key==='ArrowRight')queue(currentPage-step())});
+let resizeTimer;window.addEventListener('resize',()=>{if(!pdfDoc)return;clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>renderPage(currentPage),180)});
+document.getElementById('whatsappForm').addEventListener('submit',e=>{e.preventDefault();const en=document.body.classList.contains('english');const name=document.getElementById('contactName').value.trim(),email=document.getElementById('contactEmail').value.trim(),subject=document.getElementById('contactSubject').value.trim(),message=document.getElementById('contactMessage').value.trim();const text=en?`Hello Mr. Samy Suliman,\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`:`السلام عليكم أستاذ سامي سليمان،\n\nالاسم: ${name}\nالبريد الإلكتروني: ${email}\nالموضوع: ${subject}\n\nالرسالة:\n${message}`;window.open('https://wa.me/966559461920?text='+encodeURIComponent(text),'_blank','noopener')});
+const topBtn=document.getElementById('backToTop');window.addEventListener('scroll',()=>topBtn.classList.toggle('show',window.scrollY>500));topBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+</script>
+<script src="assets/tour.js?v=4.5" defer></script>
+<script src="assets/pwa.js" defer></script>
 </body>
 </html>
