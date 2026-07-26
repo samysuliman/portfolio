@@ -1,28 +1,14 @@
 <!DOCTYPE html><html lang="ar" dir="rtl"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>تسجيل الدخول | أكاديمية رشيد</title><link rel="stylesheet" href="assets/css/styles.css"></head><body>
-
-<header class="topbar">
-  <div class="container nav">
-    <a class="brand" href="index.html">
-      <span class="brand-mark">ر</span>
-      <span>أكاديمية رشيد<small>للقرآن الكريم والعلوم الشرعية</small></span>
-    </a>
-    <nav class="nav-links">
-      <a href="index.html#why">لماذا رشيد؟</a>
-      <a href="index.html#journey">رحلة القرآن</a>
-      <a href="index.html#how">كيف تبدأ؟</a>
-    </nav>
-    <a class="btn btn-primary" href="login.html">تسجيل الدخول</a>
-  </div>
-</header>
-
-<main class="page"><div class="container" style="max-width:520px">
-<h1 class="page-title">تسجيل الدخول</h1><p class="muted">اختر لوحة تجريبية للدخول إليها.</p>
-<div class="panel">
-<div class="field"><label>البريد الإلكتروني</label><input value="demo@rasheed.academy"></div>
-<div class="field" style="margin-top:14px"><label>كلمة المرور</label><input type="password" value="12345678"></div>
-<a class="btn btn-primary" style="width:100%;margin-top:20px" href="student/dashboard.html">دخول كطالب</a>
-<a class="btn btn-secondary" style="width:100%;margin-top:10px" href="teacher/dashboard.html">دخول كمعلم</a>
-<a class="btn btn-light" style="width:100%;margin-top:10px" href="admin/dashboard.html">دخول كمدير</a>
-</div></div></main></body></html>
+<title>دخول المدير | أكاديمية رشيد</title><link rel="stylesheet" href="assets/css/styles.css">
+<style>.login-card{max-width:520px;margin:auto}.login-note{margin-top:14px;padding:13px;border-radius:14px;background:var(--emerald-soft);color:var(--emerald-dark)}.login-error{margin-top:14px;padding:13px;border-radius:14px;background:#fff1f1;color:#8f2d2d;border:1px solid #efb2b2}</style></head><body>
+<header class="topbar"><div class="container nav"><a class="brand" href="index.html"><span class="brand-mark">ر</span><span>أكاديمية رشيد<small>للقرآن الكريم والعلوم الشرعية</small></span></a><a class="btn btn-secondary" href="index.html">الرئيسية</a></div></header>
+<main class="page"><div class="container login-card"><h1 class="page-title">دخول إدارة الأكاديمية</h1><p class="muted">هذه الصفحة مخصصة لمدير الأكاديمية والحسابات المخوّلة فقط.</p>
+<div class="panel"><form id="adminLoginForm">
+<div class="field"><label for="email">البريد الإلكتروني</label><input id="email" type="email" autocomplete="username" required placeholder="admin@example.com"></div>
+<div class="field" style="margin-top:14px"><label for="password">كلمة المرور</label><input id="password" type="password" autocomplete="current-password" required placeholder="••••••••"></div>
+<button class="btn btn-primary" style="width:100%;margin-top:20px" type="submit">دخول المدير</button>
+<div id="loginError" class="login-error hide" role="alert"></div>
+<div class="login-note">لن تظهر طلبات التسجيل إلا للحساب الذي تم اعتماده كمدير في Supabase.</div>
+</form></div></div></main>
+<script src="assets/js/admin.js?v=1.0.0"></script></body></html>
