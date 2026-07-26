@@ -1,34 +1,26 @@
 <!DOCTYPE html><html lang="ar" dir="rtl"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>التسجيل | أكاديمية رشيد</title><link rel="stylesheet" href="assets/css/styles.css"></head><body>
-
-<header class="topbar">
-  <div class="container nav">
-    <a class="brand" href="index.html">
-      <span class="brand-mark">ر</span>
-      <span>أكاديمية رشيد<small>للقرآن الكريم والعلوم الشرعية</small></span>
-    </a>
-    <nav class="nav-links">
-      <a href="index.html#why">لماذا رشيد؟</a>
-      <a href="index.html#journey">رحلة القرآن</a>
-      <a href="index.html#how">كيف تبدأ؟</a>
-    </nav>
-    <a class="btn btn-primary" href="login.html">تسجيل الدخول</a>
-  </div>
-</header>
-
+<title>التسجيل | أكاديمية رشيد</title><link rel="stylesheet" href="assets/css/styles.css">
+<style>
+.registration-actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}.wa-submit{background:#075e54;color:#fff;border:0}.contact-note{margin-top:16px;padding:14px;border:1px solid #e3c16f;border-radius:14px;background:#fffaf0}.success-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}@media(max-width:640px){.registration-actions{grid-template-columns:1fr}.page{padding-top:24px}.panel{padding:18px}.form-grid{grid-template-columns:1fr!important}}
+</style></head><body>
+<header class="topbar"><div class="container nav"><a class="brand" href="index.html"><span class="brand-mark">ر</span><span>أكاديمية رشيد<small>للقرآن الكريم والعلوم الشرعية</small></span></a><nav class="nav-links"><a href="index.html#why">لماذا رشيد؟</a><a href="index.html#quran">مسارات القرآن</a><a href="index.html#founder">عن المؤسس</a></nav><a class="btn btn-primary" href="login.html">تسجيل الدخول</a></div></header>
 <main class="page"><div class="container" style="max-width:850px">
-<h1 class="page-title">احجز تقييمك المجاني</h1><p class="muted">نحتاج معلومات بسيطة حتى نرشح لك المسار الأنسب.</p>
-<div class="panel"><form data-demo-form>
+<h1 class="page-title">سجّل في أكاديمية رشيد</h1><p class="muted">أرسل بياناتك الأولية، وسنتواصل معك عبر واتساب لترشيح المسار المناسب وتحديد موعد البداية.</p>
+<div class="panel"><form id="academyRegistration">
 <div class="form-grid">
-<div class="field"><label>الاسم الكامل</label><input required placeholder="اكتب الاسم"></div>
-<div class="field"><label>العمر</label><input required type="number" min="4" placeholder="العمر"></div>
-<div class="field"><label>الدولة</label><input required placeholder="مثال: السعودية"></div>
-<div class="field"><label>رقم واتساب</label><input required placeholder="+966..."></div>
-<div class="field"><label>هدفك الأساسي</label><select required><option value="">اختر</option><option>تعلم القراءة</option><option>تحسين التلاوة</option><option>حفظ القرآن</option><option>الإجازة والسند</option></select></div>
-<div class="field"><label>الوقت المفضل</label><select required><option>صباحًا</option><option>مساءً</option><option>مرن</option></select></div>
+<div class="field"><label for="fullName">الاسم الكامل</label><input id="fullName" name="fullName" required placeholder="اكتب الاسم الكامل"></div>
+<div class="field"><label for="age">العمر</label><input id="age" name="age" required type="number" min="4" max="100" placeholder="العمر"></div>
+<div class="field"><label for="country">الدولة / المدينة</label><input id="country" name="country" required placeholder="مثال: الرياض - السعودية"></div>
+<div class="field"><label for="whatsapp">رقم واتساب</label><input id="whatsapp" name="whatsapp" required inputmode="tel" placeholder="مثال: +9665xxxxxxxx"></div>
+<div class="field"><label for="track">المسار المطلوب</label><select id="track" name="track" required><option value="">اختر المسار</option><option>التأسيس والقراءة</option><option>التلاوة والتجويد</option><option>الحفظ والإتقان</option><option>الإجازة والسند</option><option>العقيدة</option><option>الفقه</option><option>الحديث</option><option>التفسير</option><option>السيرة النبوية</option><option>العربية لغير الناطقين بها</option></select></div>
+<div class="field"><label for="level">المستوى الحالي</label><select id="level" name="level" required><option value="">اختر المستوى</option><option>مبتدئ</option><option>متوسط</option><option>متقدم</option><option>غير متأكد وأحتاج تقييمًا</option></select></div>
+<div class="field"><label for="time">الوقت المفضل</label><select id="time" name="time" required><option value="">اختر الوقت</option><option>صباحًا</option><option>مساءً</option><option>مرن</option></select></div>
+<div class="field"><label for="studentType">التسجيل لـ</label><select id="studentType" name="studentType"><option>نفسي</option><option>ابني / ابنتي</option><option>أكثر من طالب</option></select></div>
+<div class="field" style="grid-column:1/-1"><label for="notes">ملاحظات أو هدف التعلم</label><textarea id="notes" name="notes" rows="4" placeholder="مثال: أرغب في تحسين التلاوة ومراجعة الحفظ..."></textarea></div>
 </div>
-<button class="btn btn-primary" style="margin-top:22px;width:100%">إرسال طلب التقييم</button>
-<div data-success class="notice hide" style="margin-top:18px">تم تسجيل الطلب تجريبيًا. في النسخة الحقيقية سيصل الطلب إلى لوحة الإدارة.</div>
+<div class="registration-actions"><button class="btn btn-primary" type="submit">إرسال التسجيل عبر واتساب</button><a class="btn" href="https://wa.me/966559461920?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%A3%D9%83%D8%A7%D8%AF%D9%8A%D9%85%D9%8A%D8%A9%20%D8%B1%D8%B4%D9%8A%D8%AF" target="_blank" rel="noopener">استفسار سريع عبر واتساب</a></div>
+<div class="contact-note">لن يتم طلب أي بيانات حساسة. بعد الإرسال سيفتح واتساب برسالة مرتبة تحتوي بيانات التسجيل لتراجعها قبل إرسالها.</div>
+<div id="registrationSuccess" class="notice hide" style="margin-top:18px">تم تجهيز طلبك. إذا لم يفتح واتساب تلقائيًا، استخدم زر التواصل المباشر.</div>
 </form></div></div></main>
 <script src="assets/js/app.js"></script></body></html>
