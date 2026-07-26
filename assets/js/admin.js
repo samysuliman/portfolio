@@ -67,12 +67,22 @@ function fmtDate(v){
   return new Intl.DateTimeFormat("ar-SA",{dateStyle:"medium",timeStyle:"short"}).format(new Date(v));
 }
 
+
+async function loadConvertedRegistrationIds(){
+  const res = await api("/rest/v1/students?select=registration_id&registration_id=not.is.null");
+  if(!res.ok) throw new Error(await res.text());
+  const rows = await res.json();
+  window.__convertedRegistrationIds = new Set(rows.map(r=>String(r.registration_id)));
+}
+
 async function loadRegistrations(){
   const ok = await requireAdmin(); if(!ok) return;
   const res = await api("/rest/v1/registrations?select=*&order=created_at.desc");
   if(!res.ok){ throw new Error(await res.text()); }
   const rows = await res.json();
   window.__registrations = rows;
+  try { await loadConvertedRegistrationIds(); }
+  catch(err){ console.error("Converted registrations lookup error:", err); window.__convertedRegistrationIds = new Set(); }
   renderRegistrations(rows);
   renderSummary(rows);
 }
@@ -115,7 +125,11 @@ function renderRegistrations(rows){
       </select></td>
       <td class="row-actions">
         <button class="btn btn-light details-btn" data-id="${esc(r.id)}" type="button">التفاصيل</button>
-        ${(r.status||"new")==="accepted" ? `<button class="btn btn-primary convert-student-btn" data-id="${esc(r.id)}" type="button">تحويل إلى طالب</button>` : ""}
+        ${window.__convertedRegistrationIds?.has(String(r.id))
+          ? `<button class="btn btn-light converted" type="button" disabled>تم التحويل ✓</button>`
+          : ((r.status||"new")==="accepted"
+              ? `<button class="btn btn-primary convert-student-btn" data-id="${esc(r.id)}" type="button">تحويل إلى طالب</button>`
+              : "")}
       </td>
     </tr>`;
   }).join("");
@@ -181,8 +195,9 @@ async function convertRegistrationToStudent(id, button){
   try{
     if(await studentExistsForRegistration(r.id)){
       alert("تم تحويل هذا الطلب إلى طالب بالفعل.");
-      button.textContent = "تم التحويل";
-      button.classList.add("converted");
+      window.__convertedRegistrationIds = window.__convertedRegistrationIds || new Set();
+      window.__convertedRegistrationIds.add(String(r.id));
+      renderRegistrations(window.__registrations || []);
       return;
     }
 
@@ -208,9 +223,10 @@ async function convertRegistrationToStudent(id, button){
 
     if(!res.ok) throw new Error(await res.text());
 
-    button.textContent = "تم التحويل";
-    button.classList.add("converted");
+    window.__convertedRegistrationIds = window.__convertedRegistrationIds || new Set();
+    window.__convertedRegistrationIds.add(String(r.id));
     alert("تم إنشاء ملف الطالب بنجاح.");
+    renderRegistrations(window.__registrations || []);
   }catch(err){
     console.error("Convert student error:", err);
     alert("تعذر تحويل الطلب إلى طالب. تحقق من جدول students والصلاحيات.");
@@ -282,6 +298,37 @@ function renderStudents(rows){
   }));
 }
 
+function teacherStatusLabel(s){
+  return ({active:"نشط",paused:"موقوف مؤقتًا",inactive:"غير نشط"})[s] || s || "نشط";
+}
+
+async function loadTeachers(){
+  const ok = await requireAdmin(); if(!ok) return;
+  const res = await api("/rest/v1/teachers?select=*&order=created_at.asc");
+  if(!res.ok) throw new Error(await res.text());
+  const rows = await res.json();
+  window.__teachers = rows;
+  renderTeachers(rows);
+  document.querySelectorAll("[data-teacher-kpi]").forEach(el=>{
+    const key = el.dataset.teacherKpi;
+    el.textContent = key === "all" ? rows.length : rows.filter(r=>(r.status||"active")===key).length;
+  });
+}
+
+function renderTeachers(rows){
+  const tbody = document.getElementById("teachersBody");
+  if(!tbody) return;
+  const q = (document.getElementById("teacherSearchBox")?.value || "").trim().toLowerCase();
+  const filtered = rows.filter(r=>!q || [r.full_name,r.teacher_code,r.specialization,r.whatsapp].join(" ").toLowerCase().includes(q));
+  if(!filtered.length){ tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--muted)">لا يوجد معلمون مطابقون.</td></tr>`; return; }
+  tbody.innerHTML = filtered.map(r=>`<tr>
+    <td><strong>${esc(r.full_name)}</strong><br><small>${esc(fmtDate(r.created_at))}</small></td>
+    <td>${esc(r.teacher_code)}</td><td>${esc(r.specialization || "—")}</td><td>${esc(r.whatsapp || "—")}</td>
+    <td><span class="status-badge">${esc(teacherStatusLabel(r.status))}</span></td>
+    <td><button class="btn btn-light" type="button" disabled>التفاصيل قريبًا</button></td>
+  </tr>`).join("");
+}
+
 async function doLogin(form){
   const email = form.querySelector("#email").value.trim();
   const password = form.querySelector("#password").value;
@@ -309,6 +356,7 @@ function wireCommon(){
   document.getElementById("statusFilter")?.addEventListener("change",()=>renderRegistrations(window.__registrations||[]));
   document.getElementById("studentSearchBox")?.addEventListener("input",()=>renderStudents(window.__students||[]));
   document.getElementById("studentStatusFilter")?.addEventListener("change",()=>renderStudents(window.__students||[]));
+  document.getElementById("teacherSearchBox")?.addEventListener("input",()=>renderTeachers(window.__teachers||[]));
   document.getElementById("closeDialog")?.addEventListener("click",()=>document.getElementById("detailsDialog")?.close());
 }
 
@@ -318,4 +366,5 @@ document.addEventListener("DOMContentLoaded",()=>{
   if(document.body.dataset.adminPage === "registrations") loadRegistrations().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
   if(document.body.dataset.adminPage === "dashboard") loadRegistrations().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
   if(document.body.dataset.adminPage === "students") loadStudents().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
+  if(document.body.dataset.adminPage === "teachers") loadTeachers().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
 });
