@@ -67,12 +67,22 @@ function fmtDate(v){
   return new Intl.DateTimeFormat("ar-SA",{dateStyle:"medium",timeStyle:"short"}).format(new Date(v));
 }
 
+
+async function loadConvertedRegistrationIds(){
+  const res = await api("/rest/v1/students?select=registration_id&registration_id=not.is.null");
+  if(!res.ok) throw new Error(await res.text());
+  const rows = await res.json();
+  window.__convertedRegistrationIds = new Set(rows.map(r=>String(r.registration_id)));
+}
+
 async function loadRegistrations(){
   const ok = await requireAdmin(); if(!ok) return;
   const res = await api("/rest/v1/registrations?select=*&order=created_at.desc");
   if(!res.ok){ throw new Error(await res.text()); }
   const rows = await res.json();
   window.__registrations = rows;
+  try { await loadConvertedRegistrationIds(); }
+  catch(err){ console.error("Converted registrations lookup error:", err); window.__convertedRegistrationIds = new Set(); }
   renderRegistrations(rows);
   renderSummary(rows);
 }
@@ -115,7 +125,11 @@ function renderRegistrations(rows){
       </select></td>
       <td class="row-actions">
         <button class="btn btn-light details-btn" data-id="${esc(r.id)}" type="button">التفاصيل</button>
-        ${(r.status||"new")==="accepted" ? `<button class="btn btn-primary convert-student-btn" data-id="${esc(r.id)}" type="button">تحويل إلى طالب</button>` : ""}
+        ${window.__convertedRegistrationIds?.has(String(r.id))
+          ? `<button class="btn btn-light converted" type="button" disabled>تم التحويل ✓</button>`
+          : ((r.status||"new")==="accepted"
+              ? `<button class="btn btn-primary convert-student-btn" data-id="${esc(r.id)}" type="button">تحويل إلى طالب</button>`
+              : "")}
       </td>
     </tr>`;
   }).join("");
@@ -181,8 +195,9 @@ async function convertRegistrationToStudent(id, button){
   try{
     if(await studentExistsForRegistration(r.id)){
       alert("تم تحويل هذا الطلب إلى طالب بالفعل.");
-      button.textContent = "تم التحويل";
-      button.classList.add("converted");
+      window.__convertedRegistrationIds = window.__convertedRegistrationIds || new Set();
+      window.__convertedRegistrationIds.add(String(r.id));
+      renderRegistrations(window.__registrations || []);
       return;
     }
 
@@ -208,9 +223,10 @@ async function convertRegistrationToStudent(id, button){
 
     if(!res.ok) throw new Error(await res.text());
 
-    button.textContent = "تم التحويل";
-    button.classList.add("converted");
+    window.__convertedRegistrationIds = window.__convertedRegistrationIds || new Set();
+    window.__convertedRegistrationIds.add(String(r.id));
     alert("تم إنشاء ملف الطالب بنجاح.");
+    renderRegistrations(window.__registrations || []);
   }catch(err){
     console.error("Convert student error:", err);
     alert("تعذر تحويل الطلب إلى طالب. تحقق من جدول students والصلاحيات.");
