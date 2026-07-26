@@ -298,6 +298,37 @@ function renderStudents(rows){
   }));
 }
 
+function teacherStatusLabel(s){
+  return ({active:"نشط",paused:"موقوف مؤقتًا",inactive:"غير نشط"})[s] || s || "نشط";
+}
+
+async function loadTeachers(){
+  const ok = await requireAdmin(); if(!ok) return;
+  const res = await api("/rest/v1/teachers?select=*&order=created_at.asc");
+  if(!res.ok) throw new Error(await res.text());
+  const rows = await res.json();
+  window.__teachers = rows;
+  renderTeachers(rows);
+  document.querySelectorAll("[data-teacher-kpi]").forEach(el=>{
+    const key = el.dataset.teacherKpi;
+    el.textContent = key === "all" ? rows.length : rows.filter(r=>(r.status||"active")===key).length;
+  });
+}
+
+function renderTeachers(rows){
+  const tbody = document.getElementById("teachersBody");
+  if(!tbody) return;
+  const q = (document.getElementById("teacherSearchBox")?.value || "").trim().toLowerCase();
+  const filtered = rows.filter(r=>!q || [r.full_name,r.teacher_code,r.specialization,r.whatsapp].join(" ").toLowerCase().includes(q));
+  if(!filtered.length){ tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--muted)">لا يوجد معلمون مطابقون.</td></tr>`; return; }
+  tbody.innerHTML = filtered.map(r=>`<tr>
+    <td><strong>${esc(r.full_name)}</strong><br><small>${esc(fmtDate(r.created_at))}</small></td>
+    <td>${esc(r.teacher_code)}</td><td>${esc(r.specialization || "—")}</td><td>${esc(r.whatsapp || "—")}</td>
+    <td><span class="status-badge">${esc(teacherStatusLabel(r.status))}</span></td>
+    <td><button class="btn btn-light" type="button" disabled>التفاصيل قريبًا</button></td>
+  </tr>`).join("");
+}
+
 async function doLogin(form){
   const email = form.querySelector("#email").value.trim();
   const password = form.querySelector("#password").value;
@@ -325,6 +356,7 @@ function wireCommon(){
   document.getElementById("statusFilter")?.addEventListener("change",()=>renderRegistrations(window.__registrations||[]));
   document.getElementById("studentSearchBox")?.addEventListener("input",()=>renderStudents(window.__students||[]));
   document.getElementById("studentStatusFilter")?.addEventListener("change",()=>renderStudents(window.__students||[]));
+  document.getElementById("teacherSearchBox")?.addEventListener("input",()=>renderTeachers(window.__teachers||[]));
   document.getElementById("closeDialog")?.addEventListener("click",()=>document.getElementById("detailsDialog")?.close());
 }
 
@@ -334,4 +366,5 @@ document.addEventListener("DOMContentLoaded",()=>{
   if(document.body.dataset.adminPage === "registrations") loadRegistrations().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
   if(document.body.dataset.adminPage === "dashboard") loadRegistrations().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
   if(document.body.dataset.adminPage === "students") loadStudents().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
+  if(document.body.dataset.adminPage === "teachers") loadTeachers().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
 });
