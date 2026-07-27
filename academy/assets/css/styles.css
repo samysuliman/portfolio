@@ -272,51 +272,56 @@ input,select{width:100%;padding:13px 14px;border:1px solid #cddbd5;border-radius
 @media(max-width:600px){.quran-range-fields{grid-template-columns:1fr 1fr}}
 
 
-/* ===== Quran record desktop layout v4 =====
-   Mobile rules remain unchanged. */
-@media (min-width:901px){
-  body[data-admin-page="student-record"] .quran-record-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:18px;
-  }
-
-  /* Give the two range-based sections the full content width on desktop. */
-  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(3),
-  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(4){
-    grid-column:1 / -1;
-  }
-
-  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(3) .surah-grid,
-  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(4) .surah-grid{
-    grid-template-columns:repeat(4,minmax(0,1fr));
-    max-height:320px;
-  }
-
-  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(3) .surah-check,
-  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(4) .surah-check{
-    min-height:44px;
-    padding:9px 11px;
-    font-size:14px;
-  }
-
-  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(3) .quran-range-drafts,
-  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(4) .quran-range-drafts{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
-
-  body[data-admin-page="student-record"] .quran-card{
-    padding:20px;
-  }
-
-  body[data-admin-page="student-record"] .surah-picker summary{
-    min-height:48px;
-    font-size:15px;
-  }
+/* ===== Quran selected-surah chips v5 ===== */
+.quran-selected-box{
+  min-height:58px;
+  border:1px solid #d7e5e0;
+  border-radius:14px;
+  padding:10px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+  background:#fbfdfc;
+  margin:10px 0;
 }
-
-@media (min-width:1200px){
-  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(3) .surah-grid,
-  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(4) .surah-grid{
-    grid-template-columns:repeat(5,minmax(0,1fr));
-  }
+.quran-selected-empty{color:#7a8582;font-size:14px}
+.quran-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  border:1px solid #cfe1da;
+  border-radius:999px;
+  padding:7px 10px;
+  background:#eef8f4;
+  color:#0d5f50;
+  font-weight:700;
+  line-height:1.2;
+}
+.quran-chip small{font-weight:600;color:#536b65}
+.quran-chip button{
+  border:0;
+  background:transparent;
+  color:#7b3b3b;
+  font-size:18px;
+  line-height:1;
+  cursor:pointer;
+  padding:0 2px;
+}
+.quran-add-surahs{
+  border:1px solid #b9d6cc;
+  background:#fff;
+  color:#0b705d;
+  border-radius:12px;
+  padding:9px 14px;
+  font:inherit;
+  font-weight:700;
+  cursor:pointer;
+  margin-bottom:10px;
+}
+.quran-picker-hidden{display:none !important}
+@media(max-width:900px){
+  .quran-selected-box{min-height:54px;padding:9px}
+  .quran-chip{padding:7px 9px}
+  .quran-add-surahs{width:100%}
 }
