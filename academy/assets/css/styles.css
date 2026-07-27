@@ -227,3 +227,14 @@ input,select{width:100%;padding:13px 14px;border:1px solid #cddbd5;border-radius
   body[data-admin-page] .table tbody td{grid-template-columns:88px minmax(0,1fr);font-size:13px}
   body[data-admin-page] .topbar .brand small{display:none}
 }
+
+/* ===== Student record v1 ===== */
+@media(max-width:700px){
+  body[data-admin-page="students"] .table tbody td:nth-child(10)::before{content:"السجل"}
+  body[data-admin-page="student-record"] .page{padding:22px 0 54px}
+  body[data-admin-page="student-record"] .layout{display:block}
+  body[data-admin-page="student-record"] .sidebar{position:static;display:flex;gap:7px;overflow-x:auto;padding:9px;margin-bottom:18px;border-radius:16px;scrollbar-width:none}
+  body[data-admin-page="student-record"] .sidebar::-webkit-scrollbar{display:none}
+  body[data-admin-page="student-record"] .sidebar a{flex:0 0 auto;margin:0;padding:9px 12px;white-space:nowrap;font-size:13px}
+  body[data-admin-page="student-record"] .nav > .btn[data-admin-logout]{display:inline-flex;min-height:40px;padding:0 12px;font-size:12px}
+}
