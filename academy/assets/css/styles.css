@@ -259,3 +259,44 @@ input,select{width:100%;padding:13px 14px;border:1px solid #cddbd5;border-radius
 @media(max-width:900px){.quran-record-grid{grid-template-columns:1fr}.surah-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.quran-section-head{display:block}.quran-section-head .btn{width:100%;margin-top:10px}.quran-range-form{grid-template-columns:1fr 1fr}.quran-range-form .field:first-child{grid-column:1/-1}.surah-grid{grid-template-columns:1fr 1fr;max-height:280px}.quran-entry{align-items:flex-start}}
 @media(max-width:420px){.surah-grid{grid-template-columns:1fr}.quran-range-form{grid-template-columns:1fr}.quran-range-form .field:first-child{grid-column:auto}}
+
+
+/* ===== Quran surah names: desktop visibility fix ===== */
+body[data-admin-page="student-record"] .surah-grid{
+  position:relative;
+}
+body[data-admin-page="student-record"] .surah-check{
+  color:#173c34;
+  opacity:1;
+  visibility:visible;
+}
+body[data-admin-page="student-record"] .surah-check span{
+  display:inline-block;
+  color:#173c34;
+  opacity:1;
+  visibility:visible;
+  font-size:13px;
+  line-height:1.55;
+  white-space:normal;
+}
+body[data-admin-page="student-record"] select{
+  color:#173c34;
+  background-color:#fff;
+  opacity:1;
+  visibility:visible;
+}
+body[data-admin-page="student-record"] select option{
+  color:#173c34;
+  background:#fff;
+  font-size:14px;
+}
+@media (min-width:901px){
+  body[data-admin-page="student-record"] .surah-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    display:grid;
+  }
+  body[data-admin-page="student-record"] .surah-check{
+    display:flex;
+    min-height:40px;
+  }
+}
