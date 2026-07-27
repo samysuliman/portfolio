@@ -452,7 +452,10 @@ function renderSurahChecklist(type){
   const ids={tasmee:'tasmeeSurahs',review:'reviewSurahs',memorization:'memorizationSurahs',recitation:'recitationSurahs'};
   const holder=document.getElementById(ids[type]); if(!holder) return;
   const record=window.__quranRecord||normalizeQuranRecord();
-  const selected=new Set((record[type]||[]).map(x=>Number(x.surahNo||x)));
+  // الحفظ الجديد والتلاوة سجلّان تاريخيان: المحفوظ سابقًا لا يُعاد تحديده كمسودة جديدة.
+  const selected=(type==='memorization'||type==='recitation')
+    ? new Set()
+    : new Set((record[type]||[]).map(x=>Number(x.surahNo||x)));
   holder.innerHTML=QURAN_SURAHS.map((name,i)=>`<label class="surah-check" data-surah-name="${esc(name)}"><input type="checkbox" data-quran-check="${type}" value="${i+1}" ${selected.has(i+1)?'checked':''}><span>${i+1}. ${esc(name)}</span></label>`).join('');
   updateSurahCount(type);
 }
@@ -478,14 +481,12 @@ function renderRangeEntries(type){
 function renderRangeDrafts(type){
   const holder=document.getElementById(type+'Drafts'); if(!holder) return;
   const checks=selectedSurahs(type);
-  const entries=window.__quranRecord?.[type]||[];
   holder.innerHTML=checks.map(s=>{
-    const x=entries.find(e=>Number(e.surahNo)===s.surahNo)||{};
     return `<div class="quran-range-card" data-range-card="${type}" data-surah-no="${s.surahNo}">
       <strong>${s.surahNo}. ${esc(s.surahName)}</strong>
       <div class="quran-range-fields">
-        <label>من الآية<input type="number" min="1" inputmode="numeric" data-range-from value="${esc(x.fromAyah||'')}"></label>
-        <label>إلى الآية<input type="number" min="1" inputmode="numeric" data-range-to value="${esc(x.toAyah||'')}"></label>
+        <label>من الآية<input type="number" min="1" inputmode="numeric" data-range-from value=""></label>
+        <label>إلى الآية<input type="number" min="1" inputmode="numeric" data-range-to value=""></label>
       </div>
     </div>`;
   }).join('') || `<div class="quran-empty">اختر سورة أو أكثر من القائمة أعلاه.</div>`;
@@ -517,8 +518,8 @@ async function saveQuranRecord(options={}){
   const status=document.getElementById('quranSaveStatus');
   const silent=!!options.silent;
 
-  // Build from the CURRENT visible selections only.
-  const next=normalizeQuranRecord();
+  // ابدأ من السجل المحفوظ حتى لا تضيع النطاقات التاريخية السابقة.
+  const next=normalizeQuranRecord(window.__quranRecord);
   next.tasmee=selectedSurahs('tasmee');
   next.review=selectedSurahs('review');
 
@@ -548,10 +549,13 @@ async function saveQuranRecord(options={}){
     return rows;
   };
 
-  next.memorization=collectRanges('memorization');
-  if(next.memorization===null) return false;
-  next.recitation=collectRanges('recitation');
-  if(next.recitation===null) return false;
+  const newMemorization=collectRanges('memorization');
+  if(newMemorization===null) return false;
+  const newRecitation=collectRanges('recitation');
+  if(newRecitation===null) return false;
+  // إضافة النطاق الجديد إلى التاريخ السابق بدل استبداله.
+  next.memorization=[...(window.__quranRecord?.memorization||[]),...newMemorization];
+  next.recitation=[...(window.__quranRecord?.recitation||[]),...newRecitation];
 
   if(btn && !silent){btn.disabled=true;btn.textContent='جارٍ الحفظ...';}
   if(status && !silent) status.textContent='';
@@ -611,14 +615,7 @@ function wireQuranRecord(){
       document.querySelectorAll(`[data-range-card="${type}"]`).forEach(c=>{
         const v=old[c.dataset.surahNo]; if(v){c.querySelector('[data-range-from]').value=v.from;c.querySelector('[data-range-to]').value=v.to;}
       });
-      // Show the current draft selection as chips too.
-      const draftSelected=selectedSurahs(type);
-      const saved=window.__quranRecord?.[type]||[];
-      window.__quranRecord[type]=draftSelected.map(s=>{
-        const prior=saved.find(x=>Number(x.surahNo||x)===s.surahNo)||{};
-        return {...prior,...s};
-      });
-      renderSelectedSurahs(type);
+      // لا نغيّر السجل التاريخي أثناء الاختيار؛ لا يُضاف إليه شيء إلا عند الحفظ.
     }
   });
   ['tasmee','review','memorization','recitation'].forEach(type=>{
