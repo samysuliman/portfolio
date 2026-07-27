@@ -587,7 +587,17 @@ async function saveQuranRecord(options={}){
     window.__quranRecord=normalizeQuranRecord(next);
     if(rows[0]) window.__currentStudentRecord={...window.__currentStudentRecord,...rows[0]};
 
-    ['tasmee','review','memorization','recitation'].forEach(renderSurahChecklist);
+    // بعد نجاح الحفظ: أبقِ التاريخ المحفوظ، وافرغ فقط اختيارات
+    // "الحفظ الجديد" و"التلاوة" حتى لا تظهر النطاقات القديمة كبطاقات اختيار.
+    ['memorization','recitation'].forEach(type=>{
+      document.querySelectorAll(`[data-quran-check="${type}"]`).forEach(cb=>{ cb.checked=false; });
+      updateSurahCount(type);
+    });
+
+    // التسميع والمراجعة يظلان كما حُفظا، أما الحفظ الجديد والتلاوة
+    // فيبدآن فارغين لإضافة نطاق جديد في المرة التالية.
+    renderSurahChecklist('tasmee');
+    renderSurahChecklist('review');
     renderRangeDrafts('memorization');
     renderRangeDrafts('recitation');
     renderRangeEntries('memorization');
