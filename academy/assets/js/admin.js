@@ -424,7 +424,19 @@ function quranTypeLabel(type){
 function renderSelectedSurahs(type){
   const holder=document.getElementById(type+'Selected'); if(!holder)return;
   const record=window.__quranRecord||normalizeQuranRecord();
-  const items=record[type]||[];
+
+  let items;
+  if(type==='memorization'||type==='recitation'){
+    items=selectedSurahs(type).map(s=>{
+      const card=document.querySelector(`[data-range-card="${type}"][data-surah-no="${s.surahNo}"]`);
+      const fromAyah=card?.querySelector('[data-range-from]')?.value||'';
+      const toAyah=card?.querySelector('[data-range-to]')?.value||'';
+      return {...s,fromAyah,toAyah};
+    });
+  }else{
+    items=record[type]||[];
+  }
+
   if(!items.length){
     holder.innerHTML=`<span class="quran-selected-empty">لم يتم اختيار سور بعد.</span>`;
     return;
@@ -432,7 +444,7 @@ function renderSelectedSurahs(type){
   holder.innerHTML=items.map((x,idx)=>{
     const no=Number(x.surahNo||x), name=x.surahName||QURAN_SURAHS[no-1]||'—';
     const range=(type==='memorization'||type==='recitation')&&x.fromAyah&&x.toAyah?` <small>${esc(x.fromAyah)}–${esc(x.toAyah)}</small>`:'';
-    return `<span class="quran-chip"><span>${esc(name)}${range}</span><button type="button" title="إزالة ${esc(name)}" aria-label="إزالة ${esc(name)}" data-remove-selected="${type}" data-index="${idx}">×</button></span>`;
+    return `<span class="quran-chip"><span>${esc(name)}${range}</span><button type="button" title="إزالة ${esc(name)}" aria-label="إزالة ${esc(name)}" data-remove-selected="${type}" data-index="${idx}" data-surah-no="${no}">×</button></span>`;
   }).join('');
 }
 function setPickerEditing(type,editing){
@@ -452,10 +464,10 @@ function renderSurahChecklist(type){
   const ids={tasmee:'tasmeeSurahs',review:'reviewSurahs',memorization:'memorizationSurahs',recitation:'recitationSurahs'};
   const holder=document.getElementById(ids[type]); if(!holder) return;
   const record=window.__quranRecord||normalizeQuranRecord();
-  // الحفظ الجديد والتلاوة سجلّان تاريخيان: المحفوظ سابقًا لا يُعاد تحديده كمسودة جديدة.
   const selected=(type==='memorization'||type==='recitation')
     ? new Set()
     : new Set((record[type]||[]).map(x=>Number(x.surahNo||x)));
+
   holder.innerHTML=QURAN_SURAHS.map((name,i)=>`<label class="surah-check" data-surah-name="${esc(name)}"><input type="checkbox" data-quran-check="${type}" value="${i+1}" ${selected.has(i+1)?'checked':''}><span>${i+1}. ${esc(name)}</span></label>`).join('');
   updateSurahCount(type);
 }
@@ -575,13 +587,6 @@ async function saveQuranRecord(options={}){
     window.__quranRecord=normalizeQuranRecord(next);
     if(rows[0]) window.__currentStudentRecord={...window.__currentStudentRecord,...rows[0]};
 
-    // بعد نجاح الحفظ: أفرغ فقط اختيارات الإدخال المؤقتة للحفظ الجديد والتلاوة.
-    // السجل التاريخي المحفوظ يبقى كما هو أسفل كل قسم.
-    ['memorization','recitation'].forEach(type=>{
-      document.querySelectorAll(`[data-quran-check="${type}"]`).forEach(cb=>{ cb.checked=false; });
-      updateSurahCount(type);
-    });
-
     ['tasmee','review','memorization','recitation'].forEach(renderSurahChecklist);
     renderRangeDrafts('memorization');
     renderRangeDrafts('recitation');
@@ -628,6 +633,12 @@ function wireQuranRecord(){
   ['tasmee','review','memorization','recitation'].forEach(type=>{
     document.getElementById(type+'Search')?.addEventListener('input',e=>filterSurahs(type,e.target.value));
   });
+  document.addEventListener('input',e=>{
+    const card=e.target.closest('[data-range-card]');
+    if(!card)return;
+    const type=card.dataset.rangeCard;
+    if(type==='memorization'||type==='recitation') renderSelectedSurahs(type);
+  });
   document.getElementById('saveQuranRecord')?.addEventListener('click',saveQuranRecord);
   document.addEventListener('click',e=>{
     const toggle=e.target.closest('[data-toggle-picker]');
@@ -642,8 +653,19 @@ function wireQuranRecord(){
     if(chip){
       const type=chip.dataset.removeSelected, idx=Number(chip.dataset.index);
       window.__quranRecord=window.__quranRecord||normalizeQuranRecord();
-      window.__quranRecord[type]?.splice(idx,1);
-      renderSurahChecklist(type); renderRangeDrafts(type); renderRangeEntries(type); renderSelectedSurahs(type);
+
+      if(type==='memorization'||type==='recitation'){
+        const no=Number(chip.dataset.surahNo);
+        const cb=document.querySelector(`[data-quran-check="${type}"][value="${no}"]`);
+        if(cb) cb.checked=false;
+        updateSurahCount(type);
+        renderRangeDrafts(type);
+        renderSelectedSurahs(type);
+      }else{
+        window.__quranRecord[type]?.splice(idx,1);
+        renderSurahChecklist(type);
+        renderSelectedSurahs(type);
+      }
       return;
     }
   });
