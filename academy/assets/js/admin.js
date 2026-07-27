@@ -282,6 +282,7 @@ function renderStudents(rows){
       <td><select class="student-status-select" data-id="${esc(r.id)}">
         ${["active","paused","completed","inactive"].map(s=>`<option value="${s}" ${(r.status||"active")===s?"selected":""}>${studentStatusLabel(s)}</option>`).join("")}
       </select></td>
+      <td><a class="btn btn-light" href="student-record.html?id=${encodeURIComponent(r.id)}">فتح السجل</a></td>
     </tr>`;
   }).join("");
 
@@ -296,6 +297,103 @@ function renderStudents(rows){
     if(!res.ok){ alert("تعذر تحديث حالة الطالب."); return; }
     const row = window.__students.find(x=>String(x.id)===String(id)); if(row) row.status=status;
   }));
+}
+
+
+
+function qparam(name){ return new URLSearchParams(location.search).get(name); }
+function toDateInput(v){
+  if(!v) return "";
+  const d = new Date(v);
+  if(Number.isNaN(d.getTime())) return String(v).slice(0,10);
+  return d.toISOString().slice(0,10);
+}
+function autoStudentCode(id){
+  const n = String(id ?? "").replace(/\D/g, "");
+  return `RA-S${(n || "0").padStart(4,"0")}`;
+}
+async function loadStudentRecord(){
+  const ok = await requireAdmin(); if(!ok) return;
+  const id = qparam("id");
+  const errorBox = document.getElementById("recordError");
+  const form = document.getElementById("studentRecordForm");
+  if(!id){
+    errorBox.textContent = "لم يتم تحديد الطالب."; errorBox.classList.remove("hide"); return;
+  }
+  try{
+    const [studentRes, teacherRes] = await Promise.all([
+      api(`/rest/v1/students?id=eq.${encodeURIComponent(id)}&select=*&limit=1`),
+      api('/rest/v1/teachers?select=id,full_name,teacher_code,status&order=full_name.asc').catch(()=>null)
+    ]);
+    if(!studentRes.ok) throw new Error(await studentRes.text());
+    const rows = await studentRes.json();
+    const r = rows[0];
+    if(!r) throw new Error("STUDENT_NOT_FOUND");
+    window.__currentStudentRecord = r;
+
+    const teachers = teacherRes?.ok ? await teacherRes.json() : [];
+    const teacherSelect = document.getElementById("sr_assigned_teacher_id");
+    teachers.filter(t=>(t.status||"active")==="active").forEach(t=>{
+      const opt=document.createElement("option"); opt.value=t.id; opt.textContent=`${t.full_name}${t.teacher_code?` — ${t.teacher_code}`:""}`; teacherSelect.appendChild(opt);
+    });
+
+    const vals = {
+      full_name:r.full_name, student_code:r.student_code || autoStudentCode(r.id), age:r.age,
+      country_city:r.country_city, whatsapp:r.whatsapp, enrollment_date:toDateInput(r.enrollment_date || r.created_at),
+      student_type:r.student_type, status:r.status || "active", track:r.track, level:r.level,
+      current_stage:r.current_stage || r.level || "", preferred_time:r.preferred_time,
+      assigned_teacher_id:r.assigned_teacher_id || "", weekly_goal:r.weekly_goal,
+      overall_progress:r.overall_progress ?? 0, attendance_rate:r.attendance_rate ?? 0, notes:r.notes
+    };
+    Object.entries(vals).forEach(([k,v])=>{ const el=document.getElementById(`sr_${k}`); if(el) el.value=v ?? ""; });
+    document.getElementById("recordTitle").textContent = `سجل الطالب: ${r.full_name || "—"}`;
+    document.getElementById("recordCode").textContent = `رقم الطالب: ${vals.student_code} • تاريخ الإنشاء: ${fmtDate(r.created_at)}`;
+    const phone=String(r.whatsapp||"").replace(/[^0-9]/g,"");
+    const wa=document.getElementById("studentWhatsappLink"); if(wa) wa.href=phone?`https://wa.me/${phone}`:"#";
+    form.classList.remove("hide");
+  }catch(err){
+    console.error("Student record load error:",err);
+    errorBox.textContent = err.message === "STUDENT_NOT_FOUND" ? "لم يتم العثور على الطالب." : "تعذر تحميل سجل الطالب. تحقق من جدول students وصلاحياته.";
+    errorBox.classList.remove("hide");
+  }
+}
+
+async function saveStudentRecord(e){
+  e.preventDefault();
+  const r=window.__currentStudentRecord; if(!r) return;
+  const btn=document.getElementById("saveStudentRecord");
+  const statusEl=document.getElementById("recordSaveStatus");
+  const get=id=>document.getElementById(id)?.value ?? "";
+  const nullable=v=>String(v).trim()===""?null:String(v).trim();
+  const numOrZero=v=>Math.max(0,Math.min(100,Number(v)||0));
+  const ageVal=get("sr_age");
+  const payload={
+    full_name:get("sr_full_name").trim(),
+    student_code:nullable(get("sr_student_code")) || autoStudentCode(r.id),
+    age:ageVal===""?null:Number(ageVal),
+    country_city:nullable(get("sr_country_city")),
+    whatsapp:nullable(get("sr_whatsapp")),
+    enrollment_date:nullable(get("sr_enrollment_date")),
+    student_type:nullable(get("sr_student_type")),
+    status:get("sr_status") || "active",
+    track:nullable(get("sr_track")), level:nullable(get("sr_level")),
+    current_stage:nullable(get("sr_current_stage")), preferred_time:nullable(get("sr_preferred_time")),
+    assigned_teacher_id:get("sr_assigned_teacher_id")?Number(get("sr_assigned_teacher_id")):null,
+    weekly_goal:nullable(get("sr_weekly_goal")), overall_progress:numOrZero(get("sr_overall_progress")),
+    attendance_rate:numOrZero(get("sr_attendance_rate")), notes:nullable(get("sr_notes")),
+    updated_at:new Date().toISOString()
+  };
+  btn.disabled=true; btn.textContent="جارٍ الحفظ..."; statusEl.textContent="";
+  try{
+    const res=await api(`/rest/v1/students?id=eq.${encodeURIComponent(r.id)}`,{method:"PATCH",headers:{"Prefer":"return=representation"},body:JSON.stringify(payload)});
+    if(!res.ok){ const text=await res.text(); if(text.includes("student_code")||text.includes("current_stage")||text.includes("updated_at")) throw new Error("SCHEMA_NOT_READY"); throw new Error(text); }
+    const rows=await res.json(); window.__currentStudentRecord=rows[0]||{...r,...payload};
+    statusEl.textContent="تم حفظ سجل الطالب بنجاح ✓";
+    document.getElementById("recordCode").textContent=`رقم الطالب: ${payload.student_code} • آخر تحديث: ${fmtDate(payload.updated_at)}`;
+  }catch(err){
+    console.error("Student record save error:",err);
+    statusEl.textContent = err.message === "SCHEMA_NOT_READY" ? "يجب تنفيذ ملف تهيئة سجل الطالب في Supabase أولًا." : "تعذر حفظ السجل. تحقق من الاتصال والصلاحيات.";
+  }finally{ btn.disabled=false; btn.textContent="حفظ سجل الطالب"; }
 }
 
 function teacherStatusLabel(s){
@@ -356,6 +454,7 @@ function wireCommon(){
   document.getElementById("statusFilter")?.addEventListener("change",()=>renderRegistrations(window.__registrations||[]));
   document.getElementById("studentSearchBox")?.addEventListener("input",()=>renderStudents(window.__students||[]));
   document.getElementById("studentStatusFilter")?.addEventListener("change",()=>renderStudents(window.__students||[]));
+  document.getElementById("studentRecordForm")?.addEventListener("submit",saveStudentRecord);
   document.getElementById("teacherSearchBox")?.addEventListener("input",()=>renderTeachers(window.__teachers||[]));
   document.getElementById("closeDialog")?.addEventListener("click",()=>document.getElementById("detailsDialog")?.close());
 }
@@ -366,5 +465,6 @@ document.addEventListener("DOMContentLoaded",()=>{
   if(document.body.dataset.adminPage === "registrations") loadRegistrations().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
   if(document.body.dataset.adminPage === "dashboard") loadRegistrations().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
   if(document.body.dataset.adminPage === "students") loadStudents().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
+  if(document.body.dataset.adminPage === "student-record") loadStudentRecord();
   if(document.body.dataset.adminPage === "teachers") loadTeachers().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
 });
