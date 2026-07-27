@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>سجل الطالب | أكاديمية رشيد</title><link rel="stylesheet" href="../assets/css/styles.css">
+<style>
+.record-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:20px}.record-code{font-size:14px;color:var(--muted)}
+.record-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.record-grid .full{grid-column:1/-1}
+.record-section{margin-top:20px}.record-section h2{font-size:21px;margin:0 0 14px}.range-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.record-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.record-actions .btn{min-width:150px}
+.metric-input{position:relative}.metric-input input{padding-left:46px}.metric-input span{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:700}
+textarea{width:100%;min-height:100px;padding:13px 14px;border:1px solid #cddbd5;border-radius:13px;background:#fff;font:inherit;resize:vertical}
+@media(max-width:700px){.record-head{display:block}.record-head .btn{margin-top:12px}.record-grid,.range-row{grid-template-columns:1fr}.record-grid .full{grid-column:auto}.record-actions .btn{width:100%}}
+</style></head><body data-admin-page="student-record">
+<header class="topbar"><div class="container nav"><a class="brand" href="../index.html"><span class="brand-mark">ر</span><span>أكاديمية رشيد<small>سجل الطالب</small></span></a><a class="btn btn-secondary" href="#" data-admin-logout>تسجيل الخروج</a></div></header>
+<main class="page"><div class="container layout">
+<aside class="sidebar"><a href="dashboard.html">نظرة عامة</a><a href="registrations.html">طلبات التسجيل</a><a class="active" href="students.html">الطلاب</a><a href="teachers.html">المعلمون</a><a href="#" data-demo-alert>الحصص</a><a href="#" data-demo-alert>التقارير</a></aside>
+<section>
+<div class="record-head"><div><h1 class="page-title" id="recordTitle">سجل الطالب</h1><div class="record-code" id="recordCode">جارٍ تحميل البيانات...</div></div><a class="btn btn-light" href="students.html">العودة إلى الطلاب</a></div>
+<div id="recordError" class="notice hide"></div>
+<form id="studentRecordForm" class="panel hide">
+<div class="record-section"><h2>البيانات الأساسية</h2><div class="record-grid">
+<div class="field"><label for="sr_full_name">اسم الطالب</label><input id="sr_full_name" required></div>
+<div class="field"><label for="sr_student_code">رقم الطالب</label><input id="sr_student_code" placeholder="RA-S0001"></div>
+<div class="field"><label for="sr_age">العمر</label><input id="sr_age" type="number" min="3" max="100"></div>
+<div class="field"><label for="sr_country_city">الدولة / المدينة</label><input id="sr_country_city"></div>
+<div class="field"><label for="sr_whatsapp">واتساب</label><input id="sr_whatsapp" inputmode="tel"></div>
+<div class="field"><label for="sr_enrollment_date">تاريخ الالتحاق</label><input id="sr_enrollment_date" type="date"></div>
+<div class="field"><label for="sr_student_type">التسجيل لـ</label><input id="sr_student_type" placeholder="الطالب / الابن / الأسرة..."></div>
+<div class="field"><label for="sr_status">الحالة</label><select id="sr_status"><option value="active">نشط</option><option value="paused">موقوف مؤقتًا</option><option value="completed">مكتمل</option><option value="inactive">غير نشط</option></select></div>
+</div></div>
+<div class="record-section"><h2>المسار التعليمي</h2><div class="record-grid">
+<div class="field"><label for="sr_track">المسار</label><input id="sr_track"></div>
+<div class="field"><label for="sr_level">المستوى</label><input id="sr_level"></div>
+<div class="field"><label for="sr_current_stage">المرحلة الحالية</label><input id="sr_current_stage" placeholder="مثال: التلاوة / الحفظ / المراجعة"></div>
+<div class="field"><label for="sr_preferred_time">الوقت المفضل</label><input id="sr_preferred_time"></div>
+<div class="field"><label for="sr_assigned_teacher_id">المعلم المسؤول</label><select id="sr_assigned_teacher_id"><option value="">لم يُعيَّن بعد</option></select></div>
+<div class="field full"><label for="sr_weekly_goal">هدف الأسبوع</label><textarea id="sr_weekly_goal" placeholder="مثال: حفظ سورة الملك من الآية 1 إلى 10، ومراجعة مخارج الحروف."></textarea></div>
+</div></div>
+<div class="record-section"><h2>مؤشرات المتابعة</h2><div class="record-grid">
+<div class="field"><label for="sr_overall_progress">نسبة التقدم</label><div class="metric-input"><input id="sr_overall_progress" type="number" min="0" max="100"><span>%</span></div></div>
+<div class="field"><label for="sr_attendance_rate">نسبة الالتزام / الحضور</label><div class="metric-input"><input id="sr_attendance_rate" type="number" min="0" max="100"><span>%</span></div></div>
+<div class="field full"><label for="sr_notes">ملاحظات عامة</label><textarea id="sr_notes"></textarea></div>
+</div></div>
+<div class="record-actions"><button class="btn btn-primary" id="saveStudentRecord" type="submit">حفظ سجل الطالب</button><a class="btn btn-secondary" id="studentWhatsappLink" href="#" target="_blank" rel="noopener">التواصل عبر واتساب</a></div>
+<p class="muted" id="recordSaveStatus" style="margin:12px 0 0"></p>
+</form>
+</section></div></main>
+<script src="../assets/js/admin.js?v=1.4.0"></script>
+<script>document.addEventListener('click',e=>{const a=e.target.closest('[data-demo-alert]');if(a){e.preventDefault();alert('سجل الحصص والتقييم التفصيلي هو المرحلة التالية بعد تفعيل سجل الطالب الأساسي.');}});</script>
+</body></html>
