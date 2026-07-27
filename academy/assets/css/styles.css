@@ -325,3 +325,30 @@ input,select{width:100%;padding:13px 14px;border:1px solid #cddbd5;border-radius
   .quran-chip{padding:7px 9px}
   .quran-add-surahs{width:100%}
 }
+
+
+/* ===== Quran save consistency fix v6 ===== */
+.quran-section-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-bottom:10px;
+}
+.quran-section-actions .quran-add-surahs{margin-bottom:0}
+.quran-clear-selection{
+  border:1px solid #ead2d2;
+  background:#fff;
+  color:#8b3b3b;
+  border-radius:12px;
+  padding:9px 12px;
+  font:inherit;
+  font-weight:700;
+  cursor:pointer;
+}
+.quran-clear-selection:hover{background:#fff7f7}
+@media(max-width:900px){
+  .quran-section-actions{display:grid;grid-template-columns:1fr 1fr}
+  .quran-section-actions .quran-add-surahs,
+  .quran-clear-selection{width:100%}
+}
