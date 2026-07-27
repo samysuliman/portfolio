@@ -40,10 +40,53 @@ textarea{width:100%;min-height:100px;padding:13px 14px;border:1px solid #cddbd5;
 <div class="field"><label for="sr_attendance_rate">نسبة الالتزام / الحضور</label><div class="metric-input"><input id="sr_attendance_rate" type="number" min="0" max="100"><span>%</span></div></div>
 <div class="field full"><label for="sr_notes">ملاحظات عامة</label><textarea id="sr_notes"></textarea></div>
 </div></div>
+
+<div class="record-section quran-record-section">
+  <div class="quran-section-head">
+    <div><h2>السجل القرآني</h2><p class="muted">حدّد ما يخص الطالب في التسميع والمراجعة، وأضف نطاقات الحفظ والتلاوة وتصحيح القراءة.</p></div>
+    <button class="btn btn-primary" id="saveQuranRecord" type="button">حفظ السجل القرآني</button>
+  </div>
+  <div id="quranSaveStatus" class="muted" style="margin-bottom:12px"></div>
+  <div class="quran-record-grid">
+    <article class="quran-card">
+      <h3>التسميع</h3>
+      <p class="muted">يمكن تحديد أكثر من سورة.</p>
+      <input class="surah-search" id="tasmeeSearch" placeholder="ابحث عن سورة..." autocomplete="off">
+      <details class="surah-picker" open><summary>سور التسميع <span id="tasmeeCount" class="selection-count">0 محدد</span></summary><div id="tasmeeSurahs" class="surah-grid"></div></details>
+    </article>
+    <article class="quran-card">
+      <h3>المراجعة</h3>
+      <p class="muted">يمكن تحديد أكثر من سورة.</p>
+      <input class="surah-search" id="reviewSearch" placeholder="ابحث عن سورة..." autocomplete="off">
+      <details class="surah-picker"><summary>سور المراجعة <span id="reviewCount" class="selection-count">0 محدد</span></summary><div id="reviewSurahs" class="surah-grid"></div></details>
+    </article>
+    <article class="quran-card">
+      <h3>الحفظ الجديد</h3>
+      <div class="quran-range-form">
+        <div class="field"><label for="memorizationSurah">السورة</label><select id="memorizationSurah"></select></div>
+        <div class="field"><label for="memorizationFrom">من الآية</label><input id="memorizationFrom" type="number" min="1" inputmode="numeric"></div>
+        <div class="field"><label for="memorizationTo">إلى الآية</label><input id="memorizationTo" type="number" min="1" inputmode="numeric"></div>
+        <button class="btn btn-secondary" id="addMemorizationRange" type="button">إضافة نطاق الحفظ</button>
+      </div>
+      <div id="memorizationList" class="quran-entry-list"></div>
+    </article>
+    <article class="quran-card">
+      <h3>التلاوة وتصحيح القراءة</h3>
+      <div class="quran-range-form">
+        <div class="field"><label for="recitationSurah">السورة</label><select id="recitationSurah"></select></div>
+        <div class="field"><label for="recitationFrom">من الآية</label><input id="recitationFrom" type="number" min="1" inputmode="numeric"></div>
+        <div class="field"><label for="recitationTo">إلى الآية</label><input id="recitationTo" type="number" min="1" inputmode="numeric"></div>
+        <button class="btn btn-secondary" id="addRecitationRange" type="button">إضافة نطاق التلاوة</button>
+      </div>
+      <div id="recitationList" class="quran-entry-list"></div>
+    </article>
+  </div>
+</div>
+
 <div class="record-actions"><button class="btn btn-primary" id="saveStudentRecord" type="submit">حفظ سجل الطالب</button><a class="btn btn-secondary" id="studentWhatsappLink" href="#" target="_blank" rel="noopener">التواصل عبر واتساب</a></div>
 <p class="muted" id="recordSaveStatus" style="margin:12px 0 0"></p>
 </form>
 </section></div></main>
-<script src="../assets/js/admin.js?v=1.4.0"></script>
+<script src="../assets/js/admin.js?v=1.5.0"></script>
 <script>document.addEventListener('click',e=>{const a=e.target.closest('[data-demo-alert]');if(a){e.preventDefault();alert('سجل الحصص والتقييم التفصيلي هو المرحلة التالية بعد تفعيل سجل الطالب الأساسي.');}});</script>
 </body></html>
