@@ -409,6 +409,37 @@ function normalizeQuranRecord(value){
     return {...base,...v,tasmee:Array.isArray(v?.tasmee)?v.tasmee:[],review:Array.isArray(v?.review)?v.review:[],memorization:Array.isArray(v?.memorization)?v.memorization:[],recitation:Array.isArray(v?.recitation)?v.recitation:[]};
   }catch{return base;}
 }
+
+function quranTypeLabel(type){
+  return ({tasmee:'سور التسميع',review:'سور المراجعة',memorization:'الحفظ الجديد',recitation:'التلاوة وتصحيح القراءة'})[type]||'السور المختارة';
+}
+function renderSelectedSurahs(type){
+  const holder=document.getElementById(type+'Selected'); if(!holder)return;
+  const record=window.__quranRecord||normalizeQuranRecord();
+  const items=record[type]||[];
+  if(!items.length){
+    holder.innerHTML=`<span class="quran-selected-empty">لم يتم اختيار سور بعد.</span>`;
+    return;
+  }
+  holder.innerHTML=items.map((x,idx)=>{
+    const no=Number(x.surahNo||x), name=x.surahName||QURAN_SURAHS[no-1]||'—';
+    const range=(type==='memorization'||type==='recitation')&&x.fromAyah&&x.toAyah?` <small>${esc(x.fromAyah)}–${esc(x.toAyah)}</small>`:'';
+    return `<span class="quran-chip"><span>${esc(name)}${range}</span><button type="button" title="إزالة ${esc(name)}" aria-label="إزالة ${esc(name)}" data-remove-selected="${type}" data-index="${idx}">×</button></span>`;
+  }).join('');
+}
+function setPickerEditing(type,editing){
+  const search=document.getElementById(type+'Search');
+  const grid=document.getElementById(({tasmee:'tasmeeSurahs',review:'reviewSurahs',memorization:'memorizationSurahs',recitation:'recitationSurahs'})[type]);
+  const details=grid?.closest('details.surah-picker');
+  if(search) search.classList.toggle('quran-picker-hidden',!editing);
+  if(details){details.classList.toggle('quran-picker-hidden',!editing);details.open=!!editing;}
+  const b=document.querySelector(`[data-toggle-picker="${type}"]`);
+  if(b) b.textContent=editing?'إغلاق قائمة السور':'+ إضافة سور';
+}
+function refreshQuranSelectedUI(){
+  ['tasmee','review','memorization','recitation'].forEach(type=>{renderSelectedSurahs(type);setPickerEditing(type,false);});
+}
+
 function renderSurahChecklist(type){
   const ids={tasmee:'tasmeeSurahs',review:'reviewSurahs',memorization:'memorizationSurahs',recitation:'recitationSurahs'};
   const holder=document.getElementById(ids[type]); if(!holder) return;
@@ -470,6 +501,7 @@ function initQuranRecordUI(value){
   ['tasmee','review','memorization','recitation'].forEach(renderSurahChecklist);
   renderRangeDrafts('memorization'); renderRangeDrafts('recitation');
   renderRangeEntries('memorization'); renderRangeEntries('recitation');
+  refreshQuranSelectedUI();
 }
 async function saveQuranRecord(){
   const r=window.__currentStudentRecord; if(!r) return;
@@ -481,7 +513,7 @@ async function saveQuranRecord(){
   try{
     const res=await api(`/rest/v1/students?id=eq.${encodeURIComponent(r.id)}`,{method:'PATCH',headers:{'Prefer':'return=representation'},body:JSON.stringify({quran_record:window.__quranRecord,updated_at:new Date().toISOString()})});
     if(!res.ok){const t=await res.text();if(t.includes('quran_record'))throw new Error('QURAN_SCHEMA_NOT_READY');throw new Error(t);}
-    const rows=await res.json(); if(rows[0]) window.__currentStudentRecord=rows[0]; status.textContent='تم حفظ السجل القرآني بنجاح ✓';
+    const rows=await res.json(); if(rows[0]) window.__currentStudentRecord=rows[0]; refreshQuranSelectedUI(); status.textContent='تم حفظ السجل القرآني بنجاح ✓';
   }catch(err){console.error('Quran record save error:',err);status.textContent=err.message==='QURAN_SCHEMA_NOT_READY'?'يجب تنفيذ ملف تهيئة السجل القرآني في Supabase أولًا.':'تعذر حفظ السجل القرآني. تحقق من الاتصال والصلاحيات.';}
   finally{btn.disabled=false;btn.textContent='حفظ السجل القرآني';}
 }
@@ -489,6 +521,11 @@ function wireQuranRecord(){
   document.addEventListener('change',e=>{
     const cb=e.target.closest('[data-quran-check]'); if(!cb)return;
     const type=cb.dataset.quranCheck; updateSurahCount(type);
+    window.__quranRecord=window.__quranRecord||normalizeQuranRecord();
+    if(type==='tasmee'||type==='review'){
+      window.__quranRecord[type]=selectedSurahs(type);
+      renderSelectedSurahs(type);
+    }
     if(type==='memorization'||type==='recitation'){
       // Keep values already typed before rebuilding cards.
       const old={};
@@ -505,6 +542,24 @@ function wireQuranRecord(){
     document.getElementById(type+'Search')?.addEventListener('input',e=>filterSurahs(type,e.target.value));
   });
   document.getElementById('saveQuranRecord')?.addEventListener('click',saveQuranRecord);
+  document.addEventListener('click',e=>{
+    const toggle=e.target.closest('[data-toggle-picker]');
+    if(toggle){
+      const type=toggle.dataset.togglePicker;
+      const grid=document.getElementById(({tasmee:'tasmeeSurahs',review:'reviewSurahs',memorization:'memorizationSurahs',recitation:'recitationSurahs'})[type]);
+      const details=grid?.closest('details.surah-picker');
+      setPickerEditing(type,details?.classList.contains('quran-picker-hidden'));
+      return;
+    }
+    const chip=e.target.closest('[data-remove-selected]');
+    if(chip){
+      const type=chip.dataset.removeSelected, idx=Number(chip.dataset.index);
+      window.__quranRecord=window.__quranRecord||normalizeQuranRecord();
+      window.__quranRecord[type]?.splice(idx,1);
+      renderSurahChecklist(type); renderRangeDrafts(type); renderRangeEntries(type); renderSelectedSurahs(type);
+      return;
+    }
+  });
   document.addEventListener('click',e=>{const b=e.target.closest('[data-remove-quran]');if(!b)return;const type=b.dataset.removeQuran;const idx=Number(b.dataset.index);window.__quranRecord?.[type]?.splice(idx,1);renderRangeEntries(type);renderSurahChecklist(type);renderRangeDrafts(type);});
 }
 
