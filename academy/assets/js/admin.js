@@ -362,6 +362,14 @@ async function loadStudentRecord(){
 async function saveStudentRecord(e){
   e.preventDefault();
   const r=window.__currentStudentRecord; if(!r) return;
+
+  // حفظ موحّد: زر "حفظ سجل الطالب" يحفظ السجل القرآني أولًا ثم بقية بيانات الطالب.
+  const quranOk = await saveQuranRecord({silent:true});
+  if(!quranOk){
+    const qStatus=document.getElementById('quranSaveStatus');
+    if(qStatus) qStatus.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
   const btn=document.getElementById("saveStudentRecord");
   const statusEl=document.getElementById("recordSaveStatus");
   const get=id=>document.getElementById(id)?.value ?? "";
@@ -389,7 +397,7 @@ async function saveStudentRecord(e){
     const res=await api(`/rest/v1/students?id=eq.${encodeURIComponent(r.id)}`,{method:"PATCH",headers:{"Prefer":"return=representation"},body:JSON.stringify(payload)});
     if(!res.ok){ const text=await res.text(); if(text.includes("student_code")||text.includes("current_stage")||text.includes("updated_at")) throw new Error("SCHEMA_NOT_READY"); throw new Error(text); }
     const rows=await res.json(); window.__currentStudentRecord=rows[0]||{...r,...payload};
-    statusEl.textContent="تم حفظ سجل الطالب بنجاح ✓";
+    statusEl.textContent="تم حفظ سجل الطالب والسجل القرآني بنجاح ✓";
     document.getElementById("recordCode").textContent=`رقم الطالب: ${payload.student_code} • آخر تحديث: ${fmtDate(payload.updated_at)}`;
   }catch(err){
     console.error("Student record save error:",err);
@@ -503,17 +511,17 @@ function initQuranRecordUI(value){
   renderRangeEntries('memorization'); renderRangeEntries('recitation');
   refreshQuranSelectedUI();
 }
-async function saveQuranRecord(){
-  const r=window.__currentStudentRecord; if(!r) return;
+async function saveQuranRecord(options={}){
+  const r=window.__currentStudentRecord; if(!r) return false;
   const btn=document.getElementById('saveQuranRecord');
   const status=document.getElementById('quranSaveStatus');
+  const silent=!!options.silent;
 
-  // Always rebuild the payload from what is visibly selected now.
+  // Build from the CURRENT visible selections only.
   const next=normalizeQuranRecord();
   next.tasmee=selectedSurahs('tasmee');
   next.review=selectedSurahs('review');
 
-  // Keep the current range cards only; never reuse removed/stale ranges.
   const collectRanges=(type)=>{
     const cards=[...document.querySelectorAll(`[data-range-card="${type}"]`)];
     const rows=[];
@@ -541,11 +549,13 @@ async function saveQuranRecord(){
   };
 
   next.memorization=collectRanges('memorization');
-  if(next.memorization===null) return;
+  if(next.memorization===null) return false;
   next.recitation=collectRanges('recitation');
-  if(next.recitation===null) return;
+  if(next.recitation===null) return false;
 
-  btn.disabled=true; btn.textContent='جارٍ الحفظ...'; status.textContent='';
+  if(btn && !silent){btn.disabled=true;btn.textContent='جارٍ الحفظ...';}
+  if(status && !silent) status.textContent='';
+
   try{
     const res=await api(`/rest/v1/students?id=eq.${encodeURIComponent(r.id)}`,{
       method:'PATCH',
@@ -559,24 +569,27 @@ async function saveQuranRecord(){
     }
     const rows=await res.json();
     window.__quranRecord=normalizeQuranRecord(next);
-    if(rows[0]) window.__currentStudentRecord=rows[0];
+    if(rows[0]) window.__currentStudentRecord={...window.__currentStudentRecord,...rows[0]};
 
-    // Re-render from the exact saved data, then collapse all long lists.
     ['tasmee','review','memorization','recitation'].forEach(renderSurahChecklist);
     renderRangeDrafts('memorization');
     renderRangeDrafts('recitation');
     renderRangeEntries('memorization');
     renderRangeEntries('recitation');
     refreshQuranSelectedUI();
-    status.textContent='تم حفظ السجل القرآني بنجاح ✓';
+
+    if(status && !silent) status.textContent='تم حفظ السجل القرآني بنجاح ✓';
+    return true;
   }catch(err){
     console.error('Quran record save error:',err);
-    status.textContent=err.message==='QURAN_SCHEMA_NOT_READY'
-      ?'يجب تنفيذ ملف تهيئة السجل القرآني في Supabase أولًا.'
-      :'تعذر حفظ السجل القرآني. تحقق من الاتصال والصلاحيات.';
+    if(status){
+      status.textContent=err.message==='QURAN_SCHEMA_NOT_READY'
+        ?'يجب تنفيذ ملف تهيئة السجل القرآني في Supabase أولًا.'
+        :'تعذر حفظ السجل القرآني. تحقق من الاتصال والصلاحيات.';
+    }
+    return false;
   }finally{
-    btn.disabled=false;
-    btn.textContent='حفظ السجل القرآني';
+    if(btn && !silent){btn.disabled=false;btn.textContent='حفظ السجل القرآني';}
   }
 }
 function wireQuranRecord(){
@@ -619,18 +632,6 @@ function wireQuranRecord(){
       const grid=document.getElementById(({tasmee:'tasmeeSurahs',review:'reviewSurahs',memorization:'memorizationSurahs',recitation:'recitationSurahs'})[type]);
       const details=grid?.closest('details.surah-picker');
       setPickerEditing(type,details?.classList.contains('quran-picker-hidden'));
-      return;
-    }
-    const clear=e.target.closest('[data-clear-quran]');
-    if(clear){
-      const type=clear.dataset.clearQuran;
-      window.__quranRecord=window.__quranRecord||normalizeQuranRecord();
-      window.__quranRecord[type]=[];
-      document.querySelectorAll(`[data-quran-check="${type}"]`).forEach(cb=>cb.checked=false);
-      updateSurahCount(type);
-      if(type==='memorization'||type==='recitation') renderRangeDrafts(type);
-      renderRangeEntries(type);
-      renderSelectedSurahs(type);
       return;
     }
     const chip=e.target.closest('[data-remove-selected]');
