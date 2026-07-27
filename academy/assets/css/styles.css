@@ -270,3 +270,53 @@ input,select{width:100%;padding:13px 14px;border:1px solid #cddbd5;border-radius
 .quran-range-fields label{display:grid;gap:6px;font-weight:600}
 .quran-range-fields input{width:100%;min-height:44px;border:1px solid #cbdad5;border-radius:12px;padding:8px;background:#fff}
 @media(max-width:600px){.quran-range-fields{grid-template-columns:1fr 1fr}}
+
+
+/* ===== Quran record desktop layout v4 =====
+   Mobile rules remain unchanged. */
+@media (min-width:901px){
+  body[data-admin-page="student-record"] .quran-record-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px;
+  }
+
+  /* Give the two range-based sections the full content width on desktop. */
+  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(3),
+  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(4){
+    grid-column:1 / -1;
+  }
+
+  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(3) .surah-grid,
+  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(4) .surah-grid{
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    max-height:320px;
+  }
+
+  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(3) .surah-check,
+  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(4) .surah-check{
+    min-height:44px;
+    padding:9px 11px;
+    font-size:14px;
+  }
+
+  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(3) .quran-range-drafts,
+  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(4) .quran-range-drafts{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  body[data-admin-page="student-record"] .quran-card{
+    padding:20px;
+  }
+
+  body[data-admin-page="student-record"] .surah-picker summary{
+    min-height:48px;
+    font-size:15px;
+  }
+}
+
+@media (min-width:1200px){
+  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(3) .surah-grid,
+  body[data-admin-page="student-record"] .quran-record-grid > .quran-card:nth-child(4) .surah-grid{
+    grid-template-columns:repeat(5,minmax(0,1fr));
+  }
+}
