@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="ar" dir="rtl"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>سجل الطالب | أكاديمية رشيد</title><link rel="stylesheet" href="../assets/css/styles.css?v=1.6.0">
+<title>سجل الطالب | أكاديمية رشيد</title><link rel="stylesheet" href="../assets/css/styles.css?v=1.7.0">
 <style>
 .record-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:20px}.record-code{font-size:14px;color:var(--muted)}
 .record-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.record-grid .full{grid-column:1/-1}
@@ -63,20 +63,22 @@ textarea{width:100%;min-height:100px;padding:13px 14px;border:1px solid #cddbd5;
     <article class="quran-card">
       <h3>الحفظ الجديد</h3>
       <div class="quran-range-form">
-        <div class="field"><label for="memorizationSurah">السورة</label><select id="memorizationSurah"></select></div>
-        <div class="field"><label for="memorizationFrom">من الآية</label><input id="memorizationFrom" type="number" min="1" inputmode="numeric"></div>
-        <div class="field"><label for="memorizationTo">إلى الآية</label><input id="memorizationTo" type="number" min="1" inputmode="numeric"></div>
-        <button class="btn btn-secondary" id="addMemorizationRange" type="button">إضافة نطاق الحفظ</button>
+        <div class="quran-multi-builder">
+<input class="surah-search" id="memorizationSearch" placeholder="ابحث عن سورة..." autocomplete="off">
+<details class="surah-picker"><summary>اختر سور الحفظ الجديد <span id="memorizationCount" class="selection-count">0 محدد</span></summary><div id="memorizationSurahs" class="surah-grid"></div></details>
+<div id="memorizationDrafts" class="quran-range-drafts"></div>
+</div>
       </div>
       <div id="memorizationList" class="quran-entry-list"></div>
     </article>
     <article class="quran-card">
       <h3>التلاوة وتصحيح القراءة</h3>
       <div class="quran-range-form">
-        <div class="field"><label for="recitationSurah">السورة</label><select id="recitationSurah"></select></div>
-        <div class="field"><label for="recitationFrom">من الآية</label><input id="recitationFrom" type="number" min="1" inputmode="numeric"></div>
-        <div class="field"><label for="recitationTo">إلى الآية</label><input id="recitationTo" type="number" min="1" inputmode="numeric"></div>
-        <button class="btn btn-secondary" id="addRecitationRange" type="button">إضافة نطاق التلاوة</button>
+        <div class="quran-multi-builder">
+<input class="surah-search" id="recitationSearch" placeholder="ابحث عن سورة..." autocomplete="off">
+<details class="surah-picker"><summary>اختر سور التلاوة وتصحيح القراءة <span id="recitationCount" class="selection-count">0 محدد</span></summary><div id="recitationSurahs" class="surah-grid"></div></details>
+<div id="recitationDrafts" class="quran-range-drafts"></div>
+</div>
       </div>
       <div id="recitationList" class="quran-entry-list"></div>
     </article>
@@ -87,6 +89,6 @@ textarea{width:100%;min-height:100px;padding:13px 14px;border:1px solid #cddbd5;
 <p class="muted" id="recordSaveStatus" style="margin:12px 0 0"></p>
 </form>
 </section></div></main>
-<script src="../assets/js/admin.js?v=1.6.0"></script>
+<script src="../assets/js/admin.js?v=1.7.0"></script>
 <script>document.addEventListener('click',e=>{const a=e.target.closest('[data-demo-alert]');if(a){e.preventDefault();alert('سجل الحصص والتقييم التفصيلي هو المرحلة التالية بعد تفعيل سجل الطالب الأساسي.');}});</script>
 </body></html>
