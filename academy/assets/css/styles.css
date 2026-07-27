@@ -352,3 +352,14 @@ input,select{width:100%;padding:13px 14px;border:1px solid #cddbd5;border-radius
   .quran-section-actions .quran-add-surahs,
   .quran-clear-selection{width:100%}
 }
+
+
+/* ===== Unified Quran + student save v7 ===== */
+.quran-section-actions{display:contents}
+.quran-clear-selection{display:none!important}
+#saveStudentRecord{
+  min-width:190px;
+}
+
+/* v8: single-save UX */
+button[data-clear-quran], .quran-clear-selection, #saveQuranRecord { display:none !important; }
