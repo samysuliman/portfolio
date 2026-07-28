@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>الحصص | أكاديمية رشيد</title>
+  <link rel="stylesheet" href="./assets/css/styles.css">
+  <style>
+    .lessons-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+    .lesson-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .lesson-grid .full{grid-column:1/-1}
+    .table-wrap{overflow:auto;border-radius:18px;margin-top:18px}
+    .table{min-width:1050px}
+    .meet-panel{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
+    .meet-status{font-size:13px;color:var(--muted);margin-top:8px}
+    .status-select{min-width:135px;padding:9px}
+    .join-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:#16833d;color:#fff!important;
+      padding:9px 14px;border-radius:10px;text-decoration:none;font-weight:800;border:0}
+    .join-btn:hover{filter:brightness(.94)}
+    .join-btn.disabled{opacity:.45;pointer-events:none}
+    .toolbar{display:grid;grid-template-columns:1fr 210px;gap:12px;margin-top:18px}
+    .form-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .save-note{font-size:13px;color:var(--muted)}
+    @media(max-width:760px){
+      .lesson-grid,.toolbar,.meet-panel{grid-template-columns:1fr}
+      .table{min-width:900px}
+    }
+  </style>
+</head>
+<body data-admin-page="lessons">
+<header class="topbar">
+  <div class="container nav">
+    <a class="brand" href="./index.html">
+      <span class="brand-mark">ر</span>
+      <span>أكاديمية رشيد<small>نظام الحصص</small></span>
+    </a>
+    <a class="btn btn-secondary" href="#" data-admin-logout>تسجيل الخروج</a>
+  </div>
+</header>
+
+<main class="page">
+  <div class="container layout">
+    <aside class="sidebar">
+      <a href="dashboard.html">نظرة عامة</a>
+      <a href="registrations.html">طلبات التسجيل</a>
+      <a href="students.html">الطلاب</a>
+      <a href="teachers.html">المعلمون</a>
+      <a class="active" href="lessons.html">الحصص</a>
+      <a href="#">التقارير</a>
+    </aside>
+
+    <section>
+      <div class="lessons-head">
+        <div>
+          <h1 class="page-title">إدارة الحصص</h1>
+          <p class="muted">كل حصة مرتبطة بطالب ومعلم وتاريخ ووقت بداية ونهاية وحالة.</p>
+        </div>
+      </div>
+
+      <div id="loadError" class="notice hide">تعذر تحميل نظام الحصص. تأكد من تنفيذ ملف LESSONS_SETUP.sql في Supabase.</div>
+
+      <div class="panel">
+        <h3>رابط Google Meet الثابت للأكاديمية</h3>
+        <p class="muted">يوضع مرة واحدة، ويستخدمه زر «دخول الحصة» في جميع الحصص.</p>
+        <div class="meet-panel">
+          <div class="field">
+            <label for="meetUrl">رابط Google Meet</label>
+            <input id="meetUrl" type="url" inputmode="url" placeholder="https://meet.google.com/xxx-xxxx-xxx">
+          </div>
+          <button id="saveMeetUrl" class="btn btn-primary" type="button">حفظ الرابط</button>
+        </div>
+        <div id="meetSaveStatus" class="meet-status"></div>
+      </div>
+
+      <div class="panel" style="margin-top:18px">
+        <h3>إضافة حصة جديدة</h3>
+        <form id="lessonForm">
+          <div class="lesson-grid">
+            <div class="field">
+              <label for="lessonStudent">الطالب</label>
+              <select id="lessonStudent" required><option value="">اختر الطالب</option></select>
+            </div>
+            <div class="field">
+              <label for="lessonTeacher">المعلم</label>
+              <select id="lessonTeacher" required><option value="">اختر المعلم</option></select>
+            </div>
+            <div class="field">
+              <label for="lessonDate">التاريخ</label>
+              <input id="lessonDate" type="date" required>
+            </div>
+            <div class="field">
+              <label for="lessonStatus">حالة الحصة</label>
+              <select id="lessonStatus">
+                <option value="scheduled">مجدولة</option>
+                <option value="completed">مكتملة</option>
+                <option value="cancelled">ملغاة</option>
+                <option value="absent">غياب</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="lessonStart">وقت البداية</label>
+              <input id="lessonStart" type="time" required>
+            </div>
+            <div class="field">
+              <label for="lessonEnd">وقت النهاية</label>
+              <input id="lessonEnd" type="time" required>
+            </div>
+          </div>
+          <div class="form-actions" style="margin-top:16px">
+            <button id="saveLesson" class="btn btn-primary" type="submit">إضافة الحصة</button>
+            <span id="lessonSaveStatus" class="save-note"></span>
+          </div>
+        </form>
+      </div>
+
+      <div class="toolbar">
+        <input id="lessonSearch" type="search" placeholder="بحث باسم الطالب أو المعلم...">
+        <select id="lessonFilter">
+          <option value="">كل الحالات</option>
+          <option value="scheduled">مجدولة</option>
+          <option value="completed">مكتملة</option>
+          <option value="cancelled">ملغاة</option>
+          <option value="absent">غياب</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>الطالب</th>
+              <th>المعلم</th>
+              <th>التاريخ</th>
+              <th>البداية</th>
+              <th>النهاية</th>
+              <th>الحالة</th>
+              <th>الدخول</th>
+            </tr>
+          </thead>
+          <tbody id="lessonsBody">
+            <tr><td colspan="7" style="text-align:center">جارٍ تحميل الحصص...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script src="./assets/js/admin.js?v=1.0.0"></script>
+<script>
+(() => {
+  const statusLabels = {scheduled:"مجدولة",completed:"مكتملة",cancelled:"ملغاة",absent:"غياب"};
+  let lessons = [];
+  let studentsMap = new Map();
+  let teachersMap = new Map();
+  let academyMeetUrl = "";
+
+  const el = id => document.getElementById(id);
+
+  function validMeetUrl(value){
+    try{
+      const u = new URL(String(value || "").trim());
+      return u.protocol === "https:" && u.hostname === "meet.google.com";
+    }catch{return false;}
+  }
+
+  async function loadMeetUrl(){
+    const res = await api("/rest/v1/academy_settings?setting_key=eq.academy_meet_url&select=setting_value&limit=1");
+    if(!res.ok) throw new Error(await res.text());
+    const rows = await res.json();
+    academyMeetUrl = rows[0]?.setting_value || "";
+    el("meetUrl").value = academyMeetUrl;
+  }
+
+  async function saveMeetUrl(){
+    const value = el("meetUrl").value.trim();
+    if(value && !validMeetUrl(value)){
+      el("meetSaveStatus").textContent = "أدخل رابط Google Meet صحيحًا يبدأ بـ https://meet.google.com/";
+      return;
+    }
+    const btn = el("saveMeetUrl");
+    btn.disabled = true;
+    el("meetSaveStatus").textContent = "جارٍ الحفظ...";
+    try{
+      const res = await api("/rest/v1/academy_settings?setting_key=eq.academy_meet_url", {
+        method:"PATCH",
+        headers:{"Prefer":"return=representation"},
+        body:JSON.stringify({setting_value:value,updated_at:new Date().toISOString()})
+      });
+      if(!res.ok) throw new Error(await res.text());
+      academyMeetUrl = value;
+      el("meetSaveStatus").textContent = value ? "تم حفظ رابط Google Meet الثابت ✓" : "تم مسح الرابط.";
+      renderLessons();
+    }catch(err){
+      console.error(err);
+      el("meetSaveStatus").textContent = "تعذر حفظ الرابط.";
+    }finally{btn.disabled=false;}
+  }
+
+  async function loadPeople(){
+    const [sRes,tRes] = await Promise.all([
+      api("/rest/v1/students?select=id,full_name,status&order=full_name.asc"),
+      api("/rest/v1/teachers?select=id,full_name,teacher_code,status&order=full_name.asc")
+    ]);
+    if(!sRes.ok) throw new Error(await sRes.text());
+    if(!tRes.ok) throw new Error(await tRes.text());
+
+    const students = await sRes.json();
+    const teachers = await tRes.json();
+    studentsMap = new Map(students.map(x => [String(x.id), x]));
+    teachersMap = new Map(teachers.map(x => [String(x.id), x]));
+
+    el("lessonStudent").innerHTML = '<option value="">اختر الطالب</option>' +
+      students.filter(x => (x.status || "active") === "active")
+        .map(x => `<option value="${esc(x.id)}">${esc(x.full_name)}</option>`).join("");
+
+    el("lessonTeacher").innerHTML = '<option value="">اختر المعلم</option>' +
+      teachers.filter(x => (x.status || "active") === "active")
+        .map(x => `<option value="${esc(x.id)}">${esc(x.full_name)}${x.teacher_code ? " — "+esc(x.teacher_code) : ""}</option>`).join("");
+  }
+
+  async function loadLessons(){
+    const res = await api("/rest/v1/lessons?select=*&order=lesson_date.desc,start_time.desc");
+    if(!res.ok) throw new Error(await res.text());
+    lessons = await res.json();
+    renderLessons();
+  }
+
+  function renderLessons(){
+    const q = el("lessonSearch").value.trim().toLowerCase();
+    const sf = el("lessonFilter").value;
+    const rows = lessons.filter(r => {
+      const student = studentsMap.get(String(r.student_id))?.full_name || "";
+      const teacher = teachersMap.get(String(r.teacher_id))?.full_name || "";
+      const hay = `${student} ${teacher}`.toLowerCase();
+      return (!q || hay.includes(q)) && (!sf || (r.status || "scheduled") === sf);
+    });
+
+    if(!rows.length){
+      el("lessonsBody").innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted)">لا توجد حصص مطابقة.</td></tr>';
+      return;
+    }
+
+    el("lessonsBody").innerHTML = rows.map(r => {
+      const student = studentsMap.get(String(r.student_id))?.full_name || "—";
+      const teacher = teachersMap.get(String(r.teacher_id))?.full_name || "—";
+      const url = validMeetUrl(academyMeetUrl) ? academyMeetUrl : "";
+      return `<tr>
+        <td><strong>${esc(student)}</strong></td>
+        <td>${esc(teacher)}</td>
+        <td>${esc(r.lesson_date || "—")}</td>
+        <td>${esc(String(r.start_time || "").slice(0,5))}</td>
+        <td>${esc(String(r.end_time || "").slice(0,5))}</td>
+        <td>
+          <select class="status-select" data-lesson-status="${esc(r.id)}">
+            ${["scheduled","completed","cancelled","absent"].map(s =>
+              `<option value="${s}" ${(r.status || "scheduled") === s ? "selected" : ""}>${statusLabels[s]}</option>`
+            ).join("")}
+          </select>
+        </td>
+        <td>
+          <a class="join-btn ${url ? "" : "disabled"}" href="${url ? esc(url) : "#"}" target="_blank" rel="noopener">
+            ● دخول الحصة
+          </a>
+        </td>
+      </tr>`;
+    }).join("");
+
+    document.querySelectorAll("[data-lesson-status]").forEach(select => {
+      select.addEventListener("change", async e => {
+        const id = e.currentTarget.dataset.lessonStatus;
+        const status = e.currentTarget.value;
+        e.currentTarget.disabled = true;
+        try{
+          const res = await api(`/rest/v1/lessons?id=eq.${encodeURIComponent(id)}`, {
+            method:"PATCH",
+            headers:{"Prefer":"return=minimal"},
+            body:JSON.stringify({status,updated_at:new Date().toISOString()})
+          });
+          if(!res.ok) throw new Error(await res.text());
+          const row = lessons.find(x => String(x.id) === String(id));
+          if(row) row.status = status;
+        }catch(err){
+          console.error(err);
+          alert("تعذر تحديث حالة الحصة.");
+        }finally{e.currentTarget.disabled=false;}
+      });
+    });
+  }
+
+  async function addLesson(e){
+    e.preventDefault();
+    const studentId = el("lessonStudent").value;
+    const teacherId = el("lessonTeacher").value;
+    const date = el("lessonDate").value;
+    const start = el("lessonStart").value;
+    const end = el("lessonEnd").value;
+    const status = el("lessonStatus").value || "scheduled";
+
+    if(!studentId || !teacherId || !date || !start || !end) return;
+    if(end <= start){
+      el("lessonSaveStatus").textContent = "وقت النهاية يجب أن يكون بعد وقت البداية.";
+      return;
+    }
+
+    const btn = el("saveLesson");
+    btn.disabled = true;
+    btn.textContent = "جارٍ الإضافة...";
+    el("lessonSaveStatus").textContent = "";
+
+    const payload = {
+      student_id:Number(studentId),
+      teacher_id:Number(teacherId),
+      lesson_date:date,
+      start_time:start,
+      end_time:end,
+      status
+    };
+
+    try{
+      const res = await api("/rest/v1/lessons", {
+        method:"POST",
+        headers:{"Prefer":"return=representation"},
+        body:JSON.stringify(payload)
+      });
+      if(!res.ok) throw new Error(await res.text());
+      const rows = await res.json();
+      lessons.unshift(rows[0]);
+      el("lessonForm").reset();
+      el("lessonStatus").value = "scheduled";
+      el("lessonSaveStatus").textContent = "تمت إضافة الحصة بنجاح ✓";
+      renderLessons();
+    }catch(err){
+      console.error(err);
+      el("lessonSaveStatus").textContent = "تعذر إضافة الحصة.";
+    }finally{
+      btn.disabled = false;
+      btn.textContent = "إضافة الحصة";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    try{
+      const ok = await requireAdmin();
+      if(!ok) return;
+      await Promise.all([loadMeetUrl(), loadPeople()]);
+      await loadLessons();
+    }catch(err){
+      console.error(err);
+      el("loadError")?.classList.remove("hide");
+    }
+
+    el("saveMeetUrl")?.addEventListener("click", saveMeetUrl);
+    el("lessonForm")?.addEventListener("submit", addLesson);
+    el("lessonSearch")?.addEventListener("input", renderLessons);
+    el("lessonFilter")?.addEventListener("change", renderLessons);
+  });
+})();
+</script>
+</body>
+</html>
