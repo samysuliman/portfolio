@@ -342,6 +342,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   }
 });
 
+
 let studentAssignmentsCache=[];
 let studentExamsCache=[];
 
@@ -355,89 +356,140 @@ function assignmentState(row){
   if(row.due_at && new Date(row.due_at)<new Date()) return "late";
   return "open";
 }
-function assignmentStateLabel(s){return s==="submitted"?"تم التسليم":s==="late"?"متأخر":"متاح";}
+function examState(row){
+  if(row.result?.grade!==null && row.result?.grade!==undefined) return "graded";
+  if(row.submission?.submitted_at) return "submitted";
+  const now=new Date(), due=row.due_at?new Date(row.due_at):null, start=row.starts_at?new Date(row.starts_at):null;
+  if(start && now<start) return "upcoming";
+  if(due && now>due) return "closed";
+  return "open";
+}
+const assignmentLabels={open:"متاح",submitted:"تم التسليم",late:"متأخر"};
+const examLabels={upcoming:"قادم",open:"متاح الآن",submitted:"تم التسليم",closed:"انتهى",graded:"تم التصحيح"};
+
+function teacherAttachment(url,label){
+  return url?`<a class="btn btn-secondary" href="${studentEsc(url)}" target="_blank" rel="noopener">📎 ${label}</a>`:"";
+}
 function assignmentCard(row){
-  const state=assignmentState(row);
-  const canSubmit=state!=="late" || row.allow_late_submission;
-  const grade=row.submission?.grade;
+  const state=assignmentState(row), canSubmit=state!=="late"||row.allow_late_submission;
+  const sub=row.submission||null;
   return `<article class="panel" style="margin:0">
     <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
       <div><strong>${studentEsc(row.title||"واجب")}</strong><div class="muted">${studentEsc(row.track||"")}</div></div>
-      <span class="badge">${assignmentStateLabel(state)}</span>
+      <span class="badge">${assignmentLabels[state]||state}</span>
     </div>
     <p>${studentEsc(row.description||"")}</p>
-    <div class="muted">تاريخ الإنشاء: ${portalDateTime(row.created_at)} · التسليم: ${portalDateTime(row.due_at)}</div>
-    ${grade!==null && grade!==undefined ? `<div style="margin-top:8px"><strong>الدرجة: ${studentEsc(grade)}${row.max_grade?` / ${studentEsc(row.max_grade)}`:""}</strong></div>`:""}
-    ${row.attachment_url?`<div style="margin-top:8px"><a class="btn btn-secondary" href="${studentEsc(row.attachment_url)}" target="_blank" rel="noopener">مرفق الواجب</a></div>`:""}
-    ${state==="submitted"
-      ? `<div style="margin-top:10px">تم التسليم في ${portalDateTime(row.submission.submitted_at)}</div>`
+    <div class="muted">تاريخ الإنشاء: ${portalDateTime(row.created_at)} · موعد التسليم: ${portalDateTime(row.due_at)}</div>
+    ${row.extended_due_at?`<div class="muted"><strong>تم تمديد المهلة حتى:</strong> ${portalDateTime(row.extended_due_at)}</div>`:""}
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">${teacherAttachment(row.attachment_url,"تحميل مرفق المعلم")}</div>
+    ${sub?.grade!==null&&sub?.grade!==undefined?`<div class="grade-box"><strong>الدرجة: ${studentEsc(sub.grade)} / ${studentEsc(row.max_grade||100)}</strong>${sub.feedback?`<div class="muted">ملاحظة المعلم: ${studentEsc(sub.feedback)}</div>`:""}</div>`:""}
+    ${sub?.submitted_at
+      ? `<div style="margin-top:10px">✅ تم التسليم: ${portalDateTime(sub.submitted_at)} ${sub.attachment_url?`· <a href="${studentEsc(sub.attachment_url)}" target="_blank" rel="noopener">عرض المرفق المرسل</a>`:""}</div>`
       : canSubmit
-        ? `<form class="studentSubmissionForm" data-assignment-id="${studentEsc(row.id)}" style="margin-top:12px">
-             <label>رابط المرفق أو الملف</label>
-             <input name="attachment_url" type="url" placeholder="https://..." required>
-             <button class="btn btn-primary" type="submit" style="margin-top:8px">تسليم الواجب</button>
-           </form>`
-        : `<div style="margin-top:10px;color:#a12d2d"><strong>انتهى موعد التسليم.</strong> يحتاج المعلم إلى تمديد المهلة للسماح بالتسليم.</div>`}
+        ? `<form class="studentAssignmentUploadForm upload-box" data-assignment-id="${studentEsc(row.id)}">
+            <label>📤 رفع مرفق الواجب من جهازك</label>
+            <input class="file-input" name="file" type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp" required>
+            <button class="btn btn-primary" type="submit" style="margin-top:9px">رفع وإرسال الواجب</button>
+          </form>`
+        : `<div style="margin-top:10px;color:#a12d2d"><strong>انتهى موعد التسليم.</strong> يحتاج المعلم إلى تمديد المهلة.</div>`}
   </article>`;
 }
 function examCard(row){
-  const result=row.result||null;
+  const state=examState(row), sub=row.submission||null, result=row.result||null;
+  const canSubmit=["open"].includes(state);
   return `<article class="panel" style="margin:0">
     <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
       <div><strong>${studentEsc(row.title||"اختبار")}</strong><div class="muted">${studentEsc(row.track||"")}</div></div>
-      <span class="badge">${row.due_at && new Date(row.due_at)<new Date()?"مغلق":"قادم/متاح"}</span>
+      <span class="badge">${examLabels[state]||state}</span>
     </div>
     <p>${studentEsc(row.description||"")}</p>
-    <div class="muted">تاريخ الإنشاء: ${portalDateTime(row.created_at)} · الإغلاق: ${portalDateTime(row.due_at)}</div>
-    ${row.attachment_url?`<div style="margin-top:8px"><a class="btn btn-secondary" href="${studentEsc(row.attachment_url)}" target="_blank" rel="noopener">مرفق الاختبار</a></div>`:""}
-    ${result?`<div style="margin-top:10px"><strong>الدرجة: ${studentEsc(result.grade)}${row.max_grade?` / ${studentEsc(row.max_grade)}`:""}</strong>${result.feedback?`<div class="muted">ملاحظة المعلم: ${studentEsc(result.feedback)}</div>`:""}</div>`:`<div class="muted" style="margin-top:10px">لم تُعلن الدرجة بعد.</div>`}
+    <div class="muted">تاريخ الإنشاء: ${portalDateTime(row.created_at)}${row.starts_at?` · يبدأ: ${portalDateTime(row.starts_at)}`:""} · الإغلاق: ${portalDateTime(row.due_at)}</div>
+    ${row.extended_due_at?`<div class="muted"><strong>تم تمديد المهلة حتى:</strong> ${portalDateTime(row.extended_due_at)}</div>`:""}
+    <div style="margin-top:8px"><strong>الدرجة الكلية: ${studentEsc(row.max_grade||100)}</strong></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">${teacherAttachment(row.attachment_url,"تحميل مرفق الاختبار")}</div>
+    ${result?`<div class="grade-box"><strong>درجتي: ${studentEsc(result.grade)} / ${studentEsc(row.max_grade||100)}</strong>${result.feedback?`<div class="muted">ملاحظة المعلم: ${studentEsc(result.feedback)}</div>`:""}</div>`:`<div class="grade-box">الدرجة: بانتظار التصحيح</div>`}
+    ${sub?.submitted_at
+      ? `<div style="margin-top:10px">✅ تم إرسال الإجابة: ${portalDateTime(sub.submitted_at)} ${sub.attachment_url?`· <a href="${studentEsc(sub.attachment_url)}" target="_blank" rel="noopener">عرض إجابتي</a>`:""}</div>`
+      : canSubmit
+        ? `<form class="studentExamUploadForm upload-box" data-exam-id="${studentEsc(row.id)}">
+            <label>📤 رفع إجابة الاختبار من جهازك</label>
+            <input class="file-input" name="file" type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp" required>
+            <button class="btn btn-primary" type="submit" style="margin-top:9px">رفع وإرسال الإجابة</button>
+          </form>`
+        : ""}
   </article>`;
+}
+async function uploadStudentFile(file,kind,itemId,studentId){
+  const safe=(file.name||"file").replace(/[^\w.\-]+/g,"_");
+  const path=`${studentId}/${kind}/${itemId}/${Date.now()}_${safe}`;
+  const session=getStudentSession();
+  const res=await fetch(`${STUDENT_SUPABASE_URL}/storage/v1/object/student-submissions/${encodeURI(path)}`,{
+    method:"POST",
+    headers:{
+      "apikey":STUDENT_SUPABASE_PUBLISHABLE_KEY,
+      "Authorization":`Bearer ${session.access_token}`,
+      "Content-Type":file.type||"application/octet-stream",
+      "x-upsert":"false"
+    },
+    body:file
+  });
+  if(!res.ok) throw new Error(await res.text());
+  return `${STUDENT_SUPABASE_URL}/storage/v1/object/public/student-submissions/${path}`;
 }
 async function loadAssignmentsAndExams(studentId){
   const [aRes,eRes]=await Promise.all([
-    studentApi(`/rest/v1/assignments?select=id,title,description,track,created_at,due_at,max_grade,attachment_url,allow_late_submission,assignment_submissions(id,submitted_at,attachment_url,grade,feedback)&student_id=eq.${encodeURIComponent(studentId)}&order=due_at.asc`),
-    studentApi(`/rest/v1/exams?select=id,title,description,track,created_at,due_at,max_grade,attachment_url,exam_results(id,grade,feedback,published_at)&student_id=eq.${encodeURIComponent(studentId)}&order=due_at.asc`)
+    studentApi(`/rest/v1/assignments?select=id,title,description,track,created_at,due_at,extended_due_at,max_grade,attachment_url,allow_late_submission,assignment_submissions(id,submitted_at,attachment_url,grade,feedback)&student_id=eq.${encodeURIComponent(studentId)}&order=due_at.asc`),
+    studentApi(`/rest/v1/exams?select=id,title,description,track,created_at,starts_at,due_at,extended_due_at,max_grade,attachment_url,exam_submissions(id,submitted_at,attachment_url),exam_results(id,grade,feedback,published_at)&student_id=eq.${encodeURIComponent(studentId)}&order=due_at.asc`)
   ]);
   if(aRes.ok){
-    const rows=await aRes.json();
-    studentAssignmentsCache=rows.map(x=>({...x,submission:Array.isArray(x.assignment_submissions)?x.assignment_submissions[0]:null}));
+    studentAssignmentsCache=(await aRes.json()).map(x=>({...x,submission:Array.isArray(x.assignment_submissions)?x.assignment_submissions[0]:null}));
   }else studentAssignmentsCache=[];
   if(eRes.ok){
-    const rows=await eRes.json();
-    studentExamsCache=rows.map(x=>({...x,result:Array.isArray(x.exam_results)?x.exam_results[0]:null}));
+    studentExamsCache=(await eRes.json()).map(x=>({...x,submission:Array.isArray(x.exam_submissions)?x.exam_submissions[0]:null,result:Array.isArray(x.exam_results)?x.exam_results[0]:null}));
   }else studentExamsCache=[];
-  renderAssignments();
-  renderExams();
+  renderAssignments();renderExams();
 }
 function renderAssignments(){
-  const filter=document.getElementById("assignmentFilter")?.value||"all";
-  const rows=studentAssignmentsCache.filter(r=>filter==="all"||assignmentState(r)===filter);
+  const f=document.getElementById("assignmentFilter")?.value||"all";
+  const rows=studentAssignmentsCache.filter(r=>f==="all"||assignmentState(r)===f);
   const list=document.getElementById("assignmentsList"), empty=document.getElementById("assignmentsEmpty");
   if(list) list.innerHTML=rows.map(assignmentCard).join("");
   empty?.classList.toggle("hide",rows.length>0);
-  document.querySelectorAll(".studentSubmissionForm").forEach(form=>form.addEventListener("submit",submitAssignment));
+  document.querySelectorAll(".studentAssignmentUploadForm").forEach(f=>f.addEventListener("submit",submitAssignmentFile));
 }
 function renderExams(){
+  const f=document.getElementById("examFilter")?.value||"all";
+  const rows=studentExamsCache.filter(r=>f==="all"||examState(r)===f);
   const list=document.getElementById("examsList"), empty=document.getElementById("examsEmpty");
-  if(list) list.innerHTML=studentExamsCache.map(examCard).join("");
-  empty?.classList.toggle("hide",studentExamsCache.length>0);
+  if(list) list.innerHTML=rows.map(examCard).join("");
+  empty?.classList.toggle("hide",rows.length>0);
+  document.querySelectorAll(".studentExamUploadForm").forEach(f=>f.addEventListener("submit",submitExamFile));
 }
-async function submitAssignment(e){
-  e.preventDefault();
-  const form=e.currentTarget, assignmentId=form.dataset.assignmentId;
-  const assignment=studentAssignmentsCache.find(x=>String(x.id)===String(assignmentId));
-  if(!assignment) return;
-  const portalStudentId=window.__currentPortalStudentId;
-  if(!portalStudentId) return;
-  const attachment_url=new FormData(form).get("attachment_url");
-  const res=await studentApi("/rest/v1/assignment_submissions",{
-    method:"POST",
-    headers:{"Prefer":"return=representation"},
-    body:JSON.stringify({assignment_id:Number(assignmentId),student_id:Number(portalStudentId),attachment_url,submitted_at:new Date().toISOString()})
-  });
-  if(!res.ok){alert("تعذر تسليم الواجب.");return;}
-  await loadAssignmentsAndExams(portalStudentId);
+async function submitAssignmentFile(e){
+  e.preventDefault();const form=e.currentTarget, id=form.dataset.assignmentId, file=form.file.files[0], sid=window.__currentPortalStudentId;
+  if(!file||!sid)return;
+  const btn=form.querySelector("button");btn.disabled=true;btn.textContent="جارٍ الرفع...";
+  try{
+    const url=await uploadStudentFile(file,"assignments",id,sid);
+    const res=await studentApi("/rest/v1/assignment_submissions",{method:"POST",headers:{"Prefer":"return=minimal"},body:JSON.stringify({assignment_id:Number(id),student_id:Number(sid),attachment_url:url,submitted_at:new Date().toISOString()})});
+    if(!res.ok)throw new Error(await res.text());
+    await loadAssignmentsAndExams(sid);
+  }catch(err){console.error(err);alert("تعذر رفع وتسليم الواجب.");}
+  finally{btn.disabled=false;btn.textContent="رفع وإرسال الواجب";}
+}
+async function submitExamFile(e){
+  e.preventDefault();const form=e.currentTarget, id=form.dataset.examId, file=form.file.files[0], sid=window.__currentPortalStudentId;
+  if(!file||!sid)return;
+  const btn=form.querySelector("button");btn.disabled=true;btn.textContent="جارٍ الرفع...";
+  try{
+    const url=await uploadStudentFile(file,"exams",id,sid);
+    const res=await studentApi("/rest/v1/exam_submissions",{method:"POST",headers:{"Prefer":"return=minimal"},body:JSON.stringify({exam_id:Number(id),student_id:Number(sid),attachment_url:url,submitted_at:new Date().toISOString()})});
+    if(!res.ok)throw new Error(await res.text());
+    await loadAssignmentsAndExams(sid);
+  }catch(err){console.error(err);alert("تعذر رفع وإرسال إجابة الاختبار.");}
+  finally{btn.disabled=false;btn.textContent="رفع وإرسال الإجابة";}
 }
 document.addEventListener("DOMContentLoaded",()=>{
   document.getElementById("assignmentFilter")?.addEventListener("change",renderAssignments);
+  document.getElementById("examFilter")?.addEventListener("change",renderExams);
 });
