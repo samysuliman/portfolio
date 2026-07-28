@@ -157,6 +157,8 @@ async function loadStudentPortal(){
 
   const student=await getCurrentStudent();
   if(!student) throw new Error("NO_STUDENT_PROFILE");
+  window.__currentPortalStudentId=student.id;
+  loadAssignmentsAndExams(student.id).catch(console.error);
 
   const meetUrl = settingsRows[0]?.setting_value || "";
   document.getElementById("studentWelcome").textContent = `السلام عليكم، ${student.full_name} 🌿`;
@@ -338,4 +340,104 @@ document.addEventListener("DOMContentLoaded",()=>{
       });
     });
   }
+});
+
+let studentAssignmentsCache=[];
+let studentExamsCache=[];
+
+function portalDateTime(v){
+  if(!v) return "—";
+  try{return new Intl.DateTimeFormat("ar-SA",{dateStyle:"medium",timeStyle:"short"}).format(new Date(v));}
+  catch{return v;}
+}
+function assignmentState(row){
+  if(row.submission?.submitted_at) return "submitted";
+  if(row.due_at && new Date(row.due_at)<new Date()) return "late";
+  return "open";
+}
+function assignmentStateLabel(s){return s==="submitted"?"تم التسليم":s==="late"?"متأخر":"متاح";}
+function assignmentCard(row){
+  const state=assignmentState(row);
+  const canSubmit=state!=="late" || row.allow_late_submission;
+  const grade=row.submission?.grade;
+  return `<article class="panel" style="margin:0">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div><strong>${studentEsc(row.title||"واجب")}</strong><div class="muted">${studentEsc(row.track||"")}</div></div>
+      <span class="badge">${assignmentStateLabel(state)}</span>
+    </div>
+    <p>${studentEsc(row.description||"")}</p>
+    <div class="muted">تاريخ الإنشاء: ${portalDateTime(row.created_at)} · التسليم: ${portalDateTime(row.due_at)}</div>
+    ${grade!==null && grade!==undefined ? `<div style="margin-top:8px"><strong>الدرجة: ${studentEsc(grade)}${row.max_grade?` / ${studentEsc(row.max_grade)}`:""}</strong></div>`:""}
+    ${row.attachment_url?`<div style="margin-top:8px"><a class="btn btn-secondary" href="${studentEsc(row.attachment_url)}" target="_blank" rel="noopener">مرفق الواجب</a></div>`:""}
+    ${state==="submitted"
+      ? `<div style="margin-top:10px">تم التسليم في ${portalDateTime(row.submission.submitted_at)}</div>`
+      : canSubmit
+        ? `<form class="studentSubmissionForm" data-assignment-id="${studentEsc(row.id)}" style="margin-top:12px">
+             <label>رابط المرفق أو الملف</label>
+             <input name="attachment_url" type="url" placeholder="https://..." required>
+             <button class="btn btn-primary" type="submit" style="margin-top:8px">تسليم الواجب</button>
+           </form>`
+        : `<div style="margin-top:10px;color:#a12d2d"><strong>انتهى موعد التسليم.</strong> يحتاج المعلم إلى تمديد المهلة للسماح بالتسليم.</div>`}
+  </article>`;
+}
+function examCard(row){
+  const result=row.result||null;
+  return `<article class="panel" style="margin:0">
+    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div><strong>${studentEsc(row.title||"اختبار")}</strong><div class="muted">${studentEsc(row.track||"")}</div></div>
+      <span class="badge">${row.due_at && new Date(row.due_at)<new Date()?"مغلق":"قادم/متاح"}</span>
+    </div>
+    <p>${studentEsc(row.description||"")}</p>
+    <div class="muted">تاريخ الإنشاء: ${portalDateTime(row.created_at)} · الإغلاق: ${portalDateTime(row.due_at)}</div>
+    ${row.attachment_url?`<div style="margin-top:8px"><a class="btn btn-secondary" href="${studentEsc(row.attachment_url)}" target="_blank" rel="noopener">مرفق الاختبار</a></div>`:""}
+    ${result?`<div style="margin-top:10px"><strong>الدرجة: ${studentEsc(result.grade)}${row.max_grade?` / ${studentEsc(row.max_grade)}`:""}</strong>${result.feedback?`<div class="muted">ملاحظة المعلم: ${studentEsc(result.feedback)}</div>`:""}</div>`:`<div class="muted" style="margin-top:10px">لم تُعلن الدرجة بعد.</div>`}
+  </article>`;
+}
+async function loadAssignmentsAndExams(studentId){
+  const [aRes,eRes]=await Promise.all([
+    studentApi(`/rest/v1/assignments?select=id,title,description,track,created_at,due_at,max_grade,attachment_url,allow_late_submission,assignment_submissions(id,submitted_at,attachment_url,grade,feedback)&student_id=eq.${encodeURIComponent(studentId)}&order=due_at.asc`),
+    studentApi(`/rest/v1/exams?select=id,title,description,track,created_at,due_at,max_grade,attachment_url,exam_results(id,grade,feedback,published_at)&student_id=eq.${encodeURIComponent(studentId)}&order=due_at.asc`)
+  ]);
+  if(aRes.ok){
+    const rows=await aRes.json();
+    studentAssignmentsCache=rows.map(x=>({...x,submission:Array.isArray(x.assignment_submissions)?x.assignment_submissions[0]:null}));
+  }else studentAssignmentsCache=[];
+  if(eRes.ok){
+    const rows=await eRes.json();
+    studentExamsCache=rows.map(x=>({...x,result:Array.isArray(x.exam_results)?x.exam_results[0]:null}));
+  }else studentExamsCache=[];
+  renderAssignments();
+  renderExams();
+}
+function renderAssignments(){
+  const filter=document.getElementById("assignmentFilter")?.value||"all";
+  const rows=studentAssignmentsCache.filter(r=>filter==="all"||assignmentState(r)===filter);
+  const list=document.getElementById("assignmentsList"), empty=document.getElementById("assignmentsEmpty");
+  if(list) list.innerHTML=rows.map(assignmentCard).join("");
+  empty?.classList.toggle("hide",rows.length>0);
+  document.querySelectorAll(".studentSubmissionForm").forEach(form=>form.addEventListener("submit",submitAssignment));
+}
+function renderExams(){
+  const list=document.getElementById("examsList"), empty=document.getElementById("examsEmpty");
+  if(list) list.innerHTML=studentExamsCache.map(examCard).join("");
+  empty?.classList.toggle("hide",studentExamsCache.length>0);
+}
+async function submitAssignment(e){
+  e.preventDefault();
+  const form=e.currentTarget, assignmentId=form.dataset.assignmentId;
+  const assignment=studentAssignmentsCache.find(x=>String(x.id)===String(assignmentId));
+  if(!assignment) return;
+  const portalStudentId=window.__currentPortalStudentId;
+  if(!portalStudentId) return;
+  const attachment_url=new FormData(form).get("attachment_url");
+  const res=await studentApi("/rest/v1/assignment_submissions",{
+    method:"POST",
+    headers:{"Prefer":"return=representation"},
+    body:JSON.stringify({assignment_id:Number(assignmentId),student_id:Number(portalStudentId),attachment_url,submitted_at:new Date().toISOString()})
+  });
+  if(!res.ok){alert("تعذر تسليم الواجب.");return;}
+  await loadAssignmentsAndExams(portalStudentId);
+}
+document.addEventListener("DOMContentLoaded",()=>{
+  document.getElementById("assignmentFilter")?.addEventListener("change",renderAssignments);
 });
