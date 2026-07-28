@@ -21,6 +21,10 @@
     .toolbar{display:grid;grid-template-columns:1fr 210px;gap:12px;margin-top:18px}
     .form-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
     .save-note{font-size:13px;color:var(--muted)}
+    .row-actions{display:flex;gap:7px;flex-wrap:wrap}
+    .mini-btn{border:1px solid var(--border);background:#fff;padding:8px 10px;border-radius:9px;cursor:pointer;font-weight:700}
+    .mini-btn.danger{color:#a52626;border-color:#e6bcbc}
+    .mini-btn:hover{background:#f7faf8}
     @media(max-width:760px){
       .lesson-grid,.toolbar,.meet-panel{grid-template-columns:1fr}
       .table{min-width:900px}
@@ -108,6 +112,7 @@
           </div>
           <div class="form-actions" style="margin-top:16px">
             <button id="saveLesson" class="btn btn-primary" type="submit">إضافة الحصة</button>
+            <button id="cancelEdit" class="btn btn-secondary hide" type="button">إلغاء التعديل</button>
             <span id="lessonSaveStatus" class="save-note"></span>
           </div>
         </form>
@@ -135,10 +140,11 @@
               <th>النهاية</th>
               <th>الحالة</th>
               <th>الدخول</th>
+              <th>الإجراءات</th>
             </tr>
           </thead>
           <tbody id="lessonsBody">
-            <tr><td colspan="7" style="text-align:center">جارٍ تحميل الحصص...</td></tr>
+            <tr><td colspan="8" style="text-align:center">جارٍ تحميل الحصص...</td></tr>
           </tbody>
         </table>
       </div>
@@ -154,6 +160,7 @@
   let studentsMap = new Map();
   let teachersMap = new Map();
   let academyMeetUrl = "";
+  let editingLessonId = null;
 
   const el = id => document.getElementById(id);
 
@@ -226,6 +233,54 @@
     renderLessons();
   }
 
+  function joinEnabledForStatus(status){
+    return status === "scheduled";
+  }
+
+  function resetLessonForm(){
+    editingLessonId = null;
+    el("lessonForm").reset();
+    el("lessonStatus").value = "scheduled";
+    el("saveLesson").textContent = "إضافة الحصة";
+    el("cancelEdit").classList.add("hide");
+    el("lessonSaveStatus").textContent = "";
+  }
+
+  function startEditLesson(id){
+    const r = lessons.find(x => String(x.id) === String(id));
+    if(!r) return;
+    editingLessonId = r.id;
+    el("lessonStudent").value = String(r.student_id);
+    el("lessonTeacher").value = String(r.teacher_id);
+    el("lessonDate").value = r.lesson_date || "";
+    el("lessonStart").value = String(r.start_time || "").slice(0,5);
+    el("lessonEnd").value = String(r.end_time || "").slice(0,5);
+    el("lessonStatus").value = r.status || "scheduled";
+    el("saveLesson").textContent = "حفظ التعديل";
+    el("cancelEdit").classList.remove("hide");
+    el("lessonSaveStatus").textContent = "أنت تعدّل هذه الحصة الآن.";
+    el("lessonForm").scrollIntoView({behavior:"smooth", block:"center"});
+  }
+
+  async function deleteLesson(id){
+    const r = lessons.find(x => String(x.id) === String(id));
+    const student = studentsMap.get(String(r?.student_id))?.full_name || "هذه الحصة";
+    if(!confirm(`هل تريد حذف حصة ${student} نهائيًا؟`)) return;
+    try{
+      const res = await api(`/rest/v1/lessons?id=eq.${encodeURIComponent(id)}`, {
+        method:"DELETE",
+        headers:{"Prefer":"return=minimal"}
+      });
+      if(!res.ok) throw new Error(await res.text());
+      lessons = lessons.filter(x => String(x.id) !== String(id));
+      if(String(editingLessonId) === String(id)) resetLessonForm();
+      renderLessons();
+    }catch(err){
+      console.error(err);
+      alert("تعذر حذف الحصة.");
+    }
+  }
+
   function renderLessons(){
     const q = el("lessonSearch").value.trim().toLowerCase();
     const sf = el("lessonFilter").value;
@@ -237,14 +292,16 @@
     });
 
     if(!rows.length){
-      el("lessonsBody").innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted)">لا توجد حصص مطابقة.</td></tr>';
+      el("lessonsBody").innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--muted)">لا توجد حصص مطابقة.</td></tr>';
       return;
     }
 
     el("lessonsBody").innerHTML = rows.map(r => {
       const student = studentsMap.get(String(r.student_id))?.full_name || "—";
       const teacher = teachersMap.get(String(r.teacher_id))?.full_name || "—";
-      const url = validMeetUrl(academyMeetUrl) ? academyMeetUrl : "";
+      const status = r.status || "scheduled";
+      const url = validMeetUrl(academyMeetUrl) && joinEnabledForStatus(status) ? academyMeetUrl : "";
+      const joinTitle = status === "scheduled" ? "دخول الحصة" : `غير متاح لأن الحالة: ${statusLabels[status] || status}`;
       return `<tr>
         <td><strong>${esc(student)}</strong></td>
         <td>${esc(teacher)}</td>
@@ -254,23 +311,31 @@
         <td>
           <select class="status-select" data-lesson-status="${esc(r.id)}">
             ${["scheduled","completed","cancelled","absent"].map(s =>
-              `<option value="${s}" ${(r.status || "scheduled") === s ? "selected" : ""}>${statusLabels[s]}</option>`
+              `<option value="${s}" ${status === s ? "selected" : ""}>${statusLabels[s]}</option>`
             ).join("")}
           </select>
         </td>
         <td>
-          <a class="join-btn ${url ? "" : "disabled"}" href="${url ? esc(url) : "#"}" target="_blank" rel="noopener">
+          <a class="join-btn ${url ? "" : "disabled"}" href="${url ? esc(url) : "#"}" target="_blank" rel="noopener" title="${esc(joinTitle)}">
             ● دخول الحصة
           </a>
+        </td>
+        <td>
+          <div class="row-actions">
+            <button class="mini-btn" type="button" data-edit-lesson="${esc(r.id)}">تعديل</button>
+            <button class="mini-btn danger" type="button" data-delete-lesson="${esc(r.id)}">حذف</button>
+          </div>
         </td>
       </tr>`;
     }).join("");
 
     document.querySelectorAll("[data-lesson-status]").forEach(select => {
       select.addEventListener("change", async e => {
-        const id = e.currentTarget.dataset.lessonStatus;
-        const status = e.currentTarget.value;
-        e.currentTarget.disabled = true;
+        const selectEl = e.currentTarget;
+        const id = selectEl.dataset.lessonStatus;
+        const status = selectEl.value;
+        const oldStatus = lessons.find(x => String(x.id) === String(id))?.status || "scheduled";
+        selectEl.disabled = true;
         try{
           const res = await api(`/rest/v1/lessons?id=eq.${encodeURIComponent(id)}`, {
             method:"PATCH",
@@ -280,11 +345,22 @@
           if(!res.ok) throw new Error(await res.text());
           const row = lessons.find(x => String(x.id) === String(id));
           if(row) row.status = status;
+          renderLessons();
         }catch(err){
           console.error(err);
+          selectEl.value = oldStatus;
           alert("تعذر تحديث حالة الحصة.");
-        }finally{e.currentTarget.disabled=false;}
+        }finally{
+          selectEl.disabled = false;
+        }
       });
+    });
+
+    document.querySelectorAll("[data-edit-lesson]").forEach(btn => {
+      btn.addEventListener("click", () => startEditLesson(btn.dataset.editLesson));
+    });
+    document.querySelectorAll("[data-delete-lesson]").forEach(btn => {
+      btn.addEventListener("click", () => deleteLesson(btn.dataset.deleteLesson));
     });
   }
 
@@ -305,7 +381,7 @@
 
     const btn = el("saveLesson");
     btn.disabled = true;
-    btn.textContent = "جارٍ الإضافة...";
+    btn.textContent = editingLessonId ? "جارٍ حفظ التعديل..." : "جارٍ الإضافة...";
     el("lessonSaveStatus").textContent = "";
 
     const payload = {
@@ -314,28 +390,43 @@
       lesson_date:date,
       start_time:start,
       end_time:end,
-      status
+      status,
+      updated_at:new Date().toISOString()
     };
 
     try{
-      const res = await api("/rest/v1/lessons", {
-        method:"POST",
-        headers:{"Prefer":"return=representation"},
-        body:JSON.stringify(payload)
-      });
-      if(!res.ok) throw new Error(await res.text());
-      const rows = await res.json();
-      lessons.unshift(rows[0]);
-      el("lessonForm").reset();
-      el("lessonStatus").value = "scheduled";
-      el("lessonSaveStatus").textContent = "تمت إضافة الحصة بنجاح ✓";
+      if(editingLessonId){
+        const id = editingLessonId;
+        const res = await api(`/rest/v1/lessons?id=eq.${encodeURIComponent(id)}`, {
+          method:"PATCH",
+          headers:{"Prefer":"return=representation"},
+          body:JSON.stringify(payload)
+        });
+        if(!res.ok) throw new Error(await res.text());
+        const rows = await res.json();
+        const idx = lessons.findIndex(x => String(x.id) === String(id));
+        if(idx >= 0) lessons[idx] = rows[0] || {...lessons[idx], ...payload};
+        resetLessonForm();
+        el("lessonSaveStatus").textContent = "تم حفظ التعديل بنجاح ✓";
+      }else{
+        const res = await api("/rest/v1/lessons", {
+          method:"POST",
+          headers:{"Prefer":"return=representation"},
+          body:JSON.stringify(payload)
+        });
+        if(!res.ok) throw new Error(await res.text());
+        const rows = await res.json();
+        lessons.unshift(rows[0]);
+        resetLessonForm();
+        el("lessonSaveStatus").textContent = "تمت إضافة الحصة بنجاح ✓";
+      }
       renderLessons();
     }catch(err){
       console.error(err);
-      el("lessonSaveStatus").textContent = "تعذر إضافة الحصة.";
+      el("lessonSaveStatus").textContent = editingLessonId ? "تعذر حفظ التعديل." : "تعذر إضافة الحصة.";
     }finally{
       btn.disabled = false;
-      btn.textContent = "إضافة الحصة";
+      btn.textContent = editingLessonId ? "حفظ التعديل" : "إضافة الحصة";
     }
   }
 
@@ -352,6 +443,7 @@
 
     el("saveMeetUrl")?.addEventListener("click", saveMeetUrl);
     el("lessonForm")?.addEventListener("submit", addLesson);
+    el("cancelEdit")?.addEventListener("click", resetLessonForm);
     el("lessonSearch")?.addEventListener("input", renderLessons);
     el("lessonFilter")?.addEventListener("change", renderLessons);
   });
