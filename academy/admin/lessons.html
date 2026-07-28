@@ -165,6 +165,18 @@
     .conflict-box strong{display:block;margin-bottom:4px}
     .conflict-item{margin-top:6px}
 
+    .repeat-panel{
+      grid-column:1/-1;
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:14px;
+      background:#f8fbf9;
+    }
+    .repeat-days{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .repeat-day{display:flex;align-items:center;gap:6px;border:1px solid var(--border);background:#fff;padding:8px 10px;border-radius:10px}
+    .repeat-day input{width:auto;margin:0}
+    .repeat-summary{margin-top:10px;font-size:13px;color:var(--muted)}
+
   </style>
 </head>
 <body data-admin-page="lessons">
@@ -260,6 +272,36 @@
             <div class="field">
               <label for="lessonEnd">وقت النهاية</label>
               <input id="lessonEnd" type="time" required>
+            </div>
+            <div id="repeatPanel" class="repeat-panel">
+              <div class="lesson-grid">
+                <div class="field">
+                  <label for="lessonRepeat">تكرار الحصة</label>
+                  <select id="lessonRepeat">
+                    <option value="none">بدون تكرار</option>
+                    <option value="daily">يوميًا</option>
+                    <option value="weekly">أسبوعيًا في نفس اليوم</option>
+                    <option value="custom">أيام محددة من الأسبوع</option>
+                  </select>
+                </div>
+                <div id="repeatUntilField" class="field date-field hide">
+                  <label for="repeatUntil">يستمر التكرار حتى</label>
+                  <input id="repeatUntil" type="date" lang="ar" dir="ltr">
+                </div>
+                <div id="repeatDaysField" class="field full hide">
+                  <label>أيام التكرار</label>
+                  <div class="repeat-days">
+                    <label class="repeat-day"><input type="checkbox" name="repeatDay" value="6">السبت</label>
+                    <label class="repeat-day"><input type="checkbox" name="repeatDay" value="0">الأحد</label>
+                    <label class="repeat-day"><input type="checkbox" name="repeatDay" value="1">الاثنين</label>
+                    <label class="repeat-day"><input type="checkbox" name="repeatDay" value="2">الثلاثاء</label>
+                    <label class="repeat-day"><input type="checkbox" name="repeatDay" value="3">الأربعاء</label>
+                    <label class="repeat-day"><input type="checkbox" name="repeatDay" value="4">الخميس</label>
+                    <label class="repeat-day"><input type="checkbox" name="repeatDay" value="5">الجمعة</label>
+                  </div>
+                </div>
+              </div>
+              <div id="repeatSummary" class="repeat-summary">سيتم إنشاء حصة واحدة.</div>
             </div>
           </div>
           <div id="lessonConflictBox" class="conflict-box hide" role="alert"></div>
@@ -484,9 +526,14 @@
 
   function resetLessonForm(){
     editingLessonId = null;
+    el("repeatPanel")?.classList.remove("hide");
     el("lessonForm").reset();
     el("lessonStatus").value = "scheduled";
     el("lessonTrack").value = "";
+    el("lessonRepeat").value = "none";
+    el("repeatUntil").value = "";
+    document.querySelectorAll('input[name="repeatDay"]').forEach(cb => cb.checked = false);
+    updateRepeatUI();
     syncDateField();
     setSelectedStudentIds([]);
     renderConflictWarning();
@@ -507,6 +554,9 @@
     el("lessonStart").value = String(r.start_time || "").slice(0,5);
     el("lessonEnd").value = String(r.end_time || "").slice(0,5);
     el("lessonStatus").value = r.status || "scheduled";
+    el("lessonRepeat").value = "none";
+    updateRepeatUI();
+    el("repeatPanel")?.classList.add("hide");
     renderConflictWarning();
     el("saveLesson").textContent = "حفظ التعديل";
     el("cancelEdit").classList.remove("hide");
@@ -697,20 +747,64 @@
     return startA < endB && endA > startB;
   }
 
-  function conflictDetails(){
-    const studentIds = selectedStudentIds();
-    const teacherId = el("lessonTeacher")?.value || "";
-    const date = el("lessonDate")?.value || "";
-    const start = el("lessonStart")?.value || "";
-    const end = el("lessonEnd")?.value || "";
+  function dateFromYMD(value){
+    const [y,m,d] = String(value || "").split("-").map(Number);
+    return new Date(y, (m || 1)-1, d || 1);
+  }
 
+  function ymd(date){
+    const y = date.getFullYear();
+    const m = String(date.getMonth()+1).padStart(2,"0");
+    const d = String(date.getDate()).padStart(2,"0");
+    return `${y}-${m}-${d}`;
+  }
+
+  function repeatDates(){
+    const first = el("lessonDate")?.value || "";
+    const mode = el("lessonRepeat")?.value || "none";
+    if(!first || mode === "none") return first ? [first] : [];
+
+    const until = el("repeatUntil")?.value || "";
+    if(!until || until < first) return [];
+
+    const firstDate = dateFromYMD(first);
+    const lastDate = dateFromYMD(until);
+    const wantedDays = new Set([...document.querySelectorAll('input[name="repeatDay"]:checked')].map(x => Number(x.value)));
+    const dates = [];
+
+    for(let dt = new Date(firstDate); dt <= lastDate; dt.setDate(dt.getDate()+1)){
+      const sameDay = dt.getDay() === firstDate.getDay();
+      if(mode === "daily" ||
+         (mode === "weekly" && sameDay) ||
+         (mode === "custom" && wantedDays.has(dt.getDay()))){
+        dates.push(ymd(dt));
+      }
+    }
+    return dates;
+  }
+
+  function updateRepeatUI(){
+    const mode = el("lessonRepeat")?.value || "none";
+    const repeating = mode !== "none";
+    el("repeatUntilField")?.classList.toggle("hide", !repeating);
+    el("repeatDaysField")?.classList.toggle("hide", mode !== "custom");
+
+    const dates = repeatDates();
+    const summary = el("repeatSummary");
+    if(!summary) return;
+    if(mode === "none") summary.textContent = "سيتم إنشاء حصة واحدة.";
+    else if(!el("repeatUntil")?.value) summary.textContent = "اختر تاريخ نهاية التكرار.";
+    else if(mode === "custom" && !document.querySelector('input[name="repeatDay"]:checked')) summary.textContent = "اختر يومًا واحدًا على الأقل من أيام الأسبوع.";
+    else summary.textContent = dates.length ? `سيتم إنشاء ${dates.length} حصة/حصص.` : "لا توجد مواعيد مطابقة ضمن الفترة المحددة.";
+  }
+
+  function conflictsForDate(date, studentIds, teacherId, start, end, ignoreId=null){
     if(!date || !start || !end || end <= start) return [];
-
-    const selectedStudents = new Set(studentIds.map(String));
+    const selectedStudents = new Set((studentIds || []).map(String));
     const conflicts = [];
 
     lessons.forEach(r => {
-      if(String(r.id) === String(editingLessonId || "")) return;
+      if(ignoreId && String(r.id) === String(ignoreId)) return;
       if((r.status || "scheduled") === "cancelled") return;
       if(String(r.lesson_date || "") !== date) return;
 
@@ -721,28 +815,30 @@
       const track = tracksMap.get(String(r.track_id))?.name_ar || "مسار غير محدد";
       const teacherName = teachersMap.get(String(r.teacher_id))?.full_name || "معلم غير محدد";
       const otherStudentIds = lessonStudentIds.get(String(r.id)) || (r.student_id ? [String(r.student_id)] : []);
-      const otherStudentNames = otherStudentIds
-        .map(id => studentsMap.get(String(id))?.full_name)
-        .filter(Boolean);
+      const otherStudentNames = otherStudentIds.map(id => studentsMap.get(String(id))?.full_name).filter(Boolean);
+      const dateLabel = formatArabicDate(date);
 
       if(teacherId && String(r.teacher_id) === String(teacherId)){
-        conflicts.push({
-          type:"teacher",
-          message:`المعلم ${teacherName} لديه حصة ${track} من ${otherStart} إلى ${otherEnd} مع ${otherStudentNames.join("، ") || "طلاب آخرين"}.`
-        });
+        conflicts.push({message:`${dateLabel}: المعلم ${teacherName} لديه حصة ${track} من ${otherStart} إلى ${otherEnd} مع ${otherStudentNames.join("، ") || "طلاب آخرين"}.`});
       }
-
-      const sharedIds = otherStudentIds.filter(id => selectedStudents.has(String(id)));
-      sharedIds.forEach(id => {
+      otherStudentIds.filter(id => selectedStudents.has(String(id))).forEach(id => {
         const studentName = studentsMap.get(String(id))?.full_name || "الطالب";
-        conflicts.push({
-          type:"student",
-          message:`الطالب ${studentName} لديه حصة ${track} مع ${teacherName} من ${otherStart} إلى ${otherEnd}.`
-        });
+        conflicts.push({message:`${dateLabel}: الطالب ${studentName} لديه حصة ${track} مع ${teacherName} من ${otherStart} إلى ${otherEnd}.`});
       });
     });
-
     return conflicts;
+  }
+
+  function conflictDetails(){
+    const studentIds = selectedStudentIds();
+    const teacherId = el("lessonTeacher")?.value || "";
+    const start = el("lessonStart")?.value || "";
+    const end = el("lessonEnd")?.value || "";
+    const dates = editingLessonId ? [el("lessonDate")?.value || ""] : repeatDates();
+
+    return dates.flatMap(date =>
+      conflictsForDate(date, studentIds, teacherId, start, end, editingLessonId)
+    );
   }
 
   function renderConflictWarning(){
@@ -775,6 +871,8 @@
     const start = el("lessonStart").value;
     const end = el("lessonEnd").value;
     const status = el("lessonStatus").value || "scheduled";
+    const repeatMode = editingLessonId ? "none" : (el("lessonRepeat").value || "none");
+    const datesToCreate = editingLessonId ? [date] : repeatDates();
 
     if(!studentIds.length || !teacherId || !trackId || !date || !start || !end){
       el("lessonSaveStatus").textContent = !studentIds.length ? "اختر طالبًا واحدًا على الأقل." : "أكمل بيانات الحصة والمسار.";
@@ -783,6 +881,24 @@
     if(end <= start){
       el("lessonSaveStatus").textContent = "وقت النهاية يجب أن يكون بعد وقت البداية.";
       return;
+    }
+    if(repeatMode !== "none"){
+      if(!el("repeatUntil").value){
+        el("lessonSaveStatus").textContent = "اختر تاريخ نهاية التكرار.";
+        return;
+      }
+      if(el("repeatUntil").value < date){
+        el("lessonSaveStatus").textContent = "تاريخ نهاية التكرار يجب ألا يسبق تاريخ أول حصة.";
+        return;
+      }
+      if(repeatMode === "custom" && !document.querySelector('input[name="repeatDay"]:checked')){
+        el("lessonSaveStatus").textContent = "اختر يومًا واحدًا على الأقل من أيام التكرار.";
+        return;
+      }
+      if(!datesToCreate.length){
+        el("lessonSaveStatus").textContent = "لا توجد مواعيد مطابقة ضمن فترة التكرار.";
+        return;
+      }
     }
 
     const conflicts = renderConflictWarning();
@@ -825,18 +941,25 @@
         resetLessonForm();
         el("lessonSaveStatus").textContent = "تم حفظ التعديل بنجاح ✓";
       }else{
-        const res = await api("/rest/v1/lessons", {
-          method:"POST",
-          headers:{"Prefer":"return=representation"},
-          body:JSON.stringify(payload)
-        });
-        if(!res.ok) throw new Error(await res.text());
-        const rows = await res.json();
-        const newLesson = rows[0];
-        lessons.unshift(newLesson);
-        await saveLessonStudents(newLesson.id, studentIds);
+        const created = [];
+        for(const lessonDate of datesToCreate){
+          const item = {...payload, lesson_date:lessonDate};
+          const res = await api("/rest/v1/lessons", {
+            method:"POST",
+            headers:{"Prefer":"return=representation"},
+            body:JSON.stringify(item)
+          });
+          if(!res.ok) throw new Error(await res.text());
+          const rows = await res.json();
+          const newLesson = rows[0];
+          created.push(newLesson);
+          await saveLessonStudents(newLesson.id, studentIds);
+        }
+        lessons.unshift(...created.reverse());
         resetLessonForm();
-        el("lessonSaveStatus").textContent = "تمت إضافة الحصة بنجاح ✓";
+        el("lessonSaveStatus").textContent = created.length === 1
+          ? "تمت إضافة الحصة بنجاح ✓"
+          : `تم إنشاء ${created.length} حصة بنجاح ✓`;
       }
       renderLessons();
     }catch(err){
@@ -861,13 +984,29 @@
 
     el("lessonDate")?.addEventListener("input", () => {
       syncDateField();
+      updateRepeatUI();
       renderConflictWarning();
     });
     el("lessonDate")?.addEventListener("change", () => {
       syncDateField();
+      updateRepeatUI();
       renderConflictWarning();
     });
     syncDateField();
+
+    el("lessonRepeat")?.addEventListener("change", () => {
+      updateRepeatUI();
+      renderConflictWarning();
+    });
+    el("repeatUntil")?.addEventListener("change", () => {
+      updateRepeatUI();
+      renderConflictWarning();
+    });
+    document.querySelectorAll('input[name="repeatDay"]').forEach(cb => cb.addEventListener("change", () => {
+      updateRepeatUI();
+      renderConflictWarning();
+    }));
+    updateRepeatUI();
 
     el("lessonTeacher")?.addEventListener("change", renderConflictWarning);
     el("lessonStart")?.addEventListener("input", renderConflictWarning);
