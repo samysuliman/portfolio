@@ -337,6 +337,19 @@
     return "lesson-pending-status";
   }
 
+
+  function canEnterLesson(r){
+    if ((r.status || "scheduled") !== "scheduled") return false;
+    if (!validMeetUrl(academyMeetUrl)) return false;
+
+    const date = String(r.lesson_date || "");
+    const end = String(r.end_time || "").slice(0,5);
+    if (!date || !end) return false;
+
+    const endAt = new Date(`${date}T${end}:00`);
+    return new Date() <= endAt;
+  }
+
   function needsStatusDecision(r){
     if ((r.status || "scheduled") !== "scheduled") return false;
     const date = String(r.lesson_date || "");
