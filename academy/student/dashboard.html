@@ -25,7 +25,11 @@
     .subject-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
     @media(max-width:900px){.student-grid{grid-template-columns:repeat(2,1fr)}.subject-grid{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:560px){.student-grid,.subject-grid{grid-template-columns:1fr}}
-  </style>
+  
+    .upload-box{margin-top:12px;padding:12px;border:1px dashed var(--border);border-radius:12px;background:#fafafa}
+    .file-input{width:100%;margin-top:7px}
+    .grade-box{margin-top:10px;padding:10px 12px;border-radius:12px;background:#f5f8f6}
+</style>
 </head>
 <body>
 <header class="topbar">
@@ -86,15 +90,9 @@
         <div id="studentLessonsList" class="lesson-list" style="margin-top:14px"><div class="empty">جارٍ تحميل الحصص...</div></div>
       </div>
 
-      <div id="homework" class="panel section-panel">
-        <h3>واجباتي</h3>
-        <div class="empty">سيتم ربط الواجبات والمرفقات في المرحلة التالية.</div>
-      </div>
+      
 
-      <div id="tests" class="panel section-panel">
-        <h3>اختباراتي</h3>
-        <div class="empty">سيتم ربط الاختبارات والدرجات والمرفقات في المرحلة التالية.</div>
-      </div>
+      
     </section>
   </div>
 <section class="panel" id="assignmentsSection">
