@@ -105,6 +105,27 @@
       .student-options{grid-template-columns:1fr}
     }
 
+    .date-field input[type="date"]{
+      direction:ltr;
+      text-align:right;
+      unicode-bidi:plaintext;
+    }
+    .lesson-date-display{
+      white-space:nowrap;
+      font-variant-numeric:tabular-nums;
+    }
+    .track-badge{
+      display:inline-flex;
+      align-items:center;
+      padding:5px 9px;
+      border-radius:999px;
+      background:#eef6f2;
+      border:1px solid #dce9e2;
+      font-size:12px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
   </style>
 </head>
 <body data-admin-page="lessons">
@@ -172,8 +193,14 @@
               <select id="lessonTeacher" required><option value="">اختر المعلم</option></select>
             </div>
             <div class="field">
+              <label for="lessonTrack">المسار</label>
+              <select id="lessonTrack" required>
+                <option value="">اختر المسار</option>
+              </select>
+            </div>
+            <div class="field date-field">
               <label for="lessonDate">التاريخ</label>
-              <input id="lessonDate" type="date" required>
+              <input id="lessonDate" type="date" lang="ar" dir="ltr" required>
             </div>
             <div class="field">
               <label for="lessonStatus">حالة الحصة</label>
@@ -218,6 +245,7 @@
             <tr>
               <th>الطالب</th>
               <th>المعلم</th>
+              <th>المسار</th>
               <th>التاريخ</th>
               <th>البداية</th>
               <th>النهاية</th>
@@ -227,7 +255,7 @@
             </tr>
           </thead>
           <tbody id="lessonsBody">
-            <tr><td colspan="8" style="text-align:center">جارٍ تحميل الحصص...</td></tr>
+            <tr><td colspan="9" style="text-align:center">جارٍ تحميل الحصص...</td></tr>
           </tbody>
         </table>
       </div>
@@ -243,6 +271,7 @@
   let studentsMap = new Map();
   let teachersMap = new Map();
   let lessonStudentIds = new Map();
+  let tracksMap = new Map();
   let academyMeetUrl = "";
   let editingLessonId = null;
 
@@ -312,6 +341,15 @@
     el("lessonTeacher").innerHTML = '<option value="">اختر المعلم</option>' +
       teachers.filter(x => (x.status || "active") === "active")
         .map(x => `<option value="${esc(x.id)}">${esc(x.full_name)}${x.teacher_code ? " — "+esc(x.teacher_code) : ""}</option>`).join("");
+  }
+
+  async function loadTracks(){
+    const res = await api("/rest/v1/academy_tracks?select=id,name_ar,category,sort_order,active&active=eq.true&order=sort_order.asc");
+    if(!res.ok) throw new Error(await res.text());
+    const tracks = await res.json();
+    tracksMap = new Map(tracks.map(x => [String(x.id), x]));
+    el("lessonTrack").innerHTML = '<option value="">اختر المسار</option>' +
+      tracks.map(x => `<option value="${esc(x.id)}">${esc(x.name_ar)}</option>`).join("");
   }
 
   async function loadLessons(){
@@ -396,6 +434,7 @@
     editingLessonId = null;
     el("lessonForm").reset();
     el("lessonStatus").value = "scheduled";
+    el("lessonTrack").value = "";
     setSelectedStudentIds([]);
     el("saveLesson").textContent = "إضافة الحصة";
     el("cancelEdit").classList.add("hide");
@@ -408,6 +447,7 @@
     editingLessonId = r.id;
     setSelectedStudentIds(lessonStudentIds.get(String(r.id)) || (r.student_id ? [String(r.student_id)] : []));
     el("lessonTeacher").value = String(r.teacher_id);
+    el("lessonTrack").value = r.track_id ? String(r.track_id) : "";
     el("lessonDate").value = r.lesson_date || "";
     el("lessonStart").value = String(r.start_time || "").slice(0,5);
     el("lessonEnd").value = String(r.end_time || "").slice(0,5);
@@ -438,6 +478,19 @@
     }
   }
 
+
+  function formatArabicDate(dateValue){
+    if(!dateValue) return "—";
+    try{
+      const [y,m,d] = String(dateValue).split("-").map(Number);
+      const dt = new Date(y, m - 1, d);
+      return new Intl.DateTimeFormat("ar-SA-u-ca-gregory", {
+        day:"numeric", month:"long", year:"numeric"
+      }).format(dt);
+    }catch{
+      return String(dateValue);
+    }
+  }
 
   function lessonTimeState(r){
     const status = r.status || "scheduled";
@@ -502,12 +555,13 @@
     const rows = lessons.filter(r => {
       const studentNames = namesForLesson(r);
       const teacher = teachersMap.get(String(r.teacher_id))?.full_name || "";
-      const hay = `${studentNames.join(" ")} ${teacher}`.toLowerCase();
+      const track = tracksMap.get(String(r.track_id))?.name_ar || "";
+      const hay = `${studentNames.join(" ")} ${teacher} ${track}`.toLowerCase();
       return (!q || hay.includes(q)) && (!sf || (r.status || "scheduled") === sf);
     });
 
     if(!rows.length){
-      el("lessonsBody").innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--muted)">لا توجد حصص مطابقة.</td></tr>';
+      el("lessonsBody").innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--muted)">لا توجد حصص مطابقة.</td></tr>';
       return;
     }
 
@@ -515,13 +569,15 @@
       const studentNames = namesForLesson(r);
       const student = studentNames.length ? studentNames.join("، ") : "—";
       const teacher = teachersMap.get(String(r.teacher_id))?.full_name || "—";
+      const track = tracksMap.get(String(r.track_id))?.name_ar || "غير محدد";
       const status = r.status || "scheduled";
       const url = validMeetUrl(academyMeetUrl) && joinEnabledForStatus(status) ? academyMeetUrl : "";
       const joinTitle = status === "scheduled" ? "دخول الحصة" : `غير متاح لأن الحالة: ${statusLabels[status] || status}`;
       return `<tr class="${lessonTimeState(r)}">
         <td><strong class="student-names">${esc(student)}</strong></td>
         <td>${esc(teacher)}</td>
-        <td>${esc(r.lesson_date || "—")}</td>
+        <td><span class="track-badge">${esc(track)}</span></td>
+        <td class="lesson-date-display">${esc(formatArabicDate(r.lesson_date))}</td>
         <td>${esc(String(r.start_time || "").slice(0,5))}</td>
         <td>${esc(String(r.end_time || "").slice(0,5))}</td>
         <td>
@@ -585,13 +641,14 @@
     e.preventDefault();
     const studentIds = selectedStudentIds();
     const teacherId = el("lessonTeacher").value;
+    const trackId = el("lessonTrack").value;
     const date = el("lessonDate").value;
     const start = el("lessonStart").value;
     const end = el("lessonEnd").value;
     const status = el("lessonStatus").value || "scheduled";
 
-    if(!studentIds.length || !teacherId || !date || !start || !end){
-      el("lessonSaveStatus").textContent = !studentIds.length ? "اختر طالبًا واحدًا على الأقل." : "أكمل بيانات الحصة.";
+    if(!studentIds.length || !teacherId || !trackId || !date || !start || !end){
+      el("lessonSaveStatus").textContent = !studentIds.length ? "اختر طالبًا واحدًا على الأقل." : "أكمل بيانات الحصة والمسار.";
       return;
     }
     if(end <= start){
@@ -608,6 +665,7 @@
       // نبقي أول طالب في الحقل القديم مؤقتًا للتوافق مع النظام السابق.
       student_id:Number(studentIds[0]),
       teacher_id:Number(teacherId),
+      track_id:Number(trackId),
       lesson_date:date,
       start_time:start,
       end_time:end,
@@ -658,7 +716,7 @@
     try{
       const ok = await requireAdmin();
       if(!ok) return;
-      await Promise.all([loadMeetUrl(), loadPeople()]);
+      await Promise.all([loadMeetUrl(), loadPeople(), loadTracks()]);
       await loadLessons();
     }catch(err){
       console.error(err);
