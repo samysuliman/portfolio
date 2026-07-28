@@ -38,6 +38,19 @@
 <main class="page">
   <div class="container">
     <section>
+      <div id="adminPreviewBanner" class="panel hide" style="margin-bottom:16px;border-color:#d8b34f;background:#fff9e8">
+        <div style="display:flex;gap:12px;justify-content:space-between;align-items:end;flex-wrap:wrap">
+          <div>
+            <strong>🛡️ وضع معاينة المدير</strong>
+            <p class="muted" style="margin:5px 0 0">أنت تستعرض البوابة كما يراها الطالب، دون استخدام كلمة مرور الطالب.</p>
+          </div>
+          <div class="field" style="min-width:260px">
+            <label for="previewStudentSelect">اختر الطالب</label>
+            <select id="previewStudentSelect"><option value="">جارٍ تحميل الطلاب...</option></select>
+          </div>
+          <a class="btn btn-secondary" href="../admin/dashboard.html">العودة إلى الإدارة</a>
+        </div>
+      </div>
       <h1 id="studentWelcome" class="page-title">مرحبًا بك 🌿</h1>
       <p class="muted">هذه بوابتك لمتابعة موادك وحصصك وواجباتك واختباراتك.</p>
 
