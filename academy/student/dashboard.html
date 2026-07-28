@@ -1,16 +1,91 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>لوحة الطالب | أكاديمية رشيد</title><link rel="stylesheet" href="../assets/css/styles.css"></head><body>
-<header class="topbar"><div class="container nav"><a class="brand" href="../index.html"><span class="brand-mark">ر</span><span>أكاديمية رشيد<small>لوحة الدارس</small></span></a><a class="btn btn-secondary" href="../login.html">تسجيل الخروج</a></div></header>
-<main class="page"><div class="container layout">
-<aside class="sidebar"><a class="active" href="#">الرئيسية</a><a href="#" data-demo-alert>رحلتي مع القرآن</a><a href="#" data-demo-alert>التقارير</a><a href="#" data-demo-alert>حسابي</a></aside>
-<section><h1 class="page-title">السلام عليكم، سامي 🌿</h1><p class="muted">هذه أهم المعلومات التي تحتاجها اليوم.</p>
-<div class="kpis"><div class="kpi"><span>المرحلة الحالية</span><strong>التلاوة</strong></div><div class="kpi"><span>موعد الحصة</span><strong>7:00 م</strong></div><div class="kpi"><span>نسبة التقدم</span><strong>68%</strong></div><div class="kpi"><span>الالتزام</span><strong>91%</strong></div></div>
-<div class="quick-actions">
-<a class="card quick" href="#" data-demo-alert><div class="icon">▶</div><h3>ادخل الحصة</h3><p>ابدأ الحصة القادمة مباشرة.</p></a>
-<a class="card quick" href="#" data-demo-alert><div class="icon">📖</div><h3>واجب اليوم</h3><p>راجع المطلوب قبل الحصة.</p></a>
-<a class="card quick" href="#" data-demo-alert><div class="icon">📊</div><h3>تقريري</h3><p>تابع التقدم ونقاط التحسين.</p></a>
-<a class="card quick" href="#" data-demo-alert><div class="icon">👤</div><h3>حسابي</h3><p>بياناتك وجدولك الدراسي.</p></a>
-</div>
-<div class="panel" style="margin-top:22px"><div class="row"><div><h3 style="margin:0">هدف الأسبوع</h3><p class="muted" style="margin:4px 0 0">تحسين مخارج الحروف ومراجعة سورة الملك.</p></div><strong>3 من 4</strong></div><div class="progress" style="background:#e7efeb"><span style="width:75%"></span></div></div>
-</section></div></main><script src="../assets/js/app.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>لوحة الطالب | أكاديمية رشيد</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <style>
+    .student-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0}
+    .portal-card{display:block;text-decoration:none;color:inherit;cursor:pointer}
+    .portal-card strong{display:block;font-size:28px;margin-top:8px}
+    .section-panel{margin-top:18px}
+    .lesson-list{display:grid;gap:12px}
+    .lesson-card{border:1px solid var(--border);border-radius:14px;padding:14px;background:#fff}
+    .lesson-card.upcoming{background:#eef9f1}
+    .lesson-card.current{background:#fff8e7}
+    .lesson-card.finished{background:#f2f3f5;color:#667085}
+    .lesson-card.cancelled{background:#fff1f1;color:#8a3a3a}
+    .lesson-row{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+    .lesson-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+    .track-chip{display:inline-flex;padding:5px 9px;border-radius:999px;background:#eef6f2;border:1px solid #dce9e2;font-size:12px;font-weight:800}
+    .join-btn{display:inline-flex;align-items:center;justify-content:center;background:#16833d;color:#fff!important;padding:9px 14px;border-radius:10px;text-decoration:none;font-weight:800}
+    .join-btn.disabled{opacity:.45;pointer-events:none}
+    .empty{padding:18px;text-align:center;color:var(--muted)}
+    .subject-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    @media(max-width:900px){.student-grid{grid-template-columns:repeat(2,1fr)}.subject-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:560px){.student-grid,.subject-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header class="topbar">
+  <div class="container nav">
+    <a class="brand" href="../index.html"><span class="brand-mark">ر</span><span>أكاديمية رشيد<small>لوحة الطالب</small></span></a>
+    <button class="btn btn-secondary" type="button" data-student-logout>تسجيل الخروج</button>
+  </div>
+</header>
+
+<main class="page">
+  <div class="container">
+    <section>
+      <h1 id="studentWelcome" class="page-title">مرحبًا بك 🌿</h1>
+      <p class="muted">هذه بوابتك لمتابعة موادك وحصصك وواجباتك واختباراتك.</p>
+
+      <div id="studentLoadError" class="notice hide">تعذر تحميل بيانات الطالب.</div>
+
+      <div class="student-grid">
+        <a class="card portal-card" href="#subjects"><div class="icon">📚</div><h3>موادي</h3><strong id="subjectsCount">—</strong><p>المواد والمسارات المسجل فيها.</p></a>
+        <a class="card portal-card" href="#lessons"><div class="icon">🎥</div><h3>حصصي</h3><strong id="upcomingLessonsCount">—</strong><p>الحصص القادمة وجدولك الدراسي.</p></a>
+        <a class="card portal-card" href="#homework"><div class="icon">📝</div><h3>واجباتي</h3><strong>—</strong><p>الواجبات والتسليم والمرفقات.</p></a>
+        <a class="card portal-card" href="#tests"><div class="icon">🧪</div><h3>اختباراتي</h3><strong>—</strong><p>الاختبارات والدرجات والمرفقات.</p></a>
+      </div>
+
+      <div id="nextLessonPanel" class="panel section-panel">
+        <h3>الحصة القادمة</h3>
+        <div id="nextLessonContent" class="empty">جارٍ تحميل الحصة القادمة...</div>
+      </div>
+
+      <div id="subjects" class="panel section-panel">
+        <h3>موادي</h3>
+        <div id="subjectsList" class="subject-grid"><div class="empty">جارٍ تحميل المواد...</div></div>
+      </div>
+
+      <div id="lessons" class="panel section-panel">
+        <div class="lesson-row">
+          <div><h3 style="margin:0">حصصي</h3><p class="muted" style="margin:4px 0 0">الحصص القادمة والسابقة المرتبطة بحسابك.</p></div>
+          <select id="studentLessonView" style="max-width:180px">
+            <option value="upcoming">القادمة</option>
+            <option value="today">اليوم</option>
+            <option value="week">هذا الأسبوع</option>
+            <option value="all">كل الحصص</option>
+          </select>
+        </div>
+        <div id="studentLessonsList" class="lesson-list" style="margin-top:14px"><div class="empty">جارٍ تحميل الحصص...</div></div>
+      </div>
+
+      <div id="homework" class="panel section-panel">
+        <h3>واجباتي</h3>
+        <div class="empty">سيتم ربط الواجبات والمرفقات في المرحلة التالية.</div>
+      </div>
+
+      <div id="tests" class="panel section-panel">
+        <h3>اختباراتي</h3>
+        <div class="empty">سيتم ربط الاختبارات والدرجات والمرفقات في المرحلة التالية.</div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script src="../assets/js/student.js?v=1.0.0"></script>
+</body>
+</html>
