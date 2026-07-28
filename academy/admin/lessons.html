@@ -105,10 +105,37 @@
       .student-options{grid-template-columns:1fr}
     }
 
+    .date-input-wrap{
+      position:relative;
+    }
     .date-field input[type="date"]{
       direction:ltr;
       text-align:right;
       unicode-bidi:plaintext;
+      position:relative;
+      z-index:1;
+      background:transparent;
+    }
+    /* إخفاء النص الافتراضي المشوّه في Chrome عندما لا يوجد تاريخ */
+    .date-field input[type="date"]:not(.has-value)::-webkit-datetime-edit{
+      color:transparent;
+    }
+    .date-field input[type="date"].has-value::-webkit-datetime-edit{
+      color:inherit;
+    }
+    .date-input-hint{
+      position:absolute;
+      inset-inline-start:16px;
+      inset-inline-end:52px;
+      top:50%;
+      transform:translateY(-50%);
+      color:var(--muted);
+      pointer-events:none;
+      z-index:0;
+      text-align:right;
+    }
+    .date-input-wrap.has-value .date-input-hint{
+      display:none;
     }
     .lesson-date-display{
       white-space:nowrap;
@@ -200,7 +227,10 @@
             </div>
             <div class="field date-field">
               <label for="lessonDate">التاريخ</label>
-              <input id="lessonDate" type="date" lang="ar" dir="ltr" required>
+              <div class="date-input-wrap">
+                <input id="lessonDate" type="date" lang="ar" dir="ltr" required>
+                <span id="lessonDateHint" class="date-input-hint">اختر التاريخ</span>
+              </div>
             </div>
             <div class="field">
               <label for="lessonStatus">حالة الحصة</label>
@@ -430,11 +460,21 @@
     lessonStudentIds.set(String(lessonId), studentIds.map(String));
   }
 
+  function syncDateField(){
+    const input = el("lessonDate");
+    const wrap = input?.closest(".date-input-wrap");
+    if(!input || !wrap) return;
+    const hasValue = Boolean(input.value);
+    input.classList.toggle("has-value", hasValue);
+    wrap.classList.toggle("has-value", hasValue);
+  }
+
   function resetLessonForm(){
     editingLessonId = null;
     el("lessonForm").reset();
     el("lessonStatus").value = "scheduled";
     el("lessonTrack").value = "";
+    syncDateField();
     setSelectedStudentIds([]);
     el("saveLesson").textContent = "إضافة الحصة";
     el("cancelEdit").classList.add("hide");
@@ -449,6 +489,7 @@
     el("lessonTeacher").value = String(r.teacher_id);
     el("lessonTrack").value = r.track_id ? String(r.track_id) : "";
     el("lessonDate").value = r.lesson_date || "";
+    syncDateField();
     el("lessonStart").value = String(r.start_time || "").slice(0,5);
     el("lessonEnd").value = String(r.end_time || "").slice(0,5);
     el("lessonStatus").value = r.status || "scheduled";
@@ -722,6 +763,10 @@
       console.error(err);
       el("loadError")?.classList.remove("hide");
     }
+
+    el("lessonDate")?.addEventListener("input", syncDateField);
+    el("lessonDate")?.addEventListener("change", syncDateField);
+    syncDateField();
 
     el("lessonStudents")?.addEventListener("change", updateStudentCount);
     el("selectAllStudents")?.addEventListener("click", () => {
