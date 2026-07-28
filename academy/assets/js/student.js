@@ -507,28 +507,34 @@ document.addEventListener("DOMContentLoaded",()=>{
 });
 
 
-function initStudentDashboardPanels(){
-  const cards=[...document.querySelectorAll(".dashboard-card")];
-  const panels=[...document.querySelectorAll(".student-detail-panel")];
-
-  // Initial state: no details open.
-  panels.forEach(panel=>panel.classList.remove("is-open"));
-  cards.forEach(card=>card.classList.remove("active"));
-
-  cards.forEach(card=>{
-    card.onclick=()=>{
-      const target=document.getElementById(card.dataset.panel);
-      const alreadyOpen=target && target.classList.contains("is-open");
-
-      panels.forEach(panel=>panel.classList.remove("is-open"));
-      cards.forEach(item=>item.classList.remove("active"));
-
-      if(target && !alreadyOpen){
-        target.classList.add("is-open");
-        card.classList.add("active");
-        setTimeout(()=>target.scrollIntoView({behavior:"smooth",block:"start"}),40);
-      }
-    };
-  });
+function applyStudentDashboardVisibility(){
+  const ids=["subjects","lessons","assignmentsSection","examsSection","materials"];
+  ids.forEach(id=>document.getElementById(id)?.classList.remove("is-open"));
+  document.querySelectorAll(".dashboard-card").forEach(c=>c.classList.remove("active"));
 }
-document.addEventListener("DOMContentLoaded",initStudentDashboardPanels);
+
+document.addEventListener("DOMContentLoaded",()=>{
+  applyStudentDashboardVisibility();
+
+  document.getElementById("studentDashboardCards")?.addEventListener("click",(e)=>{
+    const card=e.target.closest(".dashboard-card");
+    if(!card) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    const target=document.getElementById(card.dataset.panel);
+    const wasOpen=target?.classList.contains("is-open");
+
+    applyStudentDashboardVisibility();
+
+    if(target && !wasOpen){
+      target.classList.add("is-open");
+      card.classList.add("active");
+      setTimeout(()=>target.scrollIntoView({behavior:"smooth",block:"start"}),50);
+    }
+  }, true);
+
+  document.getElementById("examFilter")?.addEventListener("change",()=>{
+    if(typeof renderExams==="function") renderExams();
+  });
+});
