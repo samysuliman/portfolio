@@ -153,6 +153,18 @@
       white-space:nowrap;
     }
 
+    .conflict-box{
+      margin-top:14px;
+      padding:14px 16px;
+      border-radius:12px;
+      border:1px solid #efb2b2;
+      background:#fff1f1;
+      color:#8f2d2d;
+      line-height:1.8;
+    }
+    .conflict-box strong{display:block;margin-bottom:4px}
+    .conflict-item{margin-top:6px}
+
   </style>
 </head>
 <body data-admin-page="lessons">
@@ -250,6 +262,7 @@
               <input id="lessonEnd" type="time" required>
             </div>
           </div>
+          <div id="lessonConflictBox" class="conflict-box hide" role="alert"></div>
           <div class="form-actions" style="margin-top:16px">
             <button id="saveLesson" class="btn btn-primary" type="submit">إضافة الحصة</button>
             <button id="cancelEdit" class="btn btn-secondary hide" type="button">إلغاء التعديل</button>
@@ -476,6 +489,7 @@
     el("lessonTrack").value = "";
     syncDateField();
     setSelectedStudentIds([]);
+    renderConflictWarning();
     el("saveLesson").textContent = "إضافة الحصة";
     el("cancelEdit").classList.add("hide");
     el("lessonSaveStatus").textContent = "";
@@ -493,6 +507,7 @@
     el("lessonStart").value = String(r.start_time || "").slice(0,5);
     el("lessonEnd").value = String(r.end_time || "").slice(0,5);
     el("lessonStatus").value = r.status || "scheduled";
+    renderConflictWarning();
     el("saveLesson").textContent = "حفظ التعديل";
     el("cancelEdit").classList.remove("hide");
     el("lessonSaveStatus").textContent = "أنت تعدّل هذه الحصة الآن.";
@@ -678,6 +693,79 @@
     });
   }
 
+  function timesOverlap(startA, endA, startB, endB){
+    return startA < endB && endA > startB;
+  }
+
+  function conflictDetails(){
+    const studentIds = selectedStudentIds();
+    const teacherId = el("lessonTeacher")?.value || "";
+    const date = el("lessonDate")?.value || "";
+    const start = el("lessonStart")?.value || "";
+    const end = el("lessonEnd")?.value || "";
+
+    if(!date || !start || !end || end <= start) return [];
+
+    const selectedStudents = new Set(studentIds.map(String));
+    const conflicts = [];
+
+    lessons.forEach(r => {
+      if(String(r.id) === String(editingLessonId || "")) return;
+      if((r.status || "scheduled") === "cancelled") return;
+      if(String(r.lesson_date || "") !== date) return;
+
+      const otherStart = String(r.start_time || "").slice(0,5);
+      const otherEnd = String(r.end_time || "").slice(0,5);
+      if(!otherStart || !otherEnd || !timesOverlap(start, end, otherStart, otherEnd)) return;
+
+      const track = tracksMap.get(String(r.track_id))?.name_ar || "مسار غير محدد";
+      const teacherName = teachersMap.get(String(r.teacher_id))?.full_name || "معلم غير محدد";
+      const otherStudentIds = lessonStudentIds.get(String(r.id)) || (r.student_id ? [String(r.student_id)] : []);
+      const otherStudentNames = otherStudentIds
+        .map(id => studentsMap.get(String(id))?.full_name)
+        .filter(Boolean);
+
+      if(teacherId && String(r.teacher_id) === String(teacherId)){
+        conflicts.push({
+          type:"teacher",
+          message:`المعلم ${teacherName} لديه حصة ${track} من ${otherStart} إلى ${otherEnd} مع ${otherStudentNames.join("، ") || "طلاب آخرين"}.`
+        });
+      }
+
+      const sharedIds = otherStudentIds.filter(id => selectedStudents.has(String(id)));
+      sharedIds.forEach(id => {
+        const studentName = studentsMap.get(String(id))?.full_name || "الطالب";
+        conflicts.push({
+          type:"student",
+          message:`الطالب ${studentName} لديه حصة ${track} مع ${teacherName} من ${otherStart} إلى ${otherEnd}.`
+        });
+      });
+    });
+
+    return conflicts;
+  }
+
+  function renderConflictWarning(){
+    const box = el("lessonConflictBox");
+    if(!box) return [];
+
+    const conflicts = conflictDetails();
+    if(!conflicts.length){
+      box.classList.add("hide");
+      box.innerHTML = "";
+      return conflicts;
+    }
+
+    const unique = [...new Map(conflicts.map(c => [c.message, c])).values()];
+    box.innerHTML = `
+      <strong>⚠️ يوجد تعارض في الموعد</strong>
+      ${unique.map(c => `<div class="conflict-item">${esc(c.message)}</div>`).join("")}
+      <div class="conflict-item"><strong>لن يتم حفظ الحصة حتى يتم تعديل الموعد أو إزالة الطرف المتعارض.</strong></div>
+    `;
+    box.classList.remove("hide");
+    return unique;
+  }
+
   async function addLesson(e){
     e.preventDefault();
     const studentIds = selectedStudentIds();
@@ -694,6 +782,13 @@
     }
     if(end <= start){
       el("lessonSaveStatus").textContent = "وقت النهاية يجب أن يكون بعد وقت البداية.";
+      return;
+    }
+
+    const conflicts = renderConflictWarning();
+    if(conflicts.length){
+      el("lessonSaveStatus").textContent = "تعذر الحفظ بسبب تعارض في الموعد.";
+      el("lessonConflictBox")?.scrollIntoView({behavior:"smooth", block:"center"});
       return;
     }
 
@@ -764,16 +859,35 @@
       el("loadError")?.classList.remove("hide");
     }
 
-    el("lessonDate")?.addEventListener("input", syncDateField);
-    el("lessonDate")?.addEventListener("change", syncDateField);
+    el("lessonDate")?.addEventListener("input", () => {
+      syncDateField();
+      renderConflictWarning();
+    });
+    el("lessonDate")?.addEventListener("change", () => {
+      syncDateField();
+      renderConflictWarning();
+    });
     syncDateField();
 
-    el("lessonStudents")?.addEventListener("change", updateStudentCount);
+    el("lessonTeacher")?.addEventListener("change", renderConflictWarning);
+    el("lessonStart")?.addEventListener("input", renderConflictWarning);
+    el("lessonStart")?.addEventListener("change", renderConflictWarning);
+    el("lessonEnd")?.addEventListener("input", renderConflictWarning);
+    el("lessonEnd")?.addEventListener("change", renderConflictWarning);
+
+    el("lessonStudents")?.addEventListener("change", () => {
+      updateStudentCount();
+      renderConflictWarning();
+    });
     el("selectAllStudents")?.addEventListener("click", () => {
       document.querySelectorAll('input[name="lessonStudent"]').forEach(cb => cb.checked = true);
       updateStudentCount();
+      renderConflictWarning();
     });
-    el("clearAllStudents")?.addEventListener("click", () => setSelectedStudentIds([]));
+    el("clearAllStudents")?.addEventListener("click", () => {
+      setSelectedStudentIds([]);
+      renderConflictWarning();
+    });
 
     el("saveMeetUrl")?.addEventListener("click", saveMeetUrl);
     el("lessonForm")?.addEventListener("submit", addLesson);
