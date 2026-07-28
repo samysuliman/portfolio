@@ -50,10 +50,9 @@
 @media(max-width:440px){.dashboard-cards{grid-template-columns:1fr}}
 
 
-/* Final dashboard behavior: details are hidden until a card is clicked */
-.student-detail-panel{display:none !important}
+/* Final dashboard visibility fix */
+.student-detail-panel{display:none !important;margin-top:18px}
 .student-detail-panel.is-open{display:block !important}
-
 </style>
 </head>
 <body>
@@ -134,15 +133,26 @@
       
     </section>
   </div>
-<section class="panel" id="assignmentsSection">
+<section class="panel section-panel student-detail-panel" id="assignmentsSection">
       <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
         <div><h2>واجباتي</h2><p class="muted">الواجبات المطلوبة، المواعيد، والتسليم.</p></div>
         <select id="assignmentFilter" style="max-width:180px"><option value="all">كل الواجبات</option><option value="open">متاح</option><option value="submitted">تم التسليم</option><option value="late">متأخر</option></select>
       </div><div id="assignmentsList" style="display:grid;gap:12px;margin-top:14px"></div><div id="assignmentsEmpty" class="muted hide">لا توجد واجبات حاليًا.</div>
     </section>
-    <section class="panel" id="examsSection">
-      <h2>اختباراتي</h2><p class="muted">مواعيد الاختبارات، المرفقات، والدرجات بعد التصحيح.</p>
-      <div id="examsList" style="display:grid;gap:12px;margin-top:14px"></div><div id="examsEmpty" class="muted hide">لا توجد اختبارات حاليًا.</div>
+    <section class="panel section-panel student-detail-panel" id="examsSection">
+      <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
+        <div><h2 style="margin-bottom:4px">اختباراتي</h2><p class="muted">مواعيد الاختبارات، المرفقات، والدرجات بعد التصحيح.</p></div>
+        <select id="examFilter" style="max-width:190px">
+          <option value="all">كل الاختبارات</option>
+          <option value="upcoming">قادم</option>
+          <option value="open">متاح الآن</option>
+          <option value="submitted">تم التسليم</option>
+          <option value="closed">انتهى</option>
+          <option value="graded">تم التصحيح</option>
+        </select>
+      </div>
+      <div id="examsList" style="display:grid;gap:12px;margin-top:14px"></div>
+      <div id="examsEmpty" class="muted hide">لا توجد اختبارات حاليًا.</div>
     </section>
 
 <section id="materials" class="panel section-panel student-detail-panel">
