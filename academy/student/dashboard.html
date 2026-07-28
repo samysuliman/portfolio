@@ -25,11 +25,7 @@
     .subject-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
     @media(max-width:900px){.student-grid{grid-template-columns:repeat(2,1fr)}.subject-grid{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:560px){.student-grid,.subject-grid{grid-template-columns:1fr}}
-  
-    .upload-box{margin-top:12px;padding:12px;border:1px dashed var(--border);border-radius:12px;background:#fafafa}
-    .file-input{width:100%;margin-top:7px}
-    .grade-box{margin-top:10px;padding:10px 12px;border-radius:12px;background:#f5f8f6}
-</style>
+  </style>
 </head>
 <body>
 <header class="topbar">
@@ -65,6 +61,7 @@
         <a class="card portal-card" href="#lessons"><div class="icon">🎥</div><h3>حصصي</h3><strong id="upcomingLessonsCount">—</strong><p>الحصص القادمة وجدولك الدراسي.</p></a>
         <a class="card portal-card" href="#homework"><div class="icon">📝</div><h3>واجباتي</h3><strong>—</strong><p>الواجبات والتسليم والمرفقات.</p></a>
         <a class="card portal-card" href="#tests"><div class="icon">🧪</div><h3>اختباراتي</h3><strong>—</strong><p>الاختبارات والدرجات والمرفقات.</p></a>
+<a class="card portal-card" href="#materials"><div class="icon">📎</div><h3>مرفقات المادة</h3><strong id="materialsCount">—</strong><p>ملفات المواد مرتبة حسب المسار.</p></a>
       </div>
 
       <div id="nextLessonPanel" class="panel section-panel">
@@ -90,9 +87,15 @@
         <div id="studentLessonsList" class="lesson-list" style="margin-top:14px"><div class="empty">جارٍ تحميل الحصص...</div></div>
       </div>
 
-      
+      <div id="homework" class="panel section-panel">
+        <h3>واجباتي</h3>
+        <div class="empty">سيتم ربط الواجبات والمرفقات في المرحلة التالية.</div>
+      </div>
 
-      
+      <div id="tests" class="panel section-panel">
+        <h3>اختباراتي</h3>
+        <div class="empty">سيتم ربط الاختبارات والدرجات والمرفقات في المرحلة التالية.</div>
+      </div>
     </section>
   </div>
 <section class="panel" id="assignmentsSection">
@@ -104,6 +107,21 @@
     <section class="panel" id="examsSection">
       <h2>اختباراتي</h2><p class="muted">مواعيد الاختبارات، المرفقات، والدرجات بعد التصحيح.</p>
       <div id="examsList" style="display:grid;gap:12px;margin-top:14px"></div><div id="examsEmpty" class="muted hide">لا توجد اختبارات حاليًا.</div>
+    </section>
+
+<section id="materials" class="panel section-panel">
+      <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
+        <div><h2 style="margin-bottom:4px">📎 مرفقات المادة</h2><p class="muted">اختر المسار لعرض الملفات التي رفعها المعلم لك.</p></div>
+        <select id="materialTrackFilter" style="max-width:260px">
+          <option value="all">كل المسارات</option>
+          <option>التأسيس</option><option>التلاوة والتجويد</option><option>الحفظ والإتقان</option>
+          <option>الإجازة والسند</option><option>العقيدة</option><option>الفقه</option>
+          <option>الحديث</option><option>التفسير</option><option>السيرة النبوية</option>
+          <option>العربية لغير الناطقين بها</option>
+        </select>
+      </div>
+      <div id="studentMaterialsList" style="display:grid;gap:12px;margin-top:14px"></div>
+      <p id="studentMaterialsEmpty" class="muted">لا توجد مرفقات متاحة حاليًا.</p>
     </section>
 </main>
 
