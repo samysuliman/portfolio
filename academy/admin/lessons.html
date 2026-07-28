@@ -177,6 +177,26 @@
     .repeat-day input{width:auto;margin:0}
     .repeat-summary{margin-top:10px;font-size:13px;color:var(--muted)}
 
+    .schedule-tools{
+      display:flex;gap:10px;align-items:end;flex-wrap:wrap;
+      margin-top:18px;padding:14px;border:1px solid var(--border);
+      border-radius:14px;background:#fff;
+    }
+    .schedule-tools .field{min-width:160px;flex:1}
+    .schedule-tools .field.compact{max-width:220px}
+    .bulk-danger{background:#fff1f1!important;color:#a52626!important;border-color:#e6bcbc!important}
+    .day-group-row td{
+      background:#eaf3ee!important;color:#173f2d!important;font-weight:900;
+      padding:12px 14px!important;border-top:2px solid #d6e7dd;
+    }
+    .day-group-meta{font-size:12px;color:var(--muted);font-weight:700;margin-inline-start:8px}
+    .students-summary{cursor:pointer;font-weight:800;white-space:nowrap}
+    .students-summary:hover{text-decoration:underline}
+    .students-details{position:relative}
+    .students-details[open] .students-summary{margin-bottom:6px}
+    .students-list{font-size:12px;line-height:1.8;min-width:150px}
+    .view-note{font-size:12px;color:var(--muted);align-self:center}
+
   </style>
 </head>
 <body data-admin-page="lessons">
@@ -322,6 +342,24 @@
           <option value="cancelled">ملغاة</option>
           <option value="absent">غياب</option>
         </select>
+      </div>
+
+      <div class="schedule-tools">
+        <div class="field compact">
+          <label for="lessonView">عرض الحصص</label>
+          <select id="lessonView">
+            <option value="all">كل الحصص</option>
+            <option value="today">اليوم</option>
+            <option value="week">هذا الأسبوع</option>
+            <option value="month">هذا الشهر</option>
+          </select>
+        </div>
+        <div class="field compact">
+          <label for="bulkMonth">حذف حصص شهر</label>
+          <input id="bulkMonth" type="month" lang="ar" dir="ltr">
+        </div>
+        <button id="deleteMonthLessons" class="btn btn-secondary bulk-danger" type="button">حذف حصص الشهر</button>
+        <span id="viewNote" class="view-note"></span>
       </div>
 
       <div class="table-wrap">
@@ -655,6 +693,110 @@
     return new Date() > endAt;
   }
 
+  function startOfWeek(date){
+    const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    // الأسبوع: السبت إلى الجمعة
+    const offset = (d.getDay() + 1) % 7;
+    d.setDate(d.getDate() - offset);
+    return d;
+  }
+
+  function endOfWeek(date){
+    const d = startOfWeek(date);
+    d.setDate(d.getDate() + 6);
+    return d;
+  }
+
+  function inCurrentView(r){
+    const view = el("lessonView")?.value || "all";
+    if(view === "all") return true;
+
+    const value = String(r.lesson_date || "");
+    if(!value) return false;
+    const lessonDate = dateFromYMD(value);
+    const now = new Date();
+
+    if(view === "today") return ymd(lessonDate) === ymd(now);
+    if(view === "week"){
+      const a = startOfWeek(now), b = endOfWeek(now);
+      return lessonDate >= a && lessonDate <= b;
+    }
+    if(view === "month"){
+      return lessonDate.getFullYear() === now.getFullYear() && lessonDate.getMonth() === now.getMonth();
+    }
+    return true;
+  }
+
+  function studentCell(r){
+    const names = namesForLesson(r);
+    if(!names.length) return "—";
+    if(names.length === 1) return `<strong>${esc(names[0])}</strong>`;
+    return `<details class="students-details">
+      <summary class="students-summary">${names.length} طلاب</summary>
+      <div class="students-list">${names.map(n => `<div>${esc(n)}</div>`).join("")}</div>
+    </details>`;
+  }
+
+  function dayHeading(dateValue, count){
+    const dt = dateFromYMD(dateValue);
+    const day = new Intl.DateTimeFormat("ar-SA-u-ca-gregory",{weekday:"long"}).format(dt);
+    return `<tr class="day-group-row"><td colspan="9">${esc(day)} — ${esc(formatArabicDate(dateValue))}
+      <span class="day-group-meta">${count} حصة/حصص</span></td></tr>`;
+  }
+
+  function monthLabel(value){
+    if(!value) return "";
+    const [y,m] = value.split("-").map(Number);
+    return new Intl.DateTimeFormat("ar-SA-u-ca-gregory",{month:"long",year:"numeric"}).format(new Date(y,m-1,1));
+  }
+
+  async function deleteMonthLessons(){
+    const month = el("bulkMonth")?.value || "";
+    if(!month){
+      alert("اختر الشهر الذي تريد حذف حصصه أولًا.");
+      return;
+    }
+    const targets = lessons.filter(r => String(r.lesson_date || "").startsWith(month + "-"));
+    if(!targets.length){
+      alert(`لا توجد حصص في ${monthLabel(month)}.`);
+      return;
+    }
+
+    const ok = confirm(`سيتم حذف ${targets.length} حصة من ${monthLabel(month)} نهائيًا.\n\nهل أنت متأكد؟`);
+    if(!ok) return;
+
+    const typed = prompt(`للتأكيد النهائي، اكتب كلمة: حذف`);
+    if(typed !== "حذف") return;
+
+    const btn = el("deleteMonthLessons");
+    btn.disabled = true;
+    btn.textContent = "جارٍ الحذف...";
+    try{
+      const start = `${month}-01`;
+      const [y,m] = month.split("-").map(Number);
+      const next = new Date(y, m, 1);
+      const nextMonth = `${next.getFullYear()}-${String(next.getMonth()+1).padStart(2,"0")}-01`;
+      const res = await api(`/rest/v1/lessons?lesson_date=gte.${encodeURIComponent(start)}&lesson_date=lt.${encodeURIComponent(nextMonth)}`, {
+        method:"DELETE",
+        headers:{"Prefer":"return=minimal"}
+      });
+      if(!res.ok) throw new Error(await res.text());
+
+      const ids = new Set(targets.map(r => String(r.id)));
+      lessons = lessons.filter(r => !ids.has(String(r.id)));
+      ids.forEach(id => lessonStudentIds.delete(id));
+      if(editingLessonId && ids.has(String(editingLessonId))) resetLessonForm();
+      renderLessons();
+      alert(`تم حذف ${targets.length} حصة من ${monthLabel(month)} بنجاح.`);
+    }catch(err){
+      console.error(err);
+      alert("تعذر حذف حصص الشهر.");
+    }finally{
+      btn.disabled = false;
+      btn.textContent = "حذف حصص الشهر";
+    }
+  }
+
   function renderLessons(){
     const q = el("lessonSearch").value.trim().toLowerCase();
     const sf = el("lessonFilter").value;
@@ -663,50 +805,69 @@
       const teacher = teachersMap.get(String(r.teacher_id))?.full_name || "";
       const track = tracksMap.get(String(r.track_id))?.name_ar || "";
       const hay = `${studentNames.join(" ")} ${teacher} ${track}`.toLowerCase();
-      return (!q || hay.includes(q)) && (!sf || (r.status || "scheduled") === sf);
+      return (!q || hay.includes(q)) &&
+             (!sf || (r.status || "scheduled") === sf) &&
+             inCurrentView(r);
+    }).sort((a,b) => {
+      const dateCmp = String(a.lesson_date || "").localeCompare(String(b.lesson_date || ""));
+      if(dateCmp) return dateCmp;
+      return String(a.start_time || "").localeCompare(String(b.start_time || ""));
     });
+
+    const note = el("viewNote");
+    if(note) note.textContent = rows.length ? `المعروض الآن: ${rows.length} حصة/حصص` : "";
 
     if(!rows.length){
       el("lessonsBody").innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--muted)">لا توجد حصص مطابقة.</td></tr>';
       return;
     }
 
-    el("lessonsBody").innerHTML = rows.map(r => {
-      const studentNames = namesForLesson(r);
-      const student = studentNames.length ? studentNames.join("، ") : "—";
-      const teacher = teachersMap.get(String(r.teacher_id))?.full_name || "—";
-      const track = tracksMap.get(String(r.track_id))?.name_ar || "غير محدد";
-      const status = r.status || "scheduled";
-      const url = validMeetUrl(academyMeetUrl) && joinEnabledForStatus(status) ? academyMeetUrl : "";
-      const joinTitle = status === "scheduled" ? "دخول الحصة" : `غير متاح لأن الحالة: ${statusLabels[status] || status}`;
-      return `<tr class="${lessonTimeState(r)}">
-        <td><strong class="student-names">${esc(student)}</strong></td>
-        <td>${esc(teacher)}</td>
-        <td><span class="track-badge">${esc(track)}</span></td>
-        <td class="lesson-date-display">${esc(formatArabicDate(r.lesson_date))}</td>
-        <td>${esc(String(r.start_time || "").slice(0,5))}</td>
-        <td>${esc(String(r.end_time || "").slice(0,5))}</td>
-        <td>
-          <select class="status-select" data-lesson-status="${esc(r.id)}">
-            ${["scheduled","completed","cancelled","absent"].map(s =>
-              `<option value="${s}" ${status === s ? "selected" : ""}>${statusLabels[s]}</option>`
-            ).join("")}
-          </select>
-          ${needsStatusDecision(r) ? '<span class="lesson-status-note">بانتظار تحديد الحالة</span>' : ''}
-        </td>
-        <td>
-          <a class="join-btn ${url ? "" : "disabled"}" href="${url ? esc(url) : "#"}" target="_blank" rel="noopener" title="${esc(joinTitle)}">
-            ● دخول الحصة
-          </a>
-        </td>
-        <td>
-          <div class="row-actions">
-            <button class="mini-btn" type="button" data-edit-lesson="${esc(r.id)}">تعديل</button>
-            <button class="mini-btn danger" type="button" data-delete-lesson="${esc(r.id)}">حذف</button>
-          </div>
-        </td>
-      </tr>`;
-    }).join("");
+    const grouped = new Map();
+    rows.forEach(r => {
+      const key = String(r.lesson_date || "");
+      if(!grouped.has(key)) grouped.set(key, []);
+      grouped.get(key).push(r);
+    });
+
+    let html = "";
+    grouped.forEach((dayRows, dateKey) => {
+      html += dayHeading(dateKey, dayRows.length);
+      html += dayRows.map(r => {
+        const teacher = teachersMap.get(String(r.teacher_id))?.full_name || "—";
+        const track = tracksMap.get(String(r.track_id))?.name_ar || "غير محدد";
+        const status = r.status || "scheduled";
+        const url = canEnterLesson(r) ? meetOpenUrl(academyMeetUrl) : "";
+        const joinTitle = status === "scheduled" ? "دخول الحصة" : `غير متاح لأن الحالة: ${statusLabels[status] || status}`;
+        return `<tr class="${lessonTimeState(r)}">
+          <td>${studentCell(r)}</td>
+          <td>${esc(teacher)}</td>
+          <td><span class="track-badge">${esc(track)}</span></td>
+          <td class="lesson-date-display">${esc(formatArabicDate(r.lesson_date))}</td>
+          <td>${esc(String(r.start_time || "").slice(0,5))}</td>
+          <td>${esc(String(r.end_time || "").slice(0,5))}</td>
+          <td>
+            <select class="status-select" data-lesson-status="${esc(r.id)}">
+              ${["scheduled","completed","cancelled","absent"].map(s =>
+                `<option value="${s}" ${status === s ? "selected" : ""}>${statusLabels[s]}</option>`
+              ).join("")}
+            </select>
+            ${needsStatusDecision(r) ? '<span class="lesson-status-note">بانتظار تحديد الحالة</span>' : ''}
+          </td>
+          <td>
+            <a class="join-btn ${url ? "" : "disabled"}" href="${url ? esc(url) : "#"}" target="_blank" rel="noopener" title="${esc(joinTitle)}">
+              ● دخول الحصة
+            </a>
+          </td>
+          <td>
+            <div class="row-actions">
+              <button class="mini-btn" type="button" data-edit-lesson="${esc(r.id)}">تعديل</button>
+              <button class="mini-btn danger" type="button" data-delete-lesson="${esc(r.id)}">حذف</button>
+            </div>
+          </td>
+        </tr>`;
+      }).join("");
+    });
+    el("lessonsBody").innerHTML = html;
 
     document.querySelectorAll("[data-lesson-status]").forEach(select => {
       select.addEventListener("change", async e => {
@@ -729,9 +890,7 @@
           console.error(err);
           selectEl.value = oldStatus;
           alert("تعذر تحديث حالة الحصة.");
-        }finally{
-          selectEl.disabled = false;
-        }
+        }finally{ selectEl.disabled = false; }
       });
     });
 
@@ -1033,6 +1192,14 @@
     el("cancelEdit")?.addEventListener("click", resetLessonForm);
     el("lessonSearch")?.addEventListener("input", renderLessons);
     el("lessonFilter")?.addEventListener("change", renderLessons);
+    el("lessonView")?.addEventListener("change", renderLessons);
+    el("deleteMonthLessons")?.addEventListener("click", deleteMonthLessons);
+
+    // اجعل شهر الحذف الافتراضي هو الشهر الحالي.
+    const now = new Date();
+    if(el("bulkMonth") && !el("bulkMonth").value){
+      el("bulkMonth").value = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
+    }
   });
 })();
 </script>
