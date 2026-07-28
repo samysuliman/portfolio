@@ -411,6 +411,7 @@ async function loadAssignmentsAndExams(studentId){
   renderExams();
 }
 function renderAssignments(){
+  setTimeout(()=>{updateStudentDashboardCounts();refreshStudentNotifications();},0);
   const filter=document.getElementById("assignmentFilter")?.value||"all";
   const rows=studentAssignmentsCache.filter(r=>filter==="all"||assignmentState(r)===filter);
   const list=document.getElementById("assignmentsList"), empty=document.getElementById("assignmentsEmpty");
@@ -419,6 +420,7 @@ function renderAssignments(){
   document.querySelectorAll(".studentSubmissionForm").forEach(form=>form.addEventListener("submit",submitAssignment));
 }
 function renderExams(){
+  setTimeout(()=>{updateStudentDashboardCounts();refreshStudentNotifications();},0);
   const list=document.getElementById("examsList"), empty=document.getElementById("examsEmpty");
   if(list) list.innerHTML=studentExamsCache.map(examCard).join("");
   empty?.classList.toggle("hide",studentExamsCache.length>0);
@@ -453,6 +455,7 @@ async function loadStudentMaterials(studentId){
   renderStudentMaterials();
 }
 function renderStudentMaterials(){
+  setTimeout(updateStudentDashboardCounts,0);
   const filter=document.getElementById("materialTrackFilter")?.value||"all";
   const rows=studentMaterialsCache.filter(x=>filter==="all"||x.track===filter);
   const list=document.getElementById("studentMaterialsList"), empty=document.getElementById("studentMaterialsEmpty");
@@ -469,3 +472,36 @@ function renderStudentMaterials(){
   const c=document.getElementById("materialsCount"); if(c)c.textContent=studentMaterialsCache.length;
 }
 document.addEventListener("DOMContentLoaded",()=>document.getElementById("materialTrackFilter")?.addEventListener("change",renderStudentMaterials));
+
+
+function updateStudentDashboardCounts(){
+ const s=document.getElementById("subjectsCardCount"),l=document.getElementById("lessonsCardCount"),
+ a=document.getElementById("assignmentsCardCount"),e=document.getElementById("examsCardCount"),m=document.getElementById("materialsCardCount");
+ const subj=window.__studentSubjectsCount||0, lessons=window.__studentUpcomingLessonsCount||0;
+ if(s)s.textContent=`${subj} مواد`; if(l)l.textContent=`${lessons} حصص`;
+ if(a)a.textContent=`${typeof studentAssignmentsCache!=="undefined"?studentAssignmentsCache.length:0} واجبات`;
+ if(e)e.textContent=`${typeof studentExamsCache!=="undefined"?studentExamsCache.length:0} اختبارات`;
+ if(m)m.textContent=`${typeof studentMaterialsCache!=="undefined"?studentMaterialsCache.length:0} مرفقات`;
+}
+function refreshStudentNotifications(){
+ const notes=[];
+ if(typeof studentAssignmentsCache!=="undefined") studentAssignmentsCache.filter(x=>assignmentState(x)==="open").forEach(x=>notes.push(`📝 واجب: ${x.title}`));
+ if(typeof studentExamsCache!=="undefined") studentExamsCache.filter(x=>["upcoming","open"].includes(examState(x))).forEach(x=>notes.push(`📋 اختبار: ${x.title}`));
+ const c=document.getElementById("notificationCount"),list=document.getElementById("notificationList");
+ if(c){c.textContent=notes.length;c.style.display=notes.length?"flex":"none"} if(list)list.innerHTML=notes.length?notes.map(n=>`<div style="padding:8px 0;border-bottom:1px solid #eee">${n}</div>`).join(""):"لا توجد تنبيهات جديدة.";
+}
+document.addEventListener("DOMContentLoaded",()=>{
+ document.querySelectorAll(".dashboard-card").forEach(btn=>btn.addEventListener("click",()=>{
+   const id=btn.dataset.panel, panel=document.getElementById(id), was=panel?.classList.contains("is-open");
+   document.querySelectorAll(".student-detail-panel").forEach(x=>x.classList.remove("is-open"));
+   document.querySelectorAll(".dashboard-card").forEach(x=>x.classList.remove("active"));
+   if(panel&&!was){panel.classList.add("is-open");btn.classList.add("active");panel.scrollIntoView({behavior:"smooth",block:"start"});}
+ }));
+ const nb=document.getElementById("notificationBtn"),np=document.getElementById("notificationPopover");
+ nb?.addEventListener("click",()=>np?.classList.toggle("hide"));
+ const edit=document.getElementById("studentAvatarEdit"),file=document.getElementById("studentAvatarFile"),img=document.getElementById("studentAvatar");
+ edit?.addEventListener("click",()=>file?.click());
+ file?.addEventListener("change",()=>{const f=file.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>{if(img)img.src=r.result;localStorage.setItem("student_avatar_preview",r.result)};r.readAsDataURL(f)});
+ const saved=localStorage.getItem("student_avatar_preview"); if(img)img.src=saved||"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' rx='50' fill='%23e8f2ed'/%3E%3Ctext x='50' y='62' text-anchor='middle' font-size='42'%3E👤%3C/text%3E%3C/svg%3E";
+ updateStudentDashboardCounts();refreshStudentNotifications();
+});
