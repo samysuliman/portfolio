@@ -29,6 +29,23 @@
       .lesson-grid,.toolbar,.meet-panel{grid-template-columns:1fr}
       .table{min-width:900px}
     }
+  
+    /* تمييز الحصص حسب الموعد */
+    tr.lesson-upcoming > td{
+      background:#eef9f1;
+    }
+    tr.lesson-finished > td{
+      background:#f2f3f5;
+      color:#667085;
+    }
+    tr.lesson-current > td{
+      background:#fff8e7;
+    }
+    tr.lesson-cancelled > td{
+      background:#fff1f1;
+      color:#8a3a3a;
+    }
+
   </style>
 </head>
 <body data-admin-page="lessons">
@@ -281,6 +298,23 @@
     }
   }
 
+
+  function lessonTimeState(r){
+    if ((r.status || "scheduled") === "cancelled") return "lesson-cancelled";
+    const date = String(r.lesson_date || "");
+    const start = String(r.start_time || "").slice(0,5);
+    const end = String(r.end_time || "").slice(0,5);
+    if (!date || !start || !end) return "";
+
+    const startAt = new Date(`${date}T${start}:00`);
+    const endAt = new Date(`${date}T${end}:00`);
+    const now = new Date();
+
+    if (now < startAt) return "lesson-upcoming";
+    if (now > endAt || ["completed","absent"].includes(r.status || "")) return "lesson-finished";
+    return "lesson-current";
+  }
+
   function renderLessons(){
     const q = el("lessonSearch").value.trim().toLowerCase();
     const sf = el("lessonFilter").value;
@@ -302,7 +336,7 @@
       const status = r.status || "scheduled";
       const url = validMeetUrl(academyMeetUrl) && joinEnabledForStatus(status) ? academyMeetUrl : "";
       const joinTitle = status === "scheduled" ? "دخول الحصة" : `غير متاح لأن الحالة: ${statusLabels[status] || status}`;
-      return `<tr>
+      return `<tr class="${lessonTimeState(r)}">
         <td><strong>${esc(student)}</strong></td>
         <td>${esc(teacher)}</td>
         <td>${esc(r.lesson_date || "—")}</td>
