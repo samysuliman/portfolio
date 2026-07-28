@@ -61,6 +61,50 @@
       font-weight:700;
     }
 
+    .student-picker{
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:12px;
+      background:#fff;
+      max-height:220px;
+      overflow:auto;
+    }
+    .student-picker-tools{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+    .student-picker-tools button{
+      border:1px solid var(--border);
+      background:#f8fbf9;
+      padding:7px 10px;
+      border-radius:9px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .student-options{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:8px;
+    }
+    .student-option{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border:1px solid #e5ece8;
+      border-radius:10px;
+      cursor:pointer;
+      margin:0;
+    }
+    .student-option input{width:auto;margin:0}
+    .student-count{font-size:12px;color:var(--muted);margin-top:8px}
+    .student-names{line-height:1.8}
+    @media(max-width:760px){
+      .student-options{grid-template-columns:1fr}
+    }
+
   </style>
 </head>
 <body data-admin-page="lessons">
@@ -113,8 +157,15 @@
         <form id="lessonForm">
           <div class="lesson-grid">
             <div class="field">
-              <label for="lessonStudent">الطالب</label>
-              <select id="lessonStudent" required><option value="">اختر الطالب</option></select>
+              <label>طلاب الحصة</label>
+              <div class="student-picker">
+                <div class="student-picker-tools">
+                  <button id="selectAllStudents" type="button">تحديد الكل</button>
+                  <button id="clearAllStudents" type="button">إلغاء تحديد الكل</button>
+                </div>
+                <div id="lessonStudents" class="student-options"></div>
+                <div id="studentCount" class="student-count">لم يتم اختيار طلاب بعد.</div>
+              </div>
             </div>
             <div class="field">
               <label for="lessonTeacher">المعلم</label>
@@ -191,6 +242,7 @@
   let lessons = [];
   let studentsMap = new Map();
   let teachersMap = new Map();
+  let lessonStudentIds = new Map();
   let academyMeetUrl = "";
   let editingLessonId = null;
 
@@ -249,9 +301,13 @@
     studentsMap = new Map(students.map(x => [String(x.id), x]));
     teachersMap = new Map(teachers.map(x => [String(x.id), x]));
 
-    el("lessonStudent").innerHTML = '<option value="">اختر الطالب</option>' +
-      students.filter(x => (x.status || "active") === "active")
-        .map(x => `<option value="${esc(x.id)}">${esc(x.full_name)}</option>`).join("");
+    el("lessonStudents").innerHTML = students
+      .filter(x => (x.status || "active") === "active")
+      .map(x => `<label class="student-option">
+        <input type="checkbox" name="lessonStudent" value="${esc(x.id)}">
+        <span>${esc(x.full_name)}</span>
+      </label>`).join("");
+    updateStudentCount();
 
     el("lessonTeacher").innerHTML = '<option value="">اختر المعلم</option>' +
       teachers.filter(x => (x.status || "active") === "active")
@@ -259,9 +315,32 @@
   }
 
   async function loadLessons(){
-    const res = await api("/rest/v1/lessons?select=*&order=lesson_date.desc,start_time.desc");
-    if(!res.ok) throw new Error(await res.text());
-    lessons = await res.json();
+    const [lessonRes, linksRes] = await Promise.all([
+      api("/rest/v1/lessons?select=*&order=lesson_date.desc,start_time.desc"),
+      api("/rest/v1/lesson_students?select=lesson_id,student_id")
+    ]);
+    if(!lessonRes.ok) throw new Error(await lessonRes.text());
+    if(!linksRes.ok) throw new Error(await linksRes.text());
+
+    lessons = await lessonRes.json();
+    const links = await linksRes.json();
+    lessonStudentIds = new Map();
+
+    links.forEach(link => {
+      const key = String(link.lesson_id);
+      const current = lessonStudentIds.get(key) || [];
+      current.push(String(link.student_id));
+      lessonStudentIds.set(key, current);
+    });
+
+    // توافق مع الحصص القديمة لو لم تكن مرحّلة بعد.
+    lessons.forEach(r => {
+      const key = String(r.id);
+      if(!lessonStudentIds.has(key) && r.student_id){
+        lessonStudentIds.set(key, [String(r.student_id)]);
+      }
+    });
+
     renderLessons();
   }
 
@@ -269,10 +348,55 @@
     return status === "scheduled";
   }
 
+  function selectedStudentIds(){
+    return [...document.querySelectorAll('input[name="lessonStudent"]:checked')].map(x => String(x.value));
+  }
+
+  function setSelectedStudentIds(ids){
+    const wanted = new Set((ids || []).map(String));
+    document.querySelectorAll('input[name="lessonStudent"]').forEach(cb => {
+      cb.checked = wanted.has(String(cb.value));
+    });
+    updateStudentCount();
+  }
+
+  function updateStudentCount(){
+    const count = selectedStudentIds().length;
+    const box = el("studentCount");
+    if(box) box.textContent = count ? `تم اختيار ${count} طالب/طلاب.` : "لم يتم اختيار طلاب بعد.";
+  }
+
+  function namesForLesson(r){
+    const ids = lessonStudentIds.get(String(r.id)) || (r.student_id ? [String(r.student_id)] : []);
+    return ids.map(id => studentsMap.get(String(id))?.full_name).filter(Boolean);
+  }
+
+  async function saveLessonStudents(lessonId, studentIds){
+    const del = await api(`/rest/v1/lesson_students?lesson_id=eq.${encodeURIComponent(lessonId)}`, {
+      method:"DELETE",
+      headers:{"Prefer":"return=minimal"}
+    });
+    if(!del.ok) throw new Error(await del.text());
+
+    if(!studentIds.length) return;
+    const rows = studentIds.map(student_id => ({
+      lesson_id:Number(lessonId),
+      student_id:Number(student_id)
+    }));
+    const ins = await api("/rest/v1/lesson_students", {
+      method:"POST",
+      headers:{"Prefer":"return=minimal"},
+      body:JSON.stringify(rows)
+    });
+    if(!ins.ok) throw new Error(await ins.text());
+    lessonStudentIds.set(String(lessonId), studentIds.map(String));
+  }
+
   function resetLessonForm(){
     editingLessonId = null;
     el("lessonForm").reset();
     el("lessonStatus").value = "scheduled";
+    setSelectedStudentIds([]);
     el("saveLesson").textContent = "إضافة الحصة";
     el("cancelEdit").classList.add("hide");
     el("lessonSaveStatus").textContent = "";
@@ -282,7 +406,7 @@
     const r = lessons.find(x => String(x.id) === String(id));
     if(!r) return;
     editingLessonId = r.id;
-    el("lessonStudent").value = String(r.student_id);
+    setSelectedStudentIds(lessonStudentIds.get(String(r.id)) || (r.student_id ? [String(r.student_id)] : []));
     el("lessonTeacher").value = String(r.teacher_id);
     el("lessonDate").value = r.lesson_date || "";
     el("lessonStart").value = String(r.start_time || "").slice(0,5);
@@ -296,8 +420,9 @@
 
   async function deleteLesson(id){
     const r = lessons.find(x => String(x.id) === String(id));
-    const student = studentsMap.get(String(r?.student_id))?.full_name || "هذه الحصة";
-    if(!confirm(`هل تريد حذف حصة ${student} نهائيًا؟`)) return;
+    const names = namesForLesson(r);
+    const label = names.length ? names.join("، ") : "هذه الحصة";
+    if(!confirm(`هل تريد حذف الحصة نهائيًا؟\nالطلاب: ${label}`)) return;
     try{
       const res = await api(`/rest/v1/lessons?id=eq.${encodeURIComponent(id)}`, {
         method:"DELETE",
@@ -375,9 +500,9 @@
     const q = el("lessonSearch").value.trim().toLowerCase();
     const sf = el("lessonFilter").value;
     const rows = lessons.filter(r => {
-      const student = studentsMap.get(String(r.student_id))?.full_name || "";
+      const studentNames = namesForLesson(r);
       const teacher = teachersMap.get(String(r.teacher_id))?.full_name || "";
-      const hay = `${student} ${teacher}`.toLowerCase();
+      const hay = `${studentNames.join(" ")} ${teacher}`.toLowerCase();
       return (!q || hay.includes(q)) && (!sf || (r.status || "scheduled") === sf);
     });
 
@@ -387,13 +512,14 @@
     }
 
     el("lessonsBody").innerHTML = rows.map(r => {
-      const student = studentsMap.get(String(r.student_id))?.full_name || "—";
+      const studentNames = namesForLesson(r);
+      const student = studentNames.length ? studentNames.join("، ") : "—";
       const teacher = teachersMap.get(String(r.teacher_id))?.full_name || "—";
       const status = r.status || "scheduled";
       const url = validMeetUrl(academyMeetUrl) && joinEnabledForStatus(status) ? academyMeetUrl : "";
       const joinTitle = status === "scheduled" ? "دخول الحصة" : `غير متاح لأن الحالة: ${statusLabels[status] || status}`;
       return `<tr class="${lessonTimeState(r)}">
-        <td><strong>${esc(student)}</strong></td>
+        <td><strong class="student-names">${esc(student)}</strong></td>
         <td>${esc(teacher)}</td>
         <td>${esc(r.lesson_date || "—")}</td>
         <td>${esc(String(r.start_time || "").slice(0,5))}</td>
@@ -457,14 +583,17 @@
 
   async function addLesson(e){
     e.preventDefault();
-    const studentId = el("lessonStudent").value;
+    const studentIds = selectedStudentIds();
     const teacherId = el("lessonTeacher").value;
     const date = el("lessonDate").value;
     const start = el("lessonStart").value;
     const end = el("lessonEnd").value;
     const status = el("lessonStatus").value || "scheduled";
 
-    if(!studentId || !teacherId || !date || !start || !end) return;
+    if(!studentIds.length || !teacherId || !date || !start || !end){
+      el("lessonSaveStatus").textContent = !studentIds.length ? "اختر طالبًا واحدًا على الأقل." : "أكمل بيانات الحصة.";
+      return;
+    }
     if(end <= start){
       el("lessonSaveStatus").textContent = "وقت النهاية يجب أن يكون بعد وقت البداية.";
       return;
@@ -476,7 +605,8 @@
     el("lessonSaveStatus").textContent = "";
 
     const payload = {
-      student_id:Number(studentId),
+      // نبقي أول طالب في الحقل القديم مؤقتًا للتوافق مع النظام السابق.
+      student_id:Number(studentIds[0]),
       teacher_id:Number(teacherId),
       lesson_date:date,
       start_time:start,
@@ -497,6 +627,7 @@
         const rows = await res.json();
         const idx = lessons.findIndex(x => String(x.id) === String(id));
         if(idx >= 0) lessons[idx] = rows[0] || {...lessons[idx], ...payload};
+        await saveLessonStudents(id, studentIds);
         resetLessonForm();
         el("lessonSaveStatus").textContent = "تم حفظ التعديل بنجاح ✓";
       }else{
@@ -507,7 +638,9 @@
         });
         if(!res.ok) throw new Error(await res.text());
         const rows = await res.json();
-        lessons.unshift(rows[0]);
+        const newLesson = rows[0];
+        lessons.unshift(newLesson);
+        await saveLessonStudents(newLesson.id, studentIds);
         resetLessonForm();
         el("lessonSaveStatus").textContent = "تمت إضافة الحصة بنجاح ✓";
       }
@@ -531,6 +664,13 @@
       console.error(err);
       el("loadError")?.classList.remove("hide");
     }
+
+    el("lessonStudents")?.addEventListener("change", updateStudentCount);
+    el("selectAllStudents")?.addEventListener("click", () => {
+      document.querySelectorAll('input[name="lessonStudent"]').forEach(cb => cb.checked = true);
+      updateStudentCount();
+    });
+    el("clearAllStudents")?.addEventListener("click", () => setSelectedStudentIds([]));
 
     el("saveMeetUrl")?.addEventListener("click", saveMeetUrl);
     el("lessonForm")?.addEventListener("submit", addLesson);
