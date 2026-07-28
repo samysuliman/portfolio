@@ -338,6 +338,18 @@
   }
 
 
+
+  function meetOpenUrl(url){
+    if(!validMeetUrl(url)) return "";
+    const ua = navigator.userAgent || "";
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
+
+    if(!isMobile) return url;
+
+    const encoded = encodeURIComponent(url);
+    return `https://meet.app.goo.gl/?link=${encoded}&apn=com.google.android.apps.tachyon&ibi=com.google.Tachyon&efr=1&ifl=${encoded}`;
+  }
+
   function canEnterLesson(r){
     if ((r.status || "scheduled") !== "scheduled") return false;
     if (!validMeetUrl(academyMeetUrl)) return false;
