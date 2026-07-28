@@ -505,3 +505,30 @@ document.addEventListener("DOMContentLoaded",()=>{
  const saved=localStorage.getItem("student_avatar_preview"); if(img)img.src=saved||"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' rx='50' fill='%23e8f2ed'/%3E%3Ctext x='50' y='62' text-anchor='middle' font-size='42'%3E👤%3C/text%3E%3C/svg%3E";
  updateStudentDashboardCounts();refreshStudentNotifications();
 });
+
+
+function initStudentDashboardPanels(){
+  const cards=[...document.querySelectorAll(".dashboard-card")];
+  const panels=[...document.querySelectorAll(".student-detail-panel")];
+
+  // Initial state: no details open.
+  panels.forEach(panel=>panel.classList.remove("is-open"));
+  cards.forEach(card=>card.classList.remove("active"));
+
+  cards.forEach(card=>{
+    card.onclick=()=>{
+      const target=document.getElementById(card.dataset.panel);
+      const alreadyOpen=target && target.classList.contains("is-open");
+
+      panels.forEach(panel=>panel.classList.remove("is-open"));
+      cards.forEach(item=>item.classList.remove("active"));
+
+      if(target && !alreadyOpen){
+        target.classList.add("is-open");
+        card.classList.add("active");
+        setTimeout(()=>target.scrollIntoView({behavior:"smooth",block:"start"}),40);
+      }
+    };
+  });
+}
+document.addEventListener("DOMContentLoaded",initStudentDashboardPanels);
