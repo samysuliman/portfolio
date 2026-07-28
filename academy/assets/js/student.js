@@ -1,6 +1,15 @@
 const STUDENT_SUPABASE_URL = "https://crnlfpuipepolflqcwuo.supabase.co";
 const STUDENT_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_bW_x_9cHxqhuxkYdZ-g4kQ_3UAukGRV";
 const STUDENT_SESSION_KEY = "rasheed_student_session_v1";
+const PORTAL_SESSION_KEY = "rasheed_portal_session_v1";
+
+function getPortalSession(){
+  try{return JSON.parse(localStorage.getItem(PORTAL_SESSION_KEY)||"null");}catch{return null;}
+}
+function isAdminPreview(){
+  const p=getPortalSession();
+  return Boolean(p?.is_admin_preview && p?.role==="student");
+}
 
 function studentEsc(value){
   return String(value ?? "").replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
@@ -46,22 +55,24 @@ async function studentApi(path, options={}, retry=true){
 }
 
 async function requireStudent(){
-  const session = getStudentSession();
+  const session=getStudentSession();
   if(!session?.access_token){
-    window.location.replace("login.html");
+    window.location.replace("../login.html");
     return false;
   }
-  const res = await studentApi("/rest/v1/student_accounts?select=student_id&limit=1").catch(()=>null);
-  if(!res || res.status === 401){
+  if(isAdminPreview()) return true;
+
+  const res=await studentApi("/rest/v1/student_accounts?select=student_id&limit=1").catch(()=>null);
+  if(!res || res.status===401){
     clearStudentSession();
-    window.location.replace("login.html?expired=1");
+    window.location.replace("../login.html?expired=1");
     return false;
   }
   if(!res.ok) return false;
-  const rows = await res.json();
+  const rows=await res.json();
   if(!rows.length){
     clearStudentSession();
-    window.location.replace("login.html?unauthorized=1");
+    window.location.replace("../login.html?unauthorized=1");
     return false;
   }
   return true;
@@ -109,20 +120,42 @@ function startOfWeek(date){
 }
 function endOfWeek(date){ const d=startOfWeek(date); d.setDate(d.getDate()+6); return d; }
 
+async function loadPreviewStudents(){
+  const res=await studentApi("/rest/v1/students?select=id,full_name,status&order=full_name.asc");
+  if(!res.ok) throw new Error(await res.text());
+  const rows=await res.json();
+  const select=document.getElementById("previewStudentSelect");
+  if(select){
+    select.innerHTML=rows.map(s=>`<option value="${studentEsc(s.id)}">${studentEsc(s.full_name)}</option>`).join("");
+  }
+  return rows;
+}
+
+async function getCurrentStudent(){
+  if(isAdminPreview()){
+    document.getElementById("adminPreviewBanner")?.classList.remove("hide");
+    const students=await loadPreviewStudents();
+    if(!students.length) throw new Error("NO_STUDENTS");
+    const select=document.getElementById("previewStudentSelect");
+    const wanted=select?.value || String(students[0].id);
+    if(select && !select.value) select.value=wanted;
+    return students.find(s=>String(s.id)===String(wanted)) || students[0];
+  }
+
+  const accountRes=await studentApi("/rest/v1/student_accounts?select=student_id,students(id,full_name,status)&limit=1");
+  if(!accountRes.ok) throw new Error(await accountRes.text());
+  const rows=await accountRes.json();
+  return rows[0]?.students || null;
+}
+
 async function loadStudentPortal(){
   const ok = await requireStudent(); if(!ok) return;
 
-  const [accountRes, settingsRes] = await Promise.all([
-    studentApi("/rest/v1/student_accounts?select=student_id,students(id,full_name,status)&limit=1"),
-    studentApi("/rest/v1/academy_settings?setting_key=eq.academy_meet_url&select=setting_value&limit=1")
-  ]);
-  if(!accountRes.ok) throw new Error(await accountRes.text());
+  const settingsRes=await studentApi("/rest/v1/academy_settings?setting_key=eq.academy_meet_url&select=setting_value&limit=1");
   if(!settingsRes.ok) throw new Error(await settingsRes.text());
+  const settingsRows=await settingsRes.json();
 
-  const accountRows = await accountRes.json();
-  const settingsRows = await settingsRes.json();
-  const account = accountRows[0];
-  const student = account?.students;
+  const student=await getCurrentStudent();
   if(!student) throw new Error("NO_STUDENT_PROFILE");
 
   const meetUrl = settingsRows[0]?.setting_value || "";
@@ -298,5 +331,11 @@ document.addEventListener("DOMContentLoaded",()=>{
       document.getElementById("studentLoadError")?.classList.remove("hide");
     });
     document.getElementById("studentLessonView")?.addEventListener("change",renderStudentLessonList);
+    document.getElementById("previewStudentSelect")?.addEventListener("change",()=>{
+      loadStudentPortal().catch(err=>{
+        console.error(err);
+        document.getElementById("studentLoadError")?.classList.remove("hide");
+      });
+    });
   }
 });

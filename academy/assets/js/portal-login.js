@@ -40,10 +40,22 @@ function roleName(role){return ({student:"طالب",teacher:"معلم",parent:"�
 function targetFor(role){
   return ({student:"student/dashboard.html",teacher:"teacher/dashboard.html",parent:"parent/dashboard.html",admin:"admin/dashboard.html"})[role];
 }
+function storePortalSession(session,role,isAdminPreview){
+  const portal={
+    role,
+    is_admin_preview:Boolean(isAdminPreview),
+    user:session.user,
+    access_token:session.access_token,
+    refresh_token:session.refresh_token,
+    expires_at:session.expires_at
+  };
+  saveSession(PORTAL_SESSION_KEY,portal);
+}
 
 document.addEventListener("DOMContentLoaded",()=>{
   const form=document.getElementById("unifiedLoginForm");
   if(!form) return;
+
   const params=new URLSearchParams(location.search);
   if(params.get("expired")){
     const box=document.getElementById("loginError");
@@ -60,8 +72,10 @@ document.addEventListener("DOMContentLoaded",()=>{
     const btn=document.getElementById("unifiedLoginBtn");
     box.classList.add("hide");
     btn.disabled=true; btn.textContent="جارٍ التحقق...";
+
     try{
       clearPortalSessions();
+
       const res=await fetch(`${PORTAL_SUPABASE_URL}/auth/v1/token?grant_type=password`,{
         method:"POST",
         headers:{"apikey":PORTAL_SUPABASE_KEY,"Content-Type":"application/json"},
@@ -70,9 +84,33 @@ document.addEventListener("DOMContentLoaded",()=>{
       if(!res.ok) throw new Error("LOGIN_FAILED");
       const session=await res.json();
 
+      // نتحقق أولًا هل الحساب مدير. المدير يستطيع معاينة أي بوابة بنفس بياناته.
+      const isAdmin=await checkAdmin(session);
+
+      if(role==="admin"){
+        if(!isAdmin){
+          box.textContent="بيانات الدخول صحيحة، لكن هذا الحساب غير مخوّل كمدير.";
+          box.classList.remove("hide");
+          return;
+        }
+        saveSession(ADMIN_SESSION_KEY,session);
+        storePortalSession(session,"admin",false);
+        location.href=targetFor("admin");
+        return;
+      }
+
+      if(isAdmin){
+        // وضع معاينة المدير: نفس الحساب، لكن الواجهة تتصرف كالدور المختار.
+        saveSession(ADMIN_SESSION_KEY,session);
+        saveSession(STUDENT_SESSION_KEY,session); // تستخدمه بوابة الطالب للوصول ببيانات المدير.
+        storePortalSession(session,role,true);
+        location.href=targetFor(role);
+        return;
+      }
+
+      // المستخدم الحقيقي غير المدير يجب أن يكون مرتبطًا بالدور المختار.
       let allowed=false;
-      if(role==="admin") allowed=await checkAdmin(session);
-      else if(role==="student") allowed=await checkStudent(session);
+      if(role==="student") allowed=await checkStudent(session);
       else allowed=await checkRoleTable(session,role);
 
       if(!allowed){
@@ -81,10 +119,10 @@ document.addEventListener("DOMContentLoaded",()=>{
         return;
       }
 
-      if(role==="admin") saveSession(ADMIN_SESSION_KEY,session);
       if(role==="student") saveSession(STUDENT_SESSION_KEY,session);
-      saveSession(PORTAL_SESSION_KEY,{role,user:session.user,access_token:session.access_token,refresh_token:session.refresh_token,expires_at:session.expires_at});
+      storePortalSession(session,role,false);
       location.href=targetFor(role);
+
     }catch(err){
       console.error(err);
       box.textContent="تعذر تسجيل الدخول. تحقق من البريد الإلكتروني وكلمة المرور.";
