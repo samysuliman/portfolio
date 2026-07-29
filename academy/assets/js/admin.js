@@ -344,31 +344,10 @@ function renderAcademicSelections(rows){
   const box=document.getElementById("academicSelectionsBox"); if(!box)return;
   if(!rows.length){box.innerHTML='<div class="muted">لا توجد بيانات تعليمية مرتبطة بطلب التسجيل.</div>';return;}
   box.innerHTML=rows.map(x=>{
+    const meta=[x.system,x.stage,x.grade,x.branch].filter(Boolean);
     const items=recordSelectionItems(x);
-    const details=[
-      ["النظام التعليمي",x.system],
-      ["المرحلة",x.stage],
-      ["الصف",x.grade],
-      ["القسم",x.branch]
-    ].filter(([,value])=>value);
-    return `<article class="academic-program-card"><h3>${esc(x.title||x.key||"برنامج تعليمي")}</h3>${details.length?`<div class="academic-detail-list">${details.map(([label,value])=>`<div class="academic-detail"><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`).join("")}</div>`:""}${items.length?`<div class="academic-subject-title">المواد</div><div class="academic-items">${items.map(i=>`<span>${esc(i)}</span>`).join("")}</div>`:""}</article>`;
+    return `<article class="academic-program-card"><h3>${esc(x.title||x.key||"برنامج تعليمي")}</h3>${meta.length?`<div class="academic-meta">${meta.map(esc).join(" ← ")}</div>`:""}${items.length?`<div class="academic-items">${items.map(i=>`<span>${esc(i)}</span>`).join("")}</div>`:""}</article>`;
   }).join("");
-}
-function renderSubjectTeachers(rows){
-  const box=document.getElementById("subjectTeachersBox"); if(!box)return;
-  const subjects=[];
-  (rows||[]).forEach(row=>recordSelectionItems(row).forEach(item=>{
-    const name=String(item||"").trim();
-    if(name && !subjects.includes(name)) subjects.push(name);
-  }));
-  if(!subjects.length){box.innerHTML='<div class="muted">لا توجد مواد تحتاج إلى إسناد معلمين.</div>';return;}
-  box.innerHTML=`<table class="teacher-table"><thead><tr><th>المادة</th><th>المعلم</th></tr></thead><tbody>${subjects.map(subject=>`<tr><td><strong>${esc(subject)}</strong></td><td class="teacher-unassigned">غير معيّن</td></tr>`).join("")}</tbody></table>`;
-}
-function studentStatusLabel(status){
-  return ({active:"نشط",paused:"موقوف مؤقتًا",completed:"مكتمل",inactive:"غير نشط"})[status] || status || "نشط";
-}
-function setRecordDisplay(id,value){
-  const el=document.getElementById(id); if(el) el.textContent=value || "—";
 }
 async function loadStudentRecordSelections(student){
   if(Array.isArray(student.study_selections) && student.study_selections.length) return student.study_selections;
@@ -379,14 +358,58 @@ async function loadStudentRecordSelections(student){
   return normalizeRecordSelections(rows[0]?.study_selections);
 }
 
+
+function studentSubjectRows(selections){
+  const rows=[];
+  (selections||[]).forEach((program,index)=>{
+    const programKey=String(program?.key || program?.title || `program-${index+1}`);
+    const programTitle=String(program?.title || program?.key || "برنامج تعليمي");
+    recordSelectionItems(program).forEach(subject=>{
+      const name=String(subject||"").trim();
+      if(name) rows.push({programKey,programTitle,subjectName:name});
+    });
+  });
+  const seen=new Set();
+  return rows.filter(row=>{
+    const key=`${row.programKey}::${row.subjectName}`;
+    if(seen.has(key)) return false;
+    seen.add(key); return true;
+  });
+}
+
+function renderRecordTeacherAssignments(selections,assignments,teachers){
+  const holder=document.getElementById("teachersSummary"); if(!holder) return;
+  const subjects=studentSubjectRows(selections);
+  if(!subjects.length){holder.className="teacher-empty";holder.textContent="لا توجد مواد مرتبطة بهذا الطالب.";return;}
+  const teacherMap=new Map((teachers||[]).map(t=>[String(t.id),t]));
+  const assignmentMap=new Map((assignments||[]).map(a=>[`${a.program_key}::${a.subject_name}`,a]));
+  holder.className="";
+  holder.innerHTML=`<table class="teacher-table"><thead><tr><th>المادة</th><th>المعلم</th></tr></thead><tbody>${subjects.map(row=>{
+    const a=assignmentMap.get(`${row.programKey}::${row.subjectName}`);
+    const teacher=a?teacherMap.get(String(a.teacher_id)):null;
+    return `<tr><td><strong>${esc(row.subjectName)}</strong>${subjects.filter(x=>x.subjectName===row.subjectName).length>1?`<div class="muted" style="font-size:11px">${esc(row.programTitle)}</div>`:""}</td><td>${teacher?esc(teacher.full_name):'<span class="muted">غير معيّن</span>'}</td></tr>`;
+  }).join("")}</tbody></table>`;
+}
+
+async function fetchStudentAssignments(studentId){
+  const res=await api(`/rest/v1/student_teacher_assignments?student_id=eq.${encodeURIComponent(studentId)}&select=id,student_id,teacher_id,program_key,program_title,subject_name&order=subject_name.asc`).catch(()=>null);
+  if(!res || !res.ok) return [];
+  return await res.json();
+}
+
 async function loadStudentRecord(){
   const ok = await requireAdmin(); if(!ok) return;
   const id = qparam("id");
   const errorBox = document.getElementById("recordError");
   const form = document.getElementById("studentRecordForm");
-  if(!id){ errorBox.textContent = "لم يتم تحديد الطالب."; errorBox.classList.remove("hide"); return; }
+  if(!id){
+    errorBox.textContent = "لم يتم تحديد الطالب."; errorBox.classList.remove("hide"); return;
+  }
   try{
-    const studentRes = await api(`/rest/v1/students?id=eq.${encodeURIComponent(id)}&select=*&limit=1`);
+    const [studentRes, teacherRes] = await Promise.all([
+      api(`/rest/v1/students?id=eq.${encodeURIComponent(id)}&select=*&limit=1`),
+      api('/rest/v1/teachers?select=id,full_name,teacher_code,status&order=full_name.asc').catch(()=>null)
+    ]);
     if(!studentRes.ok) throw new Error(await studentRes.text());
     const rows = await studentRes.json();
     const r = rows[0];
@@ -396,21 +419,30 @@ async function loadStudentRecord(){
     const academicSelections=await loadStudentRecordSelections(r).catch(()=>[]);
     window.__currentStudentSelections=academicSelections;
     renderAcademicSelections(academicSelections);
-    renderSubjectTeachers(academicSelections);
+    const quranSection=document.querySelector(".quran-record-section");
     const showQuran=hasQuranProgram(academicSelections);
-    document.querySelector(".quran-record-section")?.classList.toggle("hide-by-program",!showQuran);
+    quranSection?.classList.toggle("hide-by-program",!showQuran);
 
-    const studentCode=r.student_code || autoStudentCode(r.id);
-    setRecordDisplay("srNameDisplay",r.full_name || "—");
-    setRecordDisplay("srCodeDisplay",studentCode);
-    setRecordDisplay("srWhatsappDisplay",r.whatsapp || "—");
-    setRecordDisplay("srStatusDisplay",studentStatusLabel(r.status || "active"));
-    const goal=document.getElementById("sr_weekly_goal"); if(goal) goal.value=r.weekly_goal || "";
-    const notes=document.getElementById("sr_notes"); if(notes) notes.value=r.notes || "";
+    const teachers = teacherRes?.ok ? await teacherRes.json() : [];
+    const assignments = await fetchStudentAssignments(r.id);
+    renderRecordTeacherAssignments(academicSelections,assignments,teachers);
+    const assignmentsLink=document.getElementById("teacherAssignmentsLink");
+    if(assignmentsLink) assignmentsLink.href=`teacher-assignments.html?id=${encodeURIComponent(r.id)}`;
+    const teacherSelect = document.getElementById("sr_assigned_teacher_id");
+    teachers.filter(t=>(t.status||"active")==="active").forEach(t=>{
+      const opt=document.createElement("option"); opt.value=t.id; opt.textContent=`${t.full_name}${t.teacher_code?` — ${t.teacher_code}`:""}`; teacherSelect.appendChild(opt);
+    });
 
+    const vals = {
+      full_name:r.full_name, student_code:r.student_code || autoStudentCode(r.id), age:r.age,
+      country_city:r.country_city, whatsapp:r.whatsapp, enrollment_date:toDateInput(r.enrollment_date || r.created_at),
+      student_type:r.student_type, status:r.status || "active", preferred_time:r.preferred_time,
+      assigned_teacher_id:r.assigned_teacher_id || "", weekly_goal:r.weekly_goal,
+      overall_progress:r.overall_progress ?? 0, attendance_rate:r.attendance_rate ?? 0, notes:r.notes
+    };
+    Object.entries(vals).forEach(([k,v])=>{ const el=document.getElementById(`sr_${k}`); if(el) el.value=v ?? ""; });
     document.getElementById("recordTitle").textContent = `سجل الطالب: ${r.full_name || "—"}`;
-    document.getElementById("recordCode").textContent = `رقم الطالب: ${studentCode} • تاريخ الإنشاء: ${fmtDate(r.created_at)}`;
-    const editLink=document.getElementById("editStudentLink"); if(editLink) editLink.href=`student-edit.html?id=${encodeURIComponent(r.id)}`;
+    document.getElementById("recordCode").textContent = `رقم الطالب: ${vals.student_code} • تاريخ الإنشاء: ${fmtDate(r.created_at)}`;
     const phone=String(r.whatsapp||"").replace(/[^0-9]/g,"");
     const wa=document.getElementById("studentWhatsappLink"); if(wa) wa.href=phone?`https://wa.me/${phone}`:"#";
     form.classList.remove("hide");
@@ -425,80 +457,48 @@ async function loadStudentRecord(){
 async function saveStudentRecord(e){
   e.preventDefault();
   const r=window.__currentStudentRecord; if(!r) return;
+
+  // حفظ السجل القرآني فقط إذا كان الطالب مسجلًا في برنامج القرآن.
   if(hasQuranProgram(window.__currentStudentSelections||[])){
     const quranOk = await saveQuranRecord({silent:true});
     if(!quranOk){
-      document.getElementById('quranSaveStatus')?.scrollIntoView({behavior:'smooth',block:'center'});
+      const qStatus=document.getElementById('quranSaveStatus');
+      if(qStatus) qStatus.scrollIntoView({behavior:'smooth',block:'center'});
       return;
     }
   }
   const btn=document.getElementById("saveStudentRecord");
   const statusEl=document.getElementById("recordSaveStatus");
-  const nullable=v=>String(v||"").trim()===""?null:String(v).trim();
+  const get=id=>document.getElementById(id)?.value ?? "";
+  const nullable=v=>String(v).trim()===""?null:String(v).trim();
+  const numOrZero=v=>Math.max(0,Math.min(100,Number(v)||0));
+  const ageVal=get("sr_age");
   const payload={
-    weekly_goal:nullable(document.getElementById("sr_weekly_goal")?.value),
-    notes:nullable(document.getElementById("sr_notes")?.value),
+    full_name:get("sr_full_name").trim(),
+    student_code:nullable(get("sr_student_code")) || autoStudentCode(r.id),
+    age:ageVal===""?null:Number(ageVal),
+    country_city:nullable(get("sr_country_city")),
+    whatsapp:nullable(get("sr_whatsapp")),
+    enrollment_date:nullable(get("sr_enrollment_date")),
+    student_type:nullable(get("sr_student_type")),
+    status:get("sr_status") || "active",
+    preferred_time:nullable(get("sr_preferred_time")),
+    assigned_teacher_id:get("sr_assigned_teacher_id")?Number(get("sr_assigned_teacher_id")):null,
+    weekly_goal:nullable(get("sr_weekly_goal")), overall_progress:numOrZero(get("sr_overall_progress")),
+    attendance_rate:numOrZero(get("sr_attendance_rate")), notes:nullable(get("sr_notes")),
     updated_at:new Date().toISOString()
   };
   btn.disabled=true; btn.textContent="جارٍ الحفظ..."; statusEl.textContent="";
   try{
     const res=await api(`/rest/v1/students?id=eq.${encodeURIComponent(r.id)}`,{method:"PATCH",headers:{"Prefer":"return=representation"},body:JSON.stringify(payload)});
-    if(!res.ok) throw new Error(await res.text());
+    if(!res.ok){ const text=await res.text(); if(text.includes("student_code")||text.includes("current_stage")||text.includes("updated_at")) throw new Error("SCHEMA_NOT_READY"); throw new Error(text); }
     const rows=await res.json(); window.__currentStudentRecord=rows[0]||{...r,...payload};
-    statusEl.textContent=hasQuranProgram(window.__currentStudentSelections||[])?"تم حفظ المتابعة والسجل القرآني بنجاح ✓":"تم حفظ المتابعة بنجاح ✓";
-    document.getElementById("recordCode").textContent=`رقم الطالب: ${r.student_code || autoStudentCode(r.id)} • آخر تحديث: ${fmtDate(payload.updated_at)}`;
+    statusEl.textContent=hasQuranProgram(window.__currentStudentSelections||[])?"تم حفظ سجل الطالب والسجل القرآني بنجاح ✓":"تم حفظ سجل الطالب بنجاح ✓";
+    document.getElementById("recordCode").textContent=`رقم الطالب: ${payload.student_code} • آخر تحديث: ${fmtDate(payload.updated_at)}`;
   }catch(err){
     console.error("Student record save error:",err);
-    statusEl.textContent="تعذر حفظ المتابعة. تحقق من الاتصال والصلاحيات.";
-  }finally{ btn.disabled=false; btn.textContent="حفظ المتابعة"; }
-}
-
-async function loadStudentEdit(){
-  const ok=await requireAdmin(); if(!ok) return;
-  const id=qparam("id");
-  const errorBox=document.getElementById("editStudentError");
-  const form=document.getElementById("studentEditForm");
-  if(!id){errorBox.textContent="لم يتم تحديد الطالب.";errorBox.classList.remove("hide");return;}
-  try{
-    const res=await api(`/rest/v1/students?id=eq.${encodeURIComponent(id)}&select=*&limit=1`);
-    if(!res.ok) throw new Error(await res.text());
-    const rows=await res.json(); const r=rows[0]; if(!r) throw new Error("STUDENT_NOT_FOUND");
-    window.__currentStudentEdit=r;
-    document.getElementById("se_full_name").value=r.full_name||"";
-    document.getElementById("se_whatsapp").value=r.whatsapp||"";
-    document.getElementById("se_status").value=r.status||"active";
-    document.getElementById("se_student_code").textContent=r.student_code||autoStudentCode(r.id);
-    document.getElementById("editStudentTitle").textContent=`تعديل بيانات: ${r.full_name||"الطالب"}`;
-    document.getElementById("backToStudentRecord").href=`student-record.html?id=${encodeURIComponent(r.id)}`;
-    document.getElementById("cancelStudentEdit").href=`student-record.html?id=${encodeURIComponent(r.id)}`;
-    form.classList.remove("hide");
-  }catch(err){
-    console.error("Student edit load error:",err);
-    errorBox.textContent=err.message==="STUDENT_NOT_FOUND"?"لم يتم العثور على الطالب.":"تعذر تحميل بيانات الطالب.";
-    errorBox.classList.remove("hide");
-  }
-}
-
-async function saveStudentEdit(e){
-  e.preventDefault();
-  const r=window.__currentStudentEdit; if(!r) return;
-  const btn=document.getElementById("saveStudentEdit");
-  const status=document.getElementById("studentEditStatus");
-  const payload={
-    full_name:document.getElementById("se_full_name").value.trim(),
-    whatsapp:document.getElementById("se_whatsapp").value.trim()||null,
-    status:document.getElementById("se_status").value||"active",
-    updated_at:new Date().toISOString()
-  };
-  if(!payload.full_name){status.textContent="اكتب اسم الطالب.";return;}
-  btn.disabled=true;btn.textContent="جارٍ الحفظ...";status.textContent="";
-  try{
-    const res=await api(`/rest/v1/students?id=eq.${encodeURIComponent(r.id)}`,{method:"PATCH",headers:{"Prefer":"return=representation"},body:JSON.stringify(payload)});
-    if(!res.ok) throw new Error(await res.text());
-    status.textContent="تم حفظ بيانات الطالب بنجاح ✓";
-    setTimeout(()=>{location.href=`student-record.html?id=${encodeURIComponent(r.id)}`;},500);
-  }catch(err){console.error("Student edit save error:",err);status.textContent="تعذر حفظ البيانات. تحقق من الاتصال والصلاحيات.";}
-  finally{btn.disabled=false;btn.textContent="حفظ التعديلات";}
+    statusEl.textContent = err.message === "SCHEMA_NOT_READY" ? "يجب تنفيذ ملف تهيئة سجل الطالب في Supabase أولًا." : "تعذر حفظ السجل. تحقق من الاتصال والصلاحيات.";
+  }finally{ btn.disabled=false; btn.textContent="حفظ سجل الطالب"; }
 }
 
 
@@ -778,6 +778,83 @@ function wireQuranRecord(){
   document.addEventListener('click',e=>{const b=e.target.closest('[data-remove-quran]');if(!b)return;const type=b.dataset.removeQuran;const idx=Number(b.dataset.index);window.__quranRecord?.[type]?.splice(idx,1);renderRangeEntries(type);renderSurahChecklist(type);renderRangeDrafts(type);});
 }
 
+
+async function loadTeacherAssignments(){
+  const ok=await requireAdmin(); if(!ok) return;
+  const studentId=qparam("id");
+  const errorBox=document.getElementById("assignmentError");
+  const panel=document.getElementById("assignmentPanel");
+  if(!studentId){errorBox.textContent="لم يتم تحديد الطالب.";errorBox.classList.remove("hide");return;}
+  try{
+    const [studentRes,teachersRes]=await Promise.all([
+      api(`/rest/v1/students?id=eq.${encodeURIComponent(studentId)}&select=*&limit=1`),
+      api('/rest/v1/teachers?select=id,full_name,teacher_code,specialization,status&order=full_name.asc')
+    ]);
+    if(!studentRes.ok) throw new Error(await studentRes.text());
+    if(!teachersRes.ok) throw new Error(await teachersRes.text());
+    const student=(await studentRes.json())[0];
+    if(!student) throw new Error("STUDENT_NOT_FOUND");
+    const teachers=(await teachersRes.json()).filter(t=>(t.status||"active")==="active");
+    const selections=await loadStudentRecordSelections(student);
+    const subjects=studentSubjectRows(selections);
+    const assignments=await fetchStudentAssignments(student.id);
+    window.__teacherAssignmentState={student,teachers,selections,subjects,assignments};
+    document.getElementById("assignmentStudentName").textContent=student.full_name||"—";
+    document.getElementById("assignmentStudentInitial").textContent=(student.full_name||"ط").trim().charAt(0)||"ط";
+    document.getElementById("assignmentStudentCode").textContent=student.student_code||autoStudentCode(student.id);
+    document.getElementById("backToRecord").href=`student-record.html?id=${encodeURIComponent(student.id)}`;
+    document.getElementById("cancelAssignments").href=`student-record.html?id=${encodeURIComponent(student.id)}`;
+    renderTeacherAssignmentRows(subjects,teachers,assignments);
+    panel.classList.remove("hide");
+  }catch(err){
+    console.error("Teacher assignments load error:",err);
+    errorBox.textContent=err.message==="STUDENT_NOT_FOUND"?"لم يتم العثور على الطالب.":"تعذر تحميل بيانات الإسناد. نفّذ ملف تهيئة جدول الإسناد في Supabase أولًا.";
+    errorBox.classList.remove("hide");
+  }
+}
+
+function renderTeacherAssignmentRows(subjects,teachers,assignments){
+  const holder=document.getElementById("assignmentRows"); if(!holder)return;
+  if(!subjects.length){holder.innerHTML='<div class="empty-state">لا توجد مواد مرتبطة بهذا الطالب.</div>';document.getElementById("saveTeacherAssignments").disabled=true;return;}
+  const current=new Map((assignments||[]).map(a=>[`${a.program_key}::${a.subject_name}`,String(a.teacher_id)]));
+  holder.innerHTML=subjects.map((row,index)=>`<div class="assignment-row" data-program-key="${esc(row.programKey)}" data-program-title="${esc(row.programTitle)}" data-subject-name="${esc(row.subjectName)}">
+    <div><div class="subject-name">${esc(row.subjectName)}</div><div class="subject-program">${esc(row.programTitle)}</div></div>
+    <select aria-label="معلم مادة ${esc(row.subjectName)}"><option value="">غير معيّن</option>${teachers.map(t=>`<option value="${esc(t.id)}" ${current.get(`${row.programKey}::${row.subjectName}`)===String(t.id)?"selected":""}>${esc(t.full_name)}${t.teacher_code?` — ${esc(t.teacher_code)}`:""}</option>`).join("")}</select>
+  </div>`).join("");
+}
+
+async function saveTeacherAssignments(){
+  const state=window.__teacherAssignmentState; if(!state)return;
+  const btn=document.getElementById("saveTeacherAssignments");
+  const status=document.getElementById("assignmentSaveStatus");
+  const rows=[...document.querySelectorAll(".assignment-row")];
+  btn.disabled=true;btn.textContent="جارٍ الحفظ...";status.textContent="";
+  try{
+    const selected=rows.map(row=>({
+      student_id:state.student.id,
+      teacher_id:row.querySelector("select").value||null,
+      program_key:row.dataset.programKey,
+      program_title:row.dataset.programTitle,
+      subject_name:row.dataset.subjectName
+    }));
+    const active=selected.filter(x=>x.teacher_id).map(x=>({...x,teacher_id:Number(x.teacher_id),updated_at:new Date().toISOString()}));
+    if(active.length){
+      const upsert=await api('/rest/v1/student_teacher_assignments?on_conflict=student_id,program_key,subject_name',{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(active)});
+      if(!upsert.ok) throw new Error(await upsert.text());
+    }
+    const cleared=selected.filter(x=>!x.teacher_id);
+    for(const item of cleared){
+      const del=await api(`/rest/v1/student_teacher_assignments?student_id=eq.${encodeURIComponent(item.student_id)}&program_key=eq.${encodeURIComponent(item.program_key)}&subject_name=eq.${encodeURIComponent(item.subject_name)}`,{method:'DELETE'});
+      if(!del.ok) throw new Error(await del.text());
+    }
+    status.textContent="تم حفظ إسناد المعلمين بنجاح ✓";
+    state.assignments=await fetchStudentAssignments(state.student.id);
+  }catch(err){
+    console.error("Teacher assignments save error:",err);
+    status.textContent="تعذر حفظ الإسناد. تحقق من تنفيذ ملف SQL ومن صلاحيات الجدول.";
+  }finally{btn.disabled=false;btn.textContent="حفظ الإسناد";}
+}
+
 function teacherStatusLabel(s){
   return ({active:"نشط",paused:"موقوف مؤقتًا",inactive:"غير نشط"})[s] || s || "نشط";
 }
@@ -837,9 +914,9 @@ function wireCommon(){
   document.getElementById("studentSearchBox")?.addEventListener("input",()=>renderStudents(window.__students||[]));
   document.getElementById("studentStatusFilter")?.addEventListener("change",()=>renderStudents(window.__students||[]));
   document.getElementById("studentRecordForm")?.addEventListener("submit",saveStudentRecord);
-  document.getElementById("studentEditForm")?.addEventListener("submit",saveStudentEdit);
   wireQuranRecord();
   document.getElementById("teacherSearchBox")?.addEventListener("input",()=>renderTeachers(window.__teachers||[]));
+  document.getElementById("saveTeacherAssignments")?.addEventListener("click",saveTeacherAssignments);
   document.getElementById("closeDialog")?.addEventListener("click",()=>document.getElementById("detailsDialog")?.close());
 }
 
@@ -850,6 +927,6 @@ document.addEventListener("DOMContentLoaded",()=>{
   if(document.body.dataset.adminPage === "dashboard") loadRegistrations().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
   if(document.body.dataset.adminPage === "students") loadStudents().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
   if(document.body.dataset.adminPage === "student-record") loadStudentRecord();
-  if(document.body.dataset.adminPage === "student-edit") loadStudentEdit();
   if(document.body.dataset.adminPage === "teachers") loadTeachers().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
+  if(document.body.dataset.adminPage === "teacher-assignments") loadTeacherAssignments();
 });
