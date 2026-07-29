@@ -33,6 +33,9 @@
 .academic-items{display:grid;gap:8px}
 .academic-items span{display:flex;align-items:center;gap:8px;padding:9px 11px;border-radius:11px;background:#fff;border:1px solid #dceae4;font-size:13px;font-weight:700}
 .academic-items span::before{content:'✓';width:20px;height:20px;border-radius:50%;background:var(--emerald-soft);color:var(--emerald);display:grid;place-items:center;font-size:12px;flex:0 0 auto}
+.teachers-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.teachers-section-head .section-title{margin:0}
+.teacher-assignment-btn{white-space:nowrap;min-width:auto}
 .teacher-table{width:100%;border-collapse:collapse;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
 .teacher-table th,.teacher-table td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:right}
 .teacher-table th{background:#f3f8f5;font-size:13px;color:var(--muted)}
@@ -58,6 +61,8 @@ textarea{width:100%;min-height:105px;padding:13px 14px;border:1px solid #cddbd5;
   .followup-grid .full{grid-column:auto}
   .profile-section,.profile-hero,.quran-record-section{padding:20px}
   .record-actions .btn{width:100%}
+  .teachers-section-head{align-items:stretch;flex-direction:column}
+  .teacher-assignment-btn{width:100%;text-align:center}
 }
 
 /* رأس موحد مع صفحة إسناد المعلمين */
@@ -103,7 +108,10 @@ textarea{width:100%;min-height:105px;padding:13px 14px;border:1px solid #cddbd5;
   </section>
 
   <section class="profile-section">
-    <h2 class="section-title">👨‍🏫 المعلمون</h2>
+    <div class="teachers-section-head">
+      <h2 class="section-title">👨‍🏫 المعلمون</h2>
+      <a class="btn btn-primary teacher-assignment-btn" id="teacherAssignmentLink" href="teacher-assignments.html">👨‍🏫 إسناد المعلمين</a>
+    </div>
     <div id="teachersSummary" class="teacher-empty">سيظهر المعلم المسؤول عن كل مادة بعد إسناده.</div>
   </section>
 
@@ -166,6 +174,12 @@ textarea{width:100%;min-height:105px;padding:13px 14px;border:1px solid #cddbd5;
     if(!unique.length){holder.className='teacher-empty';holder.textContent='لا توجد مواد مرتبطة بهذا الطالب.';return;}
     holder.className='';
     holder.innerHTML='<table class="teacher-table"><thead><tr><th>المادة</th><th>المعلم</th></tr></thead><tbody>'+unique.map(s=>'<tr><td>'+s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))+'</td><td class="muted">غير معيّن</td></tr>').join('')+'</tbody></table>';
+  }
+
+  const assignmentLink=document.getElementById('teacherAssignmentLink');
+  if(assignmentLink){
+    const studentId=new URLSearchParams(window.location.search).get('id');
+    assignmentLink.href=studentId?`teacher-assignments.html?id=${encodeURIComponent(studentId)}`:'teacher-assignments.html';
   }
   const form=document.getElementById('studentRecordForm');
   const observer=new MutationObserver(()=>{if(!form.classList.contains('hide')){syncProfile();syncTeachers();}});
