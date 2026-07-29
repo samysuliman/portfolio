@@ -320,7 +320,8 @@ function renderStudentLessons(lessons, meetUrl){
     return end >= now && (r.status || "scheduled") === "scheduled";
   });
   window.__studentUpcomingLessonsCount=upcoming.length;
-  document.getElementById("upcomingLessonsCount")?.textContent = upcoming.length;
+  const upcomingCountEl = document.getElementById("upcomingLessonsCount");
+  if (upcomingCountEl) upcomingCountEl.textContent = upcoming.length;
   updateStudentDashboardCounts();
 
   const next = upcoming[0];
