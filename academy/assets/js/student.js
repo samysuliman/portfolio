@@ -151,6 +151,28 @@ async function getCurrentStudent(){
   return rows[0]?.students || null;
 }
 
+function normalizeStudentStudySelections(value){
+  if(Array.isArray(value)) return value;
+  if(!value) return [];
+  try{const p=typeof value==="string"?JSON.parse(value):value;return Array.isArray(p)?p:[];}catch{return [];}
+}
+function studentSelectionItems(x){return [...(Array.isArray(x?.subjects)?x.subjects:[]),...(Array.isArray(x?.tracks)?x.tracks:[])].filter(Boolean);}
+async function loadStudentEnrollmentSelections(studentId){
+  const sRes=await studentApi(`/rest/v1/students?id=eq.${encodeURIComponent(studentId)}&select=id,registration_id&limit=1`);
+  if(!sRes.ok) return [];
+  const rows=await sRes.json(); const registrationId=rows[0]?.registration_id;
+  if(!registrationId) return [];
+  const rRes=await studentApi(`/rest/v1/registrations?id=eq.${encodeURIComponent(registrationId)}&select=study_selections&limit=1`);
+  if(!rRes.ok) return [];
+  const rr=await rRes.json(); return normalizeStudentStudySelections(rr[0]?.study_selections);
+}
+function renderRegisteredStudies(rows){
+  const box=document.getElementById("registeredStudiesList"); if(!box)return;
+  if(!rows?.length){box.innerHTML='<div class="empty">لا توجد اختيارات تسجيل مرتبطة بهذا الطالب حتى الآن.</div>';return;}
+  box.innerHTML=rows.map(x=>{const meta=[x.system,x.stage,x.grade,x.branch].filter(Boolean),items=studentSelectionItems(x);return `<article class="registered-study-card"><div class="registered-study-title">${studentEsc(x.title||x.key||"برنامج تعليمي")}</div>${meta.length?`<div class="registered-study-meta">${meta.map(studentEsc).join(" ← ")}</div>`:""}${items.length?`<div class="registered-study-items">${items.map(i=>`<span>${studentEsc(i)}</span>`).join("")}</div>`:""}</article>`;}).join("");
+}
+function registeredStudyNames(rows){return [...new Set((rows||[]).flatMap(studentSelectionItems))];}
+
 async function loadStudentPortal(){
   const ok = await requireStudent(); if(!ok) return;
 
@@ -161,6 +183,8 @@ async function loadStudentPortal(){
   const student=await getCurrentStudent();
   if(!student) throw new Error("NO_STUDENT_PROFILE");
   window.__currentPortalStudentId=student.id;
+  const registeredSelections=await loadStudentEnrollmentSelections(student.id).catch(()=>[]);
+  renderRegisteredStudies(registeredSelections);
   loadStudentMaterials(student.id).catch(console.error);
   loadAssignmentsAndExams(student.id).catch(console.error);
 
@@ -173,7 +197,7 @@ async function loadStudentPortal(){
   const ids = links.map(x=>x.lesson_id);
 
   if(!ids.length){
-    renderStudentSubjects([]);
+    renderStudentSubjects([], registeredSelections);
     renderStudentLessons([], meetUrl);
     return;
   }
@@ -199,19 +223,18 @@ async function loadStudentPortal(){
     r.track_name = tracks.get(String(r.track_id)) || "غير محدد";
   });
 
-  renderStudentSubjects(lessons);
+  renderStudentSubjects(lessons, registeredSelections);
   renderStudentLessons(lessons, meetUrl);
 }
 
-function renderStudentSubjects(lessons){
-  const unique = [...new Map(
-    lessons.filter(x=>x.track_id).map(x=>[String(x.track_id),x.track_name])
-  ).values()];
-  document.getElementById("subjectsCount").textContent = unique.length;
-  const box = document.getElementById("subjectsList");
-  box.innerHTML = unique.length
-    ? unique.map(name=>`<div class="card"><div class="icon">📚</div><h3>${studentEsc(name)}</h3></div>`).join("")
-    : '<div class="empty">لا توجد مواد مرتبطة بحسابك حتى الآن.</div>';
+function renderStudentSubjects(lessons, registeredSelections=[]){
+  const lessonNames=lessons.filter(x=>x.track_id).map(x=>x.track_name).filter(Boolean);
+  const unique=[...new Set([...registeredStudyNames(registeredSelections),...lessonNames])];
+  window.__studentSubjectsCount=unique.length;
+  const count=document.getElementById("subjectsCount"); if(count) count.textContent=unique.length;
+  const box=document.getElementById("subjectsList");
+  if(box) box.innerHTML=unique.length?unique.map(name=>`<div class="card"><div class="icon">📚</div><h3>${studentEsc(name)}</h3></div>`).join(""):'<div class="empty">لا توجد مواد أو مسارات مرتبطة بحسابك حتى الآن.</div>';
+  updateStudentDashboardCounts();
 }
 
 function renderStudentLessons(lessons, meetUrl){
@@ -222,7 +245,9 @@ function renderStudentLessons(lessons, meetUrl){
     const end = new Date(`${r.lesson_date}T${String(r.end_time).slice(0,5)}:00`);
     return end >= now && (r.status || "scheduled") === "scheduled";
   });
-  document.getElementById("upcomingLessonsCount").textContent = upcoming.length;
+  window.__studentUpcomingLessonsCount=upcoming.length;
+  document.getElementById("upcomingLessonsCount")?.textContent = upcoming.length;
+  updateStudentDashboardCounts();
 
   const next = upcoming[0];
   const nextBox = document.getElementById("nextLessonContent");
