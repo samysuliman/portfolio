@@ -2,6 +2,9 @@ const STUDENT_SUPABASE_URL = "https://crnlfpuipepolflqcwuo.supabase.co";
 const STUDENT_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_bW_x_9cHxqhuxkYdZ-g4kQ_3UAukGRV";
 const STUDENT_SESSION_KEY = "rasheed_student_session_v1";
 const PORTAL_SESSION_KEY = "rasheed_portal_session_v1";
+let __previewStudentsCache = null;
+let __studentPortalLoadSeq = 0;
+
 
 function getPortalSession(){
   try{return JSON.parse(localStorage.getItem(PORTAL_SESSION_KEY)||"null");}catch{return null;}
@@ -120,48 +123,52 @@ function startOfWeek(date){
 }
 function endOfWeek(date){ const d=startOfWeek(date); d.setDate(d.getDate()+6); return d; }
 
-let previewStudentsCache = null;
-let previewStudentsPromise = null;
-let studentPortalLoadSeq = 0;
+async function loadPreviewStudents(force=false){
+  if(!force && Array.isArray(__previewStudentsCache)) return __previewStudentsCache;
 
-async function loadPreviewStudents(){
-  if(Array.isArray(previewStudentsCache)) return previewStudentsCache;
-  if(previewStudentsPromise) return previewStudentsPromise;
+  const res=await studentApi("/rest/v1/students?select=id,full_name,status&order=full_name.asc");
+  if(!res.ok) throw new Error(await res.text());
 
-  previewStudentsPromise = (async()=>{
-    const res=await studentApi("/rest/v1/students?select=id,full_name,status&order=full_name.asc");
-    if(!res.ok) throw new Error(await res.text());
-    const rows=await res.json();
-    previewStudentsCache=rows;
+  const rows=await res.json();
+  __previewStudentsCache=rows;
 
-    const select=document.getElementById("previewStudentSelect");
-    if(select){
-      const keep=String(window.__previewStudentId || select.value || "");
-      select.innerHTML=rows.map(s=>`<option value="${studentEsc(s.id)}">${studentEsc(s.full_name)}</option>`).join("");
-      const validKeep=keep && rows.some(s=>String(s.id)===keep);
-      const wanted=validKeep ? keep : (rows[0] ? String(rows[0].id) : "");
-      if(wanted){
-        select.value=wanted;
-        window.__previewStudentId=wanted;
-      }
+  const select=document.getElementById("previewStudentSelect");
+  if(select){
+    const keepValue=String(window.__previewStudentId || select.value || "");
+    select.innerHTML=rows.map(s=>`<option value="${studentEsc(s.id)}">${studentEsc(s.full_name)}</option>`).join("");
+
+    if(keepValue && rows.some(s=>String(s.id)===keepValue)){
+      select.value=keepValue;
+    }else if(rows.length){
+      select.value=String(rows[0].id);
+      window.__previewStudentId=String(rows[0].id);
     }
-    return rows;
-  })();
-
-  try{return await previewStudentsPromise;}
-  finally{previewStudentsPromise=null;}
+  }
+  return rows;
 }
 
-async function getCurrentStudent(){
+async function getCurrentStudent(preferredId=""){
   if(isAdminPreview()){
     document.getElementById("adminPreviewBanner")?.classList.remove("hide");
+
     const students=await loadPreviewStudents();
     if(!students.length) throw new Error("NO_STUDENTS");
+
     const select=document.getElementById("previewStudentSelect");
-    const wanted=String(window.__previewStudentId || select?.value || students[0].id);
-    if(select && select.value!==wanted) select.value=wanted;
-    window.__previewStudentId=wanted;
-    return students.find(s=>String(s.id)===wanted) || students[0];
+    const wanted=String(
+      preferredId ||
+      window.__previewStudentId ||
+      select?.value ||
+      students[0].id
+    );
+
+    const student=students.find(s=>String(s.id)===wanted) || students[0];
+    const finalId=String(student.id);
+
+    window.__previewStudentId=finalId;
+    if(select && select.value!==finalId) select.value=finalId;
+
+    return student;
   }
 
   const accountRes=await studentApi("/rest/v1/student_accounts?select=student_id,students(id,full_name,status)&limit=1");
@@ -170,73 +177,138 @@ async function getCurrentStudent(){
   return rows[0]?.students || null;
 }
 
-async function loadStudentPortal(){
-  const loadSeq=++studentPortalLoadSeq;
-  const ok = await requireStudent(); if(!ok || loadSeq!==studentPortalLoadSeq) return;
+function normalizeStudentStudySelections(value){
+  if(Array.isArray(value)) return value;
+  if(!value) return [];
+  try{const p=typeof value==="string"?JSON.parse(value):value;return Array.isArray(p)?p:[];}catch{return [];}
+}
+function studentSelectionItems(x){return [...(Array.isArray(x?.subjects)?x.subjects:[]),...(Array.isArray(x?.tracks)?x.tracks:[])].filter(Boolean);}
+async function loadStudentEnrollmentSelections(studentId){
+  const sRes=await studentApi(`/rest/v1/students?id=eq.${encodeURIComponent(studentId)}&select=id,registration_id&limit=1`);
+  if(!sRes.ok) return [];
+  const rows=await sRes.json(); const registrationId=rows[0]?.registration_id;
+  if(!registrationId) return [];
+  const rRes=await studentApi(`/rest/v1/registrations?id=eq.${encodeURIComponent(registrationId)}&select=study_selections&limit=1`);
+  if(!rRes.ok) return [];
+  const rr=await rRes.json(); return normalizeStudentStudySelections(rr[0]?.study_selections);
+}
+function renderRegisteredStudies(rows){
+  const box=document.getElementById("registeredStudiesList"); if(!box)return;
+  if(!rows?.length){box.innerHTML='<div class="empty">لا توجد اختيارات تسجيل مرتبطة بهذا الطالب حتى الآن.</div>';return;}
+  box.innerHTML=rows.map(x=>{const meta=[x.system,x.stage,x.grade,x.branch].filter(Boolean),items=studentSelectionItems(x);return `<article class="registered-study-card"><div class="registered-study-title">${studentEsc(x.title||x.key||"برنامج تعليمي")}</div>${meta.length?`<div class="registered-study-meta">${meta.map(studentEsc).join(" ← ")}</div>`:""}${items.length?`<div class="registered-study-items">${items.map(i=>`<span>${studentEsc(i)}</span>`).join("")}</div>`:""}</article>`;}).join("");
+}
+function registeredStudyNames(rows){return [...new Set((rows||[]).flatMap(studentSelectionItems))];}
 
-  const settingsRes=await studentApi("/rest/v1/academy_settings?setting_key=eq.academy_meet_url&select=setting_value&limit=1");
-  if(!settingsRes.ok) throw new Error(await settingsRes.text());
-  const settingsRows=await settingsRes.json();
-  if(loadSeq!==studentPortalLoadSeq) return;
+async function loadStudentPortal(preferredStudentId=""){
+  const loadSeq=++__studentPortalLoadSeq;
 
-  const student=await getCurrentStudent();
-  if(loadSeq!==studentPortalLoadSeq) return;
-  if(!student) throw new Error("NO_STUDENT_PROFILE");
+  const ok=await requireStudent();
+  if(!ok || loadSeq!==__studentPortalLoadSeq) return;
+
+  const student=await getCurrentStudent(preferredStudentId);
+  if(!student || loadSeq!==__studentPortalLoadSeq) return;
+
   window.__currentPortalStudentId=student.id;
-  loadStudentMaterials(student.id).catch(console.error);
-  loadAssignmentsAndExams(student.id).catch(console.error);
 
-  const meetUrl = settingsRows[0]?.setting_value || "";
-  document.getElementById("studentWelcome").textContent = `السلام عليكم، ${student.full_name} 🌿`;
+  const welcome=document.getElementById("studentWelcome");
+  if(welcome) welcome.textContent=`السلام عليكم، ${student.full_name} 🌿`;
 
-  const linksRes = await studentApi(`/rest/v1/lesson_students?student_id=eq.${encodeURIComponent(student.id)}&select=lesson_id`);
-  if(!linksRes.ok) throw new Error(await linksRes.text());
-  const links = await linksRes.json();
-  if(loadSeq!==studentPortalLoadSeq) return;
-  const ids = links.map(x=>x.lesson_id);
+  const profileName=document.getElementById("studentProfileName");
+  if(profileName) profileName.textContent=student.full_name || "الطالب";
 
+  const loadError=document.getElementById("studentLoadError");
+  loadError?.classList.add("hide");
+
+  // البيانات التالية اختيارية؛ فشل واحدة منها لا يوقف لوحة الطالب كلها.
+  let meetUrl="";
+  try{
+    const settingsRes=await studentApi("/rest/v1/academy_settings?setting_key=eq.academy_meet_url&select=setting_value&limit=1");
+    if(settingsRes.ok){
+      const settingsRows=await settingsRes.json();
+      meetUrl=settingsRows[0]?.setting_value || "";
+    }
+  }catch(err){ console.warn("Meet settings load skipped:",err); }
+
+  if(loadSeq!==__studentPortalLoadSeq) return;
+
+  let registeredSelections=[];
+  try{
+    if(typeof loadStudentEnrollmentSelections==="function"){
+      registeredSelections=await loadStudentEnrollmentSelections(student.id);
+    }
+  }catch(err){ console.warn("Study selections load skipped:",err); }
+
+  if(loadSeq!==__studentPortalLoadSeq) return;
+
+  if(typeof renderRegisteredStudies==="function"){
+    try{renderRegisteredStudies(registeredSelections);}catch(err){console.warn(err);}
+  }
+
+  loadStudentMaterials(student.id).catch(err=>console.warn("Materials:",err));
+  loadAssignmentsAndExams(student.id).catch(err=>console.warn("Assignments/exams:",err));
+
+  let links=[];
+  try{
+    const linksRes=await studentApi(`/rest/v1/lesson_students?student_id=eq.${encodeURIComponent(student.id)}&select=lesson_id`);
+    if(linksRes.ok) links=await linksRes.json();
+    else console.warn("lesson_students:",await linksRes.text());
+  }catch(err){ console.warn("Lesson links load skipped:",err); }
+
+  if(loadSeq!==__studentPortalLoadSeq) return;
+
+  const ids=links.map(x=>x.lesson_id).filter(Boolean);
   if(!ids.length){
-    renderStudentSubjects([]);
+    renderStudentSubjects([], registeredSelections);
     renderStudentLessons([], meetUrl);
     return;
   }
 
-  const lessonRes = await studentApi(`/rest/v1/lessons?id=in.(${ids.join(",")})&select=id,teacher_id,track_id,lesson_date,start_time,end_time,status&order=lesson_date.asc,start_time.asc`);
-  if(!lessonRes.ok) throw new Error(await lessonRes.text());
-  const lessons = await lessonRes.json();
-  if(loadSeq!==studentPortalLoadSeq) return;
+  let lessons=[];
+  try{
+    const lessonRes=await studentApi(`/rest/v1/lessons?id=in.(${ids.join(",")})&select=id,teacher_id,track_id,lesson_date,start_time,end_time,status&order=lesson_date.asc,start_time.asc`);
+    if(lessonRes.ok) lessons=await lessonRes.json();
+    else console.warn("lessons:",await lessonRes.text());
+  }catch(err){ console.warn("Lessons load skipped:",err); }
 
-  const teacherIds = [...new Set(lessons.map(x=>x.teacher_id).filter(Boolean))];
-  const trackIds = [...new Set(lessons.map(x=>x.track_id).filter(Boolean))];
+  if(loadSeq!==__studentPortalLoadSeq) return;
 
-  const [teachersRes, tracksRes] = await Promise.all([
-    teacherIds.length ? studentApi(`/rest/v1/teachers?id=in.(${teacherIds.join(",")})&select=id,full_name`) : Promise.resolve({ok:true,json:async()=>[]}),
-    trackIds.length ? studentApi(`/rest/v1/academy_tracks?id=in.(${trackIds.join(",")})&select=id,name_ar`) : Promise.resolve({ok:true,json:async()=>[]})
-  ]);
-  if(!teachersRes.ok) throw new Error(await teachersRes.text());
-  if(!tracksRes.ok) throw new Error(await tracksRes.text());
+  const teacherIds=[...new Set(lessons.map(x=>x.teacher_id).filter(Boolean))];
+  const trackIds=[...new Set(lessons.map(x=>x.track_id).filter(Boolean))];
 
-  const teachers = new Map((await teachersRes.json()).map(x=>[String(x.id),x.full_name]));
-  const tracks = new Map((await tracksRes.json()).map(x=>[String(x.id),x.name_ar]));
-  if(loadSeq!==studentPortalLoadSeq) return;
+  let teachers=new Map(),tracks=new Map();
+  try{
+    if(teacherIds.length){
+      const r=await studentApi(`/rest/v1/teachers?id=in.(${teacherIds.join(",")})&select=id,full_name`);
+      if(r.ok) teachers=new Map((await r.json()).map(x=>[String(x.id),x.full_name]));
+    }
+  }catch(err){ console.warn("Teachers load skipped:",err); }
+
+  try{
+    if(trackIds.length){
+      const r=await studentApi(`/rest/v1/academy_tracks?id=in.(${trackIds.join(",")})&select=id,name_ar`);
+      if(r.ok) tracks=new Map((await r.json()).map(x=>[String(x.id),x.name_ar]));
+    }
+  }catch(err){ console.warn("Tracks load skipped:",err); }
+
+  if(loadSeq!==__studentPortalLoadSeq) return;
+
   lessons.forEach(r=>{
-    r.teacher_name = teachers.get(String(r.teacher_id)) || "—";
-    r.track_name = tracks.get(String(r.track_id)) || "غير محدد";
+    r.teacher_name=teachers.get(String(r.teacher_id)) || "—";
+    r.track_name=tracks.get(String(r.track_id)) || "غير محدد";
   });
 
-  renderStudentSubjects(lessons);
+  renderStudentSubjects(lessons, registeredSelections);
   renderStudentLessons(lessons, meetUrl);
 }
 
-function renderStudentSubjects(lessons){
-  const unique = [...new Map(
-    lessons.filter(x=>x.track_id).map(x=>[String(x.track_id),x.track_name])
-  ).values()];
-  document.getElementById("subjectsCount").textContent = unique.length;
-  const box = document.getElementById("subjectsList");
-  box.innerHTML = unique.length
-    ? unique.map(name=>`<div class="card"><div class="icon">📚</div><h3>${studentEsc(name)}</h3></div>`).join("")
-    : '<div class="empty">لا توجد مواد مرتبطة بحسابك حتى الآن.</div>';
+function renderStudentSubjects(lessons, registeredSelections=[]){
+  const lessonNames=lessons.filter(x=>x.track_id).map(x=>x.track_name).filter(Boolean);
+  const unique=[...new Set([...registeredStudyNames(registeredSelections),...lessonNames])];
+  window.__studentSubjectsCount=unique.length;
+  const count=document.getElementById("subjectsCount"); if(count) count.textContent=unique.length;
+  const box=document.getElementById("subjectsList");
+  if(box) box.innerHTML=unique.length?unique.map(name=>`<div class="card"><div class="icon">📚</div><h3>${studentEsc(name)}</h3></div>`).join(""):'<div class="empty">لا توجد مواد أو مسارات مرتبطة بحسابك حتى الآن.</div>';
+  updateStudentDashboardCounts();
 }
 
 function renderStudentLessons(lessons, meetUrl){
@@ -247,7 +319,9 @@ function renderStudentLessons(lessons, meetUrl){
     const end = new Date(`${r.lesson_date}T${String(r.end_time).slice(0,5)}:00`);
     return end >= now && (r.status || "scheduled") === "scheduled";
   });
-  document.getElementById("upcomingLessonsCount").textContent = upcoming.length;
+  window.__studentUpcomingLessonsCount=upcoming.length;
+  document.getElementById("upcomingLessonsCount")?.textContent = upcoming.length;
+  updateStudentDashboardCounts();
 
   const next = upcoming[0];
   const nextBox = document.getElementById("nextLessonContent");
@@ -357,14 +431,15 @@ document.addEventListener("DOMContentLoaded",()=>{
   });
 
   if(document.getElementById("studentLessonsList")){
-    loadStudentPortal().catch(err=>{
+    loadStudentPortal(window.__previewStudentId || "").catch(err=>{
       console.error(err);
       document.getElementById("studentLoadError")?.classList.remove("hide");
     });
     document.getElementById("studentLessonView")?.addEventListener("change",renderStudentLessonList);
     document.getElementById("previewStudentSelect")?.addEventListener("change",(e)=>{
-      window.__previewStudentId=String(e.currentTarget.value || "");
-      loadStudentPortal().catch(err=>{
+      const selectedId=String(e.currentTarget.value || "");
+      window.__previewStudentId=selectedId;
+      loadStudentPortal(selectedId).catch(err=>{
         console.error(err);
         document.getElementById("studentLoadError")?.classList.remove("hide");
       });
