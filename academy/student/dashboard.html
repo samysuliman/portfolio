@@ -50,11 +50,6 @@
 @media(max-width:440px){.dashboard-cards{grid-template-columns:1fr}}
 
 
-.registered-studies-block{margin-top:14px;padding:14px;border:1px solid var(--border);border-radius:16px;background:#f8fbf9}
-.registered-study-card{padding:13px;background:#fff;border:1px solid var(--border);border-radius:14px;margin-top:10px}
-.registered-study-title{font-weight:900;color:#174c3c;font-size:16px}.registered-study-meta{margin-top:5px;color:var(--muted);font-size:13px}
-.registered-study-items{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.registered-study-items span{display:inline-flex;padding:6px 9px;border-radius:999px;background:#eef6f2;border:1px solid #dce9e2;font-size:12px;font-weight:800}
-
 /* Final dashboard visibility fix */
 .student-detail-panel{display:none !important;margin-top:18px}
 .student-detail-panel.is-open{display:block !important}
@@ -116,13 +111,7 @@
       </div>
 
       <div id="subjects" class="panel section-panel student-detail-panel">
-        <h3>موادي ومساراتي</h3>
-        <p class="muted">اختياراتك التعليمية المعتمدة عند التسجيل، والمواد أو المسارات المرتبطة بك.</p>
-        <div class="registered-studies-block">
-          <h4 style="margin:0 0 10px">البرنامج الدراسي</h4>
-          <div id="registeredStudiesList"><div class="empty">جارٍ تحميل اختيارات التسجيل...</div></div>
-        </div>
-        <h4 style="margin:18px 0 10px">المواد والمسارات</h4>
+        <h3>موادي</h3>
         <div id="subjectsList" class="subject-grid"><div class="empty">جارٍ تحميل المواد...</div></div>
       </div>
 
@@ -182,6 +171,6 @@
     </section>
 </main>
 
-<script src="../assets/js/student.js?v=1.1.0"></script>
+<script src="../assets/js/student.js?v=1.2.0"></script>
 </body>
 </html>
