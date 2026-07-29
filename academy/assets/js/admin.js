@@ -227,7 +227,8 @@ async function convertRegistrationToStudent(id, button){
       level: r.level || null,
       preferred_time: r.preferred_time || null,
       student_type: r.registration_for || extractStudentType(r.notes) || null,
-      notes: [r.notes || "", selectionSummaryText(r.study_selections) ? `الاختيارات التعليمية: ${selectionSummaryText(r.study_selections)}` : ""].filter(Boolean).join("\n"),
+      study_selections: normalizeStudySelections(r.study_selections),
+      notes: r.notes || null,
       status: "active"
     };
 

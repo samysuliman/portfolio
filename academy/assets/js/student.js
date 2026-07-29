@@ -154,24 +154,26 @@ async function getCurrentStudent(){
 function normalizeStudentStudySelections(value){
   if(Array.isArray(value)) return value;
   if(!value) return [];
-  try{const p=typeof value==="string"?JSON.parse(value):value;return Array.isArray(p)?p:[];}catch{return [];}
+  try{
+    const p=typeof value==="string"?JSON.parse(value):value;
+    return Array.isArray(p)?p:[];
+  }catch{return [];}
 }
-function studentSelectionItems(x){return [...(Array.isArray(x?.subjects)?x.subjects:[]),...(Array.isArray(x?.tracks)?x.tracks:[])].filter(Boolean);}
+function studentSelectionItems(x){
+  return [
+    ...(Array.isArray(x?.subjects)?x.subjects:[]),
+    ...(Array.isArray(x?.tracks)?x.tracks:[])
+  ].filter(Boolean);
+}
 async function loadStudentEnrollmentSelections(studentId){
-  const sRes=await studentApi(`/rest/v1/students?id=eq.${encodeURIComponent(studentId)}&select=id,registration_id&limit=1`);
-  if(!sRes.ok) return [];
-  const rows=await sRes.json(); const registrationId=rows[0]?.registration_id;
-  if(!registrationId) return [];
-  const rRes=await studentApi(`/rest/v1/registrations?id=eq.${encodeURIComponent(registrationId)}&select=study_selections&limit=1`);
-  if(!rRes.ok) return [];
-  const rr=await rRes.json(); return normalizeStudentStudySelections(rr[0]?.study_selections);
+  const res=await studentApi(`/rest/v1/students?id=eq.${encodeURIComponent(studentId)}&select=study_selections&limit=1`);
+  if(!res.ok) return [];
+  const rows=await res.json();
+  return normalizeStudentStudySelections(rows[0]?.study_selections);
 }
-function renderRegisteredStudies(rows){
-  const box=document.getElementById("registeredStudiesList"); if(!box)return;
-  if(!rows?.length){box.innerHTML='<div class="empty">لا توجد اختيارات تسجيل مرتبطة بهذا الطالب حتى الآن.</div>';return;}
-  box.innerHTML=rows.map(x=>{const meta=[x.system,x.stage,x.grade,x.branch].filter(Boolean),items=studentSelectionItems(x);return `<article class="registered-study-card"><div class="registered-study-title">${studentEsc(x.title||x.key||"برنامج تعليمي")}</div>${meta.length?`<div class="registered-study-meta">${meta.map(studentEsc).join(" ← ")}</div>`:""}${items.length?`<div class="registered-study-items">${items.map(i=>`<span>${studentEsc(i)}</span>`).join("")}</div>`:""}</article>`;}).join("");
+function registeredStudyNames(rows){
+  return [...new Set((rows||[]).flatMap(studentSelectionItems))];
 }
-function registeredStudyNames(rows){return [...new Set((rows||[]).flatMap(studentSelectionItems))];}
 
 async function loadStudentPortal(){
   const ok = await requireStudent(); if(!ok) return;
@@ -184,12 +186,14 @@ async function loadStudentPortal(){
   if(!student) throw new Error("NO_STUDENT_PROFILE");
   window.__currentPortalStudentId=student.id;
   const registeredSelections=await loadStudentEnrollmentSelections(student.id).catch(()=>[]);
-  renderRegisteredStudies(registeredSelections);
   loadStudentMaterials(student.id).catch(console.error);
   loadAssignmentsAndExams(student.id).catch(console.error);
 
   const meetUrl = settingsRows[0]?.setting_value || "";
-  document.getElementById("studentWelcome").textContent = `السلام عليكم، ${student.full_name} 🌿`;
+  const welcome=document.getElementById("studentWelcome");
+  if(welcome) welcome.textContent = `السلام عليكم، ${student.full_name} 🌿`;
+  const profileName=document.getElementById("studentProfileName");
+  if(profileName) profileName.textContent=student.full_name || "الطالب";
 
   const linksRes = await studentApi(`/rest/v1/lesson_students?student_id=eq.${encodeURIComponent(student.id)}&select=lesson_id`);
   if(!linksRes.ok) throw new Error(await linksRes.text());
