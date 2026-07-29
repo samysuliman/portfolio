@@ -16,7 +16,7 @@
 <script>
 (function(){let arr=[];try{arr=JSON.parse(sessionStorage.getItem('rasheedStudySelections')||'[]')}catch(e){}
 const q=new URLSearchParams(location.search).get('track');if(q)arr.push({key:'quran',title:'القرآن الكريم والعلوم الشرعية',tracks:[q]});
-const box=document.getElementById('summary');if(arr.length)box.innerHTML=arr.map(x=>'<div class="sum-item"><strong>'+x.title+'</strong><span>'+[x.system,x.stage,x.grade].filter(Boolean).join(' ← ')+(x.subjects?.length?'<br>'+x.subjects.join(' • '):'')+(x.tracks?.length?'<br>'+x.tracks.join(' • '):'')+'</span></div>').join('');
+const box=document.getElementById('summary');if(arr.length)box.innerHTML=arr.map(x=>'<div class="sum-item"><strong>'+x.title+'</strong><span>'+[x.system,x.stage,x.grade,x.branch].filter(Boolean).join(' ← ')+(x.subjects?.length?'<br>'+x.subjects.join(' • '):'')+(x.tracks?.length?'<br>'+x.tracks.join(' • '):'')+'</span></div>').join('');
 document.getElementById('regForm').onsubmit=e=>{e.preventDefault();if(!e.currentTarget.reportValidity())return;document.getElementById('msg').classList.remove('hide')};
 })();
 </script></body></html>
