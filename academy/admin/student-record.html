@@ -15,8 +15,8 @@ textarea{width:100%;min-height:100px;padding:13px 14px;border:1px solid #cddbd5;
 .simple-student-record{padding:18px}.student-record-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.student-record-card{border:1px solid #dbe7e1;border-radius:18px;padding:18px;background:#fff;box-shadow:0 7px 22px rgba(18,72,55,.05)}.student-record-card-head{display:flex;align-items:center;gap:9px;margin-bottom:15px}.student-record-card-head h2{font-size:20px;margin:0}.record-card-icon{font-size:23px}.compact-grid{gap:12px}.record-readonly{padding:11px 13px;border:1px solid #e1ebe6;border-radius:13px;background:#f8fbf9}.record-readonly span{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}.record-readonly strong{font-size:14px;color:#173f33}.subject-teachers-box{display:grid;gap:9px}.subject-teacher-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 13px;border:1px solid #e0ebe5;border-radius:13px;background:#f8fbf9}.subject-teacher-row strong{font-size:14px}.subject-teacher-row span{color:var(--muted);font-size:13px;white-space:nowrap}.student-record-card .academic-program-card{box-shadow:none}.student-record-card .academic-program-card:last-child{margin-bottom:0}
 @media(max-width:850px){.student-record-cards{grid-template-columns:1fr}.simple-student-record{padding:13px}.student-record-card{padding:15px}}
 
-.record-toolbar{display:flex;justify-content:flex-end;margin-bottom:14px}.final-record-layout{grid-template-columns:1fr}.student-summary-grid,.record-edit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.study-card .academic-program-card{padding:18px}.study-card .academic-program-card h3{font-size:19px;margin-bottom:10px}.academic-detail-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px;margin:10px 0 14px}.academic-detail{padding:9px 11px;border-radius:11px;background:#fff;border:1px solid #e1ebe6}.academic-detail span{display:block;color:var(--muted);font-size:11px;margin-bottom:3px}.academic-detail strong{font-size:13px}.academic-subject-title{font-weight:800;margin:4px 0 8px}.teacher-table{width:100%;border-collapse:collapse}.teacher-table th,.teacher-table td{padding:11px 12px;border-bottom:1px solid #e0ebe5;text-align:right}.teacher-table th{font-size:12px;color:var(--muted);background:#f8fbf9}.teacher-table td{font-size:14px}.teacher-unassigned{color:var(--muted)}
-@media(max-width:700px){.student-summary-grid,.record-edit-grid,.academic-detail-list{grid-template-columns:1fr}.record-toolbar .btn{width:100%}}
+.record-toolbar{display:flex;justify-content:flex-end;margin-bottom:14px}.final-record-layout{grid-template-columns:1fr}.student-summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.study-card .academic-program-card{padding:18px}.study-card .academic-program-card h3{font-size:19px;margin-bottom:10px}.academic-detail-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px;margin:10px 0 14px}.academic-detail{padding:9px 11px;border-radius:11px;background:#fff;border:1px solid #e1ebe6}.academic-detail span{display:block;color:var(--muted);font-size:11px;margin-bottom:3px}.academic-detail strong{font-size:13px}.academic-subject-title{font-weight:800;margin:4px 0 8px}.teacher-table{width:100%;border-collapse:collapse}.teacher-table th,.teacher-table td{padding:11px 12px;border-bottom:1px solid #e0ebe5;text-align:right}.teacher-table th{font-size:12px;color:var(--muted);background:#f8fbf9}.teacher-table td{font-size:14px}.teacher-unassigned{color:var(--muted)}
+@media(max-width:700px){.student-summary-grid,.academic-detail-list{grid-template-columns:1fr}.record-toolbar .btn{width:100%}}
 </style></head><body data-admin-page="student-record">
 <header class="topbar"><div class="container nav"><a class="brand" href="../index.html"><span class="brand-mark">ر</span><span>أكاديمية رشيد<small>سجل الطالب</small></span></a><a class="btn btn-secondary" href="#" data-admin-logout>تسجيل الخروج</a></div></header>
 <main class="page"><div class="container layout">
@@ -26,7 +26,7 @@ textarea{width:100%;min-height:100px;padding:13px 14px;border:1px solid #cddbd5;
 <div id="recordError" class="notice hide"></div>
 <form id="studentRecordForm" class="panel hide simple-student-record">
 <div class="record-toolbar">
-  <button class="btn btn-light" id="toggleStudentEdit" type="button">✏️ تعديل بيانات الطالب</button>
+  <a class="btn btn-light" id="editStudentLink" href="#">✏️ تعديل بيانات الطالب</a>
 </div>
 <div class="student-record-cards final-record-layout">
   <section class="student-record-card basic-card">
@@ -37,11 +37,7 @@ textarea{width:100%;min-height:100px;padding:13px 14px;border:1px solid #cddbd5;
       <div class="record-readonly"><span>الهاتف</span><strong id="srWhatsappDisplay">—</strong></div>
       <div class="record-readonly"><span>الحالة</span><strong id="srStatusDisplay">—</strong></div>
     </div>
-    <div class="record-edit-grid hide" id="studentBasicEdit">
-      <div class="field"><label for="sr_full_name">اسم الطالب</label><input id="sr_full_name" required></div>
-      <div class="field"><label for="sr_whatsapp">الهاتف</label><input id="sr_whatsapp" inputmode="tel"></div>
-      <div class="field"><label for="sr_status">الحالة</label><select id="sr_status"><option value="active">نشط</option><option value="paused">موقوف مؤقتًا</option><option value="completed">مكتمل</option><option value="inactive">غير نشط</option></select></div>
-    </div>
+
   </section>
 
   <section class="student-record-card study-card">
@@ -58,19 +54,11 @@ textarea{width:100%;min-height:100px;padding:13px 14px;border:1px solid #cddbd5;
     <div class="student-record-card-head"><span class="record-card-icon">📊</span><h2>المتابعة</h2></div>
     <div class="record-grid compact-grid">
       <div class="field full"><label for="sr_weekly_goal">هدف الأسبوع</label><textarea id="sr_weekly_goal" placeholder="اكتب هدفًا أسبوعيًا مختصرًا عند الحاجة."></textarea></div>
-      <div class="field"><label for="sr_attendance_rate">نسبة الحضور</label><div class="metric-input"><input id="sr_attendance_rate" type="number" min="0" max="100"><span>%</span></div></div>
       <div class="field full"><label for="sr_notes">ملاحظات</label><textarea id="sr_notes"></textarea></div>
     </div>
   </section>
 </div>
 
-<!-- حقول محفوظة للتوافق مع البيانات الحالية، ولا تظهر في الواجهة المبسطة. -->
-<div hidden>
-  <input id="sr_student_code"><input id="sr_age" type="number"><input id="sr_country_city">
-  <input id="sr_enrollment_date" type="date"><input id="sr_student_type"><input id="sr_preferred_time">
-  <select id="sr_assigned_teacher_id"><option value="">لم يُعيَّن بعد</option></select>
-  <input id="sr_overall_progress" type="number" min="0" max="100">
-</div>
 <div class="record-section quran-record-section">
   <div class="quran-section-head">
     <div><h2>السجل القرآني</h2><p class="muted">حدّد ما يخص الطالب في التسميع والمراجعة، وأضف نطاقات الحفظ والتلاوة وتصحيح القراءة.</p></div>
@@ -115,10 +103,10 @@ textarea{width:100%;min-height:100px;padding:13px 14px;border:1px solid #cddbd5;
   </div>
 </div>
 
-<div class="record-actions"><button class="btn btn-primary" id="saveStudentRecord" type="submit">حفظ الملاحظات</button><a class="btn btn-secondary" id="studentWhatsappLink" href="#" target="_blank" rel="noopener">التواصل عبر واتساب</a></div>
+<div class="record-actions"><button class="btn btn-primary" id="saveStudentRecord" type="submit">حفظ المتابعة</button><a class="btn btn-secondary" id="studentWhatsappLink" href="#" target="_blank" rel="noopener">التواصل عبر واتساب</a></div>
 <p class="muted" id="recordSaveStatus" style="margin:12px 0 0"></p>
 </form>
 </section></div></main>
-<script src="../assets/js/admin.js?v=9.1.0"></script>
+<script src="../assets/js/admin.js?v=9.2.0"></script>
 <script>document.addEventListener('click',e=>{const a=e.target.closest('[data-demo-alert]');if(a){e.preventDefault();alert('سجل الحصص والتقييم التفصيلي هو المرحلة التالية بعد تفعيل سجل الطالب الأساسي.');}});</script>
 </body></html>
