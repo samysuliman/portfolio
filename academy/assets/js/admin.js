@@ -802,6 +802,12 @@ async function loadTeacherAssignments(){
     document.getElementById("assignmentStudentName").textContent=student.full_name||"—";
     document.getElementById("assignmentStudentInitial").textContent=(student.full_name||"ط").trim().charAt(0)||"ط";
     document.getElementById("assignmentStudentCode").textContent=student.student_code||autoStudentCode(student.id);
+    const programNames=[...new Set((selections||[]).map(x=>String(x?.title||x?.key||"").trim()).filter(Boolean))];
+    const gradeNames=[...new Set((selections||[]).flatMap(x=>[x?.stage,x?.grade]).map(x=>String(x||"").trim()).filter(Boolean))];
+    document.getElementById("assignmentStudentProgram").textContent=programNames.join("، ")||"غير محدد";
+    document.getElementById("assignmentStudentGrade").textContent=gradeNames.join(" — ")||"غير محدد";
+    const bulkSelect=document.getElementById("bulkTeacherSelect");
+    if(bulkSelect) bulkSelect.innerHTML='<option value="">اختر المعلم</option>'+teachers.map(t=>`<option value="${esc(t.id)}">${esc(t.full_name)}${t.teacher_code?` — ${esc(t.teacher_code)}`:""}</option>`).join("");
     document.getElementById("backToRecord").href=`student-record.html?id=${encodeURIComponent(student.id)}`;
     document.getElementById("cancelAssignments").href=`student-record.html?id=${encodeURIComponent(student.id)}`;
     renderTeacherAssignmentRows(subjects,teachers,assignments);
@@ -821,6 +827,27 @@ function renderTeacherAssignmentRows(subjects,teachers,assignments){
     <div><div class="subject-name">${esc(row.subjectName)}</div><div class="subject-program">${esc(row.programTitle)}</div></div>
     <select aria-label="معلم مادة ${esc(row.subjectName)}"><option value="">غير معيّن</option>${teachers.map(t=>`<option value="${esc(t.id)}" ${current.get(`${row.programKey}::${row.subjectName}`)===String(t.id)?"selected":""}>${esc(t.full_name)}${t.teacher_code?` — ${esc(t.teacher_code)}`:""}</option>`).join("")}</select>
   </div>`).join("");
+  updateDuplicateTeacherWarning();
+}
+
+function updateDuplicateTeacherWarning(){
+  const box=document.getElementById("duplicateTeacherWarning"); if(!box)return;
+  const state=window.__teacherAssignmentState;
+  const counts=new Map();
+  document.querySelectorAll(".assignment-row select").forEach(select=>{if(select.value)counts.set(select.value,(counts.get(select.value)||0)+1);});
+  const repeated=[...counts.entries()].filter(([,count])=>count>1);
+  if(!repeated.length){box.classList.add("hide");box.textContent="";return;}
+  const names=repeated.map(([id,count])=>{const teacher=state?.teachers?.find(t=>String(t.id)===String(id));return `${teacher?.full_name||"المعلم"} (${count} مواد)`;});
+  box.textContent=`تنبيه فقط: تم إسناد أكثر من مادة للمعلم نفسه: ${names.join("، ")}. يمكنك الحفظ إذا كان هذا مقصودًا.`;
+  box.classList.remove("hide");
+}
+
+function applyTeacherToAllSubjects(){
+  const teacherId=document.getElementById("bulkTeacherSelect")?.value||"";
+  if(!teacherId){document.getElementById("assignmentSaveStatus").textContent="اختر معلمًا أولًا لتطبيقه على جميع المواد.";return;}
+  document.querySelectorAll(".assignment-row select").forEach(select=>{select.value=teacherId;});
+  document.getElementById("assignmentSaveStatus").textContent="تم تطبيق المعلم على جميع المواد. اضغط حفظ الإسناد لتثبيت التغييرات.";
+  updateDuplicateTeacherWarning();
 }
 
 async function saveTeacherAssignments(){
@@ -928,5 +955,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   if(document.body.dataset.adminPage === "students") loadStudents().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
   if(document.body.dataset.adminPage === "student-record") loadStudentRecord();
   if(document.body.dataset.adminPage === "teachers") loadTeachers().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
+  document.getElementById("applyTeacherToAll")?.addEventListener("click",applyTeacherToAllSubjects);
+  document.getElementById("assignmentRows")?.addEventListener("change",e=>{if(e.target.matches("select"))updateDuplicateTeacherWarning();});
   if(document.body.dataset.adminPage === "teacher-assignments") loadTeacherAssignments();
 });
