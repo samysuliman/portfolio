@@ -714,6 +714,48 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
 }
 </style>
 
+
+<style id="hub-equal-desktop-final">
+/* الكمبيوتر: توحيد أبعاد البطاقتين بدون تشويه الصورة */
+@media(min-width:751px){
+  .hub-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:22px !important;
+    align-items:stretch !important;
+  }
+  .hub-card{
+    aspect-ratio: 1.52 / 1 !important;
+    min-height:0 !important;
+    padding:0 !important;
+    overflow:hidden !important;
+    background:#fff !important;
+    border-radius:20px !important;
+  }
+  .hub-card .hub-icon{
+    width:100% !important;
+    height:100% !important;
+    margin:0 !important;
+    padding:0 !important;
+    overflow:hidden !important;
+  }
+  .hub-card .hub-main-card-image{
+    width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+    object-position:center !important;
+    display:block !important;
+  }
+}
+
+/* إزالة السهم القديم نهائيًا */
+.hub-arrow,
+.hub-card::before,
+.hub-card::after{
+  display:none !important;
+  content:none !important;
+}
+</style>
+
 </head>
 <body><header class="topbar">
 <div class="container nav">
