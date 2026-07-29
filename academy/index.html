@@ -649,13 +649,20 @@ function openChooser(key){
  }
  panel.querySelector("#sqAdd").onclick=()=>commit(false);panel.querySelector("#sqContinue").onclick=()=>commit(true);
 }
-const targets=[["التعليم الأهلي السعودي","saudi-private"],["التعليم العالمي السعودي","saudi-international"],["التعليم المصري","egyptian"]];
-targets.forEach(([name,key])=>{
- document.querySelectorAll("a,button").forEach(el=>{
-  const card=el.closest("article,.card,.program-card,.study-card,div");
-  const txt=(card?card.innerText:el.innerText)||"";
-  if(txt.includes(name)&&!el.dataset.rasheedBound){el.dataset.rasheedBound="1";el.addEventListener("click",e=>{e.preventDefault();openChooser(key)})}
- });
+const directTargets=[
+  ['[data-program="saudi"]',"saudi-private"],
+  ['[data-program="global"]',"saudi-international"],
+  ['[data-program="egypt"]',"egyptian"]
+];
+directTargets.forEach(([selector,key])=>{
+  const card=document.querySelector(selector);
+  if(!card) return;
+  card.style.cursor="pointer";
+  card.setAttribute("aria-label","فتح خيارات الدراسة");
+  card.addEventListener("click",e=>{e.preventDefault();openChooser(key)});
+  card.addEventListener("keydown",e=>{
+    if(e.key==="Enter"||e.key===" "){e.preventDefault();openChooser(key);}
+  });
 });
 })();
 </script>
