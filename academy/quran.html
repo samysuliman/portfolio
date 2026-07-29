@@ -283,7 +283,53 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
   .quran-page-head{align-items:flex-start;flex-direction:column}
   .quran-page-head h1{font-size:23px}
 }
-</style></head>
+</style>
+<style id="quran-track-art-cards-v1">
+.quran-track-art-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+}
+.quran-track-art-card{
+  display:block;
+  background:#fff;
+  border:1px solid #e7e0d4;
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow:0 12px 28px rgba(7,61,50,.10);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.quran-track-art-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 18px 36px rgba(7,61,50,.15);
+}
+.quran-track-art-card img{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:contain;
+}
+@media(max-width:900px){
+  .quran-track-art-grid{grid-template-columns:1fr}
+}
+@media(max-width:650px){
+  .quran-page{padding-inline:9px!important}
+  .quran-page .content-section{padding:14px 7px 18px!important}
+  .quran-track-art-grid{gap:12px}
+  .quran-track-art-card{
+    border-radius:18px;
+    box-shadow:0 9px 22px rgba(7,61,50,.10);
+  }
+  .quran-track-art-card img{
+    width:100%;
+    height:auto;
+    max-height:none;
+    object-fit:contain;
+  }
+}
+</style>
+
+</head>
 <body><header class="topbar">
 <div class="container nav">
 <a class="brand" href="index.html">
@@ -303,12 +349,20 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
 </div>
 </div>
 </header><main class="quran-page"><section class="quran-page-head"><div><h1>القرآن الكريم والعلوم الشرعية</h1><p>اختر المسار أو العلم الذي ترغب في دراسته.</p></div><a class="back-academy" href="index.html">العودة إلى الأكاديمية</a></section><section class="content-section" id="quran">
-<h2 class="section-title"><span data-ar="">مسارات القرآن الكريم</span><span data-en="">Qur'an Learning Paths</span></h2>
-<div class="quran-grid">
-<article class="quran-card"><div class="icon">أ</div><div><h3><span data-ar="">التأسيس</span><span data-en="">Foundations</span></h3><p class="block" data-ar="">الحروف والمخارج والقاعدة العربية.</p><p class="block" data-en="">Letters, articulation and Arabic reading foundations.</p></div><a href="register.html?track=التأسيس والقراءة"><span data-ar="">ابدأ الآن</span><span data-en="">Start Now</span></a></article>
-<article class="quran-card"><div class="icon">◫</div><div><h3><span data-ar="">التلاوة والتجويد</span><span data-en="">Recitation &amp; Tajweed</span></h3><p class="block" data-ar="">تلاوة القرآن وفهم معانيه وتطبيق أحكام التجويد.</p><p class="block" data-en="">Recitation, understanding and practical Tajweed.</p></div><a href="register.html?track=التلاوة والتجويد"><span data-ar="">ابدأ الآن</span><span data-en="">Start Now</span></a></article>
-<article class="quran-card"><div class="icon">✦</div><div><h3><span data-ar="">الحفظ والإتقان</span><span data-en="">Memorization &amp; Mastery</span></h3><p class="block" data-ar="">حفظ متدرج ومراجعة مستمرة وإتقان.</p><p class="block" data-en="">Progressive memorization, revision and mastery.</p></div><a href="register.html?track=الحفظ والإتقان"><span data-ar="">ابدأ الآن</span><span data-en="">Start Now</span></a></article>
-<article class="quran-card"><div class="icon">◇</div><div><h3><span data-ar="">الإجازة والسند</span><span data-en="">Ijazah &amp; Sanad</span></h3><p class="block" data-ar="">تأهيل للقراءة المضبوطة والاستعداد للإجازة.</p><p class="block" data-en="">Preparation for accurate recitation and Ijazah.</p></div><a href="register.html?track=الإجازة والسند"><span data-ar="">ابدأ الآن</span><span data-en="">Start Now</span></a></article>
+<h2 class="section-title"><span data-ar>مسارات القرآن الكريم</span><span data-en>Qur'an Learning Paths</span></h2>
+<div class="quran-track-art-grid">
+  <a class="quran-track-art-card" href="register.html?track=التأسيس والقراءة" aria-label="التأسيس">
+    <img src="assets/quran-tracks/foundations.png" alt="بطاقة مسار التأسيس في القرآن الكريم"/>
+  </a>
+  <a class="quran-track-art-card" href="register.html?track=التلاوة والتجويد" aria-label="التلاوة والتجويد">
+    <img src="assets/quran-tracks/tajweed.png" alt="بطاقة مسار التلاوة والتجويد"/>
+  </a>
+  <a class="quran-track-art-card" href="register.html?track=الحفظ والإتقان" aria-label="الحفظ والإتقان">
+    <img src="assets/quran-tracks/memorization.png" alt="بطاقة مسار الحفظ والإتقان"/>
+  </a>
+  <a class="quran-track-art-card" href="register.html?track=الإجازة والسند" aria-label="الإجازة والسند">
+    <img src="assets/quran-tracks/ijazah-sanad.png" alt="بطاقة مسار الإجازة والسند"/>
+  </a>
 </div>
 </section><section class="content-section" id="sciences">
 <h2 class="section-title"><span data-ar="">العلوم الشرعية</span><span data-en="">Islamic Sciences</span></h2>
