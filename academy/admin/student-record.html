@@ -11,6 +11,9 @@ textarea{width:100%;min-height:100px;padding:13px 14px;border:1px solid #cddbd5;
 @media(max-width:700px){.record-head{display:block}.record-head .btn{margin-top:12px}.record-grid,.range-row{grid-template-columns:1fr}.record-grid .full{grid-column:auto}.record-actions .btn{width:100%}}
 
 .academic-selections-box{display:grid;gap:12px}.academic-program-card{border:1px solid #dbe7e1;border-radius:15px;padding:14px;background:#f8fbf9}.academic-program-card h3{margin:0 0 7px;color:#174c3c;font-size:17px}.academic-meta{color:var(--muted);font-size:13px;margin-bottom:9px}.academic-items{display:flex;gap:7px;flex-wrap:wrap}.academic-items span{display:inline-flex;padding:6px 10px;border-radius:999px;background:#eef6f2;border:1px solid #d8e8e0;font-size:12px;font-weight:700}.quran-record-section.hide-by-program{display:none!important}
+
+.simple-student-record{padding:18px}.student-record-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.student-record-card{border:1px solid #dbe7e1;border-radius:18px;padding:18px;background:#fff;box-shadow:0 7px 22px rgba(18,72,55,.05)}.student-record-card-head{display:flex;align-items:center;gap:9px;margin-bottom:15px}.student-record-card-head h2{font-size:20px;margin:0}.record-card-icon{font-size:23px}.compact-grid{gap:12px}.record-readonly{padding:11px 13px;border:1px solid #e1ebe6;border-radius:13px;background:#f8fbf9}.record-readonly span{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}.record-readonly strong{font-size:14px;color:#173f33}.subject-teachers-box{display:grid;gap:9px}.subject-teacher-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 13px;border:1px solid #e0ebe5;border-radius:13px;background:#f8fbf9}.subject-teacher-row strong{font-size:14px}.subject-teacher-row span{color:var(--muted);font-size:13px;white-space:nowrap}.student-record-card .academic-program-card{box-shadow:none}.student-record-card .academic-program-card:last-child{margin-bottom:0}
+@media(max-width:850px){.student-record-cards{grid-template-columns:1fr}.simple-student-record{padding:13px}.student-record-card{padding:15px}}
 </style></head><body data-admin-page="student-record">
 <header class="topbar"><div class="container nav"><a class="brand" href="../index.html"><span class="brand-mark">ر</span><span>أكاديمية رشيد<small>سجل الطالب</small></span></a><a class="btn btn-secondary" href="#" data-admin-logout>تسجيل الخروج</a></div></header>
 <main class="page"><div class="container layout">
@@ -18,31 +21,49 @@ textarea{width:100%;min-height:100px;padding:13px 14px;border:1px solid #cddbd5;
 <section>
 <div class="record-head"><div><h1 class="page-title" id="recordTitle">سجل الطالب</h1><div class="record-code" id="recordCode">جارٍ تحميل البيانات...</div></div><a class="btn btn-light" href="students.html">العودة إلى الطلاب</a></div>
 <div id="recordError" class="notice hide"></div>
-<form id="studentRecordForm" class="panel hide">
-<div class="record-section"><h2>البيانات الأساسية</h2><div class="record-grid">
-<div class="field"><label for="sr_full_name">اسم الطالب</label><input id="sr_full_name" required></div>
-<div class="field"><label for="sr_student_code">رقم الطالب</label><input id="sr_student_code" placeholder="RA-S0001"></div>
-<div class="field"><label for="sr_age">العمر</label><input id="sr_age" type="number" min="3" max="100"></div>
-<div class="field"><label for="sr_country_city">الدولة / المدينة</label><input id="sr_country_city"></div>
-<div class="field"><label for="sr_whatsapp">واتساب</label><input id="sr_whatsapp" inputmode="tel"></div>
-<div class="field"><label for="sr_enrollment_date">تاريخ الالتحاق</label><input id="sr_enrollment_date" type="date"></div>
-<div class="field"><label for="sr_student_type">التسجيل لـ</label><input id="sr_student_type" placeholder="الطالب / الابن / الأسرة..."></div>
-<div class="field"><label for="sr_status">الحالة</label><select id="sr_status"><option value="active">نشط</option><option value="paused">موقوف مؤقتًا</option><option value="completed">مكتمل</option><option value="inactive">غير نشط</option></select></div>
-</div></div>
-<div class="record-section"><h2>البيانات التعليمية</h2>
-<div id="academicSelectionsBox" class="academic-selections-box"><div class="muted">جارٍ تحميل البيانات التعليمية...</div></div>
-</div>
-<div class="record-section"><h2>الإدارة والمتابعة</h2><div class="record-grid">
-<div class="field"><label for="sr_preferred_time">الوقت المفضل</label><input id="sr_preferred_time"></div>
-<div class="field"><label for="sr_assigned_teacher_id">المعلم المسؤول</label><select id="sr_assigned_teacher_id"><option value="">لم يُعيَّن بعد</option></select></div>
-<div class="field full"><label for="sr_weekly_goal">هدف الأسبوع</label><textarea id="sr_weekly_goal" placeholder="اكتب هدفًا أسبوعيًا مختصرًا عند الحاجة."></textarea></div>
-</div></div>
-<div class="record-section"><h2>مؤشرات المتابعة</h2><div class="record-grid">
-<div class="field"><label for="sr_overall_progress">نسبة التقدم</label><div class="metric-input"><input id="sr_overall_progress" type="number" min="0" max="100"><span>%</span></div></div>
-<div class="field"><label for="sr_attendance_rate">نسبة الالتزام / الحضور</label><div class="metric-input"><input id="sr_attendance_rate" type="number" min="0" max="100"><span>%</span></div></div>
-<div class="field full"><label for="sr_notes">ملاحظات عامة</label><textarea id="sr_notes"></textarea></div>
-</div></div>
+<form id="studentRecordForm" class="panel hide simple-student-record">
+<div class="student-record-cards">
+  <section class="student-record-card">
+    <div class="student-record-card-head"><span class="record-card-icon">👤</span><h2>البيانات الأساسية</h2></div>
+    <div class="record-grid compact-grid">
+      <div class="field"><label for="sr_full_name">اسم الطالب</label><input id="sr_full_name" required></div>
+      <div class="field"><label for="sr_whatsapp">واتساب</label><input id="sr_whatsapp" inputmode="tel"></div>
+      <div class="field"><label for="sr_status">الحالة</label><select id="sr_status"><option value="active">نشط</option><option value="paused">موقوف مؤقتًا</option><option value="completed">مكتمل</option><option value="inactive">غير نشط</option></select></div>
+      <div class="record-readonly"><span>رقم الطالب</span><strong id="srCodeDisplay">—</strong></div>
+      <div class="record-readonly"><span>العمر</span><strong id="srAgeDisplay">—</strong></div>
+      <div class="record-readonly"><span>الدولة / المدينة</span><strong id="srCountryDisplay">—</strong></div>
+      <div class="record-readonly"><span>تاريخ الالتحاق</span><strong id="srEnrollmentDisplay">—</strong></div>
+      <div class="record-readonly"><span>التسجيل لـ</span><strong id="srTypeDisplay">—</strong></div>
+    </div>
+  </section>
 
+  <section class="student-record-card">
+    <div class="student-record-card-head"><span class="record-card-icon">📚</span><h2>الدراسة</h2></div>
+    <div id="academicSelectionsBox" class="academic-selections-box"><div class="muted">جارٍ تحميل البيانات التعليمية...</div></div>
+  </section>
+
+  <section class="student-record-card">
+    <div class="student-record-card-head"><span class="record-card-icon">👨‍🏫</span><h2>المعلمون</h2></div>
+    <div id="subjectTeachersBox" class="subject-teachers-box"><div class="muted">سيظهر المعلم أمام كل مادة بعد إسناده.</div></div>
+  </section>
+
+  <section class="student-record-card">
+    <div class="student-record-card-head"><span class="record-card-icon">📊</span><h2>المتابعة</h2></div>
+    <div class="record-grid compact-grid">
+      <div class="field full"><label for="sr_weekly_goal">هدف الأسبوع</label><textarea id="sr_weekly_goal" placeholder="اكتب هدفًا أسبوعيًا مختصرًا عند الحاجة."></textarea></div>
+      <div class="field"><label for="sr_attendance_rate">نسبة الالتزام / الحضور</label><div class="metric-input"><input id="sr_attendance_rate" type="number" min="0" max="100"><span>%</span></div></div>
+      <div class="field full"><label for="sr_notes">ملاحظات عامة</label><textarea id="sr_notes"></textarea></div>
+    </div>
+  </section>
+</div>
+
+<!-- حقول محفوظة للتوافق مع البيانات الحالية، ولا تظهر في الواجهة المبسطة. -->
+<div hidden>
+  <input id="sr_student_code"><input id="sr_age" type="number"><input id="sr_country_city">
+  <input id="sr_enrollment_date" type="date"><input id="sr_student_type"><input id="sr_preferred_time">
+  <select id="sr_assigned_teacher_id"><option value="">لم يُعيَّن بعد</option></select>
+  <input id="sr_overall_progress" type="number" min="0" max="100">
+</div>
 <div class="record-section quran-record-section">
   <div class="quran-section-head">
     <div><h2>السجل القرآني</h2><p class="muted">حدّد ما يخص الطالب في التسميع والمراجعة، وأضف نطاقات الحفظ والتلاوة وتصحيح القراءة.</p></div>
