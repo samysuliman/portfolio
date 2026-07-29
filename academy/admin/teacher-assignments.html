@@ -15,11 +15,12 @@
 <main class="page"><div class="container layout">
 <aside class="sidebar"><a href="dashboard.html">نظرة عامة</a><a href="registrations.html">طلبات التسجيل</a><a class="active" href="students.html">الطلاب</a><a href="teachers.html">المعلمون</a><a href="lessons.html">الحصص</a><a href="#" data-demo-alert>التقارير</a></aside>
 <section class="assignment-wrap">
-<div class="assignment-head"><div><h1 class="page-title">إسناد المعلمين</h1><p class="muted">اختر معلمًا واحدًا لكل مادة، ثم اضغط حفظ.</p></div><a class="btn btn-light" id="backToRecord" href="students.html">العودة إلى سجل الطالب</a></div>
+<div class="assignment-head"><div><h1 class="page-title">إسناد المعلمين</h1><p class="muted">الإسناد خاص بهذا الطالب ومرحلته وصفه؛ لذلك يمكن أن يختلف معلم المادة نفسها من طالب إلى آخر.</p></div><a class="btn btn-light" id="backToRecord" href="students.html">العودة إلى سجل الطالب</a></div>
 <div id="assignmentError" class="notice hide"></div>
 <div id="assignmentPanel" class="panel hide">
   <div class="student-summary"><div class="student-avatar" id="assignmentStudentInitial">ط</div><div><h2 id="assignmentStudentName">—</h2><div class="muted" id="assignmentStudentCode">—</div><div class="student-meta"><span>📚 <strong id="assignmentStudentProgram">—</strong></span><span>🎓 <strong id="assignmentStudentGrade">—</strong></span></div></div></div>
   <div class="bulk-assignment"><div><label for="bulkTeacherSelect">إسناد معلم واحد لجميع المواد</label><select id="bulkTeacherSelect"><option value="">اختر المعلم</option></select></div><button class="btn btn-secondary" id="applyTeacherToAll" type="button">تطبيق على الجميع</button></div>
+  <div class="notice" style="margin-bottom:14px">كل صف أدناه يمثل: <strong>الطالب + البرنامج + المرحلة + الصف + المادة</strong>. وهذا يسمح بإسناد معلمين مختلفين لمادة الرياضيات في الابتدائي والمتوسط والثانوي، أو حتى لطلاب مختلفين داخل المرحلة نفسها.</div>
   <div id="assignmentRows" class="assignment-list"><div class="muted">جارٍ تحميل المواد...</div></div>
   <div id="duplicateTeacherWarning" class="duplicate-warning hide"></div>
   <div class="actions"><button class="btn btn-primary" id="saveTeacherAssignments" type="button">حفظ الإسناد</button><a class="btn btn-secondary" id="cancelAssignments" href="students.html">إلغاء</a></div>
