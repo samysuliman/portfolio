@@ -756,6 +756,71 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
 }
 </style>
 
+
+<style id="final-main-study-cards">
+.hub-grid{
+  align-items:stretch !important;
+}
+.hub-card{
+  padding:0 !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+  background:#fff !important;
+  cursor:pointer !important;
+}
+.hub-card .hub-icon{
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  overflow:hidden !important;
+}
+.hub-card .hub-main-card-image{
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:contain !important;
+  object-position:center !important;
+}
+.hub-card .hub-title,
+.hub-card .hub-count,
+.hub-card .hub-open,
+.hub-card .hub-arrow{
+  display:none !important;
+}
+.hub-card::before,
+.hub-card::after{
+  display:none !important;
+  content:none !important;
+}
+@media(min-width:751px){
+  .hub-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:22px !important;
+  }
+  .hub-card{
+    aspect-ratio:648/551 !important;
+    border-radius:20px !important;
+  }
+}
+@media(max-width:750px){
+  .hub-grid{
+    grid-template-columns:1fr !important;
+    gap:18px !important;
+  }
+  .hub-card{
+    width:93% !important;
+    max-width:93% !important;
+    margin:0 auto !important;
+    aspect-ratio:648/551 !important;
+    border-radius:18px !important;
+  }
+}
+</style>
+
 </head>
 <body><header class="topbar">
 <div class="container nav">
@@ -785,7 +850,7 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
 
   <div class="hub-grid">
     <button class="hub-card hub-quran" type="button" data-target="quranHub" aria-expanded="false">
-      <span class="hub-icon"><img src="assets/study-cards/quran-paths-card.png" alt="مسارات القرآن الكريم" class="hub-main-card-image"></span>
+      <span class="hub-icon"><img src="assets/study-cards/quran-paths-card-final.png" alt="مسارات القرآن الكريم" class="hub-main-card-image"></span>
       <span class="hub-title">
         <span data-ar>مسارات القرآن الكريم</span>
         <span data-en>Qur'an Learning Paths</span>
@@ -797,7 +862,7 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
     </button>
 
     <button class="hub-card hub-sciences" type="button" data-target="sciencesHub" aria-expanded="false">
-      <span class="hub-icon"><img src="assets/study-cards/islamic-sciences-card.png" alt="العلوم الشرعية" class="hub-main-card-image"></span>
+      <span class="hub-icon"><img src="assets/study-cards/islamic-sciences-card-final.png" alt="العلوم الشرعية" class="hub-main-card-image"></span>
       <span class="hub-title">
         <span data-ar>العلوم الشرعية</span>
         <span data-en>Islamic Sciences</span>
