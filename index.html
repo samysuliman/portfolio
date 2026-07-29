@@ -745,6 +745,43 @@ body.english .academy-card-arrow{transform:rotate(180deg)}
 .portfolio-folder:not([open]) .folder-cta.ar:after,.portfolio-folder:not([open]) .folder-cta.en:after{content:' ↓'}
 .folder-content{padding:0 24px 26px;border-top:1px solid var(--line);padding-top:24px}
 @media(max-width:620px){.portfolio-folder{margin-top:18px;border-radius:20px}.portfolio-folder>summary{grid-template-columns:58px 1fr;padding:18px 16px;gap:14px}.folder-icon{width:56px;height:56px;border-radius:16px;font-size:24px}.folder-copy strong{font-size:19px}.folder-copy span{font-size:13px;line-height:1.6}.folder-cta{grid-column:1/-1;text-align:center;padding:11px 14px}.folder-content{padding:16px 12px 18px}.portfolio-folder:not([open])+.portfolio-folder{margin-top:14px}}
+
+/* v6.8 — Rasheed Academy moved into Qur’an & Iqra section */
+.quran-academy-card{
+  margin:0 0 30px;
+  display:grid;
+  grid-template-columns:150px 1fr auto;
+  align-items:center;
+  gap:26px;
+  padding:24px 28px;
+  border-radius:24px;
+  background:linear-gradient(135deg,#fffdf8,#f7f0df);
+  color:var(--ink);
+  border:2px solid var(--gold);
+  box-shadow:0 20px 48px rgba(0,0,0,.20);
+  transition:.22s ease;
+}
+.quran-academy-card:hover{transform:translateY(-4px);box-shadow:0 26px 56px rgba(0,0,0,.25)}
+.quran-academy-logo{
+  width:140px;height:140px;object-fit:contain;background:#fff;
+  border-radius:22px;padding:8px;border:1px solid #e7d29c;
+  box-shadow:0 10px 24px rgba(6,45,35,.12);
+}
+.quran-academy-copy h3{margin:0 0 7px;color:var(--green);font-size:29px}
+.quran-academy-copy p{margin:0;color:var(--muted);font-size:15px;line-height:1.9}
+.quran-academy-enter{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:150px;padding:12px 18px;border-radius:12px;
+  background:var(--green);color:#fff;font-weight:900;white-space:nowrap;
+}
+.quran-academy-enter:hover{background:var(--green2);color:var(--gold2)}
+@media(max-width:760px){
+ .quran-academy-card{grid-template-columns:1fr;text-align:center;padding:22px 18px;gap:15px}
+ .quran-academy-logo{width:160px;height:160px;margin:auto}
+ .quran-academy-copy h3{font-size:25px}
+ .quran-academy-enter{width:100%}
+}
+
 </style>
 <link href="assets/favicon.png" rel="icon" type="image/png"/><meta content="سامي سليمان | الملف المهني" property="og:title"/><meta content="معلم تربية إسلامية، مدرب معلمين، مؤلف تربوي، ورئيس قسم سابق بخبرة تزيد على 20 عامًا." property="og:description"/><meta content="assets/portrait-only.jpg" property="og:image"/><meta content="website" property="og:type"/><meta content="سامي سليمان، معلم تربية إسلامية، مشرف تربوي، مدرب معلمين، مؤلف تربوي، تعليم القرآن، الإقراء، مدارس دولية، الرياض" name="keywords"/><meta content="Samy Suliman" name="author"/><meta content="index, follow, max-image-preview:large" name="robots"/><link href="https://samysuliman.github.io/portfolio/" rel="canonical"/><meta content="https://samysuliman.github.io/portfolio/" property="og:url"/><meta content="ar_SA" property="og:locale"/><meta content="summary_large_image" name="twitter:card"/>
 <link rel="manifest" href="manifest.webmanifest">
@@ -806,14 +843,6 @@ body.english .academy-card-arrow{transform:rotate(180deg)}
 </div>
 <div class="hero-portrait-column">
 <div class="portrait-wrap"><img alt="سامي سليمان" class="hero-image" decoding="async" loading="lazy" src="assets/portrait-only.jpg"/></div>
-<a class="academy-card" href="academy/" aria-label="زيارة أكاديمية رشيد">
-<img class="academy-card-logo" src="assets/rasheed-academy-logo.png" alt="شعار أكاديمية رشيد" loading="lazy" decoding="async"/>
-<span class="academy-card-copy">
-<span class="academy-card-title ar">أكاديمية رشيد</span><span class="academy-card-title en">Rasheed Academy</span>
-<span class="academy-card-subtitle ar">للقرآن الكريم والعلوم الشرعية</span><span class="academy-card-subtitle en">Qur’an and Islamic Studies</span>
-</span>
-<span class="academy-card-arrow" aria-hidden="true">‹</span>
-</a>
 </div>
 </div>
 </header>
@@ -937,6 +966,16 @@ body.english .academy-card-arrow{transform:rotate(180deg)}
 <a class="btn quran-all ar" href="https://www.youtube.com/playlist?list=PLXU5zkeQbqQg" rel="noopener noreferrer" target="_blank">مشاهدة جميع الأنشطة ↗</a>
 <a class="btn quran-all en" href="https://www.youtube.com/playlist?list=PLXU5zkeQbqQg" rel="noopener noreferrer" target="_blank">View All Activities ↗</a>
 </div>
+<a class="quran-academy-card" href="academy/" aria-label="زيارة أكاديمية رشيد">
+<img class="quran-academy-logo" src="assets/rasheed-academy-logo.png" alt="شعار أكاديمية رشيد" loading="lazy" decoding="async"/>
+<div class="quran-academy-copy">
+<h3 class="ar">أكاديمية رشيد</h3><h3 class="en">Rasheed Academy</h3>
+<p class="ar">منصة تعليمية للقرآن الكريم وعلومه، تجمع التسجيل والمتابعة والتقييم في تجربة تعليمية منظمة.</p>
+<p class="en">A learning platform for Qur’an and Islamic studies, bringing registration, follow-up, and assessment into one organized experience.</p>
+</div>
+<span class="quran-academy-enter ar">دخول الأكاديمية ←</span>
+<span class="quran-academy-enter en">Enter Academy →</span>
+</a>
 <div class="quran-feature">
 <div class="quran-feature-video video-wrap">
 <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/Fat6Pzksryo" title="حلقة قرآنية مع الطلاب"></iframe>
