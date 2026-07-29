@@ -428,6 +428,49 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
 }
 </style>
 
+
+<style id="mobile-artwork-only-v5">
+@media (max-width:650px){
+  /* تصغير الصورة نفسها فقط على الجوال، دون ضغط محتوى البطاقة أو المسافات */
+  .study-program-visual{
+    height:145px !important;
+    padding:10px 14px !important;
+    background:#f8f7f2 !important;
+  }
+
+  .study-program-image{
+    width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+    object-position:center !important;
+    border-radius:14px;
+  }
+
+  /* إلغاء تصغير النصوص والمسافات من التعديل السابق */
+  .study-program-body{
+    padding:15px 16px 16px !important;
+  }
+
+  .study-program-body h3{
+    font-size:19px !important;
+    line-height:1.45 !important;
+    margin:0 0 6px !important;
+  }
+
+  .study-program-body p{
+    font-size:13px !important;
+    line-height:1.7 !important;
+    margin:0 !important;
+  }
+
+  .study-program-badge{
+    margin-top:11px !important;
+    padding:7px 11px !important;
+    font-size:12px !important;
+  }
+}
+</style>
+
 </head>
 <body><header class="topbar">
 <div class="container nav">
