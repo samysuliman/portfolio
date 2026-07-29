@@ -660,6 +660,60 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
 }
 </style>
 
+
+<style id="hub-image-only-final">
+/* البطاقتان الرئيسيتان: الصورة نفسها هي البطاقة */
+.hub-grid{
+  align-items:start !important;
+  gap:22px !important;
+}
+.hub-card{
+  display:block !important;
+  min-height:0 !important;
+  padding:0 !important;
+  border-radius:20px !important;
+  overflow:hidden !important;
+  background:#fff !important;
+  cursor:pointer !important;
+}
+.hub-card .hub-icon{
+  display:block !important;
+  width:100% !important;
+  height:auto !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+}
+.hub-card .hub-main-card-image{
+  display:block !important;
+  width:100% !important;
+  height:auto !important;
+  object-fit:contain !important;
+}
+.hub-card .hub-title,
+.hub-card .hub-count,
+.hub-card .hub-arrow{
+  display:none !important;
+}
+
+/* الجوال: صورة واحدة تحت الأخرى، بدون المساحة السفلية */
+@media(max-width:750px){
+  .hub-grid{
+    grid-template-columns:1fr !important;
+    gap:18px !important;
+    padding:0 !important;
+  }
+  .hub-card{
+    width:93% !important;
+    max-width:93% !important;
+    margin:0 auto !important;
+    border-radius:18px !important;
+  }
+}
+</style>
+
 </head>
 <body><header class="topbar">
 <div class="container nav">
