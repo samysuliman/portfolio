@@ -517,6 +517,19 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
 
 
 
+<script id="registration-session-reset">
+(function(){
+  const referrer = document.referrer || "";
+  const returningFromRegistration = /\/academy\/register\.html(?:[?#]|$)/i.test(referrer);
+
+  // عند دخول الأكاديمية من خارج صفحة التسجيل نبدأ طلبًا جديدًا.
+  // أما العودة من "تعديل / إضافة اختيارات" فنحتفظ بالاختيارات الحالية.
+  if (!returningFromRegistration) {
+    sessionStorage.removeItem("rasheedStudySelections");
+  }
+})();
+</script>
+
 <script id="phase1-school-chooser">
 (function(){
 const DATA={
