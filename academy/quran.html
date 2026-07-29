@@ -475,6 +475,69 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
 }
 </style>
 
+
+<style id="learning-hubs-final-v2">
+/* الحالة الابتدائية: لا يظهر أي مسار داخلي */
+.hub-panel[hidden]{
+  display:none !important;
+}
+
+/* تكبير البطاقتين الرئيسيتين */
+.hub-grid{
+  max-width:980px !important;
+  gap:22px !important;
+}
+.hub-card{
+  min-height:270px !important;
+  padding:32px 28px !important;
+}
+.hub-icon{
+  width:96px !important;
+  height:96px !important;
+  font-size:50px !important;
+  border-radius:26px !important;
+}
+.hub-title{
+  font-size:34px !important;
+}
+.hub-count{
+  font-size:14px !important;
+  padding:8px 15px !important;
+}
+
+/* تكبير عنوان القسم المفتوح */
+.hub-panel-title{
+  font-size:40px !important;
+  font-weight:900 !important;
+  margin:4px 0 24px !important;
+}
+
+/* الجوال */
+@media(max-width:750px){
+  .hub-grid{
+    grid-template-columns:1fr !important;
+    max-width:100% !important;
+    gap:14px !important;
+  }
+  .hub-card{
+    min-height:205px !important;
+    padding:24px 18px !important;
+  }
+  .hub-icon{
+    width:78px !important;
+    height:78px !important;
+    font-size:40px !important;
+  }
+  .hub-title{
+    font-size:29px !important;
+  }
+  .hub-panel-title{
+    font-size:32px !important;
+    margin-bottom:16px !important;
+  }
+}
+</style>
+
 </head>
 <body><header class="topbar">
 <div class="container nav">
@@ -594,24 +657,31 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
  setLang(localStorage.getItem('rasheedLanguage')||'ar');
 })();
 </script>
+
 <script id="learning-hubs-js">
 (function(){
   const buttons=[...document.querySelectorAll('.hub-card[data-target]')];
+  const panels=buttons.map(btn=>document.getElementById(btn.dataset.target)).filter(Boolean);
+
+  function closeAll(){
+    panels.forEach(panel=>panel.hidden=true);
+    buttons.forEach(btn=>btn.setAttribute('aria-expanded','false'));
+  }
+
+  closeAll();
+
   buttons.forEach(btn=>{
     btn.addEventListener('click',()=>{
       const target=document.getElementById(btn.dataset.target);
-      const willOpen=target.hasAttribute('hidden');
+      if(!target) return;
 
-      buttons.forEach(other=>{
-        const panel=document.getElementById(other.dataset.target);
-        panel.setAttribute('hidden','');
-        other.setAttribute('aria-expanded','false');
-      });
+      const wasOpen=!target.hidden;
+      closeAll();
 
-      if(willOpen){
-        target.removeAttribute('hidden');
+      if(!wasOpen){
+        target.hidden=false;
         btn.setAttribute('aria-expanded','true');
-        setTimeout(()=>target.scrollIntoView({behavior:'smooth',block:'start'}),50);
+        setTimeout(()=>target.scrollIntoView({behavior:'smooth',block:'start'}),60);
       }
     });
   });
