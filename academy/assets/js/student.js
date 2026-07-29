@@ -120,15 +120,36 @@ function startOfWeek(date){
 }
 function endOfWeek(date){ const d=startOfWeek(date); d.setDate(d.getDate()+6); return d; }
 
+let previewStudentsCache = null;
+let previewStudentsPromise = null;
+let studentPortalLoadSeq = 0;
+
 async function loadPreviewStudents(){
-  const res=await studentApi("/rest/v1/students?select=id,full_name,status&order=full_name.asc");
-  if(!res.ok) throw new Error(await res.text());
-  const rows=await res.json();
-  const select=document.getElementById("previewStudentSelect");
-  if(select){
-    select.innerHTML=rows.map(s=>`<option value="${studentEsc(s.id)}">${studentEsc(s.full_name)}</option>`).join("");
-  }
-  return rows;
+  if(Array.isArray(previewStudentsCache)) return previewStudentsCache;
+  if(previewStudentsPromise) return previewStudentsPromise;
+
+  previewStudentsPromise = (async()=>{
+    const res=await studentApi("/rest/v1/students?select=id,full_name,status&order=full_name.asc");
+    if(!res.ok) throw new Error(await res.text());
+    const rows=await res.json();
+    previewStudentsCache=rows;
+
+    const select=document.getElementById("previewStudentSelect");
+    if(select){
+      const keep=String(window.__previewStudentId || select.value || "");
+      select.innerHTML=rows.map(s=>`<option value="${studentEsc(s.id)}">${studentEsc(s.full_name)}</option>`).join("");
+      const validKeep=keep && rows.some(s=>String(s.id)===keep);
+      const wanted=validKeep ? keep : (rows[0] ? String(rows[0].id) : "");
+      if(wanted){
+        select.value=wanted;
+        window.__previewStudentId=wanted;
+      }
+    }
+    return rows;
+  })();
+
+  try{return await previewStudentsPromise;}
+  finally{previewStudentsPromise=null;}
 }
 
 async function getCurrentStudent(){
@@ -137,9 +158,10 @@ async function getCurrentStudent(){
     const students=await loadPreviewStudents();
     if(!students.length) throw new Error("NO_STUDENTS");
     const select=document.getElementById("previewStudentSelect");
-    const wanted=select?.value || String(students[0].id);
-    if(select && !select.value) select.value=wanted;
-    return students.find(s=>String(s.id)===String(wanted)) || students[0];
+    const wanted=String(window.__previewStudentId || select?.value || students[0].id);
+    if(select && select.value!==wanted) select.value=wanted;
+    window.__previewStudentId=wanted;
+    return students.find(s=>String(s.id)===wanted) || students[0];
   }
 
   const accountRes=await studentApi("/rest/v1/student_accounts?select=student_id,students(id,full_name,status)&limit=1");
@@ -149,13 +171,16 @@ async function getCurrentStudent(){
 }
 
 async function loadStudentPortal(){
-  const ok = await requireStudent(); if(!ok) return;
+  const loadSeq=++studentPortalLoadSeq;
+  const ok = await requireStudent(); if(!ok || loadSeq!==studentPortalLoadSeq) return;
 
   const settingsRes=await studentApi("/rest/v1/academy_settings?setting_key=eq.academy_meet_url&select=setting_value&limit=1");
   if(!settingsRes.ok) throw new Error(await settingsRes.text());
   const settingsRows=await settingsRes.json();
+  if(loadSeq!==studentPortalLoadSeq) return;
 
   const student=await getCurrentStudent();
+  if(loadSeq!==studentPortalLoadSeq) return;
   if(!student) throw new Error("NO_STUDENT_PROFILE");
   window.__currentPortalStudentId=student.id;
   loadStudentMaterials(student.id).catch(console.error);
@@ -167,6 +192,7 @@ async function loadStudentPortal(){
   const linksRes = await studentApi(`/rest/v1/lesson_students?student_id=eq.${encodeURIComponent(student.id)}&select=lesson_id`);
   if(!linksRes.ok) throw new Error(await linksRes.text());
   const links = await linksRes.json();
+  if(loadSeq!==studentPortalLoadSeq) return;
   const ids = links.map(x=>x.lesson_id);
 
   if(!ids.length){
@@ -178,6 +204,7 @@ async function loadStudentPortal(){
   const lessonRes = await studentApi(`/rest/v1/lessons?id=in.(${ids.join(",")})&select=id,teacher_id,track_id,lesson_date,start_time,end_time,status&order=lesson_date.asc,start_time.asc`);
   if(!lessonRes.ok) throw new Error(await lessonRes.text());
   const lessons = await lessonRes.json();
+  if(loadSeq!==studentPortalLoadSeq) return;
 
   const teacherIds = [...new Set(lessons.map(x=>x.teacher_id).filter(Boolean))];
   const trackIds = [...new Set(lessons.map(x=>x.track_id).filter(Boolean))];
@@ -191,6 +218,7 @@ async function loadStudentPortal(){
 
   const teachers = new Map((await teachersRes.json()).map(x=>[String(x.id),x.full_name]));
   const tracks = new Map((await tracksRes.json()).map(x=>[String(x.id),x.name_ar]));
+  if(loadSeq!==studentPortalLoadSeq) return;
   lessons.forEach(r=>{
     r.teacher_name = teachers.get(String(r.teacher_id)) || "—";
     r.track_name = tracks.get(String(r.track_id)) || "غير محدد";
@@ -334,7 +362,8 @@ document.addEventListener("DOMContentLoaded",()=>{
       document.getElementById("studentLoadError")?.classList.remove("hide");
     });
     document.getElementById("studentLessonView")?.addEventListener("change",renderStudentLessonList);
-    document.getElementById("previewStudentSelect")?.addEventListener("change",()=>{
+    document.getElementById("previewStudentSelect")?.addEventListener("change",(e)=>{
+      window.__previewStudentId=String(e.currentTarget.value || "");
       loadStudentPortal().catch(err=>{
         console.error(err);
         document.getElementById("studentLoadError")?.classList.remove("hide");
