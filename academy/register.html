@@ -4,19 +4,19 @@
 <body><header class="topbar"><div class="container nav"><a class="brand" href="index.html"><span class="brand-mark">ر</span><span>أكاديمية رشيد<small>للقرآن الكريم والعلوم الشرعية</small></span></a><a class="btn btn-primary" href="login.html">تسجيل الدخول</a></div></header>
 <main class="page"><div class="container reg"><h1 class="page-title">أكمل بيانات التسجيل</h1><p class="muted">بعد اختيار ما تريد دراسته، أكمل بيانات الطالب لإعداد طلب التسجيل.</p>
 <div class="choice-summary"><h2>اختياراتك التعليمية</h2><div id="summary"><div class="empty">لم تصل اختيارات تعليمية إلى صفحة التسجيل بعد. ارجع إلى صفحة الأكاديمية واختر البرنامج والمواد أو المسارات.</div></div><a class="btn" href="index.html">تعديل / إضافة اختيارات</a></div>
-<div class="panel"><form id="regForm"><div class="form-grid">
-<div class="field"><label>الاسم الكامل</label><input required placeholder="اكتب الاسم الكامل"></div><div class="field"><label>العمر</label><input required type="number" min="4" max="100" placeholder="العمر"></div>
-<div class="field"><label>الدولة / المدينة</label><input required placeholder="مثال: الرياض - السعودية"></div><div class="field"><label>رقم واتساب</label><input required inputmode="tel" placeholder="مثال: +9665xxxxxxxx"></div>
-<div class="field"><label>الوقت المفضل</label><select required><option value="">اختر الوقت</option><option>صباحًا</option><option>مساءً</option><option>مرن</option></select></div>
-<div class="field"><label>التسجيل لـ</label><select><option>نفسي</option><option>ابني / ابنتي</option><option>أكثر من طالب</option></select></div></div>
-<div class="field" style="margin-top:18px"><label>ملاحظات أو هدف التعلم</label><textarea rows="4" placeholder="أي ملاحظات تساعدنا على فهم احتياج الطالب..."></textarea></div>
-<div class="actions" style="margin-top:18px"><button class="btn btn-primary" type="submit">متابعة طلب التسجيل</button><a class="btn" href="index.html">العودة للاختيارات</a></div>
-<div class="phase-note">نسخة تجريبية للمرحلة الأولى: لم يتم تعديل Supabase أو لوحة المدير، وزر المتابعة لا يرسل البيانات بعد.</div><div id="msg" class="notice hide" style="margin-top:12px">✓ الواجهة جاهزة للاختبار. سيتم ربط الإرسال بقاعدة البيانات بعد اعتماد هذه المرحلة.</div>
+<div class="panel"><form id="academyRegistration"><input type="text" name="_honey" style="position:absolute;left:-9999px" tabindex="-1" autocomplete="off"><div class="form-grid">
+<div class="field"><label>الاسم الكامل</label><input id="fullName" required placeholder="اكتب الاسم الكامل"></div><div class="field"><label>العمر</label><input id="age" required type="number" min="4" max="100" placeholder="العمر"></div>
+<div class="field"><label>الدولة / المدينة</label><input id="country" required placeholder="مثال: الرياض - السعودية"></div><div class="field"><label>رقم واتساب</label><input id="whatsapp" required inputmode="tel" placeholder="مثال: +9665xxxxxxxx"></div>
+<div class="field"><label>الوقت المفضل</label><select id="time" required><option value="">اختر الوقت</option><option>صباحًا</option><option>مساءً</option><option>مرن</option></select></div>
+<div class="field"><label>التسجيل لـ</label><select id="studentType"><option>نفسي</option><option>ابني / ابنتي</option><option>أكثر من طالب</option></select></div></div>
+<div class="field" style="margin-top:18px"><label>ملاحظات أو هدف التعلم</label><textarea id="notes" rows="4" placeholder="أي ملاحظات تساعدنا على فهم احتياج الطالب..."></textarea></div>
+<div class="actions" style="margin-top:18px"><button class="btn btn-primary" id="registrationSubmit" type="submit">إرسال طلب التسجيل</button><a class="btn" href="index.html">العودة للاختيارات</a></div>
+<div id="registrationSuccess" class="notice hide" style="margin-top:12px">✓ تم إرسال طلب التسجيل بنجاح.</div><div id="registrationError" class="notice hide" style="margin-top:12px">تعذر إرسال الطلب الآن. حاول مرة أخرى.</div>
 </form></div></div></main>
 <script>
 (function(){let arr=[];try{arr=JSON.parse(sessionStorage.getItem('rasheedStudySelections')||'[]')}catch(e){}
 const q=new URLSearchParams(location.search).get('track');if(q)arr.push({key:'quran',title:'القرآن الكريم والعلوم الشرعية',tracks:[q]});
-const box=document.getElementById('summary');if(arr.length)box.innerHTML=arr.map(x=>'<div class="sum-item"><strong>'+x.title+'</strong><span>'+[x.system,x.stage,x.grade,x.branch].filter(Boolean).join(' ← ')+(x.subjects?.length?'<br>'+x.subjects.join(' • '):'')+(x.tracks?.length?'<br>'+x.tracks.join(' • '):'')+'</span></div>').join('');
-document.getElementById('regForm').onsubmit=e=>{e.preventDefault();if(!e.currentTarget.reportValidity())return;document.getElementById('msg').classList.remove('hide')};
+window.rasheedStudySelections=arr; const box=document.getElementById('summary');if(arr.length)box.innerHTML=arr.map(x=>'<div class="sum-item"><strong>'+x.title+'</strong><span>'+[x.system,x.stage,x.grade,x.branch].filter(Boolean).join(' ← ')+(x.subjects?.length?'<br>'+x.subjects.join(' • '):'')+(x.tracks?.length?'<br>'+x.tracks.join(' • '):'')+'</span></div>').join('');
+
 })();
-</script></body></html>
+</script><script src="assets/js/app.js"></script></body></html>
