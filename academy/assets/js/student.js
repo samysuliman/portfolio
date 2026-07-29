@@ -126,15 +126,9 @@ async function loadPreviewStudents(){
   const rows=await res.json();
   const select=document.getElementById("previewStudentSelect");
   if(select){
-    // احتفظ بالطالب الذي اختاره المدير عند إعادة تحميل القائمة.
-    const previousValue = select.value || window.__previewStudentId || "";
+    const keepValue = String(window.__previewStudentId || select.value || "");
     select.innerHTML=rows.map(s=>`<option value="${studentEsc(s.id)}">${studentEsc(s.full_name)}</option>`).join("");
-
-    const stillExists = rows.some(s=>String(s.id)===String(previousValue));
-    if(stillExists) select.value=String(previousValue);
-    else if(rows.length) select.value=String(rows[0].id);
-
-    window.__previewStudentId = select.value || "";
+    if(keepValue && rows.some(s=>String(s.id)===keepValue)) select.value=keepValue;
   }
   return rows;
 }
@@ -145,13 +139,10 @@ async function getCurrentStudent(){
     const students=await loadPreviewStudents();
     if(!students.length) throw new Error("NO_STUDENTS");
     const select=document.getElementById("previewStudentSelect");
-    const wanted=window.__previewStudentId || select?.value || String(students[0].id);
-    if(select){
-      const exists=students.some(s=>String(s.id)===String(wanted));
-      select.value=exists?String(wanted):String(students[0].id);
-      window.__previewStudentId=select.value;
-    }
-    return students.find(s=>String(s.id)===String(select?.value || wanted)) || students[0];
+    const wanted=String(window.__previewStudentId || select?.value || students[0].id);
+    if(select) select.value=wanted;
+    window.__previewStudentId=wanted;
+    return students.find(s=>String(s.id)===wanted) || students[0];
   }
 
   const accountRes=await studentApi("/rest/v1/student_accounts?select=student_id,students(id,full_name,status)&limit=1");
@@ -346,8 +337,8 @@ document.addEventListener("DOMContentLoaded",()=>{
       document.getElementById("studentLoadError")?.classList.remove("hide");
     });
     document.getElementById("studentLessonView")?.addEventListener("change",renderStudentLessonList);
-    document.getElementById("previewStudentSelect")?.addEventListener("change",e=>{
-      window.__previewStudentId=e.currentTarget.value;
+    document.getElementById("previewStudentSelect")?.addEventListener("change",(e)=>{
+      window.__previewStudentId=String(e.currentTarget.value || "");
       loadStudentPortal().catch(err=>{
         console.error(err);
         document.getElementById("studentLoadError")?.classList.remove("hide");
