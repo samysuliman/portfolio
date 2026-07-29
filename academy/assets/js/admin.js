@@ -227,8 +227,7 @@ async function convertRegistrationToStudent(id, button){
       level: r.level || null,
       preferred_time: r.preferred_time || null,
       student_type: r.registration_for || extractStudentType(r.notes) || null,
-      study_selections: normalizeStudySelections(r.study_selections),
-      notes: r.notes || null,
+      notes: [r.notes || "", selectionSummaryText(r.study_selections) ? `الاختيارات التعليمية: ${selectionSummaryText(r.study_selections)}` : ""].filter(Boolean).join("\n"),
       status: "active"
     };
 
@@ -329,6 +328,36 @@ function autoStudentCode(id){
   const n = String(id ?? "").replace(/\D/g, "");
   return `RA-S${(n || "0").padStart(4,"0")}`;
 }
+
+function normalizeRecordSelections(value){
+  if(Array.isArray(value)) return value;
+  if(!value) return [];
+  try{const p=typeof value==="string"?JSON.parse(value):value;return Array.isArray(p)?p:[];}catch{return [];}
+}
+function recordSelectionItems(x){
+  return [...(Array.isArray(x?.subjects)?x.subjects:[]),...(Array.isArray(x?.tracks)?x.tracks:[])].filter(Boolean);
+}
+function hasQuranProgram(rows){
+  return (rows||[]).some(x=>x?.key==="quran" || String(x?.title||"").includes("القرآن"));
+}
+function renderAcademicSelections(rows){
+  const box=document.getElementById("academicSelectionsBox"); if(!box)return;
+  if(!rows.length){box.innerHTML='<div class="muted">لا توجد بيانات تعليمية مرتبطة بطلب التسجيل.</div>';return;}
+  box.innerHTML=rows.map(x=>{
+    const meta=[x.system,x.stage,x.grade,x.branch].filter(Boolean);
+    const items=recordSelectionItems(x);
+    return `<article class="academic-program-card"><h3>${esc(x.title||x.key||"برنامج تعليمي")}</h3>${meta.length?`<div class="academic-meta">${meta.map(esc).join(" ← ")}</div>`:""}${items.length?`<div class="academic-items">${items.map(i=>`<span>${esc(i)}</span>`).join("")}</div>`:""}</article>`;
+  }).join("");
+}
+async function loadStudentRecordSelections(student){
+  if(Array.isArray(student.study_selections) && student.study_selections.length) return student.study_selections;
+  if(!student.registration_id) return [];
+  const res=await api(`/rest/v1/registrations?id=eq.${encodeURIComponent(student.registration_id)}&select=study_selections&limit=1`);
+  if(!res.ok) return [];
+  const rows=await res.json();
+  return normalizeRecordSelections(rows[0]?.study_selections);
+}
+
 async function loadStudentRecord(){
   const ok = await requireAdmin(); if(!ok) return;
   const id = qparam("id");
@@ -348,6 +377,13 @@ async function loadStudentRecord(){
     if(!r) throw new Error("STUDENT_NOT_FOUND");
     window.__currentStudentRecord = r;
 
+    const academicSelections=await loadStudentRecordSelections(r).catch(()=>[]);
+    window.__currentStudentSelections=academicSelections;
+    renderAcademicSelections(academicSelections);
+    const quranSection=document.querySelector(".quran-record-section");
+    const showQuran=hasQuranProgram(academicSelections);
+    quranSection?.classList.toggle("hide-by-program",!showQuran);
+
     const teachers = teacherRes?.ok ? await teacherRes.json() : [];
     const teacherSelect = document.getElementById("sr_assigned_teacher_id");
     teachers.filter(t=>(t.status||"active")==="active").forEach(t=>{
@@ -357,8 +393,7 @@ async function loadStudentRecord(){
     const vals = {
       full_name:r.full_name, student_code:r.student_code || autoStudentCode(r.id), age:r.age,
       country_city:r.country_city, whatsapp:r.whatsapp, enrollment_date:toDateInput(r.enrollment_date || r.created_at),
-      student_type:r.student_type, status:r.status || "active", track:r.track, level:r.level,
-      current_stage:r.current_stage || r.level || "", preferred_time:r.preferred_time,
+      student_type:r.student_type, status:r.status || "active", preferred_time:r.preferred_time,
       assigned_teacher_id:r.assigned_teacher_id || "", weekly_goal:r.weekly_goal,
       overall_progress:r.overall_progress ?? 0, attendance_rate:r.attendance_rate ?? 0, notes:r.notes
     };
@@ -368,7 +403,7 @@ async function loadStudentRecord(){
     const phone=String(r.whatsapp||"").replace(/[^0-9]/g,"");
     const wa=document.getElementById("studentWhatsappLink"); if(wa) wa.href=phone?`https://wa.me/${phone}`:"#";
     form.classList.remove("hide");
-    initQuranRecordUI(r.quran_record);
+    if(showQuran) initQuranRecordUI(r.quran_record);
   }catch(err){
     console.error("Student record load error:",err);
     errorBox.textContent = err.message === "STUDENT_NOT_FOUND" ? "لم يتم العثور على الطالب." : "تعذر تحميل سجل الطالب. تحقق من جدول students وصلاحياته.";
@@ -380,12 +415,14 @@ async function saveStudentRecord(e){
   e.preventDefault();
   const r=window.__currentStudentRecord; if(!r) return;
 
-  // حفظ موحّد: زر "حفظ سجل الطالب" يحفظ السجل القرآني أولًا ثم بقية بيانات الطالب.
-  const quranOk = await saveQuranRecord({silent:true});
-  if(!quranOk){
-    const qStatus=document.getElementById('quranSaveStatus');
-    if(qStatus) qStatus.scrollIntoView({behavior:'smooth',block:'center'});
-    return;
+  // حفظ السجل القرآني فقط إذا كان الطالب مسجلًا في برنامج القرآن.
+  if(hasQuranProgram(window.__currentStudentSelections||[])){
+    const quranOk = await saveQuranRecord({silent:true});
+    if(!quranOk){
+      const qStatus=document.getElementById('quranSaveStatus');
+      if(qStatus) qStatus.scrollIntoView({behavior:'smooth',block:'center'});
+      return;
+    }
   }
   const btn=document.getElementById("saveStudentRecord");
   const statusEl=document.getElementById("recordSaveStatus");
@@ -402,8 +439,7 @@ async function saveStudentRecord(e){
     enrollment_date:nullable(get("sr_enrollment_date")),
     student_type:nullable(get("sr_student_type")),
     status:get("sr_status") || "active",
-    track:nullable(get("sr_track")), level:nullable(get("sr_level")),
-    current_stage:nullable(get("sr_current_stage")), preferred_time:nullable(get("sr_preferred_time")),
+    preferred_time:nullable(get("sr_preferred_time")),
     assigned_teacher_id:get("sr_assigned_teacher_id")?Number(get("sr_assigned_teacher_id")):null,
     weekly_goal:nullable(get("sr_weekly_goal")), overall_progress:numOrZero(get("sr_overall_progress")),
     attendance_rate:numOrZero(get("sr_attendance_rate")), notes:nullable(get("sr_notes")),
@@ -414,7 +450,7 @@ async function saveStudentRecord(e){
     const res=await api(`/rest/v1/students?id=eq.${encodeURIComponent(r.id)}`,{method:"PATCH",headers:{"Prefer":"return=representation"},body:JSON.stringify(payload)});
     if(!res.ok){ const text=await res.text(); if(text.includes("student_code")||text.includes("current_stage")||text.includes("updated_at")) throw new Error("SCHEMA_NOT_READY"); throw new Error(text); }
     const rows=await res.json(); window.__currentStudentRecord=rows[0]||{...r,...payload};
-    statusEl.textContent="تم حفظ سجل الطالب والسجل القرآني بنجاح ✓";
+    statusEl.textContent=hasQuranProgram(window.__currentStudentSelections||[])?"تم حفظ سجل الطالب والسجل القرآني بنجاح ✓":"تم حفظ سجل الطالب بنجاح ✓";
     document.getElementById("recordCode").textContent=`رقم الطالب: ${payload.student_code} • آخر تحديث: ${fmtDate(payload.updated_at)}`;
   }catch(err){
     console.error("Student record save error:",err);
