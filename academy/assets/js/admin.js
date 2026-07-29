@@ -349,6 +349,22 @@ function renderAcademicSelections(rows){
     return `<article class="academic-program-card"><h3>${esc(x.title||x.key||"برنامج تعليمي")}</h3>${meta.length?`<div class="academic-meta">${meta.map(esc).join(" ← ")}</div>`:""}${items.length?`<div class="academic-items">${items.map(i=>`<span>${esc(i)}</span>`).join("")}</div>`:""}</article>`;
   }).join("");
 }
+function renderSubjectTeachers(rows){
+  const box=document.getElementById("subjectTeachersBox"); if(!box)return;
+  const subjects=[];
+  (rows||[]).forEach(row=>recordSelectionItems(row).forEach(item=>{
+    const name=String(item||"").trim();
+    if(name && !subjects.includes(name)) subjects.push(name);
+  }));
+  if(!subjects.length){
+    box.innerHTML='<div class="muted">لا توجد مواد تحتاج إلى إسناد معلمين.</div>';
+    return;
+  }
+  box.innerHTML=subjects.map(subject=>`<div class="subject-teacher-row"><strong>${esc(subject)}</strong><span>غير معيّن</span></div>`).join("");
+}
+function setRecordDisplay(id,value){
+  const el=document.getElementById(id); if(el) el.textContent=value || "—";
+}
 async function loadStudentRecordSelections(student){
   if(Array.isArray(student.study_selections) && student.study_selections.length) return student.study_selections;
   if(!student.registration_id) return [];
@@ -380,6 +396,7 @@ async function loadStudentRecord(){
     const academicSelections=await loadStudentRecordSelections(r).catch(()=>[]);
     window.__currentStudentSelections=academicSelections;
     renderAcademicSelections(academicSelections);
+    renderSubjectTeachers(academicSelections);
     const quranSection=document.querySelector(".quran-record-section");
     const showQuran=hasQuranProgram(academicSelections);
     quranSection?.classList.toggle("hide-by-program",!showQuran);
@@ -398,6 +415,11 @@ async function loadStudentRecord(){
       overall_progress:r.overall_progress ?? 0, attendance_rate:r.attendance_rate ?? 0, notes:r.notes
     };
     Object.entries(vals).forEach(([k,v])=>{ const el=document.getElementById(`sr_${k}`); if(el) el.value=v ?? ""; });
+    setRecordDisplay("srCodeDisplay",vals.student_code);
+    setRecordDisplay("srAgeDisplay",r.age ? String(r.age) : "—");
+    setRecordDisplay("srCountryDisplay",r.country_city || "—");
+    setRecordDisplay("srEnrollmentDisplay",fmtDate(r.enrollment_date || r.created_at));
+    setRecordDisplay("srTypeDisplay",r.student_type || r.registration_for || "—");
     document.getElementById("recordTitle").textContent = `سجل الطالب: ${r.full_name || "—"}`;
     document.getElementById("recordCode").textContent = `رقم الطالب: ${vals.student_code} • تاريخ الإنشاء: ${fmtDate(r.created_at)}`;
     const phone=String(r.whatsapp||"").replace(/[^0-9]/g,"");
