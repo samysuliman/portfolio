@@ -1,96 +1,122 @@
-<!DOCTYPE html><html lang="ar" dir="rtl"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>سجل الطالب | أكاديمية رشيد</title><link rel="stylesheet" href="../assets/css/styles.css?v=9.0.1">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>سجل الطالب | أكاديمية رشيد</title>
+<link rel="stylesheet" href="../assets/css/styles.css?v=9.0.0">
 <style>
-.record-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:20px}.record-code{font-size:14px;color:var(--muted)}
-.record-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.record-grid .full{grid-column:1/-1}
-.record-section{margin-top:20px}.record-section h2{font-size:21px;margin:0 0 14px}.range-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.record-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.record-actions .btn{min-width:150px}
-.metric-input{position:relative}.metric-input input{padding-left:46px}.metric-input span{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:700}
-textarea{width:100%;min-height:100px;padding:13px 14px;border:1px solid #cddbd5;border-radius:13px;background:#fff;font:inherit;resize:vertical}
-.record-view-input{background:transparent!important;border:0!important;padding:0!important;border-radius:0!important;font-weight:800;color:#173d32;box-shadow:none!important;pointer-events:none;height:auto!important;min-height:0!important}.record-view-select{background:transparent!important;border:0!important;padding:0!important;border-radius:0!important;font-weight:800;color:#087a55;pointer-events:none;appearance:none;height:auto!important;min-height:0!important}.view-card{border:1px solid #dbe7e1;border-radius:16px;padding:18px;background:#fff}.view-card .record-grid{display:block;border-top:1px solid #e5eee9}.view-card .field{display:grid;grid-template-columns:150px minmax(0,1fr);align-items:center;gap:18px;padding:14px 4px;border:0;border-bottom:1px solid #e5eee9;background:transparent;border-radius:0}.view-card .field:last-child{border-bottom:0}.view-card .field label{color:var(--muted);font-size:13px;margin:0;font-weight:700}.view-card .field input,.view-card .field select{text-align:right}.preserve-hidden{display:none!important}.followup-card{border:1px solid #dbe7e1;border-radius:16px;padding:18px;background:#fff}.record-actions{justify-content:flex-start}
-@media(max-width:700px){.record-head{display:block}.record-head .btn{margin-top:12px}.record-grid,.range-row{grid-template-columns:1fr}.record-grid .full{grid-column:auto}.record-actions .btn{width:100%}}
-
-.academic-selections-box{display:grid;gap:14px}.academic-program-card{border:0;border-radius:14px;padding:18px;background:#f8fbf9}.academic-program-card h3{margin:0 0 8px;color:#0c684d;font-size:19px}.academic-meta{color:#567068;font-size:14px;margin-bottom:14px;line-height:1.8}.academic-items{display:grid;gap:8px}.academic-items span{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:11px;background:#fff;border:1px solid #d8e8e0;font-size:13px;font-weight:800}.academic-items span::before{content:'✓';display:inline-grid;place-items:center;width:21px;height:21px;border-radius:50%;background:#e5f5ee;color:#087a55;font-size:12px}.quran-record-section.hide-by-program{display:none!important}
-@media(max-width:700px){.view-card .field{grid-template-columns:1fr;gap:5px}.view-card .field input,.view-card .field select{text-align:right}.academic-program-card{padding:14px}}
-</style></head><body data-admin-page="student-record">
+:root{--record-green:#0b6b55;--record-soft:#f4f9f7;--record-border:#d8e5df;--record-text:#18342c}
+.record-shell{max-width:980px;margin-inline:auto}
+.record-head{display:flex;justify-content:space-between;gap:18px;align-items:center;margin-bottom:18px}
+.record-head-main{display:flex;align-items:center;gap:14px;min-width:0}
+.student-avatar{width:58px;height:58px;border-radius:18px;background:var(--record-green);color:#fff;display:grid;place-items:center;font-size:25px;font-weight:800;flex:0 0 auto}
+.record-title-wrap{min-width:0}.record-title-wrap h1{margin:0;font-size:32px;line-height:1.25}.record-code{font-size:14px;color:var(--muted);margin-top:5px}
+.record-card{border:1px solid var(--record-border);border-radius:18px;background:#fff;padding:22px;margin-bottom:16px;box-shadow:0 7px 22px rgba(15,65,51,.045)}
+.profile-hero{display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center;background:linear-gradient(135deg,#ffffff 0%,#f3f9f6 100%)}
+.profile-name{font-size:28px;font-weight:800;color:#102e26;margin:0 0 7px}.profile-meta{display:flex;gap:10px;flex-wrap:wrap;align-items:center;color:var(--muted)}
+.status-pill{display:inline-flex;align-items:center;gap:7px;border-radius:999px;padding:7px 12px;background:#eaf7f1;color:#08704f;font-weight:800}.status-dot{width:8px;height:8px;border-radius:50%;background:currentColor}
+.contact-box{min-width:220px;border-right:1px solid var(--record-border);padding-right:22px}.contact-label{font-size:12px;color:var(--muted);margin-bottom:4px}.contact-value{font-size:18px;font-weight:800;direction:ltr;text-align:right}
+.section-title{display:flex;align-items:center;gap:9px;margin:0 0 16px;font-size:21px;color:var(--record-text)}
+.academic-selections-box{display:grid;gap:13px}.academic-program-card{border:0!important;border-radius:15px!important;padding:18px!important;background:var(--record-soft)!important}.academic-program-card h3{margin:0 0 8px!important;color:var(--record-green)!important;font-size:20px!important}.academic-meta{font-size:14px!important;margin-bottom:14px!important;color:#526a62!important}.academic-items{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px!important}.academic-items span{border:1px solid var(--record-border)!important;background:#fff!important;border-radius:12px!important;padding:10px 12px!important;font-size:13px!important;font-weight:800!important;display:flex!important;align-items:center!important;gap:8px!important}.academic-items span::before{content:'✓';width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:#e5f5ee;color:#08704f;font-size:12px}
+.teacher-table{width:100%;border-collapse:collapse}.teacher-table th,.teacher-table td{padding:13px 12px;text-align:right;border-bottom:1px solid #edf2ef}.teacher-table th{font-size:13px;color:var(--muted);background:#fafcfb}.teacher-table tr:last-child td{border-bottom:0}.unassigned{color:#866b28;background:#fff8df;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800;display:inline-block}
+.follow-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.follow-grid .field{margin:0}.follow-grid textarea{width:100%;min-height:112px;padding:14px;border:1px solid #cddbd5;border-radius:13px;background:#fff;font:inherit;resize:vertical}.follow-grid label{display:block;margin-bottom:7px;font-weight:800}
+.record-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.record-actions .btn{min-width:160px}.quran-record-section.hide-by-program{display:none!important}
+.legacy-fields{display:none!important}
+#studentRecordForm.panel{padding:0;background:transparent;border:0;box-shadow:none}
+.quran-record-section{border:1px solid var(--record-border);border-radius:18px;background:#fff;padding:22px;margin-top:16px}
+@media(max-width:900px){.record-shell{max-width:100%}.profile-hero{grid-template-columns:1fr}.contact-box{border-right:0;border-top:1px solid var(--record-border);padding:16px 0 0;min-width:0}.follow-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.record-head{align-items:flex-start}.record-head-main{align-items:flex-start}.student-avatar{width:48px;height:48px;border-radius:15px}.record-title-wrap h1{font-size:25px}.record-head>.btn{white-space:nowrap}.record-card{padding:17px}.profile-name{font-size:24px}.academic-items{grid-template-columns:1fr!important}.record-actions .btn{width:100%}}
+</style>
+</head>
+<body data-admin-page="student-record">
 <header class="topbar"><div class="container nav"><a class="brand" href="../index.html"><span class="brand-mark">ر</span><span>أكاديمية رشيد<small>سجل الطالب</small></span></a><a class="btn btn-secondary" href="#" data-admin-logout>تسجيل الخروج</a></div></header>
 <main class="page"><div class="container layout">
 <aside class="sidebar"><a href="dashboard.html">نظرة عامة</a><a href="registrations.html">طلبات التسجيل</a><a class="active" href="students.html">الطلاب</a><a href="teachers.html">المعلمون</a><a href="#" data-demo-alert>الحصص</a><a href="#" data-demo-alert>التقارير</a></aside>
-<section>
-<div class="record-head"><div><h1 class="page-title" id="recordTitle">سجل الطالب</h1><div class="record-code" id="recordCode">جارٍ تحميل البيانات...</div></div><a class="btn btn-light" href="students.html">العودة إلى الطلاب</a></div>
+<section class="record-shell">
+<div class="record-head"><div class="record-head-main"><div class="student-avatar" id="studentAvatar">ط</div><div class="record-title-wrap"><h1 id="recordTitle">سجل الطالب</h1><div class="record-code" id="recordCode">جارٍ تحميل البيانات...</div></div></div><a class="btn btn-light" href="students.html">العودة إلى الطلاب</a></div>
 <div id="recordError" class="notice hide"></div>
 <form id="studentRecordForm" class="panel hide">
-<div class="record-section view-card"><h2>👤 البيانات الأساسية</h2><div class="record-grid">
-<div class="field"><label for="sr_full_name">اسم الطالب</label><input id="sr_full_name" class="record-view-input" readonly></div>
-<div class="field"><label for="sr_student_code">رقم الطالب</label><input id="sr_student_code" class="record-view-input" readonly></div>
-<div class="field preserve-hidden"><label for="sr_age">العمر</label><input id="sr_age" type="number" min="3" max="100" readonly></div>
-<div class="field preserve-hidden"><label for="sr_country_city">الدولة / المدينة</label><input id="sr_country_city" readonly></div>
-<div class="field"><label for="sr_whatsapp">واتساب</label><input id="sr_whatsapp" class="record-view-input" inputmode="tel" readonly></div>
-<div class="field preserve-hidden"><label for="sr_enrollment_date">تاريخ الالتحاق</label><input id="sr_enrollment_date" type="date" readonly></div>
-<div class="field preserve-hidden"><label for="sr_student_type">التسجيل لـ</label><input id="sr_student_type" readonly></div>
-<div class="field"><label for="sr_status">الحالة</label><select id="sr_status" class="record-view-select" tabindex="-1"><option value="active">نشط</option><option value="paused">موقوف مؤقتًا</option><option value="completed">مكتمل</option><option value="inactive">غير نشط</option></select></div>
-</div></div>
-<div class="record-section view-card"><h2>📚 الدراسة والمواد</h2>
+
+<section class="record-card profile-hero">
+<div>
+<p class="profile-name" id="profileStudentName">جارٍ تحميل الاسم...</p>
+<div class="profile-meta"><strong id="profileStudentCode">—</strong><span class="status-pill"><span class="status-dot"></span><span id="profileStudentStatus">—</span></span></div>
+</div>
+<div class="contact-box"><div class="contact-label">رقم التواصل</div><div class="contact-value" id="profileStudentWhatsapp">—</div></div>
+</section>
+
+<section class="record-card">
+<h2 class="section-title">📚 الدراسة والمواد</h2>
 <div id="academicSelectionsBox" class="academic-selections-box"><div class="muted">جارٍ تحميل البيانات التعليمية...</div></div>
-</div>
-<div class="preserve-hidden">
-<input id="sr_preferred_time"><select id="sr_assigned_teacher_id"><option value="">لم يُعيَّن بعد</option></select>
-<input id="sr_overall_progress" type="number"><input id="sr_attendance_rate" type="number">
-</div>
-<div class="record-section followup-card"><h2>📊 المتابعة</h2><div class="record-grid">
-<div class="field full"><label for="sr_weekly_goal">هدف الأسبوع</label><textarea id="sr_weekly_goal" placeholder="اكتب هدفًا أسبوعيًا مختصرًا عند الحاجة."></textarea></div>
-<div class="field full"><label for="sr_notes">ملاحظات عامة</label><textarea id="sr_notes" placeholder="اكتب الملاحظات الضرورية فقط."></textarea></div>
-</div></div>
+</section>
 
-<div class="record-section quran-record-section">
-  <div class="quran-section-head">
-    <div><h2>السجل القرآني</h2><p class="muted">حدّد ما يخص الطالب في التسميع والمراجعة، وأضف نطاقات الحفظ والتلاوة وتصحيح القراءة.</p></div>
-    
-  </div>
-  <div id="quranSaveStatus" class="muted" style="margin-bottom:12px"></div>
-  <div class="quran-record-grid">
-    <article class="quran-card">
-      <h3>التسميع</h3>
-      <p class="muted">يمكن تحديد أكثر من سورة.</p>
-      <div id="tasmeeSelected" class="quran-selected-box"></div><button type="button" class="quran-add-surahs" data-toggle-picker="tasmee">+ إضافة سور</button><input class="surah-search" id="tasmeeSearch" placeholder="ابحث عن سورة..." autocomplete="off">
-      <details class="surah-picker"><summary>سور التسميع <span id="tasmeeCount" class="selection-count">0 محدد</span></summary><div id="tasmeeSurahs" class="surah-grid"></div></details>
-    </article>
-    <article class="quran-card">
-      <h3>المراجعة</h3>
-      <p class="muted">يمكن تحديد أكثر من سورة.</p>
-      <div id="reviewSelected" class="quran-selected-box"></div><button type="button" class="quran-add-surahs" data-toggle-picker="review">+ إضافة سور</button><input class="surah-search" id="reviewSearch" placeholder="ابحث عن سورة..." autocomplete="off">
-      <details class="surah-picker"><summary>سور المراجعة <span id="reviewCount" class="selection-count">0 محدد</span></summary><div id="reviewSurahs" class="surah-grid"></div></details>
-    </article>
-    <article class="quran-card">
-      <h3>الحفظ الجديد</h3>
-      <div class="quran-range-form">
-        <div class="quran-multi-builder">
-<div id="memorizationSelected" class="quran-selected-box"></div><button type="button" class="quran-add-surahs" data-toggle-picker="memorization">+ إضافة سور</button><input class="surah-search" id="memorizationSearch" placeholder="ابحث عن سورة..." autocomplete="off">
-<details class="surah-picker"><summary>اختر سور الحفظ الجديد <span id="memorizationCount" class="selection-count">0 محدد</span></summary><div id="memorizationSurahs" class="surah-grid"></div></details>
-<div id="memorizationDrafts" class="quran-range-drafts"></div>
-</div>
-      </div>
-      <div id="memorizationList" class="quran-entry-list"></div>
-    </article>
-    <article class="quran-card">
-      <h3>التلاوة وتصحيح القراءة</h3>
-      <div class="quran-range-form">
-        <div class="quran-multi-builder">
-<div id="recitationSelected" class="quran-selected-box"></div><button type="button" class="quran-add-surahs" data-toggle-picker="recitation">+ إضافة سور</button><input class="surah-search" id="recitationSearch" placeholder="ابحث عن سورة..." autocomplete="off">
-<details class="surah-picker"><summary>اختر سور التلاوة وتصحيح القراءة <span id="recitationCount" class="selection-count">0 محدد</span></summary><div id="recitationSurahs" class="surah-grid"></div></details>
-<div id="recitationDrafts" class="quran-range-drafts"></div>
-</div>
-      </div>
-      <div id="recitationList" class="quran-entry-list"></div>
-    </article>
-  </div>
-</div>
+<section class="record-card">
+<h2 class="section-title">👨‍🏫 المعلمون</h2>
+<table class="teacher-table"><thead><tr><th>المادة</th><th>المعلم</th></tr></thead><tbody id="subjectTeachersRows"><tr><td colspan="2" class="muted">جارٍ تحميل المواد...</td></tr></tbody></table>
+</section>
 
+<section class="record-card">
+<h2 class="section-title">📝 المتابعة</h2>
+<div class="follow-grid">
+<div class="field"><label for="sr_weekly_goal">هدف الأسبوع</label><textarea id="sr_weekly_goal" placeholder="اكتب هدفًا أسبوعيًا مختصرًا عند الحاجة."></textarea></div>
+<div class="field"><label for="sr_notes">ملاحظات عامة</label><textarea id="sr_notes" placeholder="اكتب الملاحظات الضرورية فقط."></textarea></div>
+</div>
 <div class="record-actions"><button class="btn btn-primary" id="saveStudentRecord" type="submit">حفظ المتابعة</button><a class="btn btn-secondary" id="studentWhatsappLink" href="#" target="_blank" rel="noopener">التواصل عبر واتساب</a></div>
 <p class="muted" id="recordSaveStatus" style="margin:12px 0 0"></p>
+</section>
+
+<!-- الحقول الأصلية محفوظة حتى يبقى الربط والحفظ كما هو دون تعديل admin.js -->
+<div class="legacy-fields" aria-hidden="true">
+<input id="sr_full_name" required><input id="sr_student_code"><input id="sr_age" type="number"><input id="sr_country_city"><input id="sr_whatsapp"><input id="sr_enrollment_date" type="date"><input id="sr_student_type">
+<select id="sr_status"><option value="active">نشط</option><option value="paused">موقوف مؤقتًا</option><option value="completed">مكتمل</option><option value="inactive">غير نشط</option></select>
+<input id="sr_preferred_time"><select id="sr_assigned_teacher_id"><option value="">لم يُعيَّن بعد</option></select><input id="sr_overall_progress" type="number"><input id="sr_attendance_rate" type="number">
+</div>
+
+<div class="record-section quran-record-section">
+  <div class="quran-section-head"><div><h2>السجل القرآني</h2><p class="muted">حدّد ما يخص الطالب في التسميع والمراجعة، وأضف نطاقات الحفظ والتلاوة وتصحيح القراءة.</p></div></div>
+  <div id="quranSaveStatus" class="muted" style="margin-bottom:12px"></div>
+  <div class="quran-record-grid">
+    <article class="quran-card"><h3>التسميع</h3><p class="muted">يمكن تحديد أكثر من سورة.</p><div id="tasmeeSelected" class="quran-selected-box"></div><button type="button" class="quran-add-surahs" data-toggle-picker="tasmee">+ إضافة سور</button><input class="surah-search" id="tasmeeSearch" placeholder="ابحث عن سورة..." autocomplete="off"><details class="surah-picker"><summary>سور التسميع <span id="tasmeeCount" class="selection-count">0 محدد</span></summary><div id="tasmeeSurahs" class="surah-grid"></div></details></article>
+    <article class="quran-card"><h3>المراجعة</h3><p class="muted">يمكن تحديد أكثر من سورة.</p><div id="reviewSelected" class="quran-selected-box"></div><button type="button" class="quran-add-surahs" data-toggle-picker="review">+ إضافة سور</button><input class="surah-search" id="reviewSearch" placeholder="ابحث عن سورة..." autocomplete="off"><details class="surah-picker"><summary>سور المراجعة <span id="reviewCount" class="selection-count">0 محدد</span></summary><div id="reviewSurahs" class="surah-grid"></div></details></article>
+    <article class="quran-card"><h3>الحفظ الجديد</h3><div class="quran-range-form"><div class="quran-multi-builder"><div id="memorizationSelected" class="quran-selected-box"></div><button type="button" class="quran-add-surahs" data-toggle-picker="memorization">+ إضافة سور</button><input class="surah-search" id="memorizationSearch" placeholder="ابحث عن سورة..." autocomplete="off"><details class="surah-picker"><summary>اختر سور الحفظ الجديد <span id="memorizationCount" class="selection-count">0 محدد</span></summary><div id="memorizationSurahs" class="surah-grid"></div></details><div id="memorizationDrafts" class="quran-range-drafts"></div></div></div><div id="memorizationList" class="quran-entry-list"></div></article>
+    <article class="quran-card"><h3>التلاوة وتصحيح القراءة</h3><div class="quran-range-form"><div class="quran-multi-builder"><div id="recitationSelected" class="quran-selected-box"></div><button type="button" class="quran-add-surahs" data-toggle-picker="recitation">+ إضافة سور</button><input class="surah-search" id="recitationSearch" placeholder="ابحث عن سورة..." autocomplete="off"><details class="surah-picker"><summary>اختر سور التلاوة وتصحيح القراءة <span id="recitationCount" class="selection-count">0 محدد</span></summary><div id="recitationSurahs" class="surah-grid"></div></details><div id="recitationDrafts" class="quran-range-drafts"></div></div></div><div id="recitationList" class="quran-entry-list"></div></article>
+  </div>
+</div>
 </form>
 </section></div></main>
 <script src="../assets/js/admin.js?v=9.1.0"></script>
-<script>document.addEventListener('click',e=>{const a=e.target.closest('[data-demo-alert]');if(a){e.preventDefault();alert('سجل الحصص والتقييم التفصيلي هو المرحلة التالية بعد تفعيل سجل الطالب الأساسي.');}});</script>
+<script>
+(function(){
+  const statusLabels={active:'نشط',paused:'موقوف مؤقتًا',completed:'مكتمل',inactive:'غير نشط'};
+  const byId=id=>document.getElementById(id);
+  function subjects(){
+    return [...document.querySelectorAll('#academicSelectionsBox .academic-items span')]
+      .map(el=>el.textContent.trim()).filter(Boolean);
+  }
+  function syncView(){
+    const name=byId('sr_full_name')?.value?.trim()||'—';
+    const code=byId('sr_student_code')?.value?.trim()||'—';
+    const phone=byId('sr_whatsapp')?.value?.trim()||'—';
+    const status=byId('sr_status')?.value||'';
+    byId('profileStudentName').textContent=name;
+    byId('profileStudentCode').textContent=code;
+    byId('profileStudentWhatsapp').textContent=phone;
+    byId('profileStudentStatus').textContent=statusLabels[status]||'—';
+    byId('studentAvatar').textContent=(name==='—'?'ط':name.charAt(0));
+    const list=subjects();
+    const rows=byId('subjectTeachersRows');
+    if(rows){
+      rows.innerHTML=list.length?list.map(subject=>`<tr><td>${escapeHtml(subject)}</td><td><span class="unassigned">غير معيّن</span></td></tr>`).join(''):'<tr><td colspan="2" class="muted">لا توجد مواد مدرسية مسجلة.</td></tr>';
+    }
+  }
+  function escapeHtml(value){const d=document.createElement('div');d.textContent=value;return d.innerHTML;}
+  document.addEventListener('input',syncView);
+  document.addEventListener('change',syncView);
+  const academicBox=byId('academicSelectionsBox');
+  if(academicBox)new MutationObserver(syncView).observe(academicBox,{childList:true,subtree:true,characterData:true});
+  let tries=0;const timer=setInterval(()=>{syncView();if(++tries>50)clearInterval(timer)},200);
+  document.addEventListener('click',e=>{const a=e.target.closest('[data-demo-alert]');if(a){e.preventDefault();alert('سجل الحصص والتقييم التفصيلي هو المرحلة التالية بعد تفعيل سجل الطالب الأساسي.');}});
+})();
+</script>
 </body></html>
