@@ -332,126 +332,88 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
 
 
 
-<style id="mobile-horizontal-cards-v8">
+<style id="mobile-banner-cards-v9">
 @media(max-width:650px){
-  /* البطاقة نفسها أفقية على الجوال */
+  /* البطاقة رأسية: الصورة المستطيلة بعرض البطاقة، ثم النص والسهم أسفلها */
   .study-program-card{
-    display:grid !important;
-    grid-template-columns:38% 62% !important;
-    grid-template-rows:auto !important;
-    min-height:150px !important;
+    display:block !important;
+    min-height:0 !important;
     border-radius:20px !important;
     overflow:hidden !important;
-    align-items:stretch !important;
   }
 
-  /* الصورة كاملة بلا قص */
   .study-program-visual{
-    grid-column:1 !important;
-    grid-row:1 !important;
     width:100% !important;
-    height:100% !important;
-    min-height:150px !important;
-    padding:10px !important;
-    overflow:hidden !important;
+    height:auto !important;
+    min-height:0 !important;
+    padding:10px 12px 0 !important;
+    overflow:visible !important;
     display:flex !important;
-    align-items:center !important;
     justify-content:center !important;
+    align-items:center !important;
     background:#f8f7f2 !important;
   }
 
+  /* الصورة كاملة، كبيرة، وبعرض شبه كامل للبطاقة */
   .study-program-image{
     width:100% !important;
     height:auto !important;
-    max-height:138px !important;
+    max-height:none !important;
     object-fit:contain !important;
     object-position:center !important;
-    margin:auto !important;
-    border-radius:12px !important;
+    margin:0 auto !important;
+    border-radius:14px !important;
   }
 
-  /* النص في الجانب الآخر */
   .study-program-body{
-    grid-column:2 !important;
-    grid-row:1 !important;
-    padding:16px 14px 48px !important;
-    text-align:right !important;
-    display:flex !important;
-    flex-direction:column !important;
-    justify-content:center !important;
-  }
-
-  body.english .study-program-body{
-    text-align:left !important;
+    padding:14px 16px 62px !important;
+    text-align:center !important;
   }
 
   .study-program-body h3{
-    font-size:17px !important;
+    font-size:19px !important;
     line-height:1.45 !important;
-    margin:0 0 5px !important;
+    margin:0 0 6px !important;
   }
 
   .study-program-body p{
-    font-size:12px !important;
-    line-height:1.55 !important;
+    font-size:13px !important;
+    line-height:1.65 !important;
     min-height:0 !important;
     margin:0 !important;
   }
 
   .study-program-badge{
-    align-self:flex-start !important;
-    margin-top:8px !important;
-    padding:6px 10px !important;
-    font-size:11px !important;
+    margin-top:10px !important;
+    padding:7px 12px !important;
+    font-size:12px !important;
   }
 
-  body.english .study-program-badge{
-    align-self:flex-start !important;
-  }
-
-  /* سهم دخول مستطيل وواضح */
+  /* السهم المستطيل أسفل النص */
   .study-program-arrow{
-    left:14px !important;
+    left:16px !important;
     right:auto !important;
-    bottom:12px !important;
-    width:62px !important;
-    height:36px !important;
-    border-radius:11px !important;
+    bottom:13px !important;
+    width:76px !important;
+    height:40px !important;
+    border-radius:12px !important;
     display:grid !important;
     place-items:center !important;
     background:var(--green) !important;
     color:#fff !important;
     border:1px solid rgba(212,163,61,.55) !important;
-    box-shadow:0 5px 12px rgba(7,61,50,.16) !important;
-    font-size:22px !important;
+    box-shadow:0 5px 12px rgba(7,61,50,.15) !important;
+    font-size:23px !important;
     font-weight:900 !important;
-    z-index:3 !important;
   }
 
   body.english .study-program-arrow{
     left:auto !important;
-    right:14px !important;
+    right:16px !important;
     transform:scaleX(-1);
   }
 
-  .study-programs-grid{
-    gap:12px !important;
-  }
-}
-
-@media(max-width:390px){
-  .study-program-card{
-    grid-template-columns:36% 64% !important;
-  }
-  .study-program-body{
-    padding:13px 11px 46px !important;
-  }
-  .study-program-body h3{
-    font-size:15.5px !important;
-  }
-  .study-program-body p{
-    font-size:11.5px !important;
-  }
+  .study-programs-grid{gap:14px !important;}
 }
 </style>
 
