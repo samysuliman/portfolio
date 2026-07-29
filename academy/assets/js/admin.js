@@ -842,11 +842,22 @@ function updateDuplicateTeacherWarning(){
   box.classList.remove("hide");
 }
 
+function showAssignmentToast(message,type="success"){
+  const toast=document.getElementById("assignmentToast");
+  if(!toast)return;
+  toast.textContent=message;
+  toast.classList.toggle("error",type==="error");
+  toast.classList.add("show");
+  clearTimeout(window.__assignmentToastTimer);
+  window.__assignmentToastTimer=setTimeout(()=>toast.classList.remove("show"),2600);
+}
+
 function applyTeacherToAllSubjects(){
   const teacherId=document.getElementById("bulkTeacherSelect")?.value||"";
-  if(!teacherId){document.getElementById("assignmentSaveStatus").textContent="اختر معلمًا أولًا لتطبيقه على جميع المواد.";return;}
+  if(!teacherId){document.getElementById("assignmentSaveStatus").textContent="اختر معلمًا أولًا لتطبيقه على جميع المواد.";showAssignmentToast("اختر معلمًا أولًا.","error");return;}
   document.querySelectorAll(".assignment-row select").forEach(select=>{select.value=teacherId;});
   document.getElementById("assignmentSaveStatus").textContent="تم تطبيق المعلم على جميع المواد. اضغط حفظ الإسناد لتثبيت التغييرات.";
+  showAssignmentToast("تم تطبيق المعلم على جميع المواد.");
   updateDuplicateTeacherWarning();
 }
 
@@ -875,10 +886,12 @@ async function saveTeacherAssignments(){
       if(!del.ok) throw new Error(await del.text());
     }
     status.textContent="تم حفظ إسناد المعلمين بنجاح ✓";
+    showAssignmentToast("تم حفظ الإسناد بنجاح.");
     state.assignments=await fetchStudentAssignments(state.student.id);
   }catch(err){
     console.error("Teacher assignments save error:",err);
     status.textContent="تعذر حفظ الإسناد. تحقق من تنفيذ ملف SQL ومن صلاحيات الجدول.";
+    showAssignmentToast("تعذر حفظ الإسناد.","error");
   }finally{btn.disabled=false;btn.textContent="حفظ الإسناد";}
 }
 
