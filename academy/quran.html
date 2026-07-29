@@ -550,6 +550,46 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
 }
 </style>
 
+
+<style id="science-mobile-layout-final">
+@media(max-width:750px){
+  /* بطاقة واحدة في الصف بعرض مناسب للجوال */
+  .science-art-grid{
+    grid-template-columns:1fr !important;
+    gap:14px !important;
+    padding:0 !important;
+  }
+
+  .science-art-card{
+    width:100% !important;
+    max-width:100% !important;
+    margin:0 auto !important;
+    border-radius:16px !important;
+    overflow:hidden !important;
+    background:#fff !important;
+  }
+
+  /* إظهار تصميم الكمبيوتر كاملاً مصغراً، بدون قص */
+  .science-art-card img{
+    display:block !important;
+    width:100% !important;
+    max-width:100% !important;
+    height:auto !important;
+    object-fit:contain !important;
+    object-position:center !important;
+  }
+
+  #sciencesHub{
+    padding:12px 8px 18px !important;
+  }
+
+  #sciencesHub .hub-panel-title{
+    font-size:30px !important;
+    margin:2px 0 16px !important;
+  }
+}
+</style>
+
 </head>
 <body><header class="topbar">
 <div class="container nav">
