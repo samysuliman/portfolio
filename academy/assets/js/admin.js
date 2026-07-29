@@ -68,6 +68,21 @@ function fmtDate(v){
 }
 
 
+
+function normalizeStudySelections(value){
+  if(Array.isArray(value)) return value;
+  if(!value) return [];
+  try{ const parsed = typeof value === "string" ? JSON.parse(value) : value; return Array.isArray(parsed) ? parsed : []; }catch{return [];}
+}
+function selectionSummaryText(value){
+  const rows = normalizeStudySelections(value); if(!rows.length) return "";
+  return rows.map(x=>{ const head=x.title||x.key||"برنامج"; const meta=[x.system,x.stage,x.grade,x.branch].filter(Boolean).join(" ← "); const items=[...(Array.isArray(x.subjects)?x.subjects:[]),...(Array.isArray(x.tracks)?x.tracks:[])].filter(Boolean).join("، "); return [head,meta,items].filter(Boolean).join(" — "); }).join(" | ");
+}
+function selectionDetailsHtml(value){
+  const rows=normalizeStudySelections(value); if(!rows.length) return '<div class="empty">لا توجد اختيارات تعليمية محفوظة لهذا الطلب.</div>';
+  return rows.map(x=>{ const meta=[x.system,x.stage,x.grade,x.branch].filter(Boolean); const items=[...(Array.isArray(x.subjects)?x.subjects:[]),...(Array.isArray(x.tracks)?x.tracks:[])]; return `<div style="padding:12px;border:1px solid var(--line);border-radius:12px;margin-bottom:10px"><strong style="display:block;margin-bottom:6px">${esc(x.title||x.key||"برنامج تعليمي")}</strong>${meta.length?`<div class="muted">${meta.map(esc).join(" ← ")}</div>`:""}${items.length?`<div style="margin-top:6px">${items.map(esc).join(" • ")}</div>`:""}</div>`; }).join("");
+}
+
 async function loadConvertedRegistrationIds(){
   const res = await api("/rest/v1/students?select=registration_id&registration_id=not.is.null");
   if(!res.ok) throw new Error(await res.text());
@@ -102,7 +117,7 @@ function renderRegistrations(rows){
   const q = (document.getElementById("searchBox")?.value || "").trim().toLowerCase();
   const sf = document.getElementById("statusFilter")?.value || "";
   const filtered = rows.filter(r => {
-    const hay = [r.full_name,r.whatsapp,r.country_city,r.track,r.level,r.notes].join(" ").toLowerCase();
+    const hay = [r.full_name,r.whatsapp,r.country_city,r.track,r.level,r.registration_for,r.notes,selectionSummaryText(r.study_selections)].join(" ").toLowerCase();
     return (!q || hay.includes(q)) && (!sf || (r.status || "new") === sf);
   });
   if(!filtered.length){
@@ -117,8 +132,8 @@ function renderRegistrations(rows){
       <td>${esc(r.age)}</td>
       <td>${esc(r.country_city)}</td>
       <td><a href="${wa}" target="_blank" rel="noopener">${esc(r.whatsapp)}</a></td>
-      <td>${esc(r.track)}</td>
-      <td>${esc(r.level)}</td>
+      <td>${esc(selectionSummaryText(r.study_selections) || r.track || "—")}</td>
+      <td>${esc(r.registration_for || "—")}</td>
       <td>${esc(r.preferred_time)}</td>
       <td><select class="status-select" data-id="${esc(r.id)}">
         ${["new","reviewed","contacted","accepted","deferred","rejected"].map(s=>`<option value="${s}" ${(r.status||"new")===s?"selected":""}>${statusLabel(s)}</option>`).join("")}
@@ -158,8 +173,9 @@ function showDetails(id){
     <div class="details-grid">
       <div><b>الاسم</b><span>${esc(r.full_name)}</span></div><div><b>العمر</b><span>${esc(r.age)}</span></div>
       <div><b>الدولة / المدينة</b><span>${esc(r.country_city)}</span></div><div><b>واتساب</b><span>${esc(r.whatsapp)}</span></div>
-      <div><b>المسار</b><span>${esc(r.track)}</span></div><div><b>المستوى</b><span>${esc(r.level)}</span></div>
-      <div><b>الوقت المفضل</b><span>${esc(r.preferred_time)}</span></div><div><b>التاريخ</b><span>${esc(fmtDate(r.created_at))}</span></div>
+      <div><b>التسجيل لـ</b><span>${esc(r.registration_for || "—")}</span></div><div><b>الوقت المفضل</b><span>${esc(r.preferred_time)}</span></div>
+      <div style="grid-column:1/-1"><b>الاختيارات التعليمية</b><div style="margin-top:8px">${selectionDetailsHtml(r.study_selections)}</div></div>
+      <div><b>التاريخ</b><span>${esc(fmtDate(r.created_at))}</span></div>
       <div style="grid-column:1/-1"><b>الملاحظات</b><span style="white-space:pre-wrap">${esc(r.notes || "لا توجد ملاحظات")}</span></div>
     </div>`;
   dlg?.showModal();
@@ -210,8 +226,8 @@ async function convertRegistrationToStudent(id, button){
       track: r.track || null,
       level: r.level || null,
       preferred_time: r.preferred_time || null,
-      student_type: extractStudentType(r.notes) || null,
-      notes: r.notes || null,
+      student_type: r.registration_for || extractStudentType(r.notes) || null,
+      notes: [r.notes || "", selectionSummaryText(r.study_selections) ? `الاختيارات التعليمية: ${selectionSummaryText(r.study_selections)}` : ""].filter(Boolean).join("\n"),
       status: "active"
     };
 
@@ -275,8 +291,8 @@ function renderStudents(rows){
       <td>${esc(r.age)}</td>
       <td>${esc(r.country_city)}</td>
       <td><a href="${wa}" target="_blank" rel="noopener">${esc(r.whatsapp)}</a></td>
-      <td>${esc(r.track)}</td>
-      <td>${esc(r.level)}</td>
+      <td>${esc(selectionSummaryText(r.study_selections) || r.track || "—")}</td>
+      <td>${esc(r.registration_for || "—")}</td>
       <td>${esc(r.preferred_time)}</td>
       <td>${esc(r.student_type || "—")}</td>
       <td><select class="student-status-select" data-id="${esc(r.id)}">
