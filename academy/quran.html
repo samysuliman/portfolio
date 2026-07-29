@@ -264,36 +264,25 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
   .book-cover{height:225px!important}
 }
 </style>
-<style id="study-programs-v1">
-.study-programs{padding:26px 28px 30px;background:linear-gradient(180deg,#fff,#fbfcfa);border-top:1px solid #edf0ec;border-bottom:1px solid #edf0ec}
-.study-programs-head{text-align:center;max-width:820px;margin:0 auto 22px}
-.study-programs-head .eyebrow{display:inline-flex;padding:7px 12px;border-radius:999px;background:#edf6f2;color:#0a5747;font-weight:900;font-size:12px;border:1px solid #d8e9e2}
-.study-programs-head h2{font-size:30px;color:var(--green);margin:10px 0 7px}
-.study-programs-head p{margin:0;color:var(--muted);line-height:1.85}
-.study-programs-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
-.study-program-card{position:relative;min-height:248px;border:1px solid #e4e8e4;border-radius:22px;background:#fff;overflow:hidden;box-shadow:0 10px 26px rgba(7,61,50,.08);cursor:pointer;transition:.2s}
-.study-program-card:hover{transform:translateY(-4px);box-shadow:0 18px 34px rgba(7,61,50,.13);border-color:#c9ddd5}
-.study-program-visual{height:112px;display:grid;place-items:center}
-.study-program-icon{font-size:52px}
-.study-program-card.quran .study-program-visual{background:linear-gradient(135deg,#e8f3ee,#dfece6)}
-.study-program-card.saudi .study-program-visual{background:linear-gradient(135deg,#edf7f0,#d9ebdf)}
-.study-program-card.global .study-program-visual{background:linear-gradient(135deg,#eef4fb,#dde8f7)}
-.study-program-card.egypt .study-program-visual{background:linear-gradient(135deg,#fbf0e8,#f1e0d4)}
-.study-program-body{padding:15px 16px 16px;text-align:center}
-.study-program-body h3{margin:0 0 6px;color:var(--green);font-size:19px}
-.study-program-body p{margin:0;color:var(--muted);font-size:13px;line-height:1.7;min-height:44px}
-.study-program-badge{display:inline-flex;margin-top:11px;padding:7px 11px;border-radius:999px;background:#f6f8f6;border:1px solid #e4eae6;color:#38554d;font-size:12px;font-weight:900}
-.study-program-arrow{position:absolute;left:12px;bottom:12px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#f5f8f6;color:var(--green);font-weight:900}
-.study-program-card.is-active{border-color:#9fc7b9;box-shadow:0 18px 36px rgba(7,61,50,.14)}
-.study-program-note{display:none;margin-top:16px;padding:14px 16px;border:1px solid #e1e9e5;border-radius:16px;background:#fff;color:#51645e;line-height:1.8;text-align:center}
-@media(max-width:1080px){.study-programs-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:650px){.study-programs{padding:22px 12px 24px}.study-programs-head h2{font-size:25px}.study-programs-grid{grid-template-columns:1fr}.study-program-card{min-height:220px}}
-</style>
-<style id="cards-only-page-v1">
-.cards-only-main{max-width:1180px;margin:0 auto;padding:34px 18px 46px}
-.cards-only-main .study-programs{border:0;border-radius:28px;box-shadow:0 16px 42px rgba(7,61,50,.08)}
-.study-program-card{text-decoration:none;color:inherit}
-@media(max-width:650px){.cards-only-main{padding:20px 10px 34px}}
+<style id="quran-page-v1">
+.quran-page{max-width:1180px;margin:0 auto;padding:28px 18px 48px}
+.quran-page-head{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:20px 22px;margin-bottom:18px;background:#fff;border:1px solid #e5ebe7;
+  border-radius:22px;box-shadow:0 12px 32px rgba(7,61,50,.07)
+}
+.quran-page-head h1{margin:0;color:#063d32;font-size:28px}
+.quran-page-head p{margin:6px 0 0;color:#687872}
+.back-academy{
+  display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;
+  background:#f3f8f5;color:#064c3d;text-decoration:none;font-weight:900;border:1px solid #dbe9e3
+}
+.quran-page .content-section{margin-bottom:18px}
+@media(max-width:650px){
+  .quran-page{padding:18px 10px 36px}
+  .quran-page-head{align-items:flex-start;flex-direction:column}
+  .quran-page-head h1{font-size:23px}
+}
 </style></head>
 <body><header class="topbar">
 <div class="container nav">
@@ -313,52 +302,31 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
 <a class="btn btn-gold" href="login.html"><span data-ar="">تسجيل الدخول</span><span data-en="">Sign In</span></a>
 </div>
 </div>
-</header><main class="cards-only-main"><section class="study-programs" id="study-programs">
-<div class="study-programs-head">
-<span class="eyebrow"><span data-ar="">اختر مسارك التعليمي</span><span data-en="">Choose Your Learning Path</span></span>
-<h2><span data-ar="">تعلم بالطريقة التي تناسبك</span><span data-en="">Learn in the way that suits you</span></h2>
-<p class="block" data-ar="">اختر البوابة التعليمية المناسبة، ثم ننتقل لاحقًا إلى المراحل والصفوف والمواد أو المسارات.</p>
-<p class="block" data-en="">Choose the right learning gateway; stages, grades, subjects, and tracks will follow.</p>
+</header><main class="quran-page"><section class="quran-page-head"><div><h1>القرآن الكريم والعلوم الشرعية</h1><p>اختر المسار أو العلم الذي ترغب في دراسته.</p></div><a class="back-academy" href="index.html">العودة إلى الأكاديمية</a></section><section class="content-section" id="quran">
+<h2 class="section-title"><span data-ar="">مسارات القرآن الكريم</span><span data-en="">Qur'an Learning Paths</span></h2>
+<div class="quran-grid">
+<article class="quran-card"><div class="icon">أ</div><div><h3><span data-ar="">التأسيس</span><span data-en="">Foundations</span></h3><p class="block" data-ar="">الحروف والمخارج والقاعدة العربية.</p><p class="block" data-en="">Letters, articulation and Arabic reading foundations.</p></div><a href="register.html?track=التأسيس والقراءة"><span data-ar="">ابدأ الآن</span><span data-en="">Start Now</span></a></article>
+<article class="quran-card"><div class="icon">◫</div><div><h3><span data-ar="">التلاوة والتجويد</span><span data-en="">Recitation &amp; Tajweed</span></h3><p class="block" data-ar="">تلاوة القرآن وفهم معانيه وتطبيق أحكام التجويد.</p><p class="block" data-en="">Recitation, understanding and practical Tajweed.</p></div><a href="register.html?track=التلاوة والتجويد"><span data-ar="">ابدأ الآن</span><span data-en="">Start Now</span></a></article>
+<article class="quran-card"><div class="icon">✦</div><div><h3><span data-ar="">الحفظ والإتقان</span><span data-en="">Memorization &amp; Mastery</span></h3><p class="block" data-ar="">حفظ متدرج ومراجعة مستمرة وإتقان.</p><p class="block" data-en="">Progressive memorization, revision and mastery.</p></div><a href="register.html?track=الحفظ والإتقان"><span data-ar="">ابدأ الآن</span><span data-en="">Start Now</span></a></article>
+<article class="quran-card"><div class="icon">◇</div><div><h3><span data-ar="">الإجازة والسند</span><span data-en="">Ijazah &amp; Sanad</span></h3><p class="block" data-ar="">تأهيل للقراءة المضبوطة والاستعداد للإجازة.</p><p class="block" data-en="">Preparation for accurate recitation and Ijazah.</p></div><a href="register.html?track=الإجازة والسند"><span data-ar="">ابدأ الآن</span><span data-en="">Start Now</span></a></article>
 </div>
-<div class="study-programs-grid">
-<a class="study-program-card quran" data-program="quran" href="quran.html" role="button" style="text-decoration:none;color:inherit" tabindex="0">
-<div class="study-program-visual"><div class="study-program-icon">📖</div></div>
-<div class="study-program-body">
-<h3><span data-ar="">القرآن الكريم والعلوم الشرعية</span><span data-en="">Qur'an &amp; Islamic Studies</span></h3>
-<p class="block" data-ar="">تعلم مرن في القرآن والتجويد والحفظ والعلوم الشرعية والعربية.</p>
-<p class="block" data-en="">Flexible study in Qur'an, Tajweed, memorization, Islamic sciences, and Arabic.</p>
-<span class="study-program-badge"><span data-ar="">دراسة حرة ومرنة</span><span data-en="">Flexible Study</span></span>
-</div><span class="study-program-arrow">←</span>
-</a>
-<article class="study-program-card saudi" data-program="saudi" role="button" tabindex="0">
-<div class="study-program-visual"><div class="study-program-icon">🇸🇦</div></div>
-<div class="study-program-body">
-<h3><span data-ar="">التعليم الأهلي السعودي</span><span data-en="">Saudi Private Education</span></h3>
-<p class="block" data-ar="">المراحل والصفوف والمواد المقررة في المنهج السعودي.</p>
-<p class="block" data-en="">Stages, grades, and subjects in the Saudi national curriculum.</p>
-<span class="study-program-badge"><span data-ar="">مناهج سعودية</span><span data-en="">Saudi Curriculum</span></span>
-</div><span class="study-program-arrow">←</span>
-</article>
-<article class="study-program-card global" data-program="global" role="button" tabindex="0">
-<div class="study-program-visual"><div class="study-program-icon">🌍</div></div>
-<div class="study-program-body">
-<h3><span data-ar="">التعليم العالمي السعودي</span><span data-en="">Saudi International Education</span></h3>
-<p class="block" data-ar="">مناهج عالمية مع مواد الهوية الوطنية السعودية المشتركة.</p>
-<p class="block" data-en="">International curricula with shared Saudi national identity subjects.</p>
-<span class="study-program-badge"><span data-ar="">عالمي + هوية وطنية</span><span data-en="">International + National Identity</span></span>
-</div><span class="study-program-arrow">←</span>
-</article>
-<article class="study-program-card egypt" data-program="egypt" role="button" tabindex="0">
-<div class="study-program-visual"><div class="study-program-icon">🇪🇬</div></div>
-<div class="study-program-body">
-<h3><span data-ar="">التعليم المصري</span><span data-en="">Egyptian Education</span></h3>
-<p class="block" data-ar="">التعليم العام والتعليم الأزهري بجميع المراحل والمواد.</p>
-<p class="block" data-en="">General and Al-Azhar education across all stages and subjects.</p>
-<span class="study-program-badge"><span data-ar="">عام + أزهري</span><span data-en="">General + Al-Azhar</span></span>
-</div><span class="study-program-arrow">←</span>
-</article>
+</section><section class="content-section" id="sciences">
+<h2 class="section-title"><span data-ar="">العلوم الشرعية</span><span data-en="">Islamic Sciences</span></h2>
+<div class="books-grid">
+<article class="book-card"><img alt="كتاب العقيدة" class="book-cover" src="assets/images/v7/aqeedah-book.webp"/><h3><span data-ar="">العقيدة</span><span data-en="">Aqeedah</span></h3><p class="block" data-ar="">تعلم أصول الإيمان وأركان العقيدة الإسلامية.</p><p class="block" data-en="">Foundations of faith and Islamic creed.</p><a href="register.html?track=العقيدة"><span data-ar="">استكشف</span><span data-en="">Explore</span></a></article>
+<article class="book-card"><img alt="كتاب الفقه" class="book-cover" src="assets/images/v7/fiqh-book.webp"/><h3><span data-ar="">الفقه</span><span data-en="">Fiqh</span></h3><p class="block" data-ar="">أحكام العبادات والمعاملات بلغة عملية.</p><p class="block" data-en="">Practical rulings for worship and daily life.</p><a href="register.html?track=الفقه"><span data-ar="">استكشف</span><span data-en="">Explore</span></a></article>
+<article class="book-card"><img alt="كتاب الحديث" class="book-cover" src="assets/images/v7/hadith-book.webp"/><h3><span data-ar="">الحديث</span><span data-en="">Hadith</span></h3><p class="block" data-ar="">دراسة الأحاديث النبوية وفهم معانيها.</p><p class="block" data-en="">Study Prophetic traditions and meanings.</p><a href="register.html?track=الحديث"><span data-ar="">استكشف</span><span data-en="">Explore</span></a></article>
+<article class="book-card"><img alt="كتاب التفسير" class="book-cover" src="assets/images/v7/tafsir-book.webp"/><h3><span data-ar="">التفسير</span><span data-en="">Tafsir</span></h3><p class="block" data-ar="">فهم معاني القرآن وتدبر آياته.</p><p class="block" data-en="">Understand and reflect on Qur'anic meanings.</p><a href="register.html?track=التفسير"><span data-ar="">استكشف</span><span data-en="">Explore</span></a></article>
+<article class="book-card"><img alt="كتاب السيرة" class="book-cover" src="assets/images/v7/seerah-book.webp"/><h3><span data-ar="">السيرة النبوية</span><span data-en="">Seerah</span></h3><p class="block" data-ar="">دروس وعبر من حياة النبي ﷺ.</p><p class="block" data-en="">Lessons from the life of the Prophet ﷺ.</p><a href="register.html?track=السيرة النبوية"><span data-ar="">استكشف</span><span data-en="">Explore</span></a></article>
+<article class="book-card"><img alt="كتاب العربية" class="book-cover" src="assets/images/v7/arabic-book.webp"/><h3><span data-ar="">العربية لغير الناطقين بها</span><span data-en="">Arabic for Non-Native Speakers</span></h3><p class="block" data-ar="">تعلم العربية لفهم القرآن والتواصل.</p><p class="block" data-en="">Arabic for Qur'anic understanding and communication.</p><a href="register.html?track=العربية لغير الناطقين بها"><span data-ar="">استكشف</span><span data-en="">Explore</span></a></article>
 </div>
-
+<div class="features">
+<div class="feature"><b data-ar="">مناهج موثوقة</b><b data-en="">Trusted Curriculum</b><span data-ar="">مستندة إلى كتب العلماء</span><span data-en="">Based on reliable scholarship</span></div>
+<div class="feature"><b data-ar="">مرونة في التعلم</b><b data-en="">Flexible Learning</b><span data-ar="">في أي وقت ومن أي مكان</span><span data-en="">Anytime and anywhere</span></div>
+<div class="feature"><b data-ar="">معلمون متخصصون</b><b data-en="">Qualified Teachers</b><span data-ar="">خبرة علمية وتربوية</span><span data-en="">Academic and educational expertise</span></div>
+<div class="feature"><b data-ar="">تعليم تفاعلي</b><b data-en="">Interactive Learning</b><span data-ar="">دروس مباشرة وتغذية راجعة</span><span data-en="">Live lessons and feedback</span></div>
+<div class="feature"><b data-ar="">شهادات إتمام</b><b data-en="">Completion Certificates</b><span data-ar="">بعد اجتياز المسار</span><span data-en="">After completing the program</span></div>
+</div>
 </section></main><footer>
 <div class="container footer-inner">
 <div><strong><span data-ar="">أكاديمية رشيد</span><span data-en="">Rasheed Academy</span></strong><br/><small><span data-ar="">مجموعة رشيد التعليمية</span><span data-en="">Rasheed Education Group</span></small></div>
