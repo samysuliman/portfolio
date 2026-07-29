@@ -367,12 +367,6 @@ function renderSubjectTeachers(rows){
 function studentStatusLabel(status){
   return ({active:"نشط",paused:"موقوف مؤقتًا",completed:"مكتمل",inactive:"غير نشط"})[status] || status || "نشط";
 }
-function setStudentBasicEditMode(editing){
-  document.getElementById("studentSummaryView")?.classList.toggle("hide",editing);
-  document.getElementById("studentBasicEdit")?.classList.toggle("hide",!editing);
-  const btn=document.getElementById("toggleStudentEdit");
-  if(btn){btn.textContent=editing?"إلغاء التعديل":"✏️ تعديل بيانات الطالب";btn.dataset.editing=editing?"1":"0";}
-}
 function setRecordDisplay(id,value){
   const el=document.getElementById(id); if(el) el.textContent=value || "—";
 }
@@ -390,14 +384,9 @@ async function loadStudentRecord(){
   const id = qparam("id");
   const errorBox = document.getElementById("recordError");
   const form = document.getElementById("studentRecordForm");
-  if(!id){
-    errorBox.textContent = "لم يتم تحديد الطالب."; errorBox.classList.remove("hide"); return;
-  }
+  if(!id){ errorBox.textContent = "لم يتم تحديد الطالب."; errorBox.classList.remove("hide"); return; }
   try{
-    const [studentRes, teacherRes] = await Promise.all([
-      api(`/rest/v1/students?id=eq.${encodeURIComponent(id)}&select=*&limit=1`),
-      api('/rest/v1/teachers?select=id,full_name,teacher_code,status&order=full_name.asc').catch(()=>null)
-    ]);
+    const studentRes = await api(`/rest/v1/students?id=eq.${encodeURIComponent(id)}&select=*&limit=1`);
     if(!studentRes.ok) throw new Error(await studentRes.text());
     const rows = await studentRes.json();
     const r = rows[0];
@@ -408,34 +397,20 @@ async function loadStudentRecord(){
     window.__currentStudentSelections=academicSelections;
     renderAcademicSelections(academicSelections);
     renderSubjectTeachers(academicSelections);
-    const quranSection=document.querySelector(".quran-record-section");
     const showQuran=hasQuranProgram(academicSelections);
-    quranSection?.classList.toggle("hide-by-program",!showQuran);
+    document.querySelector(".quran-record-section")?.classList.toggle("hide-by-program",!showQuran);
 
-    const teachers = teacherRes?.ok ? await teacherRes.json() : [];
-    const teacherSelect = document.getElementById("sr_assigned_teacher_id");
-    teachers.filter(t=>(t.status||"active")==="active").forEach(t=>{
-      const opt=document.createElement("option"); opt.value=t.id; opt.textContent=`${t.full_name}${t.teacher_code?` — ${t.teacher_code}`:""}`; teacherSelect.appendChild(opt);
-    });
-
-    const vals = {
-      full_name:r.full_name, student_code:r.student_code || autoStudentCode(r.id), age:r.age,
-      country_city:r.country_city, whatsapp:r.whatsapp, enrollment_date:toDateInput(r.enrollment_date || r.created_at),
-      student_type:r.student_type, status:r.status || "active", preferred_time:r.preferred_time,
-      assigned_teacher_id:r.assigned_teacher_id || "", weekly_goal:r.weekly_goal,
-      overall_progress:r.overall_progress ?? 0, attendance_rate:r.attendance_rate ?? 0, notes:r.notes
-    };
-    Object.entries(vals).forEach(([k,v])=>{ const el=document.getElementById(`sr_${k}`); if(el) el.value=v ?? ""; });
+    const studentCode=r.student_code || autoStudentCode(r.id);
     setRecordDisplay("srNameDisplay",r.full_name || "—");
-    setRecordDisplay("srCodeDisplay",vals.student_code);
+    setRecordDisplay("srCodeDisplay",studentCode);
     setRecordDisplay("srWhatsappDisplay",r.whatsapp || "—");
-    setRecordDisplay("srStatusDisplay",studentStatusLabel(vals.status));
-    setRecordDisplay("srAgeDisplay",r.age ? String(r.age) : "—");
-    setRecordDisplay("srCountryDisplay",r.country_city || "—");
-    setRecordDisplay("srEnrollmentDisplay",fmtDate(r.enrollment_date || r.created_at));
-    setRecordDisplay("srTypeDisplay",r.student_type || r.registration_for || "—");
+    setRecordDisplay("srStatusDisplay",studentStatusLabel(r.status || "active"));
+    const goal=document.getElementById("sr_weekly_goal"); if(goal) goal.value=r.weekly_goal || "";
+    const notes=document.getElementById("sr_notes"); if(notes) notes.value=r.notes || "";
+
     document.getElementById("recordTitle").textContent = `سجل الطالب: ${r.full_name || "—"}`;
-    document.getElementById("recordCode").textContent = `رقم الطالب: ${vals.student_code} • تاريخ الإنشاء: ${fmtDate(r.created_at)}`;
+    document.getElementById("recordCode").textContent = `رقم الطالب: ${studentCode} • تاريخ الإنشاء: ${fmtDate(r.created_at)}`;
+    const editLink=document.getElementById("editStudentLink"); if(editLink) editLink.href=`student-edit.html?id=${encodeURIComponent(r.id)}`;
     const phone=String(r.whatsapp||"").replace(/[^0-9]/g,"");
     const wa=document.getElementById("studentWhatsappLink"); if(wa) wa.href=phone?`https://wa.me/${phone}`:"#";
     form.classList.remove("hide");
@@ -450,53 +425,80 @@ async function loadStudentRecord(){
 async function saveStudentRecord(e){
   e.preventDefault();
   const r=window.__currentStudentRecord; if(!r) return;
-
-  // حفظ السجل القرآني فقط إذا كان الطالب مسجلًا في برنامج القرآن.
   if(hasQuranProgram(window.__currentStudentSelections||[])){
     const quranOk = await saveQuranRecord({silent:true});
     if(!quranOk){
-      const qStatus=document.getElementById('quranSaveStatus');
-      if(qStatus) qStatus.scrollIntoView({behavior:'smooth',block:'center'});
+      document.getElementById('quranSaveStatus')?.scrollIntoView({behavior:'smooth',block:'center'});
       return;
     }
   }
   const btn=document.getElementById("saveStudentRecord");
   const statusEl=document.getElementById("recordSaveStatus");
-  const get=id=>document.getElementById(id)?.value ?? "";
-  const nullable=v=>String(v).trim()===""?null:String(v).trim();
-  const numOrZero=v=>Math.max(0,Math.min(100,Number(v)||0));
-  const ageVal=get("sr_age");
+  const nullable=v=>String(v||"").trim()===""?null:String(v).trim();
   const payload={
-    full_name:get("sr_full_name").trim(),
-    student_code:nullable(get("sr_student_code")) || autoStudentCode(r.id),
-    age:ageVal===""?null:Number(ageVal),
-    country_city:nullable(get("sr_country_city")),
-    whatsapp:nullable(get("sr_whatsapp")),
-    enrollment_date:nullable(get("sr_enrollment_date")),
-    student_type:nullable(get("sr_student_type")),
-    status:get("sr_status") || "active",
-    preferred_time:nullable(get("sr_preferred_time")),
-    assigned_teacher_id:get("sr_assigned_teacher_id")?Number(get("sr_assigned_teacher_id")):null,
-    weekly_goal:nullable(get("sr_weekly_goal")), overall_progress:numOrZero(get("sr_overall_progress")),
-    attendance_rate:numOrZero(get("sr_attendance_rate")), notes:nullable(get("sr_notes")),
+    weekly_goal:nullable(document.getElementById("sr_weekly_goal")?.value),
+    notes:nullable(document.getElementById("sr_notes")?.value),
     updated_at:new Date().toISOString()
   };
   btn.disabled=true; btn.textContent="جارٍ الحفظ..."; statusEl.textContent="";
   try{
     const res=await api(`/rest/v1/students?id=eq.${encodeURIComponent(r.id)}`,{method:"PATCH",headers:{"Prefer":"return=representation"},body:JSON.stringify(payload)});
-    if(!res.ok){ const text=await res.text(); if(text.includes("student_code")||text.includes("current_stage")||text.includes("updated_at")) throw new Error("SCHEMA_NOT_READY"); throw new Error(text); }
+    if(!res.ok) throw new Error(await res.text());
     const rows=await res.json(); window.__currentStudentRecord=rows[0]||{...r,...payload};
-    statusEl.textContent=hasQuranProgram(window.__currentStudentSelections||[])?"تم حفظ الملاحظات والسجل القرآني بنجاح ✓":"تم حفظ الملاحظات بنجاح ✓";
-    setRecordDisplay("srNameDisplay",payload.full_name || "—");
-    setRecordDisplay("srWhatsappDisplay",payload.whatsapp || "—");
-    setRecordDisplay("srStatusDisplay",studentStatusLabel(payload.status));
-    setStudentBasicEditMode(false);
-    document.getElementById("recordTitle").textContent=`سجل الطالب: ${payload.full_name || "—"}`;
-    document.getElementById("recordCode").textContent=`رقم الطالب: ${payload.student_code} • آخر تحديث: ${fmtDate(payload.updated_at)}`;
+    statusEl.textContent=hasQuranProgram(window.__currentStudentSelections||[])?"تم حفظ المتابعة والسجل القرآني بنجاح ✓":"تم حفظ المتابعة بنجاح ✓";
+    document.getElementById("recordCode").textContent=`رقم الطالب: ${r.student_code || autoStudentCode(r.id)} • آخر تحديث: ${fmtDate(payload.updated_at)}`;
   }catch(err){
     console.error("Student record save error:",err);
-    statusEl.textContent = err.message === "SCHEMA_NOT_READY" ? "يجب تنفيذ ملف تهيئة سجل الطالب في Supabase أولًا." : "تعذر حفظ السجل. تحقق من الاتصال والصلاحيات.";
-  }finally{ btn.disabled=false; btn.textContent="حفظ الملاحظات"; }
+    statusEl.textContent="تعذر حفظ المتابعة. تحقق من الاتصال والصلاحيات.";
+  }finally{ btn.disabled=false; btn.textContent="حفظ المتابعة"; }
+}
+
+async function loadStudentEdit(){
+  const ok=await requireAdmin(); if(!ok) return;
+  const id=qparam("id");
+  const errorBox=document.getElementById("editStudentError");
+  const form=document.getElementById("studentEditForm");
+  if(!id){errorBox.textContent="لم يتم تحديد الطالب.";errorBox.classList.remove("hide");return;}
+  try{
+    const res=await api(`/rest/v1/students?id=eq.${encodeURIComponent(id)}&select=*&limit=1`);
+    if(!res.ok) throw new Error(await res.text());
+    const rows=await res.json(); const r=rows[0]; if(!r) throw new Error("STUDENT_NOT_FOUND");
+    window.__currentStudentEdit=r;
+    document.getElementById("se_full_name").value=r.full_name||"";
+    document.getElementById("se_whatsapp").value=r.whatsapp||"";
+    document.getElementById("se_status").value=r.status||"active";
+    document.getElementById("se_student_code").textContent=r.student_code||autoStudentCode(r.id);
+    document.getElementById("editStudentTitle").textContent=`تعديل بيانات: ${r.full_name||"الطالب"}`;
+    document.getElementById("backToStudentRecord").href=`student-record.html?id=${encodeURIComponent(r.id)}`;
+    document.getElementById("cancelStudentEdit").href=`student-record.html?id=${encodeURIComponent(r.id)}`;
+    form.classList.remove("hide");
+  }catch(err){
+    console.error("Student edit load error:",err);
+    errorBox.textContent=err.message==="STUDENT_NOT_FOUND"?"لم يتم العثور على الطالب.":"تعذر تحميل بيانات الطالب.";
+    errorBox.classList.remove("hide");
+  }
+}
+
+async function saveStudentEdit(e){
+  e.preventDefault();
+  const r=window.__currentStudentEdit; if(!r) return;
+  const btn=document.getElementById("saveStudentEdit");
+  const status=document.getElementById("studentEditStatus");
+  const payload={
+    full_name:document.getElementById("se_full_name").value.trim(),
+    whatsapp:document.getElementById("se_whatsapp").value.trim()||null,
+    status:document.getElementById("se_status").value||"active",
+    updated_at:new Date().toISOString()
+  };
+  if(!payload.full_name){status.textContent="اكتب اسم الطالب.";return;}
+  btn.disabled=true;btn.textContent="جارٍ الحفظ...";status.textContent="";
+  try{
+    const res=await api(`/rest/v1/students?id=eq.${encodeURIComponent(r.id)}`,{method:"PATCH",headers:{"Prefer":"return=representation"},body:JSON.stringify(payload)});
+    if(!res.ok) throw new Error(await res.text());
+    status.textContent="تم حفظ بيانات الطالب بنجاح ✓";
+    setTimeout(()=>{location.href=`student-record.html?id=${encodeURIComponent(r.id)}`;},500);
+  }catch(err){console.error("Student edit save error:",err);status.textContent="تعذر حفظ البيانات. تحقق من الاتصال والصلاحيات.";}
+  finally{btn.disabled=false;btn.textContent="حفظ التعديلات";}
 }
 
 
@@ -835,10 +837,7 @@ function wireCommon(){
   document.getElementById("studentSearchBox")?.addEventListener("input",()=>renderStudents(window.__students||[]));
   document.getElementById("studentStatusFilter")?.addEventListener("change",()=>renderStudents(window.__students||[]));
   document.getElementById("studentRecordForm")?.addEventListener("submit",saveStudentRecord);
-  document.getElementById("toggleStudentEdit")?.addEventListener("click",e=>{
-    const editing=e.currentTarget.dataset.editing!=="1";
-    setStudentBasicEditMode(editing);
-  });
+  document.getElementById("studentEditForm")?.addEventListener("submit",saveStudentEdit);
   wireQuranRecord();
   document.getElementById("teacherSearchBox")?.addEventListener("input",()=>renderTeachers(window.__teachers||[]));
   document.getElementById("closeDialog")?.addEventListener("click",()=>document.getElementById("detailsDialog")?.close());
@@ -851,5 +850,6 @@ document.addEventListener("DOMContentLoaded",()=>{
   if(document.body.dataset.adminPage === "dashboard") loadRegistrations().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
   if(document.body.dataset.adminPage === "students") loadStudents().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
   if(document.body.dataset.adminPage === "student-record") loadStudentRecord();
+  if(document.body.dataset.adminPage === "student-edit") loadStudentEdit();
   if(document.body.dataset.adminPage === "teachers") loadTeachers().catch(err=>{console.error(err);document.getElementById("loadError")?.classList.remove("hide");});
 });
