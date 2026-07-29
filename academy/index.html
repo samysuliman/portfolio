@@ -417,6 +417,20 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
 }
 </style>
 
+
+<style id="phase1-school-chooser-styles">
+.school-quick-panel{display:none;margin:18px auto 0;max-width:980px;padding:22px;border:1px solid #d9e5df;border-radius:20px;background:#fff;box-shadow:0 10px 30px rgba(9,67,54,.06)}
+.school-quick-panel.active{display:block}.school-quick-panel h3{margin:0 0 6px;color:#064c3c}.school-quick-panel p{margin:0 0 16px;color:#687b74}
+.school-quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.school-quick-field label{display:block;font-weight:700;margin-bottom:6px}
+.school-quick-field select{width:100%;padding:12px;border:1px solid #cbdad4;border-radius:12px;background:#fff;font:inherit}
+.school-quick-subjects{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:6px}
+.school-quick-subject{display:flex;gap:7px;align-items:center;padding:10px;border:1px solid #d8e3df;border-radius:12px;cursor:pointer}
+.school-quick-subject:has(input:checked){border-color:#0b755e;background:#edf8f4}.school-quick-actions{grid-column:1/-1;display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+.school-quick-actions button{padding:11px 18px;border-radius:12px;border:1px solid #0b755e;background:#0b755e;color:#fff;font-weight:800;cursor:pointer}
+.school-quick-actions .secondary{background:#fff;color:#0b755e}.school-quick-empty{grid-column:1/-1;padding:14px;border:1px dashed #cbdad4;border-radius:12px;color:#71827c;text-align:center}
+@media(max-width:700px){.school-quick-grid,.school-quick-subjects{grid-template-columns:1fr}.school-quick-panel{margin:14px 10px 0;padding:15px}}
+</style>
+
 </head>
 <body><header class="topbar">
 <div class="container nav">
@@ -499,5 +513,69 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
  ar.onclick=()=>setLang('ar'); en.onclick=()=>setLang('en');
  setLang(localStorage.getItem('rasheedLanguage')||'ar');
 })();
-</script></body>
+</script>
+<script id="phase1-school-chooser">
+(function(){
+ const cards=[...document.querySelectorAll('a[href*="register.html"], a[href="#"]')];
+ const map=[
+  {needle:'التعليم الأهلي السعودي',key:'saudi-private'},
+  {needle:'التعليم العالمي السعودي',key:'saudi-international'},
+  {needle:'التعليم المصري',key:'egyptian'}
+ ];
+ const data={
+  'saudi-private':{title:'التعليم الأهلي السعودي',stages:{
+   'المرحلة الابتدائية':['الأول الابتدائي','الثاني الابتدائي','الثالث الابتدائي','الرابع الابتدائي','الخامس الابتدائي','السادس الابتدائي'],
+   'المرحلة المتوسطة':['الأول المتوسط','الثاني المتوسط','الثالث المتوسط'],
+   'المرحلة الثانوية':['الأول الثانوي','الثاني الثانوي','الثالث الثانوي']},
+   subjects:['القرآن الكريم والدراسات الإسلامية','اللغة العربية','الرياضيات','العلوم','اللغة الإنجليزية','الدراسات الاجتماعية']},
+  'saudi-international':{title:'التعليم العالمي السعودي',stages:{
+   'المرحلة الابتدائية':['الصف الأول','الصف الثاني','الصف الثالث','الصف الرابع','الصف الخامس','الصف السادس'],
+   'المرحلة المتوسطة':['الصف السابع','الصف الثامن','الصف التاسع'],
+   'المرحلة الثانوية':['الصف العاشر','الصف الحادي عشر','الصف الثاني عشر']},
+   subjects:['English','Mathematics','Science','Social Studies','اللغة العربية','الدراسات الإسلامية']},
+  'egyptian':{title:'التعليم المصري',systems:['التعليم العام','التعليم الأزهري'],stages:{
+   'المرحلة الابتدائية':['الصف الأول','الصف الثاني','الصف الثالث','الصف الرابع','الصف الخامس','الصف السادس'],
+   'المرحلة الإعدادية':['الصف الأول الإعدادي','الصف الثاني الإعدادي','الصف الثالث الإعدادي'],
+   'المرحلة الثانوية':['الصف الأول الثانوي','الصف الثاني الثانوي','الصف الثالث الثانوي']},
+   subjects:['اللغة العربية','اللغة الإنجليزية','الرياضيات','العلوم','الدراسات الاجتماعية','التربية الدينية']}
+ };
+ let panel=document.createElement('section'); panel.id='schoolQuickPanel'; panel.className='school-quick-panel';
+ const main=document.querySelector('main')||document.body; main.appendChild(panel);
+ function opts(arr,label){return '<option value="">'+label+'</option>'+arr.map(x=>'<option>'+x+'</option>').join('')}
+ function openChooser(key){
+  const d=data[key];
+  panel.innerHTML='<h3>'+d.title+'</h3><p>اختر بيانات الدراسة هنا، ثم انتقل إلى صفحة بيانات التسجيل.</p><div class="school-quick-grid">'+
+   (d.systems?'<div class="school-quick-field"><label>نوع التعليم</label><select id="sqSystem">'+opts(d.systems,'اختر عام أو أزهري')+'</select></div>':'')+
+   '<div class="school-quick-field"><label>المرحلة</label><select id="sqStage">'+opts(Object.keys(d.stages),'اختر المرحلة')+'</select></div>'+
+   '<div class="school-quick-field"><label>الصف</label><select id="sqGrade" disabled><option>اختر المرحلة أولًا</option></select></div>'+
+   '<div class="school-quick-subjects" id="sqSubjects"><div class="school-quick-empty">اختر المرحلة والصف لعرض المواد.</div></div>'+
+   '<div class="school-quick-actions"><button class="secondary" type="button" id="sqAdd">إضافة برنامج آخر</button><button type="button" id="sqContinue">متابعة التسجيل</button></div></div>';
+  panel.classList.add('active'); panel.scrollIntoView({behavior:'smooth',block:'center'});
+  const st=panel.querySelector('#sqStage'), gr=panel.querySelector('#sqGrade'), subs=panel.querySelector('#sqSubjects');
+  st.onchange=()=>{gr.innerHTML=opts(d.stages[st.value]||[],'اختر الصف');gr.disabled=!st.value;subs.innerHTML='<div class="school-quick-empty">اختر الصف لعرض المواد.</div>'};
+  gr.onchange=()=>{subs.innerHTML=d.subjects.map(s=>'<label class="school-quick-subject"><input type="checkbox" value="'+s+'"> '+s+'</label>').join('')};
+  panel.querySelector('#sqAdd').onclick=()=>{save(key,d,st,gr);panel.classList.remove('active');window.scrollTo({top:0,behavior:'smooth'})};
+  panel.querySelector('#sqContinue').onclick=()=>{save(key,d,st,gr);location.href='register.html'};
+ }
+ function save(key,d,st,gr){
+  const system=panel.querySelector('#sqSystem')?.value||'';
+  const subjects=[...panel.querySelectorAll('#sqSubjects input:checked')].map(x=>x.value);
+  if(!st.value||!gr.value||!subjects.length){alert('اختر المرحلة والصف ومادة واحدة على الأقل.');return false}
+  let all=[];try{all=JSON.parse(sessionStorage.getItem('rasheedStudySelections')||'[]')}catch(e){}
+  all=all.filter(x=>x.key!==key);all.push({key,title:d.title,system,stage:st.value,grade:gr.value,subjects});
+  sessionStorage.setItem('rasheedStudySelections',JSON.stringify(all)); return true;
+ }
+ map.forEach(m=>{
+   document.querySelectorAll('a,button').forEach(el=>{
+    const box=el.closest('article,div');
+    const txt=(box?box.innerText:el.innerText)||'';
+    if(txt.includes(m.needle) && !txt.includes('القرآن الكريم')){
+      el.addEventListener('click',e=>{e.preventDefault();openChooser(m.key)});
+    }
+   });
+ });
+})();
+</script>
+
+</body>
 </html>
