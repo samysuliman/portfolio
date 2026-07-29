@@ -364,9 +364,12 @@ function studentSubjectRows(selections){
   (selections||[]).forEach((program,index)=>{
     const programKey=String(program?.key || program?.title || `program-${index+1}`);
     const programTitle=String(program?.title || program?.key || "برنامج تعليمي");
+    const stageName=String(program?.stage || "").trim();
+    const gradeName=String(program?.grade || "").trim();
+    const branchName=String(program?.branch || "").trim();
     recordSelectionItems(program).forEach(subject=>{
       const name=String(subject||"").trim();
-      if(name) rows.push({programKey,programTitle,subjectName:name});
+      if(name) rows.push({programKey,programTitle,stageName,gradeName,branchName,subjectName:name});
     });
   });
   const seen=new Set();
@@ -392,7 +395,7 @@ function renderRecordTeacherAssignments(selections,assignments,teachers){
 }
 
 async function fetchStudentAssignments(studentId){
-  const res=await api(`/rest/v1/student_teacher_assignments?student_id=eq.${encodeURIComponent(studentId)}&select=id,student_id,teacher_id,program_key,program_title,subject_name&order=subject_name.asc`).catch(()=>null);
+  const res=await api(`/rest/v1/student_teacher_assignments?student_id=eq.${encodeURIComponent(studentId)}&select=id,student_id,teacher_id,program_key,program_title,stage_name,grade_name,branch_name,subject_name&order=subject_name.asc`).catch(()=>null);
   if(!res || !res.ok) return [];
   return await res.json();
 }
@@ -823,10 +826,13 @@ function renderTeacherAssignmentRows(subjects,teachers,assignments){
   const holder=document.getElementById("assignmentRows"); if(!holder)return;
   if(!subjects.length){holder.innerHTML='<div class="empty-state">لا توجد مواد مرتبطة بهذا الطالب.</div>';document.getElementById("saveTeacherAssignments").disabled=true;return;}
   const current=new Map((assignments||[]).map(a=>[`${a.program_key}::${a.subject_name}`,String(a.teacher_id)]));
-  holder.innerHTML=subjects.map((row,index)=>`<div class="assignment-row" data-program-key="${esc(row.programKey)}" data-program-title="${esc(row.programTitle)}" data-subject-name="${esc(row.subjectName)}">
-    <div><div class="subject-name">${esc(row.subjectName)}</div><div class="subject-program">${esc(row.programTitle)}</div></div>
-    <select aria-label="معلم مادة ${esc(row.subjectName)}"><option value="">غير معيّن</option>${teachers.map(t=>`<option value="${esc(t.id)}" ${current.get(`${row.programKey}::${row.subjectName}`)===String(t.id)?"selected":""}>${esc(t.full_name)}${t.teacher_code?` — ${esc(t.teacher_code)}`:""}</option>`).join("")}</select>
-  </div>`).join("");
+  holder.innerHTML=subjects.map((row,index)=>{
+    const context=[row.programTitle,row.stageName,row.gradeName,row.branchName].filter(Boolean).join(" — ");
+    return `<div class="assignment-row" data-program-key="${esc(row.programKey)}" data-program-title="${esc(row.programTitle)}" data-stage-name="${esc(row.stageName||"")}" data-grade-name="${esc(row.gradeName||"")}" data-branch-name="${esc(row.branchName||"")}" data-subject-name="${esc(row.subjectName)}">
+      <div><div class="subject-name">${esc(row.subjectName)}</div><div class="subject-program">${esc(context||row.programTitle)}</div></div>
+      <select aria-label="معلم مادة ${esc(row.subjectName)}"><option value="">غير معيّن</option>${teachers.map(t=>`<option value="${esc(t.id)}" ${current.get(`${row.programKey}::${row.subjectName}`)===String(t.id)?"selected":""}>${esc(t.full_name)}${t.teacher_code?` — ${esc(t.teacher_code)}`:""}${t.specialization?` — ${esc(t.specialization)}`:""}</option>`).join("")}</select>
+    </div>`;
+  }).join("");
   updateDuplicateTeacherWarning();
 }
 
@@ -873,6 +879,9 @@ async function saveTeacherAssignments(){
       teacher_id:row.querySelector("select").value||null,
       program_key:row.dataset.programKey,
       program_title:row.dataset.programTitle,
+      stage_name:row.dataset.stageName||null,
+      grade_name:row.dataset.gradeName||null,
+      branch_name:row.dataset.branchName||null,
       subject_name:row.dataset.subjectName
     }));
     const active=selected.filter(x=>x.teacher_id).map(x=>({...x,teacher_id:Number(x.teacher_id),updated_at:new Date().toISOString()}));
