@@ -66,7 +66,7 @@ textarea{width:100%;min-height:105px;padding:13px 14px;border:1px solid #cddbd5;
 <main class="page"><div class="container layout">
 <aside class="sidebar"><a href="dashboard.html">نظرة عامة</a><a href="registrations.html">طلبات التسجيل</a><a class="active" href="students.html">الطلاب</a><a href="teachers.html">المعلمون</a><a href="#" data-demo-alert>الحصص</a><a href="#" data-demo-alert>التقارير</a></aside>
 <section>
-<div class="record-head"><div><h1 class="page-title" id="recordTitle">سجل الطالب</h1><div class="record-code" id="recordCode">جارٍ تحميل البيانات...</div></div><a class="btn btn-light" href="students.html">العودة إلى الطلاب</a></div>
+<div class="record-head"><div><h1 class="page-title" id="recordTitle">سجل الطالب</h1><div class="record-code" id="recordCode">جارٍ تحميل البيانات...</div></div><div class="record-actions" style="margin-top:0"><a class="btn btn-primary" id="teacherAssignmentsLink" href="#">إسناد المعلمين</a><a class="btn btn-light" href="students.html">العودة إلى الطلاب</a></div></div>
 <div id="recordError" class="notice hide"></div>
 <form id="studentRecordForm" class="student-profile hide">
   <div class="profile-hero">
@@ -132,7 +132,7 @@ textarea{width:100%;min-height:105px;padding:13px 14px;border:1px solid #cddbd5;
   </div>
 </form>
 </section></div></main>
-<script src="../assets/js/admin.js?v=9.1.0"></script>
+<script src="../assets/js/admin.js?v=10.0.0"></script>
 <script>
 (function(){
   const statusLabels={active:'نشط',paused:'موقوف مؤقتًا',completed:'مكتمل',inactive:'غير نشط'};
@@ -153,21 +153,9 @@ textarea{width:100%;min-height:105px;padding:13px 14px;border:1px solid #cddbd5;
     document.getElementById('viewWhatsapp').textContent=phone;
     document.getElementById('viewStatus').textContent=status;
   }
-  function syncTeachers(){
-    const box=document.getElementById('academicSelectionsBox');
-    const holder=document.getElementById('teachersSummary');
-    if(!box||!holder)return;
-    const subjects=[...box.querySelectorAll('.academic-items span')].map(x=>x.textContent.trim()).filter(Boolean);
-    const unique=[...new Set(subjects)];
-    if(!unique.length){holder.className='teacher-empty';holder.textContent='لا توجد مواد مرتبطة بهذا الطالب.';return;}
-    holder.className='';
-    holder.innerHTML='<table class="teacher-table"><thead><tr><th>المادة</th><th>المعلم</th></tr></thead><tbody>'+unique.map(s=>'<tr><td>'+s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))+'</td><td class="muted">غير معيّن</td></tr>').join('')+'</tbody></table>';
-  }
   const form=document.getElementById('studentRecordForm');
-  const observer=new MutationObserver(()=>{if(!form.classList.contains('hide')){syncProfile();syncTeachers();}});
+  const observer=new MutationObserver(()=>{if(!form.classList.contains('hide')){syncProfile();}});
   observer.observe(form,{attributes:true,attributeFilter:['class']});
-  const academic=document.getElementById('academicSelectionsBox');
-  new MutationObserver(syncTeachers).observe(academic,{childList:true,subtree:true});
   document.addEventListener('click',e=>{const a=e.target.closest('[data-demo-alert]');if(a){e.preventDefault();alert('سجل الحصص والتقييم التفصيلي هو المرحلة التالية بعد تفعيل سجل الطالب الأساسي.');}});
 })();
 </script>
