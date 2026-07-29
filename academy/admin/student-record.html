@@ -9,6 +9,8 @@
 .metric-input{position:relative}.metric-input input{padding-left:46px}.metric-input span{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:700}
 textarea{width:100%;min-height:100px;padding:13px 14px;border:1px solid #cddbd5;border-radius:13px;background:#fff;font:inherit;resize:vertical}
 @media(max-width:700px){.record-head{display:block}.record-head .btn{margin-top:12px}.record-grid,.range-row{grid-template-columns:1fr}.record-grid .full{grid-column:auto}.record-actions .btn{width:100%}}
+
+.academic-selections-box{display:grid;gap:12px}.academic-program-card{border:1px solid #dbe7e1;border-radius:15px;padding:14px;background:#f8fbf9}.academic-program-card h3{margin:0 0 7px;color:#174c3c;font-size:17px}.academic-meta{color:var(--muted);font-size:13px;margin-bottom:9px}.academic-items{display:flex;gap:7px;flex-wrap:wrap}.academic-items span{display:inline-flex;padding:6px 10px;border-radius:999px;background:#eef6f2;border:1px solid #d8e8e0;font-size:12px;font-weight:700}.quran-record-section.hide-by-program{display:none!important}
 </style></head><body data-admin-page="student-record">
 <header class="topbar"><div class="container nav"><a class="brand" href="../index.html"><span class="brand-mark">ر</span><span>أكاديمية رشيد<small>سجل الطالب</small></span></a><a class="btn btn-secondary" href="#" data-admin-logout>تسجيل الخروج</a></div></header>
 <main class="page"><div class="container layout">
@@ -27,13 +29,13 @@ textarea{width:100%;min-height:100px;padding:13px 14px;border:1px solid #cddbd5;
 <div class="field"><label for="sr_student_type">التسجيل لـ</label><input id="sr_student_type" placeholder="الطالب / الابن / الأسرة..."></div>
 <div class="field"><label for="sr_status">الحالة</label><select id="sr_status"><option value="active">نشط</option><option value="paused">موقوف مؤقتًا</option><option value="completed">مكتمل</option><option value="inactive">غير نشط</option></select></div>
 </div></div>
-<div class="record-section"><h2>المسار التعليمي</h2><div class="record-grid">
-<div class="field"><label for="sr_track">المسار</label><input id="sr_track"></div>
-<div class="field"><label for="sr_level">المستوى</label><input id="sr_level"></div>
-<div class="field"><label for="sr_current_stage">المرحلة الحالية</label><input id="sr_current_stage" placeholder="مثال: التلاوة / الحفظ / المراجعة"></div>
+<div class="record-section"><h2>البيانات التعليمية</h2>
+<div id="academicSelectionsBox" class="academic-selections-box"><div class="muted">جارٍ تحميل البيانات التعليمية...</div></div>
+</div>
+<div class="record-section"><h2>الإدارة والمتابعة</h2><div class="record-grid">
 <div class="field"><label for="sr_preferred_time">الوقت المفضل</label><input id="sr_preferred_time"></div>
 <div class="field"><label for="sr_assigned_teacher_id">المعلم المسؤول</label><select id="sr_assigned_teacher_id"><option value="">لم يُعيَّن بعد</option></select></div>
-<div class="field full"><label for="sr_weekly_goal">هدف الأسبوع</label><textarea id="sr_weekly_goal" placeholder="مثال: حفظ سورة الملك من الآية 1 إلى 10، ومراجعة مخارج الحروف."></textarea></div>
+<div class="field full"><label for="sr_weekly_goal">هدف الأسبوع</label><textarea id="sr_weekly_goal" placeholder="اكتب هدفًا أسبوعيًا مختصرًا عند الحاجة."></textarea></div>
 </div></div>
 <div class="record-section"><h2>مؤشرات المتابعة</h2><div class="record-grid">
 <div class="field"><label for="sr_overall_progress">نسبة التقدم</label><div class="metric-input"><input id="sr_overall_progress" type="number" min="0" max="100"><span>%</span></div></div>
@@ -89,6 +91,6 @@ textarea{width:100%;min-height:100px;padding:13px 14px;border:1px solid #cddbd5;
 <p class="muted" id="recordSaveStatus" style="margin:12px 0 0"></p>
 </form>
 </section></div></main>
-<script src="../assets/js/admin.js?v=9.0.0"></script>
+<script src="../assets/js/admin.js?v=9.1.0"></script>
 <script>document.addEventListener('click',e=>{const a=e.target.closest('[data-demo-alert]');if(a){e.preventDefault();alert('سجل الحصص والتقييم التفصيلي هو المرحلة التالية بعد تفعيل سجل الطالب الأساسي.');}});</script>
 </body></html>
