@@ -618,6 +618,48 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
 }
 </style>
 
+
+<style id="main-hub-card-images-final">
+.hub-card{
+  overflow:hidden !important;
+  padding:0 0 20px !important;
+  min-height:0 !important;
+}
+.hub-icon{
+  width:100% !important;
+  height:auto !important;
+  padding:0 !important;
+  margin:0 0 14px !important;
+  border:0 !important;
+  border-radius:20px 20px 0 0 !important;
+  background:transparent !important;
+  overflow:hidden !important;
+}
+.hub-main-card-image{
+  display:block !important;
+  width:100% !important;
+  height:auto !important;
+  object-fit:contain !important;
+}
+.hub-title{
+  margin:4px 18px 8px !important;
+}
+.hub-count{
+  margin-bottom:2px !important;
+}
+@media(max-width:750px){
+  .hub-card{
+    width:92% !important;
+    max-width:92% !important;
+    margin:0 auto !important;
+    padding-bottom:16px !important;
+  }
+  .hub-icon{
+    margin-bottom:10px !important;
+  }
+}
+</style>
+
 </head>
 <body><header class="topbar">
 <div class="container nav">
@@ -647,7 +689,7 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
 
   <div class="hub-grid">
     <button class="hub-card hub-quran" type="button" data-target="quranHub" aria-expanded="false">
-      <span class="hub-icon">📖</span>
+      <span class="hub-icon"><img src="assets/study-cards/quran-paths-card.png" alt="مسارات القرآن الكريم" class="hub-main-card-image"></span>
       <span class="hub-title">
         <span data-ar>مسارات القرآن الكريم</span>
         <span data-en>Qur'an Learning Paths</span>
@@ -659,7 +701,7 @@ body.english .main-column,body.english .founder-sidebar{direction:ltr}
     </button>
 
     <button class="hub-card hub-sciences" type="button" data-target="sciencesHub" aria-expanded="false">
-      <span class="hub-icon">📚</span>
+      <span class="hub-icon"><img src="assets/study-cards/islamic-sciences-card.png" alt="العلوم الشرعية" class="hub-main-card-image"></span>
       <span class="hub-title">
         <span data-ar>العلوم الشرعية</span>
         <span data-en>Islamic Sciences</span>
