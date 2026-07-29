@@ -59,6 +59,17 @@ textarea{width:100%;min-height:105px;padding:13px 14px;border:1px solid #cddbd5;
   .profile-section,.profile-hero,.quran-record-section{padding:20px}
   .record-actions .btn{width:100%}
 }
+
+/* رأس موحد مع صفحة إسناد المعلمين */
+.profile-hero{display:flex;gap:12px;align-items:center;padding:18px;border:1px solid var(--line);border-radius:18px;background:#f8fbf9;margin:0 0 18px}
+.profile-person{display:flex;gap:12px;align-items:center;min-width:0;width:100%}
+.profile-avatar{width:48px;height:48px;border-radius:15px;background:var(--emerald);color:#fff;display:grid;place-items:center;font-weight:800;font-size:20px;flex:0 0 auto}
+.profile-name{margin:0 0 4px;font-size:20px}
+.profile-meta{display:flex;gap:8px 14px;flex-wrap:wrap;margin-top:7px;font-size:13px;color:var(--muted)}
+.profile-meta strong{color:var(--ink)}
+.profile-phone{direction:ltr;text-align:right;color:var(--ink);font-weight:700}
+.student-profile{background:transparent;border:0;box-shadow:none;overflow:visible}
+.profile-section{background:#fff;border:1px solid var(--line);border-radius:18px;margin-bottom:14px}
 </style>
 </head>
 <body data-admin-page="student-record">
@@ -66,7 +77,7 @@ textarea{width:100%;min-height:105px;padding:13px 14px;border:1px solid #cddbd5;
 <main class="page"><div class="container layout">
 <aside class="sidebar"><a href="dashboard.html">نظرة عامة</a><a href="registrations.html">طلبات التسجيل</a><a class="active" href="students.html">الطلاب</a><a href="teachers.html">المعلمون</a><a href="#" data-demo-alert>الحصص</a><a href="#" data-demo-alert>التقارير</a></aside>
 <section>
-<div class="record-head"><div><h1 class="page-title" id="recordTitle">سجل الطالب</h1><div class="record-code" id="recordCode">جارٍ تحميل البيانات...</div></div><div class="record-actions" style="margin-top:0"><a class="btn btn-primary" id="teacherAssignmentsLink" href="#">إسناد المعلمين</a><a class="btn btn-light" href="students.html">العودة إلى الطلاب</a></div></div>
+<div class="record-head"><div><h1 class="page-title" id="recordTitle">سجل الطالب</h1><div class="record-code" id="recordCode">جارٍ تحميل البيانات...</div></div><a class="btn btn-light" href="students.html">العودة إلى الطلاب</a></div>
 <div id="recordError" class="notice hide"></div>
 <form id="studentRecordForm" class="student-profile hide">
   <div class="profile-hero">
@@ -75,26 +86,19 @@ textarea{width:100%;min-height:105px;padding:13px 14px;border:1px solid #cddbd5;
       <div>
         <h2 class="profile-name" id="profileName">—</h2>
         <div class="profile-meta">
-          <span class="profile-chip" id="profileCode">—</span>
-          <span class="profile-chip status" id="profileStatus">—</span>
+          <span>رقم الطالب: <strong id="profileCode">—</strong></span>
+          <span>الحالة: <strong id="profileStatus">—</strong></span>
+          <span>واتساب: <strong class="profile-phone" id="profilePhone">—</strong></span>
         </div>
       </div>
     </div>
-    <div class="profile-phone" id="profilePhone">—</div>
+  </div>
+  <div class="hide" aria-hidden="true">
+    <span id="viewFullName">—</span><span id="viewStudentCode">—</span><span id="viewWhatsapp">—</span><span id="viewStatus">—</span>
   </div>
 
   <section class="profile-section">
-    <h2 class="section-title">👤 البيانات الأساسية</h2>
-    <div class="info-list">
-      <div class="info-row"><span class="info-label">اسم الطالب</span><span class="info-value" id="viewFullName">—</span></div>
-      <div class="info-row"><span class="info-label">رقم الطالب</span><span class="info-value" id="viewStudentCode">—</span></div>
-      <div class="info-row"><span class="info-label">واتساب</span><span class="info-value" id="viewWhatsapp">—</span></div>
-      <div class="info-row"><span class="info-label">الحالة</span><span class="info-value" id="viewStatus">—</span></div>
-    </div>
-  </section>
-
-  <section class="profile-section">
-    <h2 class="section-title">📚 الدراسة والمواد</h2>
+    <h2 class="section-title">📚 البرنامج الدراسي والمواد</h2>
     <div id="academicSelectionsBox" class="academic-selections-box"><div class="muted">جارٍ تحميل البيانات التعليمية...</div></div>
   </section>
 
@@ -132,7 +136,7 @@ textarea{width:100%;min-height:105px;padding:13px 14px;border:1px solid #cddbd5;
   </div>
 </form>
 </section></div></main>
-<script src="../assets/js/admin.js?v=10.0.0"></script>
+<script src="../assets/js/admin.js?v=9.1.0"></script>
 <script>
 (function(){
   const statusLabels={active:'نشط',paused:'موقوف مؤقتًا',completed:'مكتمل',inactive:'غير نشط'};
@@ -153,9 +157,21 @@ textarea{width:100%;min-height:105px;padding:13px 14px;border:1px solid #cddbd5;
     document.getElementById('viewWhatsapp').textContent=phone;
     document.getElementById('viewStatus').textContent=status;
   }
+  function syncTeachers(){
+    const box=document.getElementById('academicSelectionsBox');
+    const holder=document.getElementById('teachersSummary');
+    if(!box||!holder)return;
+    const subjects=[...box.querySelectorAll('.academic-items span')].map(x=>x.textContent.trim()).filter(Boolean);
+    const unique=[...new Set(subjects)];
+    if(!unique.length){holder.className='teacher-empty';holder.textContent='لا توجد مواد مرتبطة بهذا الطالب.';return;}
+    holder.className='';
+    holder.innerHTML='<table class="teacher-table"><thead><tr><th>المادة</th><th>المعلم</th></tr></thead><tbody>'+unique.map(s=>'<tr><td>'+s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))+'</td><td class="muted">غير معيّن</td></tr>').join('')+'</tbody></table>';
+  }
   const form=document.getElementById('studentRecordForm');
-  const observer=new MutationObserver(()=>{if(!form.classList.contains('hide')){syncProfile();}});
+  const observer=new MutationObserver(()=>{if(!form.classList.contains('hide')){syncProfile();syncTeachers();}});
   observer.observe(form,{attributes:true,attributeFilter:['class']});
+  const academic=document.getElementById('academicSelectionsBox');
+  new MutationObserver(syncTeachers).observe(academic,{childList:true,subtree:true});
   document.addEventListener('click',e=>{const a=e.target.closest('[data-demo-alert]');if(a){e.preventDefault();alert('سجل الحصص والتقييم التفصيلي هو المرحلة التالية بعد تفعيل سجل الطالب الأساسي.');}});
 })();
 </script>
