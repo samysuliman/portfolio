@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'samy-portfolio-v6.5-rasheed-academy';
+const CACHE_VERSION = 'samy-portfolio-v6.5-separated';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 const CORE_ASSETS = [
   './',
@@ -18,12 +18,6 @@ const CORE_ASSETS = [
   './assets/icons/icon-512.png',
   './assets/icons/apple-touch-icon.png',
   './manifest.webmanifest',
-  './academy/',
-  './academy/index.html',
-  './academy/login.html',
-  './academy/register.html',
-  './academy/assets/css/styles.css',
-  './academy/assets/js/app.js'
 ];
 
 self.addEventListener('install', event => {
