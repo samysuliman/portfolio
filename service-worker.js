@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'samy-portfolio-v6.5-separated';
+const CACHE_VERSION = 'samy-portfolio-v6.6-portrait';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 const CORE_ASSETS = [
   './',
