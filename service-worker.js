@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'samy-portfolio-v6.7-rasheed-series';
+const CACHE_VERSION = 'samy-portfolio-v6.8-intro-video';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 const CORE_ASSETS = [
   './',
@@ -37,6 +37,7 @@ self.addEventListener('fetch', event => {
   if (request.method !== 'GET') return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+  if (url.pathname.endsWith('.mp4')) return;
 
   const isFreshContent = request.mode === 'navigate' ||
     url.pathname.endsWith('/articles/articles-data.js') ||
