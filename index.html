@@ -1071,6 +1071,32 @@ body.english .academy-card-arrow{transform:rotate(180deg)}
 </article>
 </div>
 </div>
+<div class="shelf rasheed-arabic-series-shelf">
+<div class="shelf-title">
+<h3 class="ar">سلسلة سامي رشيد لتعليم اللغة العربية للناطقين بغيرها</h3><h3 class="en">Samy Rasheed Series for Teaching Arabic to Non-Native Speakers</h3>
+<span class="ar">سلسلة تعليمية متدرجة للأطفال</span><span class="en">A progressive series for young learners</span>
+</div>
+<div class="books">
+<article class="book-card">
+<div class="book-image"><img alt="الحروف العربية - المستوى التأسيسي الأول" decoding="async" loading="lazy" src="assets/rasheed-series-arabic-letters.webp"/></div>
+<div class="book-body"><h4 class="ar">الحروف العربية – المستوى التأسيسي الأول</h4><h4 class="en">Arabic Letters – Foundation Level 1</h4>
+<p class="ar">أتعرّف، أميّز، أنطق، أكتب: تأسيس الحروف العربية بالصور والأنشطة.</p><p class="en">Recognize, distinguish, pronounce and write the Arabic letters.</p>
+<span class="badge done ar">إصدار جديد</span><span class="badge done en">New release</span><div class="book-meta"><span class="ar">📄 84 صفحة</span><span class="en">📄 84 pages</span></div><button class="book-preview-btn rs-preview" hidden data-pdf="assets/rasheed-series-arabic-letters.pdf" data-title-ar="الحروف العربية – المستوى التأسيسي الأول" data-title-en="Arabic Letters – Foundation Level 1" type="button"><span class="ar">📖 استعراض الكتاب</span><span class="en">📖 Preview Book</span></button></div>
+</article>
+<article class="book-card">
+<div class="book-image"><img alt="كراسة التدريبات - المستوى الأول" decoding="async" loading="lazy" src="assets/rasheed-series-practice.webp"/></div>
+<div class="book-body"><h4 class="ar">كراسة التدريبات – المستوى الأول</h4><h4 class="en">Practice Workbook – Level 1</h4>
+<p class="ar">تدريبات كتابة وتتبّع للحروف تكمّل كتاب الحروف العربية.</p><p class="en">Tracing and writing practice that accompanies the Arabic Letters book.</p>
+<span class="badge done ar">إصدار جديد</span><span class="badge done en">New release</span><div class="book-meta"><span class="ar">📄 35 صفحة</span><span class="en">📄 35 pages</span></div><button class="book-preview-btn rs-preview" hidden data-pdf="assets/rasheed-series-practice.pdf" data-title-ar="كراسة التدريبات – المستوى الأول" data-title-en="Practice Workbook – Level 1" type="button"><span class="ar">📖 استعراض الكتاب</span><span class="en">📖 Preview Book</span></button></div>
+</article>
+<article class="book-card">
+<div class="book-image"><img alt="قصص الحروف - المستوى الثاني" decoding="async" loading="lazy" src="assets/rasheed-series-letter-stories.webp"/></div>
+<div class="book-body"><h4 class="ar">قصص الحروف – المستوى الثاني</h4><h4 class="en">Letter Stories – Level 2</h4>
+<p class="ar">قصص مشوّقة وأسئلة متنوعة وتدريبات تفاعلية لتنمية مهارة الفهم.</p><p class="en">Engaging stories, varied questions and exercises to build comprehension.</p>
+<span class="badge done ar">إصدار جديد</span><span class="badge done en">New release</span><div class="book-meta"><span class="ar">📄 67 صفحة</span><span class="en">📄 67 pages</span></div><button class="book-preview-btn rs-preview" hidden data-pdf="assets/rasheed-series-letter-stories.pdf" data-title-ar="قصص الحروف – المستوى الثاني" data-title-en="Letter Stories – Level 2" type="button"><span class="ar">📖 استعراض الكتاب</span><span class="en">📖 Preview Book</span></button></div>
+</article>
+</div>
+</div>
 <div class="shelf tajweed-series-shelf">
 <div class="shelf-title">
 <h3 class="ar">سلسلة إعلام القراء</h3><h3 class="en">I‘lam Al-Qurra’ Tajweed Series</h3>
@@ -1278,6 +1304,7 @@ let resizeTimer;window.addEventListener('resize',()=>{if(!pdfDoc)return;clearTim
 document.getElementById('whatsappForm').addEventListener('submit',e=>{e.preventDefault();const en=document.body.classList.contains('english');const name=document.getElementById('contactName').value.trim(),email=document.getElementById('contactEmail').value.trim(),subject=document.getElementById('contactSubject').value.trim(),message=document.getElementById('contactMessage').value.trim();const text=en?`Hello Mr. Samy Suliman,\n\nName: ${name}\nEmail: ${email}\nSubject: ${subject}\n\nMessage:\n${message}`:`السلام عليكم أستاذ سامي سليمان،\n\nالاسم: ${name}\nالبريد الإلكتروني: ${email}\nالموضوع: ${subject}\n\nالرسالة:\n${message}`;window.open('https://wa.me/966559461920?text='+encodeURIComponent(text),'_blank','noopener')});
 const topBtn=document.getElementById('backToTop');window.addEventListener('scroll',()=>topBtn.classList.toggle('show',window.scrollY>500));topBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
 </script>
+<script>document.querySelectorAll('.rs-preview').forEach(function(b){fetch(b.dataset.pdf,{method:'HEAD'}).then(function(r){if(r.ok)b.hidden=false}).catch(function(){})});</script>
 <script defer="" src="assets/tour.js?v=4.5"></script>
 <script defer="" src="assets/pwa.js"></script>
 </body>
