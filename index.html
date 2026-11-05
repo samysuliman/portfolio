@@ -73,6 +73,7 @@ section{padding:78px 0}
 .shelf-title h3{margin:0;color:var(--green);font-size:28px}
 .shelf-title span{color:#8c691f;font-weight:800}
 .books{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.books.four{grid-template-columns:repeat(4,1fr);gap:18px}
 .book-card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);transition:.25s}
 .book-card:hover{transform:translateY(-7px)}
 .book-image{background:linear-gradient(145deg,#e9e3d8,#fff);padding:18px}
@@ -124,7 +125,7 @@ body.english .ar{display:none}
 body.english .en{display:block}
 @media(max-width:920px){
  .links{display:none}.hero-grid,.featured-impact,.reference{grid-template-columns:1fr}
- .books{grid-template-columns:repeat(2,1fr)}.portfolio-grid{grid-template-columns:repeat(2,1fr)}
+ .books,.books.four{grid-template-columns:repeat(2,1fr)}.portfolio-grid{grid-template-columns:repeat(2,1fr)}
  .hero-image{max-width:560px;margin:auto}
 }
 @media(max-width:620px){
@@ -1095,7 +1096,7 @@ body.english .academy-card-arrow{transform:rotate(180deg)}
 <h3 class="ar">سلسلة سامي رشيد لتعليم اللغة العربية للناطقين بغيرها</h3><h3 class="en">Samy Rasheed Series for Teaching Arabic to Non-Native Speakers</h3>
 <span class="ar">سلسلة تعليمية متدرجة للأطفال</span><span class="en">A progressive series for young learners</span>
 </div>
-<div class="books">
+<div class="books four">
 <article class="book-card">
 <div class="book-image"><img alt="الحروف العربية - المستوى التأسيسي الأول" decoding="async" loading="lazy" src="assets/rasheed-series-arabic-letters.webp"/></div>
 <div class="book-body"><h4 class="ar">الحروف العربية – المستوى التأسيسي الأول</h4><h4 class="en">Arabic Letters – Foundation Level 1</h4>
@@ -1109,10 +1110,16 @@ body.english .academy-card-arrow{transform:rotate(180deg)}
 <span class="badge done ar">إصدار جديد</span><span class="badge done en">New release</span><div class="book-meta"><span class="ar">📄 35 صفحة</span><span class="en">📄 35 pages</span></div><button class="book-preview-btn rs-preview" hidden data-pdf="assets/rasheed-series-practice.pdf" data-title-ar="كراسة التدريبات – المستوى الأول" data-title-en="Practice Workbook – Level 1" type="button"><span class="ar">📖 استعراض الكتاب</span><span class="en">📖 Preview Book</span></button></div>
 </article>
 <article class="book-card">
-<div class="book-image"><img alt="قصص الحروف - المستوى الثاني" decoding="async" loading="lazy" src="assets/rasheed-series-letter-stories.webp"/></div>
-<div class="book-body"><h4 class="ar">قصص الحروف – المستوى الثاني</h4><h4 class="en">Letter Stories – Level 2</h4>
-<p class="ar">قصص مشوّقة وأسئلة متنوعة وتدريبات تفاعلية لتنمية مهارة الفهم.</p><p class="en">Engaging stories, varied questions and exercises to build comprehension.</p>
-<span class="badge done ar">إصدار جديد</span><span class="badge done en">New release</span><div class="book-meta"><span class="ar">📄 67 صفحة</span><span class="en">📄 67 pages</span></div><button class="book-preview-btn rs-preview" hidden data-pdf="assets/rasheed-series-letter-stories.pdf" data-title-ar="قصص الحروف – المستوى الثاني" data-title-en="Letter Stories – Level 2" type="button"><span class="ar">📖 استعراض الكتاب</span><span class="en">📖 Preview Book</span></button></div>
+<div class="book-image"><img alt="قصص الحروف – الجزء الأول" decoding="async" loading="lazy" src="assets/letter-stories-part-1.webp"/></div>
+<div class="book-body"><h4 class="ar">قصص الحروف – الجزء الأول</h4><h4 class="en">Letter Stories – Part 1</h4>
+<p class="ar">28 قصة مصوّرة ثنائية اللغة، نتعلّم معها الأعداد والألوان والأحجام والكلمة وضدها.</p><p class="en">28 bilingual picture stories teaching numbers, colours, sizes and opposites.</p>
+<span class="badge done ar">إصدار جديد</span><span class="badge done en">New release</span><div class="book-meta"><span class="ar">📄 64 صفحة</span><span class="en">📄 64 pages</span></div><button class="book-preview-btn rs-preview" hidden data-pdf="assets/letter-stories-part-1.pdf" data-title-ar="قصص الحروف – الجزء الأول" data-title-en="Letter Stories – Part 1" type="button"><span class="ar">📖 استعراض الكتاب</span><span class="en">📖 Preview Book</span></button></div>
+</article>
+<article class="book-card">
+<div class="book-image"><img alt="قصص الحروف – الجزء الثاني" decoding="async" loading="lazy" src="assets/letter-stories-part-2.webp"/></div>
+<div class="book-body"><h4 class="ar">قصص الحروف – الجزء الثاني</h4><h4 class="en">Letter Stories – Part 2</h4>
+<p class="ar">قصص أطول وأسئلة أعمق لتنمية مهارة الفهم القرائي والتعبير.</p><p class="en">Longer stories and deeper questions to build reading comprehension and expression.</p>
+<span class="badge done ar">إصدار جديد</span><span class="badge done en">New release</span><div class="book-meta"><span class="ar">📄 80 صفحة</span><span class="en">📄 80 pages</span></div><button class="book-preview-btn rs-preview" hidden data-pdf="assets/letter-stories-part-2.pdf" data-title-ar="قصص الحروف – الجزء الثاني" data-title-en="Letter Stories – Part 2" type="button"><span class="ar">📖 استعراض الكتاب</span><span class="en">📖 Preview Book</span></button></div>
 </article>
 </div>
 </div>
